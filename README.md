@@ -4,6 +4,7 @@
 
 - git flow 실습
 - Figma 목업 작성
+- 요구사항 명세 작성
 
 <br/><br/><br/>
 
