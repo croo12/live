@@ -1,3 +1,6 @@
+import ListBox from "../UI/ListBox";
+import AlertCardContent from "./AlertCardContent";
+
 const MyAlert = () => {
   return (
     <>
@@ -5,6 +8,9 @@ const MyAlert = () => {
       {/*
       내가 받은 알림들 마구 출력 
       */}
+      <ListBox dataArray={[1, 2, 3]}>
+        <AlertCardContent />
+      </ListBox>
     </>
   );
 };
