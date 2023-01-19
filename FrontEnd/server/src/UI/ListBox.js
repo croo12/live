@@ -3,6 +3,7 @@ import Card from "./Card";
 
 const ListBox = (props) => {
   const [data, setData] = useState(props.dataArray);
+  console.log(setData);
   const contentBox = props.children;
 
   //가로세로 props로 받기 그래서 플렉스 박스 방향 바꾸기
