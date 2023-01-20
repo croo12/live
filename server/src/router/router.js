@@ -24,14 +24,16 @@ import LoginPage from "../pages/LoginPage";
 import MainPage from "../pages/MainPage";
 import MyPage from "../pages/MyPage";
 import ReservationPage from "../pages/ReservationPage";
-import SignUpPage from "../pages/SignUpPage";
+import SignUpPageRealtor from "../components/SignUpPageRealtor";
+import SignUpPageUser from "../components/SignUpPageUser";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<ErrorCommonPage />}>
       <Route index element={<MainPage />}></Route>
       <Route path="login" element={<LoginPage />}></Route>
-      <Route path="signup" element={<SignUpPage />}></Route>
+      <Route path="signup-user" element={<SignUpPageUser />}></Route>
+      <Route path="signup-realtor" element={<SignUpPageRealtor />}></Route>
       <Route path="reservation" element={<ReservationPage />}></Route>
       <Route path="consulting" element={<ConsultingPage />}></Route>
       <Route path="house" element={<HousePage />}>
