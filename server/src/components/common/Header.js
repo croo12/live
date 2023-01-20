@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
+import classes from "./Header.module.scss";
 
 const Header = () => {
   return (
-    <div>
+    <div className={classes.header}>
       <h1> 안녕 나는 tmp헤더 </h1>
       <NavLink to={"/"}>홈</NavLink>
       <NavLink to={"/login"}> 로그인 </NavLink>

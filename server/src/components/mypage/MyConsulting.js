@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "../UI/Button";
-import ListBox from "../UI/ListBox";
-import ConsultingCardContent from "./ConsultingCardContent";
+import Button from "../../UI/Button";
+import ListBox from "../../UI/ListBox";
+import ConsultingCardContent from "../ConsultingCardContent";
 
 const MyConsulting = () => {
   const [tabIndex, setIndex] = useState(0);

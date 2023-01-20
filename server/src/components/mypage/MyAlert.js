@@ -1,5 +1,5 @@
-import ListBox from "../UI/ListBox";
-import AlertCardContent from "./AlertCardContent";
+import ListBox from "../../UI/ListBox";
+import AlertCardContent from "../AlertCardContent";
 
 const MyAlert = () => {
   return (

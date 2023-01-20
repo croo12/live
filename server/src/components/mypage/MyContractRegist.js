@@ -1,7 +1,7 @@
-import RealtorCardContent from "./RealtorCardContent";
-import HouseCardContent from "./HouseCardContent";
-import Button from "../UI/Button";
-import Card from "../UI/Card";
+import RealtorCardContent from "../RealtorCardContent";
+import HouseCardContent from "../HouseCardContent";
+import Button from "../../UI/Button";
+import Card from "../../UI/Card";
 
 const MyContractRegist = () => {
   return (
