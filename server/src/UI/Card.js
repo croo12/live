@@ -1,6 +1,8 @@
+import classes from "./Card.module.scss";
+
 const Card = (props) => {
   return (
-    <div style={{ border: "1px solid black" }}>
+    <div className={classes.card}>
       <p>카드 UI</p>
       {props.children}
     </div>
