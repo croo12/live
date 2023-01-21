@@ -26,6 +26,7 @@ import MyPage from "../pages/MyPage";
 import ReservationPage from "../pages/ReservationPage";
 import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
+import MyConsultingDetail from "../components/mypage/MyConsultingDetail";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,6 +54,10 @@ const router = createBrowserRouter(
           element={<MyInfoModifyRealtor />}
         ></Route>
         <Route path="consulting" element={<MyConsulting />}></Route>
+        <Route
+          path="consulting-detail"
+          element={<MyConsultingDetail />}
+        ></Route>
         <Route path="contract" element={<MyContract />}>
           <Route index element={<MyContractView />}></Route>
           <Route path="regist" element={<MyContractRegist />}></Route>

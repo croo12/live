@@ -14,54 +14,58 @@ const MyConsulting = () => {
     <>
       <h1> 안녕 나는 마이페이지 - 상담관리</h1>
       <div>
-        <Button
-          clickEvent={() => {
-            onClickHandler(0);
-          }}
-        >
-          버튼0
-        </Button>
-        <Button
-          clickEvent={() => {
-            onClickHandler(1);
-          }}
-        >
-          버튼1
-        </Button>
-        <Button
-          clickEvent={() => {
-            onClickHandler(2);
-          }}
-        >
-          버튼2
-        </Button>
-      </div>
-      <div>
-        왼쪽놈
-        {tabIndex === 0 && (
-          <div>
-            탭0
-            <ListBox dataArray={[0, 1, 2, 3, 4]}>
-              <ConsultingCardContent />
-            </ListBox>
-          </div>
-        )}
-        {tabIndex === 1 && (
-          <div>
-            탭1
-            <ListBox dataArray={[0, 1, 2]}>
-              <ConsultingCardContent />
-            </ListBox>
-          </div>
-        )}
-        {tabIndex === 2 && (
-          <div>
-            탭2
-            <ListBox dataArray={[0, 1, 2, 3, 4, 5, 6]}>
-              <ConsultingCardContent />
-            </ListBox>
-          </div>
-        )}
+        {"//안녕 나는 탭 "}
+
+        <div>
+          <Button
+            clickEvent={() => {
+              onClickHandler(0);
+            }}
+          >
+            버튼0
+          </Button>
+          <Button
+            clickEvent={() => {
+              onClickHandler(1);
+            }}
+          >
+            버튼1
+          </Button>
+          <Button
+            clickEvent={() => {
+              onClickHandler(2);
+            }}
+          >
+            버튼2
+          </Button>
+        </div>
+        <div>
+          왼쪽놈
+          {tabIndex === 0 && (
+            <div>
+              탭0
+              <ListBox dataArray={[0, 1, 2, 3, 4]}>
+                <ConsultingCardContent />
+              </ListBox>
+            </div>
+          )}
+          {tabIndex === 1 && (
+            <div>
+              탭1
+              <ListBox dataArray={[0, 1, 2]}>
+                <ConsultingCardContent />
+              </ListBox>
+            </div>
+          )}
+          {tabIndex === 2 && (
+            <div>
+              탭2
+              <ListBox dataArray={[0, 1, 2, 3, 4, 5, 6]}>
+                <ConsultingCardContent />
+              </ListBox>
+            </div>
+          )}
+        </div>
       </div>
       {/*
         리스트
