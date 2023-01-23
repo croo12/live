@@ -59,4 +59,5 @@ public class User extends Member implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
 }
