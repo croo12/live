@@ -9,13 +9,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "house_no"))
 @Entity
 public class House extends BaseEntity {
+
+    @OneToMany(mappedBy = "house")
+    private List<Item> items = new ArrayList<>();
 
     private int isActive;
 
