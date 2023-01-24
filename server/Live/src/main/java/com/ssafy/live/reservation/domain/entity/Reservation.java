@@ -1,14 +1,14 @@
 package com.ssafy.live.reservation.domain.entity;
 
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
+import com.ssafy.live.account.user.domain.entity.User;
 import com.ssafy.live.common.domain.BaseEntity;
 import com.ssafy.live.common.domain.ReservationStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,6 +17,12 @@ import java.time.LocalDateTime;
 @Entity
 public class Reservation extends BaseEntity {
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Realtor realtor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @Column(name = "consulting_date")
     private LocalDateTime consultingDate;
 
@@ -24,3 +30,4 @@ public class Reservation extends BaseEntity {
 
     private ReservationStatus status;
 }
+
