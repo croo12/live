@@ -3,6 +3,7 @@ package com.ssafy.live.account.realtor.domain.entity;
 import com.ssafy.live.account.common.Member;
 import com.ssafy.live.account.common.Role;
 import com.ssafy.live.contract.domain.entity.Contract;
+import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.reservation.domain.entity.Reservation;
 import com.ssafy.live.review.domain.entity.Review;
 import com.sun.istack.NotNull;
@@ -32,6 +33,9 @@ public class Realtor extends Member implements UserDetails {
 
     @OneToMany(mappedBy = "realtor")
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "realtor")
+    private List<Notice> notices = new ArrayList<>();
 
     @Column(name = "business_number")
     private String businessNumber;

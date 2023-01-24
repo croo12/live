@@ -3,6 +3,7 @@ package com.ssafy.live.account.user.domain.entity;
 import com.ssafy.live.account.common.Member;
 import com.ssafy.live.account.common.Role;
 import com.ssafy.live.contract.domain.entity.Contract;
+import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.reservation.domain.entity.Reservation;
 import com.ssafy.live.review.domain.entity.Review;
 import com.sun.istack.NotNull;
@@ -43,6 +44,9 @@ public class User extends Member implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Notice> notices = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
