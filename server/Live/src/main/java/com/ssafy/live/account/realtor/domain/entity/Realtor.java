@@ -3,6 +3,7 @@ package com.ssafy.live.account.realtor.domain.entity;
 import com.ssafy.live.account.common.Member;
 import com.ssafy.live.account.common.Role;
 import com.ssafy.live.contract.domain.entity.Contract;
+import com.ssafy.live.reservation.domain.entity.Reservation;
 import com.sun.istack.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,6 +22,9 @@ import java.util.List;
 @AttributeOverride(name = "no", column = @Column(name = "user_no"))
 @Entity
 public class Realtor extends Member implements UserDetails {
+
+    @OneToMany(mappedBy = "realtor")
+    private List<Reservation> reservations = new ArrayList<>();
 
     @Column(name = "business_number")
     private String businessNumber;

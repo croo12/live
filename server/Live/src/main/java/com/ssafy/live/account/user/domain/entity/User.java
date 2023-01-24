@@ -3,6 +3,7 @@ package com.ssafy.live.account.user.domain.entity;
 import com.ssafy.live.account.common.Member;
 import com.ssafy.live.account.common.Role;
 import com.ssafy.live.contract.domain.entity.Contract;
+import com.ssafy.live.reservation.domain.entity.Reservation;
 import com.sun.istack.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -35,6 +36,9 @@ public class User extends Member implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Contract> contracts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Reservation> reservations = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
