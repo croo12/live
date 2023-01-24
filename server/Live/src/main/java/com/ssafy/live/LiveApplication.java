@@ -10,7 +10,4 @@ public class LiveApplication {
         SpringApplication.run(LiveApplication.class, args);
     }
 
-
-
-
 }
