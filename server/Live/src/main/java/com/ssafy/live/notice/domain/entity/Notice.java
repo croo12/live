@@ -18,9 +18,11 @@ import java.time.LocalDateTime;
 public class Notice extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "realtor_no")
     private Realtor realtor;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_no")
     private User user;
 
     @Column(name = "notice_info")

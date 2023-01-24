@@ -21,21 +21,9 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "no", column = @Column(name = "user_no"))
+@AttributeOverride(name = "no", column = @Column(name = "realtor_no"))
 @Entity
 public class Realtor extends Member implements UserDetails {
-
-    @OneToMany(mappedBy = "realtor")
-    private List<Reservation> reservations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "realtor")
-    private List<Contract> contracts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "realtor")
-    private List<Review> reviews = new ArrayList<>();
-
-    @OneToMany(mappedBy = "realtor")
-    private List<Notice> notices = new ArrayList<>();
 
     @Column(name = "business_number")
     private String businessNumber;
@@ -54,6 +42,18 @@ public class Realtor extends Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.ROLE_REALTOR;
+
+    @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    private List<Contract> contracts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    private List<Notice> notices = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

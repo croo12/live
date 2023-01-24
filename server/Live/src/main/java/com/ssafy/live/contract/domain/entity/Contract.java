@@ -20,12 +20,15 @@ import java.time.LocalDateTime;
 public class Contract extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_no")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "realtor_no")
     private Realtor realtor;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_no")
     private Item item; // 단방향
 
     @Column(name = "move_on_date")

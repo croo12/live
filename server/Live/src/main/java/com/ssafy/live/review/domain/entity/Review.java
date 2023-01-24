@@ -19,12 +19,15 @@ import java.time.LocalDateTime;
 public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "realtor_no")
     private Realtor realtor;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_no")
     private User user;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_no")
     private Reservation reservation;
 
     @Column(name = "review_info")

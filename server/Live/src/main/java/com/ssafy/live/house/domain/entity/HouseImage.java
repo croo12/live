@@ -16,5 +16,6 @@ import java.util.List;
 public class HouseImage extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_no")
     private Item item;
 }
