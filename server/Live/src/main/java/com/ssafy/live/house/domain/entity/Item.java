@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,4 +40,10 @@ public class Item extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "option_no")
     private Option option;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private House house;
+
+    @OneToMany(mappedBy = "item")
+    private List<HouseImage> houseImages = new ArrayList<>();
 }
