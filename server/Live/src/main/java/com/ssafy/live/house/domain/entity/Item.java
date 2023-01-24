@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 public class Item extends BaseEntity {
 
-    private int dposit;
+    private int deposit;
 
     private int rent;
 
@@ -33,15 +33,15 @@ public class Item extends BaseEntity {
     private LocalDate moveInDate;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
+    //@Builder.Default
     private Heating heating;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
+    //@Builder.Default
     private Direction direction;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
+    //@Builder.Default
     private Entrance entrance;
 
     @OneToOne(fetch = FetchType.LAZY)
