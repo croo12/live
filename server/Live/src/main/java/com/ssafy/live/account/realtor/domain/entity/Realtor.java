@@ -4,6 +4,7 @@ import com.ssafy.live.account.common.Member;
 import com.ssafy.live.account.common.Role;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.reservation.domain.entity.Reservation;
+import com.ssafy.live.review.domain.entity.Review;
 import com.sun.istack.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,6 +27,12 @@ public class Realtor extends Member implements UserDetails {
     @OneToMany(mappedBy = "realtor")
     private List<Reservation> reservations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "realtor")
+    private List<Contract> contracts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "realtor")
+    private List<Review> reviews = new ArrayList<>();
+
     @Column(name = "business_number")
     private String businessNumber;
 
@@ -43,9 +50,6 @@ public class Realtor extends Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.ROLE_REALTOR;
-
-    @OneToMany(mappedBy = "realtor")
-    private List<Contract> contracts = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
