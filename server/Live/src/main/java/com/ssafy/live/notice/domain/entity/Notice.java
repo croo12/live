@@ -1,10 +1,9 @@
-package com.ssafy.live.reservation.domain.entity;
+package com.ssafy.live.notice.domain.entity;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.User;
 import com.ssafy.live.common.domain.BaseEntity;
-import com.ssafy.live.common.domain.ReservationStatus;
-import com.ssafy.live.review.domain.entity.Review;
+import com.ssafy.live.reservation.domain.entity.Reservation;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +13,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "no", column = @Column(name = "reservation_no"))
+@AttributeOverride(name = "no", column = @Column(name = "notice_no"))
 @Entity
-public class Reservation extends BaseEntity {
+public class Notice extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Realtor realtor;
@@ -24,14 +23,13 @@ public class Reservation extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToOne(mappedBy = "reservation")
-    private Review review;
+    @Column(name = "notice_info")
+    private String noticeInfo;
 
-    @Column(name = "consulting_date")
-    private LocalDateTime consultingDate;
+    @Column(name = "notice_writer")
+    private String noticeWriter;
 
-    private String requirement;
-
-    private ReservationStatus status;
+    @Column(name = "notice_date")
+    private LocalDateTime noticeDate;
 }
 
