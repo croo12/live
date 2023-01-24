@@ -1,4 +1,4 @@
-package com.ssafy.live.reservation.service;
+package com.ssafy.live.contract.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReservationService {
+public class ContractService {
 
 }

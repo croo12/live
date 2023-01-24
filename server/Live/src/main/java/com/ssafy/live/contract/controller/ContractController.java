@@ -1,4 +1,4 @@
-package com.ssafy.live.reservation.controller;
+package com.ssafy.live.contract.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/reservations")
-public class ReservationController {
+@RequestMapping("/api/v1/contracts")
+public class ContractController {
 
 }
