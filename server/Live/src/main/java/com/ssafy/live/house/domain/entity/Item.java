@@ -4,9 +4,7 @@ import com.ssafy.live.common.domain.BaseEntity;
 import com.ssafy.live.common.domain.item.Direction;
 import com.ssafy.live.common.domain.item.Entrance;
 import com.ssafy.live.common.domain.item.Heating;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,6 +13,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "item_no"))
 @Entity
 public class Item extends BaseEntity {
@@ -32,15 +31,15 @@ public class Item extends BaseEntity {
     private LocalDate moveInDate;
 
     @Enumerated(EnumType.STRING)
-    //@Builder.Default
+    @Builder.Default
     private Heating heating;
 
     @Enumerated(EnumType.STRING)
-    //@Builder.Default
+    @Builder.Default
     private Direction direction;
 
     @Enumerated(EnumType.STRING)
-    //@Builder.Default
+    @Builder.Default
     private Entrance entrance;
 
     @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)

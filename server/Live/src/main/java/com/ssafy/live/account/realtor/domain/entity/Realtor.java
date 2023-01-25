@@ -2,9 +2,9 @@ package com.ssafy.live.account.realtor.domain.entity;
 
 import com.ssafy.live.account.common.Member;
 import com.ssafy.live.account.common.Role;
+import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.notice.domain.entity.Notice;
-import com.ssafy.live.reservation.domain.entity.Reservation;
 import com.ssafy.live.review.domain.entity.Review;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -44,7 +44,7 @@ public class Realtor extends Member implements UserDetails {
     private Role role = Role.ROLE_REALTOR;
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<Consulting> consultings = new ArrayList<>();
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
     private List<Contract> contracts = new ArrayList<>();
