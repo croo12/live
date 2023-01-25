@@ -8,7 +8,10 @@ const ListBox = (props) => {
    * 3. 배열의 데이터를 contextBox의 props로 주입한다
    * 4. 배열 길이만큼 반복한다
    */
-  const [data, setData] = useState(props.dataArray);
+
+  const dataArray = props.dataArray;
+
+  const [data, setData] = useState(dataArray ? dataArray : []);
   const contentBox = props.children;
 
   //가로세로 props로 받기 그래서 플렉스 박스 방향 바꾸기
