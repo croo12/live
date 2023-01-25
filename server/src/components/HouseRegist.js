@@ -99,7 +99,7 @@ const HouseRegist = () => {
           시 서비스 이용이 제한될 수 있습니다.
         </p>
       </div>
-      <div>
+      <div style={{ width: "70%" }}>
         <h2>기본 정보</h2>
         <table border={1}>
           <tbody>
@@ -113,6 +113,8 @@ const HouseRegist = () => {
                   ref={postcodeInputRef}
                   id="postcode"
                   placeholder="우편번호"
+                  onClick={findPostcodeModalStateHandler}
+                  readOnly
                 />
                 <Button clickEvent={findPostcodeModalStateHandler}>
                   우편 번호 찾기
@@ -123,12 +125,16 @@ const HouseRegist = () => {
                   ref={roadAddressInputRef}
                   id="roadAddress"
                   placeholder="도로명주소"
+                  onClick={findPostcodeModalStateHandler}
+                  readOnly
                 />
                 <input
                   type="text"
                   ref={jibunAddressInputRef}
                   id="jibunAddress"
                   placeholder="지번주소"
+                  onClick={findPostcodeModalStateHandler}
+                  readOnly
                 />
                 <input
                   type="text"
@@ -141,6 +147,8 @@ const HouseRegist = () => {
                   ref={extraAddressInputRef}
                   id="extraAddress"
                   placeholder="참고항목"
+                  onClick={findPostcodeModalStateHandler}
+                  readOnly
                 />
               </td>
             </tr>
@@ -150,11 +158,11 @@ const HouseRegist = () => {
               </td>
               <td colSpan={3}>
                 <label htmlFor="deposit">보증금</label>
-                <input type="number" id="deposit"></input>
+                <input type="number" id="deposit" min={0}></input>
                 <label htmlFor="rent">월세</label>
-                <input type="number" id="rent"></input>
+                <input type="number" id="rent" min={0}></input>
                 <label htmlFor="maintenanceFee">관리비</label>
-                <input type="number" id="maintenanceFee"></input>
+                <input type="number" id="maintenanceFee" min={0}></input>
               </td>
             </tr>
             <tr>
@@ -162,13 +170,13 @@ const HouseRegist = () => {
                 <h3>방 개수</h3>
               </td>
               <td>
-                <input type="number" id="room"></input>개
+                <input type="number" id="room" min={0}></input>개
               </td>
               <td>
                 <h3>욕실 개수</h3>
               </td>
               <td>
-                <input type="number" id="bathroom"></input>개
+                <input type="number" id="bathroom" min={0}></input>개
               </td>
             </tr>
             <tr>
@@ -218,19 +226,43 @@ const HouseRegist = () => {
               <td>
                 <h3>방향</h3>
               </td>
-              <td colSpan={3}>
-                <input type="radio" name="direction" value="동" />동
-                <input type="radio" name="direction" value="서" />서
-                <input type="radio" name="direction" value="남" />남
-                <input type="radio" name="direction" value="북" />북
-                <input type="radio" name="direction" value="남동" />
-                남동
-                <input type="radio" name="direction" value="남서" />
-                남서
-                <input type="radio" name="direction" value="북동" />
-                북동
-                <input type="radio" name="direction" value="북서" />
-                북서
+              <td>
+                <input type="radio" name="direction" value="동" id="east" />
+                <label htmlFor="east">동</label>
+                <input type="radio" name="direction" value="서" id="west" />
+                <label htmlFor="west">서</label>
+                <input type="radio" name="direction" value="남" id="south" />
+                <label htmlFor="south">남</label>
+                <input type="radio" name="direction" value="북" id="north" />
+                <label htmlFor="north">북</label>
+                <input
+                  type="radio"
+                  name="direction"
+                  value="남동"
+                  id="southEast"
+                />
+                <label htmlFor="southEast">남동</label>
+                <input
+                  type="radio"
+                  name="direction"
+                  value="남서"
+                  id="southWest"
+                />
+                <label htmlFor="southWest">남서</label>
+                <input
+                  type="radio"
+                  name="direction"
+                  value="북동"
+                  id="northEast"
+                />
+                <label htmlFor="northEast">북동</label>
+                <input
+                  type="radio"
+                  name="direction"
+                  value="북서"
+                  id="northWest"
+                />
+                <label htmlFor="northWest">북서</label>
               </td>
             </tr>
             <tr>
@@ -238,11 +270,11 @@ const HouseRegist = () => {
                 <h3>현관구조</h3>
               </td>
               <td>
-                <input type="radio" name="entrance" value="남서" />
+                <input type="radio" name="entrance" value="계단식" />
                 계단식
-                <input type="radio" name="entrance" value="북동" />
+                <input type="radio" name="entrance" value="복도식" />
                 복도식
-                <input type="radio" name="entrance" value="북서" />
+                <input type="radio" name="entrance" value="복합식" />
                 복합식
               </td>
             </tr>
@@ -251,11 +283,11 @@ const HouseRegist = () => {
                 <h3>난방방식</h3>
               </td>
               <td>
-                <input type="radio" name="heating" value="남서" />
+                <input type="radio" name="heating" value="개별난방" />
                 개별난방
-                <input type="radio" name="heating" value="북동" />
+                <input type="radio" name="heating" value="중앙난방" />
                 중앙난방
-                <input type="radio" name="heating" value="북서" />
+                <input type="radio" name="heating" value="지역난방" />
                 지역난방
               </td>
             </tr>
@@ -269,10 +301,8 @@ const HouseRegist = () => {
                   id="moveInDate"
                   defaultValue={new Date().toISOString().substring(0, 10)}
                 />
-                <input type="radio" name="moveInDateInfo" value="즉시입주" />
-                즉시입주???????????????
-                <input type="radio" name="moveInDateInfo" value="협의가능" />
-                협의가능??????????????
+                <br />* 즉시입주나 협의가능 등 입주가능일 관련 내용은 상세
+                설명에 작성바랍니다.
               </td>
             </tr>
             <tr>
@@ -282,68 +312,48 @@ const HouseRegist = () => {
               <td>
                 <input type="checkbox" id="bed" />
                 <label htmlFor="bed">침대</label>
+                <input type="checkbox" id="washingMachine" />
+                <label htmlFor="washingMachine">세탁기</label>
+                <input type="checkbox" id="airConditioner" />
+                <label htmlFor="airConditioner">에어컨</label>
                 <input type="checkbox" id="desk" />
                 <label htmlFor="desk">책상</label>
                 <input type="checkbox" id="closet" />
                 <label htmlFor="closet">옷장</label>
-                <input type="checkbox" id="bulitInCloset" />
-                <label htmlFor="bulitInCloset">붙박이장</label>
+                <input type="checkbox" id="sink" />
+                <label htmlFor="sink">싱크대</label>
+                <input type="checkbox" id="cctv" />
+                <label htmlFor="cctv">CCTV</label>
                 <input type="checkbox" id="table" />
                 <label htmlFor="table">식탁</label>
                 <input type="checkbox" id="sofa" />
                 <label htmlFor="sofa">소파</label>
                 <input type="checkbox" id="shoeRack" />
                 <label htmlFor="shoeRack">신발장</label>
-
-                <br />
-
                 <input type="checkbox" id="refrigerator" />
                 <label htmlFor="refrigerator">냉장고</label>
-                <input type="checkbox" id="washingMachine" />
-                <label htmlFor="washingMachine">세탁기</label>
                 <input type="checkbox" id="dryingMachine" />
                 <label htmlFor="dryingMachine">건조기</label>
-                <input type="checkbox" id="showerBooth" />
-                <label htmlFor="showerBooth">샤워부스</label>
-                <input type="checkbox" id="bath" />
-                <label htmlFor="bath">욕조</label>
+                <input type="checkbox" id="bathtub" />
+                <label htmlFor="bathtub">욕조</label>
                 <input type="checkbox" id="bidet" />
                 <label htmlFor="bidet">비데</label>
-
-                <br />
-
-                <input type="checkbox" id="sink" />
-                <label htmlFor="sink">싱크대</label>
                 <input type="checkbox" id="dishWasher" />
                 <label htmlFor="dishWasher">식기세척기</label>
                 <input type="checkbox" id="gasStore" />
                 <label htmlFor="gasStore">가스레인지</label>
                 <input type="checkbox" id="inductionCooktop" />
-                <label htmlFor="inductionCooktop">인덕션레인지</label>
+                <label htmlFor="inductionCooktop">인덕션</label>
                 <input type="checkbox" id="microwave" />
                 <label htmlFor="microwave">전자레인지</label>
-                <input type="checkbox" id="gasOven" />
-                <label htmlFor="gasOven">가스오븐</label>
-
-                <br />
-
-                <input type="checkbox" id="ownSecurity" />
-                <label htmlFor="ownSecurity">자체경비</label>
+                <input type="checkbox" id="oven" />
+                <label htmlFor="gasOven">오븐</label>
+                <input type="checkbox" id="guard" />
+                <label htmlFor="guard">경비원</label>
                 <input type="checkbox" id="intercom" />
                 <label htmlFor="intercom">인터폰</label>
                 <input type="checkbox" id="keycard" />
                 <label htmlFor="keycard">카드키</label>
-                <input type="checkbox" id="cctv" />
-                <label htmlFor="cctv">CCTV</label>
-                <input type="checkbox" id="privateSecurity" />
-                <label htmlFor="privateSecurity">사설경비</label>
-                <input type="checkbox" id="entranceSecurity" />
-                <label htmlFor="entranceSecurity">현관보안</label>
-                <input type="checkbox" id="securityWindow" />
-                <label htmlFor="securityWindow">방범창</label>
-
-                <br />
-
                 <input type="checkbox" id="elevator" />
                 <label htmlFor="elevator">엘리베이터</label>
                 <input type="checkbox" id="fireAlarm" />
@@ -369,8 +379,8 @@ const HouseRegist = () => {
               <td colSpan={4}>
                 * 해당 방에 대한 자세한 설명을 입력해주세요.
                 <br />
-                * 방 정보, 가격협의내용, 교통 등 자세한 내용을 작성하시면 거래가
-                성사될 가능성이 높습니다.
+                * 방 정보, 가격 협의내용, 입주일 협의내용, 교통 등 자세한 내용을
+                작성하시면 거래가 성사될 가능성이 높습니다.
                 <br />* 한글, 영어, 숫자 ㎡을 제외한 특수문자(괄호포함)는 입력할
                 수 없습니다.
               </td>
