@@ -31,15 +31,15 @@ public class Item extends BaseEntity {
     private LocalDate moveInDate;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
+    //@Builder.Default
     private Heating heating;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
+    //@Builder.Default
     private Direction direction;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
+    //@Builder.Default
     private Entrance entrance;
 
     @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)
