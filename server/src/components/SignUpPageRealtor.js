@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
+import Card from "../UI/Card";
 
 const SignUpPageRealtor = () => {
   const onChangeHanldler = (e) => {
@@ -44,7 +45,7 @@ const SignUpPageRealtor = () => {
   };
 
   return (
-    <>
+    <Card>
       <form onSubmit={onChangeHanldler}>
         <button>조회하기</button>
         <div>
@@ -117,7 +118,7 @@ const SignUpPageRealtor = () => {
         <button>중개사 가입</button>
       </form>
       <Outlet />
-    </>
+    </Card>
   );
 };
 
