@@ -29,6 +29,9 @@ public class Consulting extends BaseEntity {
     @OneToOne(mappedBy = "consulting", cascade = CascadeType.ALL)
     private Review review;
 
+    @OneToOne(mappedBy = "consulting", cascade = CascadeType.ALL)
+    private ConsultingRoom consultingRoom;
+
     @Column(name = "consulting_date")
     private LocalDateTime consultingDate;
 
