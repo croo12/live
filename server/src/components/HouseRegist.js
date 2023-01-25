@@ -5,16 +5,18 @@ import Modal from "../UI/Modal";
 import { useRef, useState } from "react";
 
 const HouseRegist = () => {
-  const [postcodeModalState, setPostcodeModalState] = useState(null);
+  const [postcodeModalState, setPostcodeModalState] = useState(null); // 주소 검색 모달창 상태 관리용
+  const [imageState, setImageState] = useState([]); // 매물 사진 관리용
+  const [previewImageState, setPreviewImageState] = useState([]);
 
-  const postcodeInputRef = useRef();
-  const roadAddressInputRef = useRef();
-  const jibunAddressInputRef = useRef();
-  const detailAddressInputRef = useRef();
-  const extraAddressInputRef = useRef();
+  const postcodeInputRef = useRef(); // 우편번호
+  const roadAddressInputRef = useRef(); //도로명주소
+  const jibunAddressInputRef = useRef(); //지번주소
+  const detailAddressInputRef = useRef(); //상세주소
+  const extraAddressInputRef = useRef(); //추가사항
 
+  // postcodeModalState를 통해 모달 창 열고 닫는 함수
   const findPostcodeModalStateHandler = () => {
-    // 주소 검색 모달 띄우기
     if (postcodeModalState === null) {
       setPostcodeModalState(true);
       return;
@@ -22,6 +24,7 @@ const HouseRegist = () => {
     setPostcodeModalState(null);
   };
 
+  // 모달창에서 주소 선택 시 주소 등록 칸에 채워주는 함수
   const completePostHandler = (data) => {
     let roadAddr = data.roadAddress; // 도로명 주소 변수
     let extraRoadAddr = ""; // 참고 항목 변수
@@ -65,7 +68,35 @@ const HouseRegist = () => {
     }
     console.log(data);
 
-    findPostcodeModalStateHandler();
+    findPostcodeModalStateHandler(); // 완료 후 모달 창 닫기
+  };
+
+  // 매물 사진 변경이벤트 함수
+  const ImageChangeHandler = (data) => {
+    const images = data.target.files; // 입력받은 이미지 파일
+    const reader = new FileReader();
+
+    [...images].map((image) => {
+      reader.readAsDataURL(image);
+      // 이미지 파일
+      setImageState([
+        // 필터 통해 중복 제거 ( 여기서 미리 걸러서 미리보기 때 필터 안쓰는 방법 생각해보자.. 그리고 하나씩 확인하고 넣는거 말고 한번에 하는거 없나.. )
+        ...imageState.filter((el) => {
+          return el !== image;
+        }),
+        image,
+      ]);
+
+      reader.onload = () => {
+        // 미리보기
+        setPreviewImageState([
+          ...previewImageState.filter((el) => {
+            return el !== reader.result;
+          }),
+          reader.result,
+        ]);
+      };
+    });
   };
 
   return (
@@ -401,9 +432,29 @@ const HouseRegist = () => {
 
         <h2>사진등록</h2>
         <div>
-          <input type="file" id="image" accept="img/*" multiple={true} />
+          <input
+            type="file"
+            id="houseImage"
+            accept="image/*"
+            multiple={true}
+            onChange={ImageChangeHandler}
+          />
+          <label htmlFor="houseImage">사진 업로드하기</label>
         </div>
-        <div id="img__box">미리보기</div>
+        <div id="img__box">
+          미리보기
+          {previewImageState.map((image, idx) => {
+            return (
+              <input
+                width="10%"
+                type="image"
+                src={image}
+                key={idx}
+                alt={imageState[idx].name}
+              />
+            );
+          })}
+        </div>
       </div>
       <button>등록</button>
     </>
