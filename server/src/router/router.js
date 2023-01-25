@@ -26,6 +26,7 @@ import MyPage from "../pages/MyPage";
 import ReservationPage from "../pages/ReservationPage";
 import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
+import ReservationCardContentDetail from "../components/ReservationCardContentDetail";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
