@@ -4,6 +4,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.User;
 import com.ssafy.live.common.domain.BaseEntity;
 import com.ssafy.live.common.domain.ConsultingStatus;
+import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.review.domain.entity.Review;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,5 +22,9 @@ public class ConsultingRoom extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "consulting_no")
     private Consulting consulting;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_no")
+    private Item item;
 }
 
