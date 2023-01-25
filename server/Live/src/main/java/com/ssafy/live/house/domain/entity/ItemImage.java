@@ -6,16 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "no", column = @Column(name = "house_image_no"))
+@AttributeOverride(name = "no", column = @Column(name = "item_image_no"))
 @Entity
-public class HouseImage extends BaseEntity {
+public class ItemImage extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_no")
     private Item item;
+
+    @Column(name = "image_src")
+    private String imageSrc;
 }
