@@ -3,7 +3,6 @@ package com.ssafy.live.notice.domain.entity;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.User;
 import com.ssafy.live.common.domain.BaseEntity;
-import com.ssafy.live.reservation.domain.entity.Reservation;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

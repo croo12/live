@@ -5,15 +5,21 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "no", column = @Column(name = "option_no"))
 @Entity
-public class Option extends BaseEntity {
+public class ItemOption {
+
+    @Id
+    @Column(name = "item_no")
+    private Long itemNo;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     private boolean bed;
     @Column(name = "washing_machine")
@@ -25,7 +31,8 @@ public class Option extends BaseEntity {
     private boolean bath;
     private boolean sink;
     private boolean cctv;
-    private boolean table;
+    @Column(name = "dining_table")
+    private boolean diningTable;
     private boolean sofa;
     @Column(name = "shoe_rack")
     private boolean shoeRack;

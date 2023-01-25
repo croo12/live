@@ -1,9 +1,9 @@
-package com.ssafy.live.reservation.domain.entity;
+package com.ssafy.live.consulting.domain.entity;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.User;
 import com.ssafy.live.common.domain.BaseEntity;
-import com.ssafy.live.common.domain.ReservationStatus;
+import com.ssafy.live.common.domain.ConsultingStatus;
 import com.ssafy.live.review.domain.entity.Review;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "no", column = @Column(name = "reservation_no"))
+@AttributeOverride(name = "no", column = @Column(name = "consulting_no"))
 @Entity
-public class Reservation extends BaseEntity {
+public class Consulting extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "realtor_no")
@@ -26,14 +28,20 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "user_no")
     private User user;
 
-    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "consulting", cascade = CascadeType.ALL)
     private Review review;
+
+    @OneToOne(mappedBy = "consulting", cascade = CascadeType.ALL)
+    private ConsultingRoom consultingRoom;
+
+    @OneToMany(mappedBy = "consulting", cascade = CascadeType.ALL)
+    private List<ConsultingItem> consultingItems = new ArrayList<>();
 
     @Column(name = "consulting_date")
     private LocalDateTime consultingDate;
 
     private String requirement;
 
-    private ReservationStatus status;
+    private ConsultingStatus status;
 }
 
