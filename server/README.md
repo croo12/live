@@ -7,7 +7,7 @@ react-icons
 @reduxjs/toolkit
 sass
 
-### 01.18 디렉토리 설계
+### 01.18 디렉토리 설계 
 
 -----
 
