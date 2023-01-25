@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,6 +33,9 @@ public class Consulting extends BaseEntity {
 
     @OneToOne(mappedBy = "consulting", cascade = CascadeType.ALL)
     private ConsultingRoom consultingRoom;
+
+    @OneToMany(mappedBy = "consulting", cascade = CascadeType.ALL)
+    private List<ConsultingItem> consultingItems = new ArrayList<>();
 
     @Column(name = "consulting_date")
     private LocalDateTime consultingDate;
