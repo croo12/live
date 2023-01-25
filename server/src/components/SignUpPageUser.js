@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import Card from "../UI/Card";
 
 const SignUpPageUser = () => {
-  const onChangeHanldler = (e) => {
-    e.preventDefault();
-
-    console.log(e.target.phone.value);
+  const onChange = (e) => {
+    console.log(e.target.value.user_id);
   };
 
   const [userId, setUserId] = useState("");
