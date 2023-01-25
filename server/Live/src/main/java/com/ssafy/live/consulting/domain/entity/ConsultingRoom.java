@@ -22,9 +22,4 @@ public class ConsultingRoom extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "consulting_no")
     private Consulting consulting;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_no")
-    private Item item;
 }
-
