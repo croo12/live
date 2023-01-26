@@ -53,7 +53,7 @@ const SignUpPageUser = () => {
 
   return (
     <Card>
-      <form onSubmit={onChangeHanldler}>
+      <form>
         <div>
           <label htmlFor="user_id">아이디 </label>
           <input

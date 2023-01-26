@@ -1,49 +1,27 @@
-import { useCallback, useContext, useEffect } from "react";
-import { UNSAFE_NavigationContext } from "react-router-dom";
+import { useEffect } from "react";
+import { unstable_useBlocker as useBlocker } from "react-router-dom";
 
-export const useBlocker = (blocker, when) => {
-  const context = useContext(UNSAFE_NavigationContext);
-  const navigator = context.navigator;
-
-  console.log(context);
+//뒤로가기랑 이동은 막음
+//새로고침은 안막음
+export const usePrompt = ({ when, message }) => {
+  let blocker = useBlocker(when);
+  console.log(blocker);
 
   useEffect(() => {
-    if (!when) return;
-
-    const PUSH = navigator.push;
-    console.log(PUSH);
-
-    navigator.push = (...args) => {
-      //여기서 to 체크 가능
-      console.log(...args);
-
-      const result = blocker();
-      if (result !== false) {
-        PUSH(...args);
-      }
-    };
-
-    return () => (navigator.push = PUSH);
-  }, [navigator, blocker, when]);
-};
-
-export const usePrompt = (msg, trigger) => {
-  useEffect(() => {
-    if (trigger) {
-      window.onbeforeunload = () => {
-        return msg;
-      };
+    if (blocker.state === "blocked" && !when) {
+      blocker.reset();
     }
+  }, [blocker, when]);
 
-    return () => {
-      window.onbeforeunload(null);
-    };
-  }, [msg, trigger]);
+  useEffect(() => {
+    if (blocker.state === "blocked") {
+      let proceed = window.confirm(message);
 
-  const blocker = useCallback(() => {
-    const confirm = window.confirm(msg);
-    return confirm;
-  }, [msg]);
-
-  useBlocker(blocker, trigger);
+      if (proceed) {
+        setTimeout(blocker.proceed, 0);
+      } else {
+        blocker.reset();
+      }
+    }
+  }, [blocker, message]);
 };
