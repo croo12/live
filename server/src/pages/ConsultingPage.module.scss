@@ -1,0 +1,10 @@
+.consulting_page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  .video_box {
+    border: 1px solid black;
+    width: 100%;
+  }
+}
