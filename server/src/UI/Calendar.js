@@ -5,7 +5,8 @@ import classes from "./Calendar.module.scss";
 /**
  * @description 주워온 캘린더를 수정해서 만듦.
  *
- * @param { Object : Date } today
+ * @param { today : Date } new Date() 넣어요
+ * @param { mode : boolean } false : 날짜 하나 선택, true : 날짜 여러개 선택 가능 
  * @returns
  */
 
@@ -32,14 +33,16 @@ const isSame = (date1, date2, depth) => {
   return year1 === year2 && month1 === month2 && day1 === day2;
 };
 
-const CalendarTitle = ({ date, changeMonthEvent, resetDate }) => (
+const CalendarTitle = ({ date, changeMonthEvent, resetDate, today }) => (
   <nav className={classes.calendar__nav}>
-    <Button clickEvent={() => changeMonthEvent(date.getMonth() - 1)}>
-      &#8249;
-    </Button>
-    <span onClick={() => resetDate()}>
+    {date.getMonth() > today.getMonth() && (
+      <Button clickEvent={() => changeMonthEvent(date.getMonth() - 1)}>
+        &#8249;
+      </Button>
+    )}
+    <h1 onClick={() => resetDate()}>
       {date.getMonth() + 1} <small>{date.getFullYear()}</small>
-    </span>
+    </h1>
     <Button clickEvent={() => changeMonthEvent(date.getMonth() + 1)}>
       &#8250;
     </Button>
@@ -116,7 +119,9 @@ const Days = ({ date, startDate, endDate, clickEvent, today }) => {
       {days.map((el, idx) => (
         <Day
           key={idx}
-          clickEvent={(date) => clickEvent(date)}
+          clickEvent={
+            date < today ? () => console.log("ㄴㄴ") : (d) => clickEvent(d)
+          }
           currentdate={date}
           date={el}
           startDate={startDate}
@@ -128,8 +133,12 @@ const Days = ({ date, startDate, endDate, clickEvent, today }) => {
   );
 };
 
-const Calendar = ({ today }) => {
-  const TODAY = today;
+const Calendar = ({ today, mode }) => {
+  const TODAY = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
   const [date, setDate] = useState(TODAY);
   const [startDate, setStartDate] = useState(TODAY);
   const [endDate, setEndDate] = useState(TODAY);
@@ -146,17 +155,22 @@ const Calendar = ({ today }) => {
   const changeDay = (newDate) => {
     if (newDate < TODAY) return;
 
-    if (
-      startDate === null ||
-      newDate < startDate ||
-      !isSame(startDate, endDate)
-    ) {
+    if (mode) {
+      if (
+        startDate === null ||
+        newDate < startDate ||
+        !isSame(startDate, endDate)
+      ) {
+        setStartDate(newDate);
+        setEndDate(newDate);
+      } else if (isSame(newDate, startDate) && isSame(newDate, endDate)) {
+        setStartDate(null);
+        setEndDate(null);
+      } else if (newDate > startDate) {
+        setEndDate(newDate);
+      }
+    } else {
       setStartDate(newDate);
-      setEndDate(newDate);
-    } else if (isSame(newDate, startDate) && isSame(newDate, endDate)) {
-      setStartDate(null);
-      setEndDate(null);
-    } else if (newDate > startDate) {
       setEndDate(newDate);
     }
   };
@@ -167,6 +181,7 @@ const Calendar = ({ today }) => {
         date={date}
         changeMonthEvent={(month) => changeMonth(month)}
         resetDate={() => resetDate()}
+        today={TODAY}
       />
 
       <Days

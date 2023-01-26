@@ -22,7 +22,7 @@ $radius: 12px;
     height: 70px;
     position: relative;
 
-    a {
+    button {
       position: absolute;
       cursor: pointer;
       left: 10px;
@@ -32,7 +32,7 @@ $radius: 12px;
       width: 30px;
       text-align: center;
       display: inline-block;
-      color: transparentize(#fff, 0.6);
+      color: rgba(255, 255, 255, 0);
       user-select: none;
 
       &:hover {
@@ -90,10 +90,12 @@ $radius: 12px;
         font-weight: 700;
         background-color: transparentize($primary, 0.95);
         border-radius: $radius;
+        
       }
 
       &.muted {
-        color: red;
+        color: rgba(0, 0, 0, 0.3);
+        cursor: default;
       }
 
       &.another {
