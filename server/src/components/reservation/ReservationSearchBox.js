@@ -1,5 +1,5 @@
 import Button from "../../UI/Button";
-import DateSelector from "../../UI/DateSelector";
+import DateSelector from "./DateSelector";
 import SelectBox from "../../UI/SelectBox";
 
 const ReservationSearchBox = () => {

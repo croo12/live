@@ -17,10 +17,16 @@ const ReservationPage = () => {
         <ReservationRightDiv />
       </div>
 
-      <ListBox dataArray={[0, 1]}>
+      <ListBox dataArray={[0, 1]} direction={true}>
         <HouseCardContent />
       </ListBox>
-      <Button> 반가워용 </Button>
+      <Button
+        clickEvent={() => {
+          console.log("ㅎㅇ");
+        }}
+      >
+        반가워용
+      </Button>
     </>
   );
 };

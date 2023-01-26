@@ -43,9 +43,11 @@ const CalendarTitle = ({ date, changeMonthEvent, resetDate, today }) => (
     <h1 onClick={() => resetDate()}>
       {date.getMonth() + 1} <small>{date.getFullYear()}</small>
     </h1>
-    <Button clickEvent={() => changeMonthEvent(date.getMonth() + 1)}>
-      &#8250;
-    </Button>
+    {date.getMonth() < today.getMonth() + 1 && (
+      <Button clickEvent={() => changeMonthEvent(date.getMonth() + 1)}>
+        &#8250;
+      </Button>
+    )}
   </nav>
 );
 
@@ -133,7 +135,9 @@ const Days = ({ date, startDate, endDate, clickEvent, today }) => {
   );
 };
 
-const Calendar = ({ today, mode }) => {
+const Calendar = ({ mode, startDateChangeEvent, endDateChangeEvent }) => {
+  const today = new Date();
+
   const TODAY = new Date(
     today.getFullYear(),
     today.getMonth(),
@@ -152,6 +156,16 @@ const Calendar = ({ today, mode }) => {
     setDate(tmp);
   };
 
+  const startDateSetter = (value) => {
+    setStartDate(value);
+    if (startDateChangeEvent) startDateChangeEvent(value);
+  };
+
+  const endDateSetter = (value) => {
+    setEndDate(value);
+    if (endDateChangeEvent) endDateChangeEvent(value);
+  };
+
   const changeDay = (newDate) => {
     if (newDate < TODAY) return;
 
@@ -161,17 +175,17 @@ const Calendar = ({ today, mode }) => {
         newDate < startDate ||
         !isSame(startDate, endDate)
       ) {
-        setStartDate(newDate);
-        setEndDate(newDate);
+        startDateSetter(newDate);
+        endDateSetter(newDate);
       } else if (isSame(newDate, startDate) && isSame(newDate, endDate)) {
-        setStartDate(null);
-        setEndDate(null);
+        startDateSetter(null);
+        endDateSetter(null);
       } else if (newDate > startDate) {
-        setEndDate(newDate);
+        endDateSetter(null);
       }
     } else {
-      setStartDate(newDate);
-      setEndDate(newDate);
+      startDateSetter(newDate);
+      endDateSetter(newDate);
     }
   };
 
