@@ -2,12 +2,13 @@ import { BsFillExclamationCircleFill } from "react-icons/bs";
 import Button from "../UI/Button";
 import DaumPostcode from "react-daum-postcode";
 import Modal from "../UI/Modal";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Card from "../UI/Card";
 
 const HouseRegist = () => {
   const [postcodeModalState, setPostcodeModalState] = useState(null); // 주소 검색 모달창 상태 관리용
-  const [imageState, setImageState] = useState([]); // 매물 사진 관리용
-  const [previewImageState, setPreviewImageState] = useState([]);
+  const [imageState, setImageState] = useState([]); // 매물 이미지 파일
+  const [previewImageState, setPreviewImageState] = useState([]); // 매물 이미지 미리보기
 
   const postcodeInputRef = useRef(); // 우편번호
   const roadAddressInputRef = useRef(); //도로명주소
@@ -66,37 +67,66 @@ const HouseRegist = () => {
       let expJibunAddr = data.autoJibunAddress;
       jibunAddressInputRef.current.value = expJibunAddr;
     }
-    console.log(data);
 
     findPostcodeModalStateHandler(); // 완료 후 모달 창 닫기
   };
 
-  // 매물 사진 변경이벤트 함수
-  const ImageChangeHandler = (data) => {
+  // --------- 매물이미지등록 store에 reducer로 빼야할거 같음 ------------//
+
+  // 매물 이미지 변경 이벤트 함수
+  const ImageChangeHandler = async (data) => {
     const images = data.target.files; // 입력받은 이미지 파일
-    const reader = new FileReader();
 
-    [...images].map((image) => {
-      reader.readAsDataURL(image);
-      // 이미지 파일
-      setImageState([
-        // 필터 통해 중복 제거 ( 여기서 미리 걸러서 미리보기 때 필터 안쓰는 방법 생각해보자.. 그리고 하나씩 확인하고 넣는거 말고 한번에 하는거 없나.. )
-        ...imageState.filter((el) => {
-          return el !== image;
-        }),
-        image,
-      ]);
+    const removeDupl = [...imageState, ...images]; // 이미지 파일 중복 제거용 배열
 
+    // 이미지 파일 정보는 객체 배열이므로 -> 파일 이름 속성으로 객체 중복 제거
+    const nonDuplImages = removeDupl.filter((item) => {
+      let idx; // 중복되는 객체의 인덱스 정보를 담을 변수
+
+      for (let i = 0; i < removeDupl.length; i++) {
+        // 반복문을 통해 중복 객체의 인덱스 정보를 찾음
+        if (item.name === removeDupl[i].name) {
+          idx = i;
+          break;
+        }
+      }
+
+      // 찾은 인덱스(idx)와 일치하는 가장 가까운 이미지 객체들을 필터함수로 배열 형태로 반환
+      return idx === removeDupl.indexOf(item);
+    });
+
+    // 이미지 파일 수 유효성 검사 ( 10개 이하 ), 5개 이상은 등록, 수정 버튼 클릭 시 활성화
+    if (nonDuplImages.length > 10) {
+      alert("이미지 등록은 최대 10개까지만 가능합니다.");
+      return;
+    }
+
+    // 유효성 검사를 통과 시 imageState에 중복제거된 배열 복사
+    await setImageState([...nonDuplImages]);
+
+    // 이건 Set으로 중복제거해보려 했는데, 객체 배열은 중복제거가 안되더라..
+    // await setImageState([...new Set([...imageState, ...images])]);
+  };
+
+  // 매물 이미지 미리보기 처리 ( imageState 변경 시 실행 )
+  useEffect(() => {
+    let imagePreview = []; // 미리보기 데이터 담을 임시 변수
+
+    imageState.forEach((image) => {
+      const reader = new FileReader(); // 이미지 파일 읽어줄 친구
+      reader.readAsDataURL(image); // 이미지 URL 변환
+
+      // onload : 읽기 성공 시, onloadend : 읽기 성공 실패 여부 상관 없음
       reader.onload = () => {
-        // 미리보기
-        setPreviewImageState([
-          ...previewImageState.filter((el) => {
-            return el !== reader.result;
-          }),
-          reader.result,
-        ]);
+        imagePreview = [...imagePreview, { image, url: reader.result }]; // 데이터 담아줌
+
+        setPreviewImageState([...imagePreview]); // previewImageState에 넣어줌
       };
     });
+  }, [imageState]);
+
+  const deleteImageHandler = (data) => {
+    console.log(data);
   };
 
   return (
@@ -443,15 +473,21 @@ const HouseRegist = () => {
         </div>
         <div id="img__box">
           미리보기
-          {previewImageState.map((image, idx) => {
+          {previewImageState.map((data) => {
             return (
-              <input
-                width="10%"
-                type="image"
-                src={image}
-                key={idx}
-                alt={imageState[idx].name}
-              />
+              <Card>
+                <input
+                  width="10%"
+                  type="image"
+                  src={data.url}
+                  key={data.image.name}
+                  alt={data.image.name}
+                  id={data.image.name}
+                />
+                <button onClick={deleteImageHandler} data={data.image.name}>
+                  X[삭제버튼]
+                </button>
+              </Card>
             );
           })}
         </div>
