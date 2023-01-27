@@ -1,7 +1,7 @@
 package com.ssafy.live.review.domain.entity;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
-import com.ssafy.live.account.user.domain.entity.User;
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.BaseEntity;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import lombok.AccessLevel;
@@ -22,7 +22,7 @@ public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
-    private User user;
+    private Users users;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "consulting_no")
