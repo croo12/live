@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Card from "../UI/Card";
 
 const SignUpPageUser = () => {
@@ -18,7 +18,8 @@ const SignUpPageUser = () => {
   const [userEmailError, setUserEmailError] = useState(false);
 
   const onChangeUserId = (e) => {
-    if (e.target.value.length > 16) setUserIdError(true);
+    if (e.target.value.length > 16 || e.target.value.length < 3)
+      setUserIdError(true);
     else setUserIdError(false);
 
     setUserId(e.target.value);
@@ -51,11 +52,31 @@ const SignUpPageUser = () => {
     setUserEmail(e.target.value);
   };
 
+  const [imgFile, setImgFile] = useState("");
+  const imgRef = useRef();
+
+  // 이미지 업로드 input의 onChange
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+    console.log(file);
+  };
+
+  const deleteImage = () => {
+    setImgFile({
+      imgFile: "",
+    });
+  };
+
   return (
     <Card>
-      <form onSubmit={onChangeHanldler}>
+      <form>
         <div>
-          <label htmlFor="user_id">아이디 </label>
+          <label htmlFor="userId">아이디 </label>
           <input
             id="userId"
             name="userId"
@@ -64,7 +85,9 @@ const SignUpPageUser = () => {
             onChange={onChangeUserId}
           />
           {userIdError && (
-            <div style={{ color: "red" }}>최대 16자까지 입력가능합니다.</div>
+            <div style={{ color: "red" }}>
+              최소 3자부터 최대 16자까지 입력가능합니다.
+            </div>
           )}
           <button>중복확인</button>
         </div>
@@ -118,7 +141,29 @@ const SignUpPageUser = () => {
           <label htmlFor="userPhone">전화번호 </label>
           <input id="userPhone" name="userPhone" type="text" />
         </div>
-        <button>회원 가입</button>
+        <div>
+          <h4>사진등록</h4>
+          <div>
+            <img
+              src={imgFile ? imgFile : `/images/icon/user.png`}
+              alt="프로필 이미지"
+            />
+          </div>
+          <br />
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              id="profileImg"
+              onChange={saveImgFile}
+              ref={imgRef}
+            />
+          </div>
+          <div>
+            <button onClick={deleteImage}>삭제</button>
+          </div>
+        </div>
+        <button>회원가입</button>
       </form>
     </Card>
   );
