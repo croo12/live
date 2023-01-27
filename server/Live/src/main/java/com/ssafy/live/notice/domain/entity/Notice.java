@@ -1,7 +1,7 @@
 package com.ssafy.live.notice.domain.entity;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
-import com.ssafy.live.account.user.domain.entity.User;
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class Notice extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
-    private User user;
+    private Users users;
 
     @Column(name = "notice_info")
     private String noticeInfo;
