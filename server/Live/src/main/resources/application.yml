@@ -1,0 +1,38 @@
+com:
+  example:
+    upload:
+      path: /Live/Images/profile/
+spring:
+  jpa:
+    database: mysql
+    properties:
+      hibernate:
+        use_sql_comments: 'true'
+        format_sql: 'true'
+        show_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      enabled: 'true'
+      max-request-size: 30MB
+      location: /Live/Images/profile/
+  datasource:
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/live_test?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  profiles:
+    include: aws
+server:
+  address: localhost
+  port: '8080'
+logging:
+  level:
+    org:
+      hibernate: info
