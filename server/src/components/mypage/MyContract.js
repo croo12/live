@@ -1,8 +1,8 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { usePrompt } from "../../util/usePrompt";
 
 const MyContract = () => {
-  console.log(usePrompt("안녕", true));
+  console.log(usePrompt("정말로 나갈거임?", true));
 
   return (
     <>

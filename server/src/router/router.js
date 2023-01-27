@@ -5,8 +5,8 @@ import {
 } from "react-router-dom";
 import App from "../App";
 import HouseDetail from "../components/HouseDetail";
-import HouseRegist from "../components/HouseRegist";
-import HouseView from "../components/HouseView";
+import HouseRegist from "../components/house/HouseRegist";
+import HouseView from "../components/house/HouseView";
 import MyAlert from "../components/mypage/MyAlert";
 import MyConsulting from "../components/mypage/MyConsulting";
 import MyContract from "../components/mypage/MyContract";

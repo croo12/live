@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Card from "./Card";
+import classes from "./ListBox.module.scss";
 
 const ListBox = (props) => {
   /**
@@ -13,10 +14,11 @@ const ListBox = (props) => {
 
   const [data, setData] = useState(dataArray ? dataArray : []);
   const contentBox = props.children;
+  const [direction, setDirection] = useState(props.direction);
 
   //가로세로 props로 받기 그래서 플렉스 박스 방향 바꾸기
   return (
-    <ul>
+    <ul className={`${classes.list_box} ${direction ? classes.row : ""}`}>
       {data.map((element, idx) => {
         return (
           <li key={idx}>
