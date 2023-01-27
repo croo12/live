@@ -2,6 +2,7 @@ package com.ssafy.live.account.realtor.domain.entity;
 
 import com.ssafy.live.account.common.Member;
 import com.ssafy.live.account.common.Authority ;
+import com.ssafy.live.account.realtor.controller.dto.RealtorUpdateRequest;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.notice.domain.entity.Notice;
@@ -81,5 +82,12 @@ public class Realtor extends Member implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public void updateRealtor(RealtorUpdateRequest request, String imgSrc) {
+        super.updateInformation(request.getName(), request.getPhone(), imgSrc);
+        this.corp = request.getCorp();
+        this.description = request.getDescription();
+        this.businessAddress = request.getBusinessAddress();
     }
 }

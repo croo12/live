@@ -57,7 +57,7 @@ public class RealtorController {
                 .body(realtorService.createRealtorWithS3(request, file));
     }
 
-    @PutMapping
+    @PostMapping("/info/{realtorNo}")
     public ResponseEntity<Message> updateRealtor(@PathVariable("realtorNo") Long realtorNo, @RequestPart(value = "RealtorUpdateRequest") RealtorUpdateRequest request, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         log.info("공인중개사 정보수정");
         return ResponseEntity.ok()

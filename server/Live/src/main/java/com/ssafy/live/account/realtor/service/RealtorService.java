@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,20 +34,20 @@ import static com.ssafy.live.common.domain.SuccessCode.REALTOR_UPDATED;
 @RequiredArgsConstructor
 public class RealtorService {
 
-
     private final S3Service s3Service;
     private final RealtorRepository realtorRepository;
 
+    @Transactional
     public Message createRealtor(RealtorSignupRequest realtorSignupRequest, String savePath) {
         Realtor realtor = realtorSignupRequest.toEntity(realtorSignupRequest.getPassword(), savePath);
         realtorRepository.save(realtor);
         return new Message(REALTOR_REGISTED.getMessage());
     }
 
+    @Transactional
     public Message createRealtorWithS3(RealtorSignupWithS3Request realtorSignupRequest, MultipartFile file) throws IOException {
-        String savePath = s3Service.upload(file);
-        realtorSignupRequest.setFilePath(UUID.randomUUID() + "_" + savePath);
-        Realtor realtor = realtorSignupRequest.toEntity(realtorSignupRequest.getPassword(), savePath);
+        String imgSrc = s3Service.upload(file);
+        Realtor realtor = realtorSignupRequest.toEntity(realtorSignupRequest.getPassword(), imgSrc);
         realtorRepository.save(realtor);
         return new Message(REALTOR_REGISTED.getMessage());
     }
@@ -56,11 +57,12 @@ public class RealtorService {
         return new RealtorFindDetailResponse(realtor);
     }
 
+    @Transactional
     public Message updateRealtor(Long realtorNo, RealtorUpdateRequest request, MultipartFile file) throws IOException {
-        s3Service.deleteFile(realtorRepository.findById(realtorNo).get().getImageSrc());
-        String savePath = s3Service.upload(file);
-        request.setFilePath(UUID.randomUUID() + "_" + savePath);
-        Realtor realtor = request.toEntity(savePath);
+        Realtor realtor = realtorRepository.findById(realtorNo).get();
+        s3Service.deleteFile(realtor.getImageSrc());
+        String imgSrc = s3Service.upload(file);
+        realtor.updateRealtor(request, imgSrc);
         realtorRepository.save(realtor);
         return new Message(REALTOR_UPDATED.getMessage());
     }

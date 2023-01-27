@@ -16,7 +16,7 @@ public class RealtorUpdateRequest {
     private String description;
     private String businessAddress;
     @Column(columnDefinition = "TEXT")
-    private String filePath;
+    private String imageSrc;
 
     @Builder
     public RealtorUpdateRequest(String name, String phone, String corp, String description, String businessAddress) {

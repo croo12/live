@@ -24,4 +24,10 @@ public class Member {
 
     @Column(name = "image_src")
     private String imageSrc;
+
+    protected void updateInformation(String name, String phone, String imageSrc) {
+        this.name = name;
+        this.phone = phone;
+        this.imageSrc = imageSrc;
+    }
 }

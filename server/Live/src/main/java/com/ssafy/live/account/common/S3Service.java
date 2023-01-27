@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @NoArgsConstructor
@@ -44,7 +46,7 @@ public class S3Service {
     }
 
     public String upload(MultipartFile file) throws IOException {
-        String fileName = file.getOriginalFilename();
+        String fileName = file.getOriginalFilename()+ "_" +UUID.randomUUID();
 
         s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
@@ -54,10 +56,10 @@ public class S3Service {
     public void deleteFile(String imageSrc) {
         try{
             String key = imageSrc; // 폴더/파일.확장자
-            final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
 
             try {
-                s3.deleteObject(bucket, key);
+                System.out.println((key).substring(54));
+                s3Client.deleteObject(bucket, (key).substring(54));
             } catch (AmazonServiceException e) {
                 System.err.println(e.getErrorMessage());
                 System.exit(1);
