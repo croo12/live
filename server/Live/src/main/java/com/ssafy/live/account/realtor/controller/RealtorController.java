@@ -34,7 +34,7 @@ public class RealtorController {
     private String uploadPath;
     private final RealtorService realtorService;
 
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity<Message> signup(@RequestPart(value = "RealtorSignupRequest") RealtorSignupRequest request, @RequestPart(value = "file", required = false) MultipartFile uploadFile) {
         String saveName = uploadPath+ request.getName() + "_" + uploadFile.getOriginalFilename();
         File file = new File("C:\\"+saveName);
@@ -54,7 +54,7 @@ public class RealtorController {
         return realtorService.findRealtorDetail(realtorNo);
     }
 
-    @PostMapping("/signupS3")
+    @PostMapping
     public ResponseEntity<Message> signupWithS3(@RequestPart(value = "RealtorSignupWithS3Request") RealtorSignupWithS3Request request, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         String imgPath = s3Service.upload(file);
         request.setFilePath(imgPath);

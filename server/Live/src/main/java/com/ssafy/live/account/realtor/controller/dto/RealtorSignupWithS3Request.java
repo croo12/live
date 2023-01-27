@@ -60,39 +60,8 @@ public class RealtorSignupWithS3Request {
                 .corp(corp)
                 .registrationNumber(registrationNumber)
                 .description(description)
-                .businessNumber(businessNumber)
+                .businessAddress(businessAddress)
                 .imageSrc(imageSrc)
                 .build();
     }
-
-
-    public Realtor toEntity() {
-        return Realtor.builder()
-                .businessNumber(businessNumber)
-                .password(password)
-                .name(name)
-                .email(email)
-                .phone(phone)
-                .corp(corp)
-                .registrationNumber(registrationNumber)
-                .description(description)
-                .businessNumber(businessNumber)
-                .imageSrc(filePath)
-                .build();
-    }
-
-//    public Realtor toEntity(PasswordEncoder passwordEncoder, String imageSrc) {
-//        return Realtor.builder()
-//                .businessNumber(businessNumber)
-//                .password(passwordEncoder.encode(password))
-//                .name(name)
-//                .email(email)
-//                .phone(phone)
-//                .corp(corp)
-//                .registrationNumber(registrationNumber)
-//                .description(description)
-//                .businessNumber(businessNumber)
-//                .imageSrc(imageSrc)
-//                .build();
-//    }
 }
