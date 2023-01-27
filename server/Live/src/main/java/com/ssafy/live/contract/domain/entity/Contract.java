@@ -1,7 +1,7 @@
 package com.ssafy.live.contract.domain.entity;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
-import com.ssafy.live.account.user.domain.entity.User;
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.BaseEntity;
 import com.ssafy.live.house.domain.entity.Item;
 import lombok.AccessLevel;
@@ -20,7 +20,7 @@ public class Contract extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
-    private User user;
+    private Users users;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "realtor_no")
