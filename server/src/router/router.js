@@ -9,10 +9,14 @@ import HouseRegist from "../components/house/HouseRegist";
 import HouseView from "../components/house/HouseView";
 import MyAlert from "../components/mypage/MyAlert";
 import MyConsulting from "../components/mypage/MyConsulting";
-import MyContract from "../components/mypage/MyContract";
-import MyContractDetail from "../components/mypage/MyContractDetail";
-import MyContractRegist from "../components/mypage/MyContractRegist";
-import MyContractView from "../components/mypage/MyContractView";
+import MyContractUser from "../components/mypage/MyContractUser";
+import MyContractDetailUser from "../components/mypage/MyContractDetailUser";
+import MyContractRegistUser from "../components/mypage/MyContractRegistUser";
+import MyContractViewUser from "../components/mypage/MyContractViewUser";
+import MyContractRealtor from "../components/mypage/MyContractRealtor";
+import MyContractViewRealtor from "../components/mypage/MyContractViewRealtor";
+import MyContractModifyRealtor from "../components/mypage/MyContractModifyRealtor";
+import MyContractDetailRealtor from "../components/mypage/MyContractDetailRealtor";
 import MyInfoDetailRealtor from "../components/mypage/MyInfoDetailRealtor";
 import MyInfoDetailUser from "../components/mypage/MyInfoDetailUser";
 import MyInfoModifyRealtor from "../components/mypage/MyInfoModifyRealtor";
@@ -28,6 +32,7 @@ import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
 import MyConsultingDetail from "../components/mypage/MyConsultingDetail";
 import SignUpPage from "../pages/SignUpPage";
+import ConsultingMeetPage from "../components/ConsultingMeetPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,7 +44,9 @@ const router = createBrowserRouter(
         <Route path="signup-realtor" element={<SignUpPageRealtor />}></Route>
       </Route>
       <Route path="reservation" element={<ReservationPage />}></Route>
-      <Route path="consulting" element={<ConsultingPage />}></Route>
+      <Route path="consulting" element={<ConsultingPage />}>
+        <Route path="consult-meet" element={<ConsultingMeetPage />}></Route>
+      </Route>
       <Route path="house" element={<HousePage />}>
         <Route index element={<HouseView />}></Route>
         <Route path="regist" element={<HouseRegist />}></Route>
@@ -61,10 +68,28 @@ const router = createBrowserRouter(
           path="consulting-detail"
           element={<MyConsultingDetail />}
         ></Route>
-        <Route path="contract" element={<MyContract />}>
-          <Route index element={<MyContractView />}></Route>
-          <Route path="regist" element={<MyContractRegist />}></Route>
-          <Route path="detail" element={<MyContractDetail />}></Route>
+        <Route path="contract-user" element={<MyContractUser />}>
+          <Route index element={<MyContractViewUser />}></Route>
+          <Route
+            path="contract-regist-user"
+            element={<MyContractRegistUser />}
+          ></Route>
+          <Route
+            path="contract-detail-user"
+            element={<MyContractDetailUser />}
+          ></Route>
+        </Route>
+        <Route path="contract-realtor" element={<MyContractRealtor />}>
+          <Route index element={<MyContractViewRealtor />}></Route>
+
+          <Route
+            path="contract-detail-realtor"
+            element={<MyContractDetailRealtor />}
+          ></Route>
+          <Route
+            path="contract-modify-realtor"
+            element={<MyContractModifyRealtor />}
+          ></Route>
         </Route>
         <Route path="alert" element={<MyAlert />}></Route>
         {/* 부동산 아저씨 일정관리 */}

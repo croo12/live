@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useState, useRef } from "react";
 import Card from "../UI/Card";
 
 const SignUpPageRealtor = () => {
@@ -44,9 +43,29 @@ const SignUpPageRealtor = () => {
     setRealtorPassCheck(e.target.value);
   };
 
+  const [imgFile, setImgFile] = useState("");
+  const imgRef = useRef();
+
+  // 이미지 업로드 input의 onChange
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+    console.log(file);
+  };
+
+  const deleteImage = () => {
+    setImgFile({
+      imgFile: "",
+    });
+  };
+
   return (
     <Card>
-      <form onSubmit={onChangeHanldler}>
+      <form>
         <button>조회하기</button>
         <div>
           <label htmlFor="businessNumber">사업자 상호 </label>
@@ -115,9 +134,30 @@ const SignUpPageRealtor = () => {
         {realtorPassCheckError && (
           <div style={{ color: "red" }}>비밀번호 입력값이 다릅니다!</div>
         )}
+        <div>
+          <h4>사진등록</h4>
+          <div>
+            <img
+              src={imgFile ? imgFile : `/images/icon/user.png`}
+              alt="프로필 이미지"
+            />
+          </div>
+          <br />
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              id="profileImg"
+              onChange={saveImgFile}
+              ref={imgRef}
+            />
+          </div>
+          <div>
+            <button onClick={deleteImage}>삭제</button>
+          </div>
+        </div>
         <button>중개사 가입</button>
       </form>
-      <Outlet />
     </Card>
   );
 };

@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div className={styles.App}>
       <Header />
-      <h1>안녕 난 앱</h1>
+      <hr />
       <section>
         <Outlet />
       </section>

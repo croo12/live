@@ -12,15 +12,16 @@ const MyPage = () => {
         <br />
         카드 상자 : 네비게이션임
         {/* 둘 다 */}
-        <NavLink to={"consulting"}> 상담관리 </NavLink>
-        <NavLink to={"contract"}> 계약관리 </NavLink>
-        <NavLink to={"alert"}> 알림 </NavLink>
+        <NavLink to={"consulting"}> 상담관리 |</NavLink>
+        <NavLink to={"alert"}> 알림 |</NavLink>
         {/* 유저만 */}
-        <NavLink to={"info-detail-user"}> 유저 상세 </NavLink>
-        <NavLink to={"info-modify-user"}> 유저 수정 </NavLink>
+        <NavLink to={"contract-user"}>유저 계약관리 |</NavLink>
+        <NavLink to={"info-detail-user"}> 유저 상세 |</NavLink>
+        <NavLink to={"info-modify-user"}> 유저 수정 |</NavLink>
         {/* 중개사만 */}
-        <NavLink to={"info-detail-realtor"}> 중개사 상세 </NavLink>
-        <NavLink to={"info-modify-realtor"}> 중개사 수정 </NavLink>
+        <NavLink to={"contract-realtor"}>중개사 계약관리 |</NavLink>
+        <NavLink to={"info-detail-realtor"}> 중개사 상세 |</NavLink>
+        <NavLink to={"info-modify-realtor"}> 중개사 수정 |</NavLink>
       </div>
       <div id="router" ref={routerView}>
         <Outlet />

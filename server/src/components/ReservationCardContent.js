@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 
 const ReservationCardContent = (props) => {
-  const onChangeHandler = () => {};
-
   return (
     <>
       <Link>예약 상세보기▶</Link>
