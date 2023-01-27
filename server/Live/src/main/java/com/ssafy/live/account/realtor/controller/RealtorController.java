@@ -1,12 +1,6 @@
 package com.ssafy.live.account.realtor.controller;
 
-import com.ssafy.live.account.common.S3Service;
-import com.ssafy.live.account.realtor.controller.dto.RealtorFindDetailResponse;
-import com.ssafy.live.account.realtor.controller.dto.RealtorSignupRequest;
-import com.ssafy.live.account.realtor.controller.dto.RealtorSignupWithS3Request;
-import com.ssafy.live.account.realtor.controller.dto.RealtorUpdateRequest;
-import com.ssafy.live.account.realtor.domain.entity.Realtor;
-import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
+import com.ssafy.live.account.realtor.controller.dto.*;
 import com.ssafy.live.account.realtor.service.RealtorService;
 import com.ssafy.live.common.domain.Message;
 import lombok.RequiredArgsConstructor;
@@ -62,5 +56,12 @@ public class RealtorController {
         log.info("공인중개사 정보수정");
         return ResponseEntity.ok()
                 .body(realtorService.updateRealtor(realtorNo, request, file));
+    }
+
+    @PostMapping("/passcheck")
+    public ResponseEntity<Message> findPassword(@RequestBody RealtorFindPasswordRequest request) {
+        log.info("공인중개사 비밀번호 찾기");
+        return ResponseEntity.ok()
+                .body(realtorService.findPassword(request));
     }
 }

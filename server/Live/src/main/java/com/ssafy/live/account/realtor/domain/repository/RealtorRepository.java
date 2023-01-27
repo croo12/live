@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RealtorRepository extends JpaRepository<Realtor, Long> {
 
+    Realtor findByEmailAndBusinessNumber(String email, String businessNumber);
 }

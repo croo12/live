@@ -1,33 +1,20 @@
 package com.ssafy.live.account.realtor.service;
 
+import com.ssafy.live.account.common.EmailService;
 import com.ssafy.live.account.common.S3Service;
-import com.ssafy.live.account.realtor.controller.dto.RealtorFindDetailResponse;
-import com.ssafy.live.account.realtor.controller.dto.RealtorSignupRequest;
-import com.ssafy.live.account.realtor.controller.dto.RealtorSignupWithS3Request;
-import com.ssafy.live.account.realtor.controller.dto.RealtorUpdateRequest;
+import com.ssafy.live.account.realtor.controller.dto.*;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.common.domain.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
 
-import static com.ssafy.live.common.domain.SuccessCode.REALTOR_REGISTED;
-import static com.ssafy.live.common.domain.SuccessCode.REALTOR_UPDATED;
+import static com.ssafy.live.common.domain.SuccessCode.*;
 
 @Slf4j
 @Service
@@ -36,6 +23,7 @@ public class RealtorService {
 
     private final S3Service s3Service;
     private final RealtorRepository realtorRepository;
+    private final EmailService emailService;
 
     @Transactional
     public Message createRealtor(RealtorSignupRequest realtorSignupRequest, String savePath) {
@@ -65,5 +53,12 @@ public class RealtorService {
         realtor.updateRealtor(request, imgSrc);
         realtorRepository.save(realtor);
         return new Message(REALTOR_UPDATED.getMessage());
+    }
+
+
+    public Message findPassword(RealtorFindPasswordRequest request) {
+        Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
+        emailService.joinEmail(realtor.getEmail(), realtor.getPassword());
+        return new Message(EMAIL_FINDPASSWORD.getMessage());
     }
 }
