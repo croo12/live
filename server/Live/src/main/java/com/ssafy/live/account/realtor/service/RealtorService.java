@@ -44,16 +44,7 @@ public class RealtorService {
 
     public ResponseEntity<RealtorFindDetailResponse> findRealtorDetail(Long realtorNo) throws IOException {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        Path path = Paths.get(realtor.getImageSrc());
-        //String contentType = Files.probeContentType(path);
-        Resource resource = new InputStreamResource(new FileInputStream(path.toString()));
-
-        MediaType mediaType = MediaType.parseMediaType(Files.probeContentType(Paths.get(realtor.getImageSrc())));
-        System.out.println(mediaType);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, mediaType.toString())
-                .body(new RealtorFindDetailResponse(resource, realtor));
-       // return new ResponseEntity<>(new RealtorFindDetailResponse(resource, realtor), headers, HttpStatus.OK);
-        //return new RealtorFindDetailResponse(resource, realtor);
+                .body(new RealtorFindDetailResponse(realtor));
     }
 }

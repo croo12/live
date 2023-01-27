@@ -43,7 +43,6 @@ public class RealtorController {
         }catch (IOException e){
             e.printStackTrace();
         }
-
         Message message = realtorService.createRealtor(request, file.getPath());
         log.info("공인중개사 회원가입");
         return ResponseEntity.ok()
