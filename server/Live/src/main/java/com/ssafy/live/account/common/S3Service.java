@@ -1,5 +1,6 @@
 package com.ssafy.live.account.common;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -48,5 +49,23 @@ public class S3Service {
         s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, fileName).toString();
+    }
+
+    public void deleteFile(String imageSrc) {
+        try{
+            String key = imageSrc; // 폴더/파일.확장자
+            final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
+
+            try {
+                s3.deleteObject(bucket, key);
+            } catch (AmazonServiceException e) {
+                System.err.println(e.getErrorMessage());
+                System.exit(1);
+            }
+            System.out.println(String.format("[%s] deletion complete", key));
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 }

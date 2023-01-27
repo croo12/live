@@ -4,6 +4,9 @@ import com.ssafy.live.account.common.S3Service;
 import com.ssafy.live.account.realtor.controller.dto.RealtorFindDetailResponse;
 import com.ssafy.live.account.realtor.controller.dto.RealtorSignupRequest;
 import com.ssafy.live.account.realtor.controller.dto.RealtorSignupWithS3Request;
+import com.ssafy.live.account.realtor.controller.dto.RealtorUpdateRequest;
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
+import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.realtor.service.RealtorService;
 import com.ssafy.live.common.domain.Message;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +25,6 @@ import java.io.IOException;
 @RequestMapping("/api/v1/realtors")
 public class RealtorController {
 
-    private final S3Service s3Service;
-
-    @PostMapping("/hello")
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok()
-                .body("hello");
-    }
-
     @Value("${com.example.upload.path}")
     private String uploadPath;
     private final RealtorService realtorService;
@@ -43,24 +38,29 @@ public class RealtorController {
         }catch (IOException e){
             e.printStackTrace();
         }
-        Message message = realtorService.createRealtor(request, file.getPath());
         log.info("공인중개사 회원가입");
         return ResponseEntity.ok()
-                .body(message);
+                .body(realtorService.createRealtor(request, file.getPath()));
     }
 
     @GetMapping ("/{realtorNo}")
     public ResponseEntity<RealtorFindDetailResponse> findRealtorDetail(@PathVariable("realtorNo") Long realtorNo) throws IOException {
-        return realtorService.findRealtorDetail(realtorNo);
+        log.info("공인중개사 정보 상세 조회");
+        return ResponseEntity.ok()
+                .body(realtorService.findRealtorDetail(realtorNo));
     }
 
     @PostMapping
     public ResponseEntity<Message> signupWithS3(@RequestPart(value = "RealtorSignupWithS3Request") RealtorSignupWithS3Request request, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-        String imgPath = s3Service.upload(file);
-        request.setFilePath(imgPath);
-        Message message = realtorService.createRealtorWithS3(request, imgPath);
         log.info("공인중개사 회원가입");
         return ResponseEntity.ok()
-                .body(message);
+                .body(realtorService.createRealtorWithS3(request, file));
+    }
+
+    @PutMapping
+    public ResponseEntity<Message> updateRealtor(@PathVariable("realtorNo") Long realtorNo, @RequestPart(value = "RealtorUpdateRequest") RealtorUpdateRequest request, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        log.info("공인중개사 정보수정");
+        return ResponseEntity.ok()
+                .body(realtorService.updateRealtor(realtorNo, request, file));
     }
 }
