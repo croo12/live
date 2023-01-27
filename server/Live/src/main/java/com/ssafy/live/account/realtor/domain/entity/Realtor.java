@@ -1,7 +1,7 @@
 package com.ssafy.live.account.realtor.domain.entity;
 
 import com.ssafy.live.account.common.Member;
-import com.ssafy.live.account.common.Role;
+import com.ssafy.live.account.common.Authority ;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.notice.domain.entity.Notice;
@@ -27,12 +27,10 @@ public class Realtor extends Member implements UserDetails {
 
     @Column(name = "business_number")
     private String businessNumber;
-
     private String corp;
 
     @Column(name = "registration_number")
     private String registrationNumber;
-
     private String description;
 
     @Column(name = "business_address")
@@ -41,7 +39,7 @@ public class Realtor extends Member implements UserDetails {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Role role = Role.ROLE_REALTOR;
+    private Authority  auth = Authority .ROLE_REALTOR;
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
     private List<Consulting> consultings = new ArrayList<>();
@@ -62,7 +60,7 @@ public class Realtor extends Member implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return businessNumber;
     }
 
     @Override
