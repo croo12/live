@@ -4,9 +4,9 @@
 
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../UI/Button";
-import ListBox from "../UI/ListBox";
-import HouseCardContent from "./HouseCardContent";
+import Button from "../../UI/Button";
+import ListBox from "../../UI/ListBox";
+import HouseCardContent from "../HouseCardContent";
 import { GiConversation } from "react-icons/gi";
 
 const HouseView = () => {
