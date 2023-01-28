@@ -1,4 +1,4 @@
-package com.ssafy.live.common.domain.item;
+package com.ssafy.live.common.domain.Entity.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
