@@ -5,6 +5,7 @@ import com.ssafy.live.account.common.Authority ;
 import com.ssafy.live.account.realtor.controller.dto.RealtorUpdateRequest;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
+import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.review.domain.entity.Review;
 import com.sun.istack.NotNull;
@@ -53,6 +54,9 @@ public class Realtor extends Member implements UserDetails {
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
     private List<Notice> notices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    private List<Item> items = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

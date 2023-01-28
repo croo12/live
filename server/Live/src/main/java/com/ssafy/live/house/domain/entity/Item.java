@@ -1,5 +1,6 @@
 package com.ssafy.live.house.domain.entity;
 
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.common.domain.BaseEntity;
 import com.ssafy.live.common.domain.Entity.item.Direction;
 import com.ssafy.live.common.domain.Entity.item.Entrance;
@@ -31,15 +32,12 @@ public class Item extends BaseEntity {
     private LocalDate moveInDate;
 
     @Enumerated(EnumType.STRING)
-    //@Builder.Default
     private Heating heating;
 
     @Enumerated(EnumType.STRING)
-    //@Builder.Default
     private Direction direction;
 
     @Enumerated(EnumType.STRING)
-    //@Builder.Default
     private Entrance entrance;
 
     @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)
@@ -48,6 +46,10 @@ public class Item extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_no")
     private House house;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "realtor_no")
+    private Realtor realtor;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<ItemImage> houseImages = new ArrayList<>();
