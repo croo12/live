@@ -58,7 +58,7 @@ public class RealtorService {
 
     public Message findPassword(RealtorFindPasswordRequest request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
-        emailService.joinEmail(realtor.getEmail(), realtor.getPassword());
+        emailService.joinEmail(realtor.getEmail(), realtor.getPassword(), realtor.getName());
         return new Message(EMAIL_FINDPASSWORD.getMessage());
     }
 }

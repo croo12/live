@@ -28,20 +28,19 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String setFrom;
 
-    public void joinEmail(String email, String password) {
+    public void joinEmail(String email, String password, String name) {
         String toMail = email;
         String title = "[Live] 비밀번호 찾기 메일입니다."; // 이메일 제목
 
         Context context = new Context();
         context.setVariable("password", password);
+        context.setVariable("name", name);
         String content = templateEngine.process("findPassword", context);
         sendMail(toMail, title, content);
     }
 
     public void sendMail(String toMail, String title, String content) {
-        System.out.println("!!!!!!!!!!!!!");
         MimeMessage message = mailSender.createMimeMessage();
-        System.out.println("??????????? ");
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
             helper.setFrom(new InternetAddress(setFrom, "Live", "UTF-8"));
