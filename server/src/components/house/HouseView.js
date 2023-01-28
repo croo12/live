@@ -28,7 +28,7 @@ const HouseView = () => {
   //매물 페이지의 index
   return (
     <>
-      <h1>안녕 나는 매물 - 매물 목록</h1>
+      <h1>안녕 나는 매물 - 매물 목록 </h1>
       <div style={{ background: "rgba(90, 183, 191, 0.17)" }}>
         <GiConversation />
         <p>
