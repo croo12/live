@@ -6,7 +6,7 @@ import com.ssafy.live.account.common.Authority;
 import com.ssafy.live.account.user.controller.Dto.UserRequest;
 import com.ssafy.live.account.user.controller.Dto.UserResponse;
 import com.ssafy.live.account.user.domain.entity.Users;
-import com.ssafy.live.account.user.domain.repository.UserRepository;
+import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,14 +27,14 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UserService {
 
-    private final UserRepository usersRepository;
+    private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisTemplate redisTemplate;
 
     public ResponseEntity<?> signUp(UserRequest.SignUp signUp) {
-        if (usersRepository.existsByEmail(signUp.getId())) {
+        if (usersRepository.existsById(signUp.getId())) {
             return ResponseEntity.badRequest().body("이미 회원가입된 아이디입니다.");
         }
 
@@ -49,11 +49,11 @@ public class UserService {
     }
 
     public ResponseEntity<?> login(UserRequest.Login login) {
-
-        if (usersRepository.findByEmail(login.getId()).orElse(null) == null) {
+        
+        if (usersRepository.findById(login.getId()).orElse(null) == null) {
             return ResponseEntity.badRequest().body("해당하는 유저가 존재하지 않습니다.");
         }
-
+        log.debug("service login 단계");
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
@@ -130,7 +130,7 @@ public class UserService {
         // SecurityContext에 담겨 있는 authentication userEamil 정보
         String userEmail = SecurityUtil.getCurrentUserEmail();
 
-        Users users = usersRepository.findByEmail(userEmail)
+        Users users = usersRepository.findById(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("No authentication information."));
 
         // add ROLE_USER

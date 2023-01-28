@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 @RestController
 public class UserController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService usersService;
 
-    @PostMapping("/sign-up")
+    @PostMapping("/signup")
     public ResponseEntity<?> signUp(@Validated UserRequest.SignUp signUp, Errors errors) {
         // validation check
         if (errors.hasErrors()) {

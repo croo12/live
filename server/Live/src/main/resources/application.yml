@@ -9,9 +9,12 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
   redis:
     host: localhost
     port: '6379'
+    password: 'liveB104'
+
   datasource:
     password: '1234'
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -1,9 +1,9 @@
 package com.ssafy.live.account.user.service;
 
+import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 
 import com.ssafy.live.account.user.domain.entity.Users;
-import com.ssafy.live.account.user.domain.repository.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final UserRepository usersRepository;
+    private final UsersRepository usersRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return usersRepository.findByEmail(username)
+        return usersRepository.findById(username)
                 .map(this::createUserDetail)
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
     }

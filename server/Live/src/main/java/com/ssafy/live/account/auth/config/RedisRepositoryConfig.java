@@ -1,6 +1,7 @@
 package com.ssafy.live.account.auth.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +17,16 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisRepositoryConfig {
 
     private final RedisProperties redisProperties;
+    private String redisPassword;
 
     // lettuce
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(redisProperties.getHost(), redisProperties.getPort());
+        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
+        lettuceConnectionFactory.setHostName(redisProperties.getHost());
+        lettuceConnectionFactory.setPort(redisProperties.getPort());
+        lettuceConnectionFactory.setPassword(redisProperties.getPassword());
+        return lettuceConnectionFactory;
     }
 
     @Bean
@@ -29,6 +35,7 @@ public class RedisRepositoryConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new StringRedisSerializer());
+
         return redisTemplate;
     }
 }
