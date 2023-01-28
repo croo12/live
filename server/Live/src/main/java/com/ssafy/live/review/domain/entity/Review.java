@@ -35,6 +35,5 @@ public class Review extends BaseEntity {
     private int ratingScore;
 
     @Column(name = "iscontract")
-    private boolean isContract;
+    private int isContract;
 }
-

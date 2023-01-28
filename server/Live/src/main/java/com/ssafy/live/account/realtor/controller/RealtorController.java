@@ -3,6 +3,7 @@ package com.ssafy.live.account.realtor.controller;
 import com.ssafy.live.account.realtor.controller.dto.*;
 import com.ssafy.live.account.realtor.service.RealtorService;
 import com.ssafy.live.common.domain.Message;
+import com.ssafy.live.account.realtor.controller.dto.RealtorByRegionRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -63,5 +65,13 @@ public class RealtorController {
         log.info("공인중개사 비밀번호 찾기");
         return ResponseEntity.ok()
                 .body(realtorService.findPassword(request));
+    }
+
+    @GetMapping("/region")
+    public ResponseEntity<List<RealtorByRegionRequest>> findRealtorByRegion(@RequestParam String sidoName, @RequestParam String gugunName, @RequestParam String dongName) {
+        log.info("특정 지역 공인중개사 목록 조회");
+        System.out.println("특정 지역 공인중개사 목록 조회");
+        return ResponseEntity.ok()
+                .body(realtorService.findDistinctRealtorWithItemsByHouseByRegion(sidoName, gugunName, dongName));
     }
 }

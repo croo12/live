@@ -6,6 +6,10 @@ import com.ssafy.live.account.realtor.controller.dto.*;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.common.domain.Message;
+import com.ssafy.live.common.domain.repository.RegionRepository;
+import com.ssafy.live.account.realtor.controller.dto.RealtorByRegionRequest;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ssafy.live.common.domain.SuccessCode.*;
 
@@ -23,6 +29,7 @@ public class RealtorService {
 
     private final S3Service s3Service;
     private final RealtorRepository realtorRepository;
+    private final RegionRepository regionRepository;
     private final EmailService emailService;
 
     @Transactional
@@ -55,10 +62,18 @@ public class RealtorService {
         return new Message(REALTOR_UPDATED.getMessage());
     }
 
-
     public Message findPassword(RealtorFindPasswordRequest request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
         emailService.joinEmail(realtor.getEmail(), realtor.getPassword(), realtor.getName());
         return new Message(EMAIL_FINDPASSWORD.getMessage());
+    }
+
+    public List<RealtorByRegionRequest> findDistinctRealtorWithItemsByHouseByRegion(String sidoName, String gugunName, String dongName) {
+        String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(sidoName, gugunName, dongName).getRegionCode();
+        List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
+        List<RealtorByRegionRequest> list = findRealtors.stream()
+                .map(r -> new RealtorByRegionRequest(r))
+                .collect(Collectors.toList());
+        return list;
     }
 }

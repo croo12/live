@@ -18,4 +18,6 @@ public interface RegionRepository extends JpaRepository<Region, String> {
 
     @Query("SELECT DISTINCT r.dongName FROM Region r WHERE r.sidoName = :sidoName AND r.gugunName = :gugunName AND r.dongName IS NOT NULL ORDER BY r.dongName")
     List<String> findDistinctRegionByDongName(String sidoName, String gugunName);
+
+    Region findBySidoNameAndGugunNameAndDongName(String sidoName, String gugunName, String dongName);
 }
