@@ -1,9 +1,15 @@
 import ReservationCardContent from "../components/ReservationCardContent";
 import ListBox from "../UI/ListBox";
+import { usePrompt } from "../util/usePrompt";
 import classes from "./ConsultingPage.module.scss";
 
 //화상통화
 const ConsultingPage = () => {
+  usePrompt(
+    true,
+    `페이지 이동으로 통화가 종료될 수 있습니다. \n 정말로 나가시겠습니까?`
+  );
+
   return (
     <>
       <h1> 안녕 나는 통화 페이지</h1>
