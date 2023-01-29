@@ -20,6 +20,15 @@ public class UserRequest {
         @NotEmpty(message = "비밀번호는 필수 입력값입니다.")
 //        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{9,16}$", message = "비밀번호는 9~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
         private String password;
+
+        @NotEmpty(message = "이메일은 필수 입력밧입니다.")
+        private String email;
+
+        private String name;
+        private String phone;
+        private String region;
+        private String gender;
+        private String imageSrc;
     }
 
     @Getter

@@ -22,9 +22,7 @@ public class RedisRepositoryConfig {
     // lettuce
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
-        lettuceConnectionFactory.setHostName(redisProperties.getHost());
-        lettuceConnectionFactory.setPort(redisProperties.getPort());
+        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisProperties.getHost(), redisProperties.getPort());
         lettuceConnectionFactory.setPassword(redisProperties.getPassword());
         return lettuceConnectionFactory;
     }

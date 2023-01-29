@@ -41,6 +41,11 @@ public class UserService {
         Users users = Users.builder()
                 .id(signUp.getId())
                 .password(passwordEncoder.encode(signUp.getPassword()))
+                .name(signUp.getName())
+                .email(signUp.getEmail())
+                .region(signUp.getRegion())
+                .gender(signUp.getGender())
+                .imageSrc(signUp.getImageSrc())
                 .roles(Collections.singletonList(Authority.ROLE_USER.name()))
                 .build();
         usersRepository.save(users);

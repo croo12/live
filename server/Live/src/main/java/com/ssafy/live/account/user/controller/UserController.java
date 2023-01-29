@@ -23,7 +23,7 @@ public class UserController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService usersService;
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity<?> signUp(@Validated UserRequest.SignUp signUp, Errors errors) {
         // validation check
         if (errors.hasErrors()) {
