@@ -24,11 +24,15 @@ const HouseView = () => {
     // 매물 등록 페이지 이동 함수
     navigate("/house/regist");
   };
+  const houseUpdateHandler = () => {
+    // 매물 수정 페이지 이동 함수(임시)
+    navigate("/house/modify");
+  };
 
   //매물 페이지의 index
   return (
     <>
-      <h1>안녕 나는 매물 - 매물 목록</h1>
+      <h1>안녕 나는 매물 - 매물 목록 </h1>
       <div style={{ background: "rgba(90, 183, 191, 0.17)" }}>
         <GiConversation />
         <p>
@@ -41,6 +45,7 @@ const HouseView = () => {
         </p>
       </div>
       <Button clickEvent={houseRegistHandler}>매물 등록</Button>
+      <Button clickEvent={houseUpdateHandler}>매물 수정</Button>
       <ListBox dataArray={[1, 2, 3, 4]}>
         <HouseCardContent />
       </ListBox>

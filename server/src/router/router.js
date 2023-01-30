@@ -7,6 +7,7 @@ import App from "../App";
 import HouseDetail from "../components/HouseDetail";
 import HouseRegist from "../components/house/HouseRegist";
 import HouseView from "../components/house/HouseView";
+import HouseModify from "../components/house/HouseModify";
 import MyAlert from "../components/mypage/MyAlert";
 import MyConsulting from "../components/mypage/MyConsulting";
 import MyContractUser from "../components/mypage/MyContractUser";
@@ -47,7 +48,8 @@ const router = createBrowserRouter(
       <Route path="house" element={<HousePage />}>
         <Route index element={<HouseView />}></Route>
         <Route path="regist" element={<HouseRegist />}></Route>
-        <Route path="detail" element={<HouseDetail />}></Route>
+        <Route path="detail/:itemNo" element={<HouseDetail />}></Route>
+        <Route path="modify" element={<HouseModify />}></Route>
       </Route>
       <Route path="mypage" element={<MyPage />}>
         <Route path="info-detail-user" element={<MyInfoDetailUser />}></Route>
