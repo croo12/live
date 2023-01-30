@@ -32,7 +32,6 @@ import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
 import MyConsultingDetail from "../components/mypage/MyConsultingDetail";
 import SignUpPage from "../pages/SignUpPage";
-import ConsultingMeetPage from "../components/ConsultingMeetPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,9 +43,7 @@ const router = createBrowserRouter(
         <Route path="signup-realtor" element={<SignUpPageRealtor />}></Route>
       </Route>
       <Route path="reservation" element={<ReservationPage />}></Route>
-      <Route path="consulting" element={<ConsultingPage />}>
-        <Route path="consult-meet" element={<ConsultingMeetPage />}></Route>
-      </Route>
+      <Route path="consulting/:sessionId" element={<ConsultingPage />}></Route>
       <Route path="house" element={<HousePage />}>
         <Route index element={<HouseView />}></Route>
         <Route path="regist" element={<HouseRegist />}></Route>
