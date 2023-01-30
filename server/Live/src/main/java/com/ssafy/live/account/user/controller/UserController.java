@@ -59,21 +59,15 @@ public class UserController {
         return usersService.logout(logout);
     }
 
+    @GetMapping("/delete")
+    public ResponseEntity<?> withdrwal(@Validated UserRequest.withdrawl withdrawl) {
+        return usersService.withdrawl(withdrawl);
+    }
+
     @GetMapping("/authority")
     public ResponseEntity<?> authority() {
         log.info("ADD ROLE_ADMIN");
         return usersService.authority();
     }
 
-    @GetMapping("/userTest")
-    public ResponseEntity<?> userTest() {
-        log.info("ROLE_USER TEST");
-        return ResponseEntity.ok(null);
-    }
-
-    @GetMapping("/adminTest")
-    public ResponseEntity<?> adminTest() {
-        log.info("ROLE_ADMIN TEST");
-        return ResponseEntity.ok(null);
-    }
 }

@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 
 public class UserRequest {
 
@@ -64,5 +63,12 @@ public class UserRequest {
 
         @NotEmpty(message = "잘못된 요청입니다.")
         private String refreshToken;
+    }
+
+    @Getter
+    @Setter
+    public  static class withdrawl {
+        @NotEmpty(message = "해당하는 user_no가 없습니다.")
+        private Long no;
     }
 }
