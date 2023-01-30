@@ -64,7 +64,10 @@ public class RealtorService {
 
     public Message temporaryPassword(RealtorFindPasswordRequest request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
-        emailService.joinEmail(realtor.getEmail(), realtor.generateRandomPassword(), realtor.getName());
+        String temporaryPwd = realtor.generateRandomPassword();
+        realtor.updatePassword(temporaryPwd);
+        realtorRepository.save(realtor);
+        emailService.joinEmail(realtor.getEmail(), temporaryPwd, realtor.getName());
         return new Message(EMAIL_FINDPASSWORD.getMessage());
     }
 

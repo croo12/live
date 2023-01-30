@@ -33,7 +33,7 @@ public class Member {
         this.imageSrc = imageSrc;
     }
 
-    public static String generateRandomPassword()
+    public String generateRandomPassword()
     {
         int len = 10;
         int randNumOrigin = 97, randNumBound = 122;
@@ -41,5 +41,9 @@ public class Member {
         return random.ints(len, randNumOrigin, randNumBound + 1)
                 .mapToObj(i -> String.valueOf((char)i))
                 .collect(Collectors.joining());
+    }
+
+    public void updatePassword(String temporaryPassword){
+        this.password = temporaryPassword;
     }
 }
