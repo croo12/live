@@ -1,21 +1,21 @@
 package com.ssafy.live.account.user.domain.entity;
 
 import com.ssafy.live.account.common.Member;
-import com.ssafy.live.account.common.Role;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.review.domain.entity.Review;
-import com.sun.istack.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @SuperBuilder
@@ -23,39 +23,39 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "user_no"))
 @Entity
-public class User extends Member implements UserDetails {
-
+public class Users extends Member implements UserDetails {
+    private String id;
     private String score;
-
     private String region;
-
     private String gender;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
+    @Column
+    @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
-    private Role role = Role.ROLE_USER;
+    private List<String> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Contract> contracts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Consulting> consultings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Notice> notices = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return id;
     }
 
     @Override

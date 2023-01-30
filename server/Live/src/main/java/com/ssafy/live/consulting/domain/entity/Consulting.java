@@ -1,7 +1,7 @@
 package com.ssafy.live.consulting.domain.entity;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
-import com.ssafy.live.account.user.domain.entity.User;
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.BaseEntity;
 import com.ssafy.live.common.domain.ConsultingStatus;
 import com.ssafy.live.review.domain.entity.Review;
@@ -26,7 +26,7 @@ public class Consulting extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
-    private User user;
+    private Users users;
 
     @OneToOne(mappedBy = "consulting", cascade = CascadeType.ALL)
     private Review review;
