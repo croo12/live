@@ -62,9 +62,9 @@ public class RealtorService {
         return new Message(REALTOR_UPDATED.getMessage());
     }
 
-    public Message findPassword(RealtorFindPasswordRequest request) {
+    public Message temporaryPassword(RealtorFindPasswordRequest request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
-        emailService.joinEmail(realtor.getEmail(), realtor.getPassword(), realtor.getName());
+        emailService.joinEmail(realtor.getEmail(), realtor.generateRandomPassword(), realtor.getName());
         return new Message(EMAIL_FINDPASSWORD.getMessage());
     }
 

@@ -61,10 +61,10 @@ public class RealtorController {
     }
 
     @PostMapping("/passcheck")
-    public ResponseEntity<Message> findPassword(@RequestBody RealtorFindPasswordRequest request) {
-        log.info("공인중개사 비밀번호 찾기");
+    public ResponseEntity<Message> temporaryPassword(@RequestBody RealtorFindPasswordRequest request) {
+        log.info("공인중개사 임시비밀번호 발급");
         return ResponseEntity.ok()
-                .body(realtorService.findPassword(request));
+                .body(realtorService.temporaryPassword(request));
     }
 
     @GetMapping("/region")
