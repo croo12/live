@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import classes from "./Header.module.scss";
 import logo from "../../assets/image/liveLogo.png";
+import { makeUUID } from "../../util/UUID";
 const Header = () => {
   return (
     <div className={classes.header}>
@@ -31,7 +32,7 @@ const Header = () => {
           예약{" "}
         </NavLink>
         <NavLink
-          to={"/consulting"}
+          to={`/consulting/${makeUUID()}`}
           style={{ textDecoration: "none", color: "black" }}
         >
           {" "}
