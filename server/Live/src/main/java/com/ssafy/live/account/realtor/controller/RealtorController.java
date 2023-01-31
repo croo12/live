@@ -20,6 +20,7 @@ import java.io.IOException;
 @RequestMapping("/api/v1/realtors")
 public class RealtorController {
 
+
     @Value("${com.example.upload.path}")
     private String uploadPath;
     private final RealtorService realtorService;
@@ -94,4 +95,5 @@ public class RealtorController {
         log.info("특정 지역 공인중개사 목록 조회");
         return realtorService.findDistinctRealtorWithItemsByHouseByRegion(sidoName, gugunName, dongName);
     }
+
 }

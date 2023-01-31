@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
+import java.security.SecureRandom;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -29,5 +31,19 @@ public class Member {
         this.name = name;
         this.phone = phone;
         this.imageSrc = imageSrc;
+    }
+
+    public String generateRandomPassword()
+    {
+        int len = 10;
+        int randNumOrigin = 97, randNumBound = 122;
+        SecureRandom random = new SecureRandom();
+        return random.ints(len, randNumOrigin, randNumBound + 1)
+                .mapToObj(i -> String.valueOf((char)i))
+                .collect(Collectors.joining());
+    }
+
+    public void updatePassword(String temporaryPassword){
+        this.password = temporaryPassword;
     }
 }

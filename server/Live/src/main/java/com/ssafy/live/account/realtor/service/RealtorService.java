@@ -3,9 +3,9 @@ package com.ssafy.live.account.realtor.service;
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.auth.security.SecurityUtil;
 import com.ssafy.live.account.common.Authority;
+import com.ssafy.live.account.common.dto.CommonResponse;
 import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
-import com.ssafy.live.account.common.dto.CommonResponse;
 import com.ssafy.live.account.realtor.controller.dto.*;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
@@ -50,30 +50,30 @@ public class RealtorService {
     private final RegionRepository regionRepository;
     private final EmailService emailService;
 
-public ResponseEntity<?> signUp(RealtorRequest.SignUp signUp, MultipartFile file)
-    throws IOException {
-    if (realtorRepository.existsByBusinessNumber(signUp.getBusinessNumber())) {
-        return response.fail("이미 회원가입된 중개사번호입니다.", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> signUp(RealtorRequest.SignUp signUp, MultipartFile file)
+        throws IOException {
+        if (realtorRepository.existsByBusinessNumber(signUp.getBusinessNumber())) {
+            return response.fail("이미 회원가입된 중개사번호입니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        String imgSrc = s3Service.upload(file);
+        Realtor realtor = Realtor.builder()
+            .password(passwordEncoder.encode(signUp.getPassword()))
+            .name(signUp.getName())
+            .email(signUp.getEmail())
+            .phone(signUp.getPhone())
+            .corp(signUp.getCorp())
+            .description(signUp.getDescription())
+            .businessNumber(signUp.getBusinessNumber())
+            .businessAddress(signUp.getBusinessAddress())
+            .registrationNumber(signUp.getRegistrationNumber())
+            .imageSrc(imgSrc)
+            .roles(Collections.singletonList(Authority.ROLE_REALTOR.name()))
+            .build();
+        realtorRepository.save(realtor);
+
+        return response.success("회원가입에 성공했습니다.");
     }
-
-    String imgSrc = s3Service.upload(file);
-    Realtor realtor = Realtor.builder()
-        .password(passwordEncoder.encode(signUp.getPassword()))
-        .name(signUp.getName())
-        .email(signUp.getEmail())
-        .phone(signUp.getPhone())
-        .corp(signUp.getCorp())
-        .description(signUp.getDescription())
-        .businessNumber(signUp.getBusinessNumber())
-        .businessAddress(signUp.getBusinessAddress())
-        .registrationNumber(signUp.getRegistrationNumber())
-        .imageSrc(imgSrc)
-        .roles(Collections.singletonList(Authority.ROLE_REALTOR.name()))
-        .build();
-    realtorRepository.save(realtor);
-
-    return response.success("회원가입에 성공했습니다.");
-}
 
     public ResponseEntity<?> login(RealtorRequest.Login login) {
 
@@ -200,8 +200,8 @@ public ResponseEntity<?> signUp(RealtorRequest.SignUp signUp, MultipartFile file
         String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(sidoName, gugunName, dongName).getRegionCode();
         List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-                .map(r -> new RealtorResponse.FindByRegion(r))
-                .collect(Collectors.toList());
+            .map(r -> new RealtorResponse.FindByRegion(r))
+            .collect(Collectors.toList());
         return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 }
