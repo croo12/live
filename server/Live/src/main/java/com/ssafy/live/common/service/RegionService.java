@@ -1,6 +1,5 @@
 package com.ssafy.live.common.service;
 
-import com.ssafy.live.common.domain.Message;
 import com.ssafy.live.common.domain.repository.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

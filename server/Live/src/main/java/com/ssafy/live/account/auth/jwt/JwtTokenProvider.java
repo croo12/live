@@ -1,6 +1,6 @@
 package com.ssafy.live.account.auth.jwt;
 
-import com.ssafy.live.account.user.controller.Dto.UserResponse;
+import com.ssafy.live.account.common.dto.CommonResponse;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -37,7 +37,7 @@ public class JwtTokenProvider {
     }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public UserResponse.TokenInfo generateToken(Authentication authentication) {
+    public CommonResponse.TokenInfo generateToken(Authentication authentication) {
         // 권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -59,7 +59,7 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-        return UserResponse.TokenInfo.builder()
+        return CommonResponse.TokenInfo.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

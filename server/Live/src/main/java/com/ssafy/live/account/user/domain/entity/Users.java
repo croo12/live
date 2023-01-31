@@ -1,7 +1,6 @@
 package com.ssafy.live.account.user.domain.entity;
 
 import com.ssafy.live.account.common.Member;
-import com.ssafy.live.account.user.controller.Dto.UserRequest;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.notice.domain.entity.Notice;
@@ -56,7 +55,7 @@ public class Users extends Member implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getEmail();
+        return id;
     }
 
     @Override

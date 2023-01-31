@@ -1,17 +1,17 @@
 package com.ssafy.live.account.realtor.domain.entity;
 
 import com.ssafy.live.account.common.Member;
-import com.ssafy.live.account.common.Authority ;
-import com.ssafy.live.account.realtor.controller.dto.RealtorUpdateRequest;
+import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.review.domain.entity.Review;
-import com.sun.istack.NotNull;
+import java.util.stream.Collectors;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -41,10 +41,10 @@ public class Realtor extends Member implements UserDetails {
     @Column(name = "rating_score")
     private String ratingScore;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
+    @Column
+    @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
-    private Authority  auth = Authority .ROLE_REALTOR;
+    private List<String> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
     private List<Consulting> consultings = new ArrayList<>();
@@ -63,7 +63,9 @@ public class Realtor extends Member implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roles.stream()
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -91,7 +93,7 @@ public class Realtor extends Member implements UserDetails {
         return false;
     }
 
-    public void updateRealtor(RealtorUpdateRequest request, String imgSrc) {
+    public void updateRealtor(RealtorRequest.Update request, String imgSrc) {
         super.updateInformation(request.getName(), request.getPhone(), imgSrc);
         this.corp = request.getCorp();
         this.description = request.getDescription();

@@ -2,7 +2,7 @@ package com.ssafy.live.review.domain.entity;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
-import com.ssafy.live.common.domain.BaseEntity;
+import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import lombok.AccessLevel;
 import lombok.Getter;

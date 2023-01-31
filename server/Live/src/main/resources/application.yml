@@ -27,8 +27,10 @@ spring:
   redis:
     host: localhost
     port: '6379'
+    password: 'liveB104'
+
   datasource:
-    password: Abcd123@
+    password: '1234'
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     url: jdbc:mysql://localhost:3306/live?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
@@ -37,7 +39,6 @@ spring:
       matching-strategy: ant_path_matcher
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
-
 server:
   address: localhost
   port: '8080'

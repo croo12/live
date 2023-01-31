@@ -1,4 +1,4 @@
-package com.ssafy.live.account.common;
+package com.ssafy.live.account.common.service;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
@@ -58,7 +58,6 @@ public class S3Service {
             String key = imageSrc; // 폴더/파일.확장자
 
             try {
-                System.out.println((key).substring(54));
                 s3Client.deleteObject(bucket, (key).substring(54));
             } catch (AmazonServiceException e) {
                 System.err.println(e.getErrorMessage());

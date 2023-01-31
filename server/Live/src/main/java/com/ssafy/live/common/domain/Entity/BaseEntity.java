@@ -1,4 +1,4 @@
-package com.ssafy.live.common.domain;
+package com.ssafy.live.common.domain.Entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

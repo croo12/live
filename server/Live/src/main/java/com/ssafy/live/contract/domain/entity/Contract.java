@@ -2,7 +2,7 @@ package com.ssafy.live.contract.domain.entity;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
-import com.ssafy.live.common.domain.BaseEntity;
+import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.house.domain.entity.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

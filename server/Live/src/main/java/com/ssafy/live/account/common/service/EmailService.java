@@ -1,4 +1,4 @@
-package com.ssafy.live.account.common;
+package com.ssafy.live.account.common.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
