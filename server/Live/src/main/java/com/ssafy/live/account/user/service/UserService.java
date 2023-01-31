@@ -3,11 +3,13 @@ package com.ssafy.live.account.user.service;
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.auth.security.SecurityUtil;
 import com.ssafy.live.account.common.Authority;
-import com.ssafy.live.account.user.controller.Dto.UserRequest;
-import com.ssafy.live.account.user.controller.Dto.UserResponse;
+import com.ssafy.live.account.common.service.S3Service;
+import com.ssafy.live.account.common.dto.CommonResponse;
+import com.ssafy.live.account.user.controller.dto.UserRequest;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,6 +26,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,12 +39,15 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisTemplate redisTemplate;
+    private final S3Service s3Service;
 
-    public ResponseEntity<?> signUp(UserRequest.SignUp signUp) {
+    public ResponseEntity<?> signUp(UserRequest.SignUp signUp, MultipartFile file)
+        throws IOException {
         if (usersRepository.existsById(signUp.getId())) {
             return response.fail("이미 회원가입된 아이디입니다.", HttpStatus.BAD_REQUEST);
         }
 
+        String imgSrc = s3Service.upload(file);
         Users users = Users.builder()
                 .id(signUp.getId())
                 .password(passwordEncoder.encode(signUp.getPassword()))
@@ -50,7 +56,7 @@ public class UserService {
                 .phone(signUp.getPhone())
                 .region(signUp.getRegion())
                 .gender(signUp.getGender())
-                .imageSrc(signUp.getImageSrc())
+                .imageSrc(imgSrc)
                 .roles(Collections.singletonList(Authority.ROLE_USER.name()))
                 .build();
         usersRepository.save(users);
@@ -66,8 +72,9 @@ public class UserService {
 
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        UserResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+        CommonResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
+        log.info("----------------authentication" +authentication);
         redisTemplate.opsForValue()
                 .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
@@ -90,7 +97,7 @@ public class UserService {
             return response.fail("Refresh Token 정보가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
 
-        UserResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+        CommonResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
         redisTemplate.opsForValue()
                 .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);

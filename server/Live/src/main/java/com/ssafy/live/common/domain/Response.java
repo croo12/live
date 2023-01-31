@@ -77,4 +77,8 @@ public class Response {
     public ResponseEntity<?> fail(String msg, HttpStatus status) {
         return fail(Collections.emptyList(), msg, status);
     }
+
+    public ResponseEntity<?> success(String msg, HttpStatus status) {
+        return success(Collections.emptyList(), msg, status);
+    }
 }

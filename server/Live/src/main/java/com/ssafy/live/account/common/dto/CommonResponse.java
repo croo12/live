@@ -1,10 +1,10 @@
-package com.ssafy.live.account.user.controller.Dto;
+package com.ssafy.live.account.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-public class UserResponse {
+public class CommonResponse {
 
     @Builder
     @Getter

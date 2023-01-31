@@ -1,8 +1,7 @@
 package com.ssafy.live.consulting.domain.entity;
 
-import com.ssafy.live.common.domain.BaseEntity;
+import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.house.domain.entity.Item;
-import com.ssafy.live.house.domain.entity.ItemImage;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

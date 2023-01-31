@@ -1,10 +1,10 @@
-package com.ssafy.live.account.user.controller.Dto;
+package com.ssafy.live.account.user.controller.dto;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
-import javax.validation.constraints.NotEmpty;
 
 public class UserRequest {
 
@@ -28,6 +28,8 @@ public class UserRequest {
         private String region;
         private String gender;
         private String imageSrc;
+        @Column(columnDefinition = "TEXT")
+        private String filePath;
     }
 
     @Getter
