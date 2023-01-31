@@ -1,11 +1,10 @@
 package com.ssafy.live.account.user.controller.dto;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
-import javax.validation.constraints.NotEmpty;
 
 public class UserRequest {
 

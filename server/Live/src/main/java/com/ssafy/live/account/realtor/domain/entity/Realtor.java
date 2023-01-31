@@ -30,14 +30,11 @@ public class Realtor extends Member implements UserDetails {
     @Column(name = "business_number")
     private String businessNumber;
     private String corp;
-
     @Column(name = "registration_number")
     private String registrationNumber;
     private String description;
-
     @Column(name = "business_address")
     private String businessAddress;
-
     @Column(name = "rating_score")
     private String ratingScore;
 

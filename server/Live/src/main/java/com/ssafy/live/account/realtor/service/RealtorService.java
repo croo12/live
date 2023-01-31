@@ -68,7 +68,7 @@ public ResponseEntity<?> signUp(RealtorRequest.SignUp signUp, MultipartFile file
         .businessAddress(signUp.getBusinessAddress())
         .registrationNumber(signUp.getRegistrationNumber())
         .imageSrc(imgSrc)
-        .roles(Collections.singletonList(Authority.ROLE_USER.name()))
+        .roles(Collections.singletonList(Authority.ROLE_REALTOR.name()))
         .build();
     realtorRepository.save(realtor);
 
@@ -80,14 +80,17 @@ public ResponseEntity<?> signUp(RealtorRequest.SignUp signUp, MultipartFile file
         if (realtorRepository.findByBusinessNumber(login.getBusinessNumber()).orElse(null) == null) {
             return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
-
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
+        log.info("authenticationToken?? "+authenticationToken);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        log.info("authenticationToken1 "+authenticationToken);
         CommonResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+        log.info("authenticationToken2 "+authenticationToken);
 
         redisTemplate.opsForValue()
             .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
+        log.info("authenticationToken3 "+authenticationToken);
         return response.success(tokenInfo, "로그인에 성공했습니다.", HttpStatus.OK);
     }
 
