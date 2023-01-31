@@ -24,7 +24,7 @@ const HouseCardContent = (props) => {
       <p>층수 주소 설명... </p>
       <button onClick={clickEventHandler}>상세로</button>
       {isModal && (
-        <Modal>
+        <Modal onConfirm={clickEventHandler}>
           <HouseDetailCom houseId={123} />
         </Modal>
       )}

@@ -3,7 +3,7 @@ import Button from "../../UI/Button";
 import Calendar from "../../UI/Calendar";
 import Modal from "../../UI/Modal";
 
-const DateSelector = () => {
+const DateSelector = (props) => {
   const [activeModal, setActive] = useState(false);
   const date = useRef(new Date());
 
@@ -17,6 +17,7 @@ const DateSelector = () => {
 
   const startDateChangeEvent = (newStartDate) => {
     date.current = newStartDate;
+    props.changeEventHandler(newStartDate);
   };
 
   return (

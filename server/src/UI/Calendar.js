@@ -122,7 +122,7 @@ const Days = ({ date, startDate, endDate, clickEvent, today }) => {
         <Day
           key={idx}
           clickEvent={
-            date < today ? () => console.log("ㄴㄴ") : (d) => clickEvent(d)
+            el < today ? () => console.log("ㄴㄴ") : (d) => clickEvent(d)
           }
           currentdate={date}
           date={el}

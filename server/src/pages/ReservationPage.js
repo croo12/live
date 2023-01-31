@@ -4,13 +4,25 @@ import ReservationRightDiv from "../components/reservation/ReservationRightDiv";
 import ListBox from "../UI/ListBox";
 import Button from "../UI/Button";
 import ReservationSearchBox from "../components/reservation/ReservationSearchBox";
+import { useState } from "react";
 
 const ReservationPage = () => {
+  const [reserveData, setReserveData] = useState({
+    sido: "",
+    gugun: "",
+    dong: "",
+    date: null,
+  });
+
+  const clickSearchEventHandler = (sido, gugun, dong, date) => {
+    setReserveData({ sido, gugun, dong, date });
+  };
+
   return (
     <>
       <h1>안녕 난 예약페이지</h1>
 
-      <ReservationSearchBox />
+      <ReservationSearchBox clickSearchEventHandler={clickSearchEventHandler} />
 
       <div style={{ display: "flex", justifyContent: "center" }}>
         <ReservationLeftDiv />
