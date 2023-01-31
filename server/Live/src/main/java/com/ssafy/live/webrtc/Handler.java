@@ -103,6 +103,9 @@ public class Handler extends TextWebSocketHandler
     JsonObject jsonMessage = gson.fromJson(message.getPayload(),
         JsonObject.class);
 
+    System.out.println(session.toString());
+    System.out.println(message.toString());
+
     log.info("[Handler::handleTextMessage] message: {}, sessionId: {}",
         jsonMessage, sessionId);
 
