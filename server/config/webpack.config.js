@@ -545,7 +545,7 @@ module.exports = function (webpackEnv) {
               ).concat({
                 loader: require.resolve("sass-loader"),
                 options: {
-                  additionalData: `@import '_variables';`,
+                  additionalData: `@import '_variables.scss';`,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                   sassOptions: {
                     includePaths: [paths.appSrc],

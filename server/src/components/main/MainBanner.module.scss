@@ -1,13 +1,15 @@
 .inner {
   border: 0;
-  width: 1300px;
+  width: 100%;
   margin: auto;
   background-image: url("../../assets/image/MainBackground.png");
   background-position: 30%;
 
+  margin-top: 24px;
+
   .introContent {
     display: flex; 
-    padding: 90px 0px 120px 60px; 
+    // padding: 90px 0px 120px 60px; 
   
     .desc {
       text-align: left;

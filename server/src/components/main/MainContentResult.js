@@ -6,13 +6,13 @@ import { MdLocalLaundryService } from "react-icons/md";
 import { RiStore2Line } from "react-icons/ri";
 import ListBox from "../../UI/ListBox";
 
-import classes from "./MainContentResultBox.module.scss";
-import MainContentResultBoxIconBox from "./MainContentResultBoxIcon";
+import classes from "./MainContentResult.module.scss";
+import MainContentResultIconBox from "./MainContentResultIconBox";
 
 const dummy = [
   {
     icon: <BiCoffeeTogo />,
-    name: "카페",
+    name: "카  페",
     content: 300,
   },
   {
@@ -22,7 +22,7 @@ const dummy = [
   },
   {
     icon: <AiOutlineShoppingCart />,
-    name: "마트",
+    name: "마  트",
     content: 3,
   },
   {
@@ -51,7 +51,7 @@ const MainContentResultBox = () => {
       <br />
       <div className={classes.results}>
         <ListBox dataArray={data} direction={true}>
-          <MainContentResultBoxIconBox />
+          <MainContentResultIconBox />
         </ListBox>
       </div>
     </div>

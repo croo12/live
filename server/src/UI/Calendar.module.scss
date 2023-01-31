@@ -1,4 +1,4 @@
-$primary: #b670f4;
+$primary: $main-dark;
 $radius: 12px;
 
 .calendar {
@@ -107,7 +107,7 @@ $radius: 12px;
       }
 
       &.start, &.between, &.end {
-        background-color: $main_color3;
+        background-color: $main_green;
         color: #fff;
       }
 
@@ -129,7 +129,7 @@ $radius: 12px;
         top: 0;
         bottom: 0;
         left: 100%;
-        background-color: $main_color3;
+        background-color: $main_green;
         width: 20px;
       }
 
@@ -139,7 +139,7 @@ $radius: 12px;
         top: 0;
         bottom: 0;
         right: 100%;
-        background-color: $main_color3;
+        background-color: $main_green;
         width: 20px;
       }
 

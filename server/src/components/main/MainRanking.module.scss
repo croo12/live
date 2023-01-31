@@ -1,13 +1,36 @@
 .inner {
-  border: 0;
-        width: 1300px;
-        margin: auto;
-
+  
   .rankingContent {
-    padding: 100px 0;
+    margin: auto;
+
+    padding: 16px;
+    margin-bottom: 128px;
+
+    border: 0;
+    width: 100%;
+
+    padding-bottom: 128px 0;
+
+    h2 {
+      margin-bottom: 30px;
+      text-align: left;
+      font-size: 20px;
+
+      margin-bottom: 48px;
+    }
+
+    .buttonBox {
+      display: flex;
+      
+      button {
+        margin: 8px;
+        width: 64px;
+        height : 32px;
+      }
+    }
   }
 
   .items {
-    
+  
   }
 }
