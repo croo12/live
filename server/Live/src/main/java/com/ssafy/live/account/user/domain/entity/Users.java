@@ -46,6 +46,11 @@ public class Users extends Member implements UserDetails {
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Notice> notices = new ArrayList<>();
 
+    public Users(String id, String password) {
+        this.id = id;
+        super.setPassword(password);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()

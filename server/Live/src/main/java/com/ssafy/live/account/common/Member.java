@@ -46,4 +46,5 @@ public class Member {
     public void updatePassword(String temporaryPassword){
         this.password = temporaryPassword;
     }
+
 }

@@ -77,11 +77,11 @@ public class RealtorService {
 
     public ResponseEntity<?> login(RealtorRequest.Login login) {
 
-        if (realtorRepository.findByBusinessNumber(login.getBusinessNumber()).orElse(null) == null) {
-            return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
-        }
+      //  if (realtorRepository.findByBusinessNumber(login.getBusinessNumber()).orElse(null) == null) {
+       //     return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+      //  }
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
-        log.info("authenticationToken?? "+authenticationToken);
+        log.info("authenticationToken?? "+authenticationManagerBuilder.getObject());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         log.info("authenticationToken1 "+authenticationToken);
         CommonResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);

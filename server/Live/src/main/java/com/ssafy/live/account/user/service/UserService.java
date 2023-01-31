@@ -5,6 +5,7 @@ import com.ssafy.live.account.auth.security.SecurityUtil;
 import com.ssafy.live.account.common.Authority;
 import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.common.dto.CommonResponse;
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.controller.dto.UserRequest;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
@@ -65,16 +66,16 @@ public class UserService {
     }
 
     public ResponseEntity<?> login(UserRequest.Login login) {
-        
-        if (usersRepository.findById(login.getId()).orElse(null) == null) {
-            return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
-        }
+   //     if (usersRepository.findById(login.getId()).orElse(null) == null) {
+    //        return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+    //    }
 
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
+        log.info("----------------authenticationToken " +authenticationToken);
+
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         CommonResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-        log.info("----------------authentication" +authentication);
         redisTemplate.opsForValue()
                 .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
