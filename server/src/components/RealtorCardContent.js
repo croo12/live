@@ -1,17 +1,13 @@
 import classes from "./RealtorCardContent.module.scss";
-
-// const RealtorCardContent = () => {
-//   return <></>;
-// };
-
-/* 사진, 사무소 이름, 중개사 이름 리뷰 별점 평균? */
+import sample from "../assets/image/sample.jpg";
+/* 사진, 사무소 이름, 중개사 이름 리뷰 별점평균? */
 
 const RealtorCardContent = ({
-  image,
-  corpName,
-  name,
-  starNum,
-  contactCnt,
+  image, //프로필사진
+  corpName, //사무소 이름
+  name, //중개사 이름
+  starNum, //별점 평균
+  contactCnt, //계약 건수
 }) => {
   return (
     <>
@@ -22,7 +18,7 @@ const RealtorCardContent = ({
         <div className={classes.rightDesc}>
           <p>{corpName} 공인중개사</p>
           <p>
-            <strong>{name} </strong>
+            <strong> {name} </strong>
           </p>
         </div>
       </div>
@@ -36,3 +32,30 @@ const RealtorCardContent = ({
 };
 
 export default RealtorCardContent;
+
+export const DUMMY = [
+  {
+    image: sample,
+    name: "김희연",
+    starNum: 4.8,
+    contactCnt: 105,
+  },
+  {
+    image: sample,
+    name: "김희연",
+    starNum: 4.8,
+    contactCnt: 105,
+  },
+  {
+    image: sample,
+    name: "김희연",
+    starNum: 4.8,
+    contactCnt: 105,
+  },
+  {
+    image: sample,
+    name: "김희연",
+    starNum: 4.8,
+    contactCnt: 105,
+  },
+];

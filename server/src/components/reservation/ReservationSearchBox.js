@@ -2,6 +2,9 @@ import Button from "../../UI/Button";
 import DateSelector from "./DateSelector";
 import SelectBox from "../../UI/SelectBox";
 import { useRef } from "react";
+
+import classes from "./ReservationSearchBox.module.scss";
+
 const dummyMaker = (str) => {
   return [
     { name: `${str}이름 1`, value: `${str} value 1` },
@@ -30,34 +33,37 @@ const ReservationSearchBox = (props) => {
   };
 
   return (
-    <div>
-      안녕 나는 검색상자
-      <SelectBox
-        dataArray={dummyMaker("시")}
-        default={"시 이름"}
-        changeEventHandler={(e) => {
-          changeEventHandler(e, sido);
-        }}
-      />
-      <SelectBox
-        dataArray={dummyMaker("구")}
-        default={"구 이름"}
-        changeEventHandler={(e) => {
-          changeEventHandler(e, gugun);
-        }}
-      />
-      <SelectBox
-        dataArray={dummyMaker("동")}
-        default={"동 이름"}
-        changeEventHandler={(e) => {
-          changeEventHandler(e, dong);
-        }}
-      />
-      <DateSelector
-        changeEventHandler={(e) => {
-          changeEventHandler(e, refDate);
-        }}
-      />
+    <div className={classes.searchBox}>
+      {/* <p>안녕 나는 검색상자</p> */}
+      <div>
+        <SelectBox
+          dataArray={dummyMaker("시")}
+          default={"시를 선택해 주세요"}
+          changeEventHandler={(e) => {
+            changeEventHandler(e, sido);
+          }}
+        />
+        <SelectBox
+          dataArray={dummyMaker("구")}
+          default={"구를 선택해 주세요"}
+          changeEventHandler={(e) => {
+            changeEventHandler(e, gugun);
+          }}
+        />
+        <SelectBox
+          dataArray={dummyMaker("동")}
+          default={"동을 선택해 주세요"}
+          changeEventHandler={(e) => {
+            changeEventHandler(e, dong);
+          }}
+        />
+
+        <DateSelector
+          changeEventHandler={(e) => {
+            changeEventHandler(e, refDate);
+          }}
+        />
+      </div>
       <Button
         clickEvent={() =>
           props.clickSearchEventHandler(

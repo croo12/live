@@ -3,6 +3,8 @@ import Button from "../../UI/Button";
 import Calendar from "../../UI/Calendar";
 import Modal from "../../UI/Modal";
 
+import classes from "./DateSelector.module.scss";
+
 const DateSelector = (props) => {
   const [activeModal, setActive] = useState(false);
   const date = useRef(new Date());
@@ -27,6 +29,7 @@ const DateSelector = (props) => {
         onClick={clickEvent}
         type="date"
         value={`${year}-${month}-${day}`}
+        className={classes.dateSelectorSommoner}
         readOnly
       />
       {activeModal && (

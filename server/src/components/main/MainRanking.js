@@ -1,38 +1,11 @@
 import classes from "./MainRanking.module.scss";
 import ListBox from "../../UI/ListBox";
-import sample from "../../assets/image/sample.jpg";
-import RealtorCardContent from "../RealtorCardContent";
+
+import RealtorCardContent, { DUMMY } from "../RealtorCardContent";
 import { useState } from "react";
 
-const dummy = [
-  {
-    image: sample,
-    name: "김희연",
-    starNum: 4.8,
-    contactCnt: 105,
-  },
-  {
-    image: sample,
-    name: "김희연",
-    starNum: 4.8,
-    contactCnt: 105,
-  },
-  {
-    image: sample,
-    name: "김희연",
-    starNum: 4.8,
-    contactCnt: 105,
-  },
-  {
-    image: sample,
-    name: "김희연",
-    starNum: 4.8,
-    contactCnt: 105,
-  },
-];
-
 const MainRanking = () => {
-  const [data, setData] = useState(dummy);
+  const [data, setData] = useState(DUMMY);
 
   return (
     <div className={classes.inner}>
