@@ -1,0 +1,39 @@
+.inner {
+  border: 0;
+  width: 100%;
+  margin: auto;
+  background-image: url("../../assets/image/MainBackground.png");
+  background-position: 30%;
+
+  margin-top: 24px;
+
+  .introContent {
+    display: flex; 
+    // padding: 90px 0px 120px 60px; 
+  
+    .desc {
+      text-align: left;
+      flex: 2;
+      padding: 160px 0 0 120px;
+
+      h1 {
+        font-size: 70px;
+        color: #42D395;
+        font-weight: light;
+      }
+
+      p {
+          font-size: 22px;
+          line-height: 1.7em;
+      }
+    }
+
+    .photo {
+      flex: 6;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

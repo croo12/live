@@ -1,11 +1,12 @@
 import sample from "../assets/image/sample.jpg";
 
 const Card = ({ data }) => {
-  console.log(data);
+  // console.log(data);
   return (
     <div>
       <img
         src={sample}
+        alt="test"
         style={{
           width: "20vw",
           height: "250px",

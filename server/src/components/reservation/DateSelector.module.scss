@@ -1,0 +1,25 @@
+.dateSelectorSommoner {
+  padding: 8px 24px;
+  padding-right: 32px;
+
+  color: white;
+	cursor: pointer;
+	width: auto;
+
+  font-size: 14px;
+	font-weight: bold;
+
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+
+  -webkit-appearance: none;
+	appearance: none;
+	border: 1px solid black;
+	outline: 0;
+	transition: 0.3s ease all;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519' fill='rgba(255,255,255,.5)'/></svg>");
+	background-color: $main-dark;
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 16px 16px;
+}
+

@@ -6,6 +6,8 @@ import Button from "../UI/Button";
 import ReservationSearchBox from "../components/reservation/ReservationSearchBox";
 import { useState } from "react";
 
+import classes from "./ReservationPage.module.scss";
+
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
     sido: "",
@@ -24,7 +26,7 @@ const ReservationPage = () => {
 
       <ReservationSearchBox clickSearchEventHandler={clickSearchEventHandler} />
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className={classes.content}>
         <ReservationLeftDiv />
         <ReservationRightDiv />
       </div>
