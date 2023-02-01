@@ -17,7 +17,7 @@ import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/realtors")
+@RequestMapping("/realtors")
 public class RealtorController {
 
 

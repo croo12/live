@@ -84,11 +84,10 @@ public class Realtor extends Member implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return false;
     }
-
     @Override
     public boolean isEnabled() {
-        return false;
-    }
+        return true;
+    } //계정이 사용 가능한지 여부를 리턴한다. (true: 사용 가능)
 
     public void updateRealtor(RealtorRequest.Update request, String imgSrc) {
         super.updateInformation(request.getName(), request.getPhone(), imgSrc);
