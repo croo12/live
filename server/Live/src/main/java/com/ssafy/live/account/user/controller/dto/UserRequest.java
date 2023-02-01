@@ -2,9 +2,13 @@ package com.ssafy.live.account.user.controller.dto;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
+
+import com.ssafy.live.account.user.domain.entity.Users;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import java.util.Optional;
 
 public class UserRequest {
 

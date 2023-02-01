@@ -19,9 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,8 +35,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.ssafy.live.common.domain.SuccessCode.*;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -45,10 +45,10 @@ public class RealtorService {
     private final PasswordEncoder passwordEncoder;
     private final Response response;
     private final JwtTokenProvider jwtTokenProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisTemplate redisTemplate;
     private final RegionRepository regionRepository;
     private final EmailService emailService;
+    private final AuthenticationManager authenticationManager;
 
     public ResponseEntity<?> signUp(RealtorRequest.SignUp signUp, MultipartFile file)
         throws IOException {
@@ -81,16 +81,14 @@ public class RealtorService {
             return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
-        log.info("authenticationToken?? "+authenticationToken);
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        log.info("authenticationToken1 "+authenticationToken);
+
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         CommonResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
-        log.info("authenticationToken2 "+authenticationToken);
 
         redisTemplate.opsForValue()
             .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
-        log.info("authenticationToken3 "+authenticationToken);
         return response.success(tokenInfo, "로그인에 성공했습니다.", HttpStatus.OK);
     }
 
