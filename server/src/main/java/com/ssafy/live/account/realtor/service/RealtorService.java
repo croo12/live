@@ -202,4 +202,12 @@ public class RealtorService {
             .collect(Collectors.toList());
         return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
+
+    public ResponseEntity<?> findRealtorList() {
+        List<Realtor> findRealtors = realtorRepository.findAll();
+        List<RealtorResponse.FindByRegion> list = findRealtors.stream()
+                .map(r -> new RealtorResponse.FindByRegion(r))
+                .collect(Collectors.toList());
+        return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
+    }
 }

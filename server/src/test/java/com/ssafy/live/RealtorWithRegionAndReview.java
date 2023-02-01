@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,6 +25,6 @@ public class RealtorWithRegionAndReview {
     @Test
     public void realtorWithRegion() {
         List<Realtor> list = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion("3020011300");
-        list.stream().forEach(r->System.out.println(r.getName()));
+        list.stream().forEach(r->System.out.println(r));
     }
 }
