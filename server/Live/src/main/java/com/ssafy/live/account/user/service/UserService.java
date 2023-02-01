@@ -3,9 +3,12 @@ package com.ssafy.live.account.user.service;
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.auth.security.SecurityUtil;
 import com.ssafy.live.account.common.Authority;
+import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.common.dto.CommonResponse;
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.controller.dto.UserRequest;
+import com.ssafy.live.account.user.controller.dto.UserRequest.FindPassword;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
@@ -40,6 +43,7 @@ public class UserService {
     private final Response response;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
+    private final EmailService emailService;
     private final S3Service s3Service;
     private final AuthenticationManager authenticationManager;
 
@@ -145,5 +149,15 @@ public class UserService {
         usersRepository.save(users);
 
         return response.success();
+    }
+
+    public ResponseEntity<?> temporaryPassword(FindPassword request) {
+        Users user = usersRepository.findByEmailAndId(request.getEmail(), request.getId());
+        String temporaryPwd = user.generateRandomPassword();
+        user.updatePassword(passwordEncoder.encode(temporaryPwd));
+        usersRepository.save(user);
+        emailService.joinEmail(user.getEmail(), temporaryPwd, user.getName());
+        return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
+
     }
 }
