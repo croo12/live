@@ -42,12 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .requestMatchers()
-            .antMatchers("/users/**")
-            .and()
             .authorizeRequests()
             .antMatchers("/users/sign-up", "/users/login", "/users/authority", "/users/reissue", "/users/logout").permitAll()
-            .antMatchers("/api/v1/realtors/login", "/api/v1/realtors/authority", "/api/v1/realtors/reissue", "/api/v1/realtors/logout").permitAll()
+            .antMatchers("/realtors/login", "/realtors/authority", "/realtors/reissue", "/realtors/logout").permitAll()
             .antMatchers("/users/userTest").hasRole("USER")
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
