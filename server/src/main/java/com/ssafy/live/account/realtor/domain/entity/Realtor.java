@@ -44,18 +44,23 @@ public class Realtor extends Member implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Consulting> consultings = new ArrayList<>();
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Contract> contracts = new ArrayList<>();
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Notice> notices = new ArrayList<>();
 
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Item> items = new ArrayList<>();
 
     @Override
