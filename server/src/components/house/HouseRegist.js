@@ -4,9 +4,11 @@ import DaumPostcode from "react-daum-postcode";
 import Modal from "../../UI/Modal";
 import { useEffect, useRef, useState } from "react";
 import Card from "../../UI/Card";
+import HousePurpose from "./HousePurpose";
 
 const HouseRegist = () => {
   const [postcodeModalState, setPostcodeModalState] = useState(null); // 주소 검색 모달창 상태 관리용
+  const [purpopseModalState, setPurpopseModalState] = useState(null); // 매물 이미지 미리보기
   const [imageState, setImageState] = useState([]); // 매물 이미지 파일
   const [imagePreviewState, setImagePreviewState] = useState([]); // 매물 이미지 미리보기
 
@@ -15,6 +17,14 @@ const HouseRegist = () => {
   const jibunAddressInputRef = useRef(); //지번주소
   const detailAddressInputRef = useRef(); //상세주소
   const extraAddressInputRef = useRef(); //추가사항
+
+  const purposeModalHandler = () => {
+    if (purpopseModalState === null) {
+      setPurpopseModalState(true);
+      return;
+    }
+    setPurpopseModalState(null);
+  };
 
   // postcodeModalState를 통해 모달 창 열고 닫는 함수
   const findPostcodeModalStateChangeEventHandler = () => {
@@ -163,6 +173,11 @@ const HouseRegist = () => {
           <DaumPostcode onComplete={completePostHandler} />
         </Modal>
       )}
+      {purpopseModalState && (
+        <Modal onConfirm={purposeModalHandler}>
+          <HousePurpose onComplete={purposeModalHandler} />
+        </Modal>
+      )}
       <h1>매물 등록하기</h1>
       <div style={{ background: "rgba(90, 183, 191, 0.17)" }}>
         <BsFillExclamationCircleFill />
@@ -279,6 +294,15 @@ const HouseRegist = () => {
               <td>
                 <label htmlFor="exclusivePrivateArea">전용면적</label>
                 <input type="number" id="exclusivePrivateArea"></input>㎡
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>건축물 용도</h3>
+              </td>
+              <td colSpan={3}>
+                <input type="text" id="purpose" />
+                <button onClick={purposeModalHandler}>작성법보기</button>
               </td>
             </tr>
             <tr>
@@ -416,8 +440,8 @@ const HouseRegist = () => {
                 <label htmlFor="bidet">비데</label>
                 <input type="checkbox" id="dishWasher" />
                 <label htmlFor="dishWasher">식기세척기</label>
-                <input type="checkbox" id="gasStore" />
-                <label htmlFor="gasStore">가스레인지</label>
+                <input type="checkbox" id="gasStove" />
+                <label htmlFor="gasStove">가스레인지</label>
                 <input type="checkbox" id="inductionCooktop" />
                 <label htmlFor="inductionCooktop">인덕션</label>
                 <input type="checkbox" id="microwave" />
