@@ -440,8 +440,8 @@ const HouseRegist = () => {
                 <label htmlFor="bidet">비데</label>
                 <input type="checkbox" id="dishWasher" />
                 <label htmlFor="dishWasher">식기세척기</label>
-                <input type="checkbox" id="gasStore" />
-                <label htmlFor="gasStore">가스레인지</label>
+                <input type="checkbox" id="gasStove" />
+                <label htmlFor="gasStove">가스레인지</label>
                 <input type="checkbox" id="inductionCooktop" />
                 <label htmlFor="inductionCooktop">인덕션</label>
                 <input type="checkbox" id="microwave" />
