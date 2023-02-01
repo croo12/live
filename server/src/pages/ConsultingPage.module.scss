@@ -4,7 +4,31 @@
   justify-content: space-around;
 
   .video_box {
+    flex: 9;
     border: 1px solid black;
+
+    background-color: black;
+
     width: 100%;
+
+    min-height: 100%;
+
+    height: 100%;
+
+    position: relative;
+
+    video {
+      width: 100%;
+      display: block;
+    }
+
+    button {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .lists {
+    flex: 3;
   }
 }

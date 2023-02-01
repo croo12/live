@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListBox from "../UI/ListBox";
 import HouseCardContent from "./HouseCardContent";
 import ReservationCardContent from "./ReservationCardContent";
 
-const ConsultingRightBox = (props) => {
-  const [status, setStatus] = useState("reservation"); //중개사만 이걸로 시작해야함
+const ConsultingRightBox = ({ isRealtor }) => {
+  const [status, setStatus] = useState(isRealtor ? "reservation" : "house");
+
+  useEffect(() => {
+    setStatus(isRealtor ? "reservation" : "house");
+  }, [isRealtor]);
 
   const statusChangeHandler = (action) => {
-    console.log("짜잔");
-    setStatus(action);
+    const confirm = window.confirm;
+
+    if (confirm(`정말로 `)) setStatus(action);
   };
 
   return (
     <>
-      <h2>화상통화 오른쪽 상자</h2>
       {status === "reservation" && (
         <ListBox dataArray={[1, 2, 3]}>
           <ReservationCardContent

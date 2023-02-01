@@ -1,0 +1,22 @@
+.cardBox {
+  display: flex;
+
+  div{
+
+    &:first-child{
+      flex: 1;
+
+      img {
+        width : 88px;
+        height : 80px;
+
+        border-radius: 70%;;
+      }
+    }
+
+
+    &:last-child{
+      flex: 2;
+    }
+  }
+}
