@@ -28,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
     private final UsersRepository usersRepository;
-    private final RealtorRepository realtorRepository;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -49,7 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(new CustomUserDetailService(usersRepository)).passwordEncoder(passwordEncoder());;
-        auth.userDetailsService(new CustomRealtorDetailService(realtorRepository)).passwordEncoder(passwordEncoder());
     }
 
     // 암호화에 필요한 PasswordEncoder Bean 등록

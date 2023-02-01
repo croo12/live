@@ -4,6 +4,7 @@ import com.ssafy.live.account.auth.jwt.JwtAuthenticationFilter;
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.realtor.service.CustomRealtorDetailService;
+import com.ssafy.live.account.user.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,6 +25,7 @@ public class RealtorSecurityConfig extends WebSecurityConfigurerAdapter {
     private final RedisTemplate redisTemplate;
     private final CustomRealtorDetailService customRealtorDetailService;
     private final PasswordEncoder passwordEncoder;
+    private final RealtorRepository realtorRepository;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -40,5 +42,8 @@ public class RealtorSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
         // JwtAuthenticationFilter를 UsernamePasswordAuthentictaionFilter 전에 적용시킨다.
     }
-
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(new CustomRealtorDetailService(realtorRepository)).passwordEncoder(passwordEncoder);
+    }
 }
