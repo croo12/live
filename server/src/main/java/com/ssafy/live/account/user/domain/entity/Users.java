@@ -30,24 +30,24 @@ public class Users extends Member implements UserDetails {
     private String gender;
 
     @Column
-    @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     @Builder.Default
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Contract> contracts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     @Builder.Default
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Consulting> consultings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     @Builder.Default
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     @Builder.Default
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Notice> notices = new ArrayList<>();
 
     public Users(String id, String password) {
