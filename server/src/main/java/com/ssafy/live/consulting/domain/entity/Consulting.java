@@ -5,9 +5,7 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.ConsultingStatus;
 import com.ssafy.live.review.domain.entity.Review;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,7 +14,9 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "consulting_no"))
+@Builder
 @Entity
 public class Consulting extends BaseEntity {
 

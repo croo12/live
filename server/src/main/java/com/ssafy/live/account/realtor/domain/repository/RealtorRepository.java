@@ -26,4 +26,6 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
             "inner join house h where h.house_no=i.house_no and h.region_code=:region_code " +
             "group by r.realtor_no order by AVG(v.rating_score) DESC", nativeQuery=true)
     List<Realtor> findDistinctRealtorWithItemsByHouseByRegion(@Param("region_code") String region_code);
+
+    Realtor findByNo(Long realtorNo);
 }
