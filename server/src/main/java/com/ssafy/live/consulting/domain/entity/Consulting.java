@@ -35,6 +35,7 @@ public class Consulting extends BaseEntity {
     private ConsultingRoom consultingRoom;
 
     @OneToMany(mappedBy = "consulting", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<ConsultingItem> consultingItems = new ArrayList<>();
 
     @Column(name = "consulting_date")

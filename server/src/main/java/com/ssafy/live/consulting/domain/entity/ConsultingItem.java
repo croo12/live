@@ -26,6 +26,7 @@ public class ConsultingItem extends BaseEntity {
     private Item item;
 
     @OneToMany(mappedBy = "consultingItem", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Record> records = new ArrayList<>();
 }
 
