@@ -15,7 +15,6 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    static-path-pattern: '/static/**'
 
   servlet:
     multipart:
@@ -52,6 +51,7 @@ spring:
     password: gPwjd20180354!
     port: 465
     protocol: smtps
+
   thymeleaf:
     encoding: UTF-8
     prefix: classpath:/templates/
@@ -66,11 +66,11 @@ jwt:
 server:
   address: localhost
   port: '8080'
-  ssl:
-    key-store-password: kurento
-    key-store-type: JKS
-    key-store: classpath:keystore.jks
-    key-alias: kurento-selfsigned
+#  ssl:
+#    key-store-password: kurento
+#    key-store-type: JKS
+#    key-store: classpath:keystore.jks
+#    key-alias: kurento-selfsigned
 
 logging:
   level:

@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface HouseRepository extends JpaRepository<House, Long> {
 
-    List<House> findByAddressAndAddressDetail(String address, String addressDetail);
+    House findTop1ByAddressAndAddressDetail(String address, String addressDetail);
+
 
 }

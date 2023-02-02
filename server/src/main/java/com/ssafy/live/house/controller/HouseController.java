@@ -14,25 +14,19 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/houses")
+@RequestMapping("/houses")
 @Slf4j
 public class HouseController {
 
     private final HouseService houseService;
 
-    @GetMapping(value ="/", headers = { "Content-type=application/json" })
+    @GetMapping(value ="", headers = { "Content-type=application/json" })
     private ResponseEntity<?> searchHouseByAddress(
             @RequestParam String address,
             @RequestParam String addressDetail) {
 
-        List<HouseResponse> houseList = houseService.findByAddressAndAddressDetail(address, addressDetail);
-
-        if(houseList.isEmpty()){
-            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-        }
-        else {
-            return new ResponseEntity<HouseResponse>(houseList.get(0), HttpStatus.OK);
-        }
+        log.info("부동산 정보 검색");
+        return houseService.findHouseByAddress(address, addressDetail);
     }
 
 //    @DeleteMapping(value ="/", headers = { "Content-type=application/json" })
