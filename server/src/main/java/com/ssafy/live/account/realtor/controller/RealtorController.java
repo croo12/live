@@ -20,7 +20,6 @@ import java.io.IOException;
 @RequestMapping("/realtors")
 public class RealtorController {
 
-
     @Value("${com.example.upload.path}")
     private String uploadPath;
     private final RealtorService realtorService;
@@ -96,4 +95,9 @@ public class RealtorController {
         return realtorService.findDistinctRealtorWithItemsByHouseByRegion(sidoName, gugunName, dongName);
     }
 
+    @GetMapping
+    public ResponseEntity<?> findRealtorList() {
+        log.info("메인페이지 공인중개사 목록 조회");
+        return realtorService.findRealtorList();
+    }
 }
