@@ -1,18 +1,16 @@
 package com.ssafy.live.consulting.controller;
 
 import com.ssafy.live.account.common.error.ErrorHandler;
-import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
-import com.ssafy.live.account.realtor.service.RealtorService;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.service.ConsultingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,7 +25,6 @@ public class ConsultingController {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
-        System.out.println(reserve.getUserNo());
         return consultingService.reserve(reserve);
     }
 }
