@@ -15,11 +15,11 @@
  *
  */
 
-package org.kurento.tutorial.one2onecall;
-
-import java.util.concurrent.ConcurrentHashMap;
+package com.ssafy.live.webrtc;
 
 import org.springframework.web.socket.WebSocketSession;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Map of users registered in the system. This class has a concurrent hash map to store users, using

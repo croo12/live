@@ -15,7 +15,7 @@
  *
  */
 
-package org.kurento.tutorial.one2onecall;
+package com.ssafy.live.webrtc;
 
 import org.kurento.client.KurentoClient;
 import org.kurento.client.MediaPipeline;

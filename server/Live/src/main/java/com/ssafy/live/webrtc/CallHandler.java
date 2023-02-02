@@ -15,11 +15,11 @@
  *
  */
 
-package org.kurento.tutorial.one2onecall;
+package com.ssafy.live.webrtc;
 
-import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import org.kurento.client.EventListener;
 import org.kurento.client.IceCandidate;
 import org.kurento.client.IceCandidateFoundEvent;
@@ -33,9 +33,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Protocol handler for 1 to 1 video call communication.
