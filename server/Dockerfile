@@ -10,7 +10,7 @@ RUN gradle build -x test --parallel
 FROM openjdk:8-jdk-alpine
 WORKDIR /app
 # 빌드파일을 컨테이너로 복사
-COPY server/build/libs/live-0.0.1-SNAPSHOT.jar ./
+COPY --from=builder server/build/build/libs/live-0.0.1-SNAPSHOT.jar .
 # 노출 8080
 EXPOSE 8080
 # jar 파일 실행
