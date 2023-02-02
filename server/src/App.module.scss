@@ -2,16 +2,15 @@
   text-align: center;
 
   > h1 {
-    color : $main-green;
+    color: $main-green;
   }
 }
 
-.wrapper{
-  height:auto;
-  min-height:105%;
+.wrapper {
+  height: auto;
+  min-height: 105%;
 
   padding: 16px 0;
 
-  overflow:hidden;
+  overflow: hidden;
 }
-
