@@ -1,199 +1,48 @@
-// import { useCallback, useRef } from "react";
+//웹소켓 연결
+//내가 받는 웹소켓 메시지 status인 responseMsg (백엔드 메시지)
 
-// const useWebRTC = ({ sessionId, localVideo, remoteVideo }) => {
-//   //로그인 체크
-//   const login = true;
+import { useCallback, useEffect, useRef, useState } from "react";
+const BACK_SERVER_URL = `wss://localhost:8443/groupcall`;
 
-//   const wsocket = useRef(null);
-//   const webRtcPeer = useRef(null);
+//웹소켓 메시지를 보내는 sendMsg 함수 리턴
+const useWebSocket = () => {
+  const [responseMsg, setMsg] = useState("");
+  const ws = useRef(null);
 
-//   //웹소켓 연결
-//   wsocket.current = new WebSocket(`wss://localhost:8443/call`);
+  useEffect(() => {
+    ws.current = new WebSocket(BACK_SERVER_URL);
 
-//   const handlerProcessSdpAnswer = useCallback(
-//     (jsonMsg) => {
-//       console.log(`kms에서 답장이 왔으니 WEBRTC 진행 해버릴까...`);
+    ws.current.onmessage = (e) => {
+      // console.log("메세지 받음", e);
+      const data = e.data;
 
-//       if (webRtcPeer.current == null) {
-//         console.log("상대가 없는데?");
+      setMsg(JSON.parse(data));
+    };
 
-//         return;
-//       }
+    ws.current.onopen = () => {
+      console.log("웹소켓 연결됨");
+      // setMsg({ id: "WEBSOCKET_CONNECTION_OK" });
+    };
 
-//       //에러남
-//       webRtcPeer.current.processAnswer(jsonMsg.sdpAnswer, (err) => {
-//         if (err) {
-//           console.log(err);
-//           return;
-//         }
+    ws.current.onclose = () => {
+      console.log("웹소켓 연결안댐");
+    };
 
-//         //비디오 시작하기
-//         startVideo(true);
-//         //
-//       });
-//     },
-//     [webRtcPeer]
-//   );
+    window.onbeforeunload = () => {
+      // ws.current.close();
+    };
+  }, []);
 
-//   const registerResponse = useCallback((jsonMsg) => {
-//     if (jsonMsg.respose === "accepted") {
-//       console.log("등록되었다");
-//     } else {
-//       console.log("등록 ㄴ");
-//     }
-//   }, []);
+  const sendMsg = useCallback(
+    (msg) => {
+      const data = JSON.stringify(msg);
+      console.log(`메시지 보내기 : ${data}`);
+      ws.current.send(data);
+    },
+    [ws]
+  );
 
-//   const callResponse = useCallback(
-//     (jsonMsg) => {
-//       if (jsonMsg.respose !== "accepted") {
-//         console.log(`거절당함`);
-//         //정지!!!
-//         //경고
-//       } else {
-//         handlerProcessSdpAnswer(jsonMsg);
-//       }
-//     },
-//     [handlerProcessSdpAnswer]
-//   );
+  return { responseMsg, sendMsg };
+};
 
-//   const incomingCall = useCallback(
-//     (jsonMsg) => {
-//       // if (통화중?) {
-//       // 	var response = {
-//       // 		id : 'incomingCallResponse',
-//       // 		from : message.from,
-//       // 		callResponse : 'reject',
-//       // 		message : 'bussy'
-//       // 	};
-//       // 	return sendMsg(response);
-//       // }
-
-//       const confirm = window.confirm(
-//         "User " + jsonMsg.from + " is calling you. Do you accept the call?"
-//       );
-
-//       if (confirm) {
-//         // showSpinner(videoInput, videoOutput);
-
-//         let from = jsonMsg.from;
-//         var options = {
-//           localVideo,
-//           remoteVideo,
-//           onicecandidate: onIceCandidate,
-//         };
-//         webRtcPeer.current = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(
-//           options,
-//           function (error) {
-//             if (error) {
-//               return console.error(error);
-//             }
-//             this.generateOffer(onOfferIncomingCall);
-//           }
-//         );
-//       } else {
-//         var response = {
-//           id: "incomingCallResponse",
-//           from: message.from,
-//           callResponse: "reject",
-//           message: "user declined",
-//         };
-//         sendMessage(response);
-//         stop();
-//       }
-//     },
-//     [handlerProcessSdpAnswer]
-//   );
-
-//   const handleAddIceCandidate = useCallback(
-//     (jsonMsg) => {
-//       if (webRtcPeer.current == null) {
-//         console.warn("상대가 없는데 경로를 왜 찾아");
-//         return;
-//       }
-
-//       webRtcPeer.current.addIceCandidate(jsonMsg.candidate, (err) => {
-//         if (err) {
-//           console.error(err);
-//           return;
-//         }
-//       });
-//     },
-//     [webRtcPeer]
-//   );
-
-//   const startVideo = () => {};
-
-//   const onBeforeUnload = useCallback(() => {
-//     wsocket.current.close();
-//   }, [wsocket]);
-
-//   const onMessage = useCallback(
-//     (msg) => {
-//       const jsonMsg = JSON.parse(msg.data);
-//       console.log(`메세지가 왔다네 : `, jsonMsg);
-
-//       switch (jsonMsg.id) {
-//         case `registerResponse`:
-//           registerResponse(jsonMsg);
-//           break;
-
-//         case `callResponse`:
-//           callResponse(jsonMsg);
-//           break;
-
-//         case `incomingCall`:
-//           incomingCall(jsonMsg);
-//           break;
-
-//         // case `PROCESS_SDP_ANSWER`:
-//         //   handlerProcessSdpAnswer(jsonMsg);
-//         //   break;
-
-//         case "iceCandidate":
-//           handleAddIceCandidate(jsonMsg);
-//           break;
-
-//         default:
-//           console.log("뭐임 이건 없는 id잖어");
-//           break;
-//       }
-//     },
-//     [registerResponse, callResponse, handleAddIceCandidate]
-//   );
-
-//   try {
-//     window.onbeforeunload = onBeforeUnload;
-
-//     wsocket.current.onmessage = onMessage;
-
-//     //웹소켓에 기능달기
-//     const funcs = {
-//       websocket: wsocket.current,
-//       sendMsg(msg) {
-//         if (wsocket.readyState !== wsocket.OPEN) {
-//           console.warn(`웹소켓 세션 안열림 : ${wsocket.readyState}`);
-//           return;
-//         }
-
-//         const jsonMsg = JSON.stringify(msg);
-//         wsocket.current.send(jsonMsg);
-//       },
-//       onIceCandidate(candidate) {
-//         let message = {
-//           id: "onIceCandidate",
-//           candidate: candidate,
-//         };
-
-//         this.sendMsg(message);
-//       },
-//     };
-
-//     if (login) return funcs;
-//   } catch (err) {
-//     console.error("useWebSocket 에러 발생...", err);
-//   }
-
-//   return null;
-// };
-
-// export default useWebRTC;
+export default useWebSocket;

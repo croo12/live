@@ -1,39 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ListBox from "../UI/ListBox";
+import { REALTOR_STATUS, USER_STATUS } from "./ConsultingMeetPage";
 import HouseCardContent from "./HouseCardContent";
 import ReservationCardContent from "./ReservationCardContent";
 
-const ConsultingRightBox = ({ isRealtor }) => {
-  const [status, setStatus] = useState(isRealtor ? "reservation" : "house");
-
-  useEffect(() => {
-    setStatus(isRealtor ? "reservation" : "house");
-  }, [isRealtor]);
-
-  const statusChangeHandler = (action) => {
-    const confirm = window.confirm;
-
-    if (confirm(`정말로 `)) setStatus(action);
-  };
+const ConsultingRightBox = ({ statusChangeHandler, status, isRealtor }) => {
+  const [detail, setDetail] = useState(-1);
 
   return (
     <>
-      {status === "reservation" && (
+      {isRealtor && REALTOR_STATUS.BEFORE_START === status && (
         <ListBox dataArray={[1, 2, 3]}>
           <ReservationCardContent
             isConsulting={true}
-            statusChangeHandler={statusChangeHandler}
+            statusChangeHandler={() => statusChangeHandler()}
           />
         </ListBox>
       )}
-      {status === "house" && (
+      {((!isRealtor && detail === -1) ||
+        (REALTOR_STATUS.BEFORE_START !== status && detail === -1)) && (
         <ListBox dataArray={[0, 1]}>
           <HouseCardContent />
         </ListBox>
       )}
-      {status === "houseDetail" && (
-        <ReservationCardContent isConsulting={true} />
-      )}
+      {detail !== -1 && <ReservationCardContent isConsulting={true} />}
     </>
   );
 };

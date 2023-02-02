@@ -10,7 +10,7 @@ const ReservationCardContent = (props) => {
   const realtor = useRef(props.isRealtor);
 
   const clickEventHandler = () => {
-    if (props.statusChangeHandler) props.statusChangeHandler("house");
+    if (props.statusChangeHandler) props.statusChangeHandler(1);
   };
 
   return (

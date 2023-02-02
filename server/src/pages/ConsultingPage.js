@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { BiRegistered } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import ConsultingMeetPage from "../components/ConsultingMeetPage";
 import ConsultingRightBox from "../components/ConsultingRightBox";
 import { usePrompt } from "../util/usePrompt";
+import useWebSocket from "../util/useWebSocket";
 import classes from "./ConsultingPage.module.scss";
 
 //화상통화
 const ConsultingPage = (props) => {
   const { sessionId } = useParams();
   const [isRealtor, toggleRealtor] = useState(true);
+  const [status, setStatus] = useState(0);
+
+  const statusChangeHandler = (action) => {
+    setStatus(action);
+  };
 
   usePrompt({
     when: true,
@@ -28,10 +35,20 @@ const ConsultingPage = (props) => {
       */}
       <div className={classes.consulting_page}>
         <div className={classes.video_box}>
-          <ConsultingMeetPage isRealtor={isRealtor} toggleTest={toggleTest} />
+          <ConsultingMeetPage
+            isRealtor={isRealtor}
+            toggleTest={toggleTest}
+            status={status}
+            statusChangeHandler={statusChangeHandler}
+            sessionId={sessionId}
+          />
         </div>
         <div className={classes.lists}>
-          <ConsultingRightBox isRealtor={isRealtor} />
+          <ConsultingRightBox
+            isRealtor={isRealtor}
+            statusChangeHandler={statusChangeHandler}
+            status={status}
+          />
         </div>
       </div>
     </>
