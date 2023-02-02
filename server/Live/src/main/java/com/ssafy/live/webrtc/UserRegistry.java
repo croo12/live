@@ -27,12 +27,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @author Boni Garcia (bgarcia@gsyc.es)
  * @author Micael Gallego (micael.gallego@gmail.com)
+ * @authos Ivan Gracia (izanmail@gmail.com)
  * @since 4.3.1
  */
 public class UserRegistry {
 
-  private ConcurrentHashMap<String, UserSession> usersByName = new ConcurrentHashMap<>();
-  private ConcurrentHashMap<String, UserSession> usersBySessionId = new ConcurrentHashMap<>();
+  private final ConcurrentHashMap<String, UserSession> usersByName = new ConcurrentHashMap<>();
+  private final ConcurrentHashMap<String, UserSession> usersBySessionId = new ConcurrentHashMap<>();
 
   public void register(UserSession user) {
     usersByName.put(user.getName(), user);
@@ -53,10 +54,8 @@ public class UserRegistry {
 
   public UserSession removeBySession(WebSocketSession session) {
     final UserSession user = getBySession(session);
-    if (user != null) {
-      usersByName.remove(user.getName());
-      usersBySessionId.remove(session.getId());
-    }
+    usersByName.remove(user.getName());
+    usersBySessionId.remove(session.getId());
     return user;
   }
 
