@@ -1,0 +1,52 @@
+.footer {
+  width: 100%;
+  height: 160px;
+  box-sizing: border-box;
+  background: #ededed;
+  padding: 40px 0;
+
+  .footerInner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10%;
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 50vw;
+
+      .partList {
+        display: flex;
+        color: #555555;
+
+        li {
+          font-size: 14px;
+          font-weight: 400;
+          margin: 0 1%;
+          cursor: pointer;
+        }
+      }
+
+      .footerDesc {
+        display: flex;
+        font-weight: 700;
+        font-size: 14px;
+      }
+    }
+
+    .snsIcon {
+      :hover {
+        font-size: 24px;
+      }
+      span {
+        font-size: 20px;
+        margin: 6px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+    }
+  }
+}

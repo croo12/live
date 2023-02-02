@@ -6,38 +6,32 @@ import { FiInstagram } from "react-icons/fi";
 
 const Footer = () => {
   return (
-    <div
-      className={classes.set}
-      style={{ backgroundColor: "#EDEDED", padding: "50px 0" }}
-    >
-      <div
-        className={classes.inner}
-        style={{ border: "", width: "1300px", margin: "auto" }}
-      >
-        <div
-          className={classes.footerContent}
-          style={{ display: "flex", padding: "20px" }}
-        >
-          <p style={{ flex: "3", textAlign: "left" }}>
-            회사소개 이용약관 개인정보처리방침 매물관리규정 <br />{" "}
-            <strong style={{ lineHeight: "1.7em" }}>
-              © SSAFY Corp.Live.All rights Reserved
-            </strong>
-          </p>
-          <div style={{ flex: "0.5" }}>
-            <span style={{ padding: "1px 2px 3px 4px" }}>
-              <SiYoutubemusic />
-            </span>
-            <span style={{ padding: "1px 2px 3px 4px" }}>
-              <BsFacebook />
-            </span>
-            <span style={{ padding: "1px 2px 3px 4px" }}>
-              <AiFillTwitterCircle />
-            </span>
-            <span style={{ padding: "1px 2px 3px 4px" }}>
-              <FiInstagram />
-            </span>
+    <div className={classes.footer}>
+      <div className={classes.footerInner}>
+        <div className={classes.item}>
+          <ul className={classes.partList}>
+            <li>회사소개</li>
+            <li>이용약관</li>
+            <li>개인정보처리방침</li>
+            <li>매물관리규정</li>
+          </ul>
+          <div className={classes.footerDesc}>
+            © SSAFY Corp.Live.All rights Reserved
           </div>
+        </div>
+        <div className={classes.snsIcon}>
+          <span>
+            <SiYoutubemusic />
+          </span>
+          <span>
+            <BsFacebook />
+          </span>
+          <span>
+            <AiFillTwitterCircle />
+          </span>
+          <span>
+            <FiInstagram />
+          </span>
         </div>
       </div>
     </div>
