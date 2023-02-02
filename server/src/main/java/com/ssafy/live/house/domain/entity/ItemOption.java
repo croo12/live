@@ -15,7 +15,7 @@ public class ItemOption {
     @Column(name = "item_no")
     private Long itemNo;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "item_id")
     private Item item;

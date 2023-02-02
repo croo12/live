@@ -5,12 +5,24 @@ import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.Entity.item.Direction;
 import com.ssafy.live.common.domain.Entity.item.Entrance;
 import com.ssafy.live.common.domain.Entity.item.Heating;
-import lombok.*;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,26 +32,20 @@ import java.util.List;
 public class Item extends BaseEntity {
 
     private int deposit;
-
     private int rent;
-
     @Column(name = "maintenance_fee")
     private int maintenanceFee;
-
     private String description;
-
+    @Column(name = "building_name")
+    private String buildingName;
     @Column(name = "move_in_date")
     private LocalDate moveInDate;
-
     @Enumerated(EnumType.STRING)
     private Heating heating;
-
     @Enumerated(EnumType.STRING)
     private Direction direction;
-
     @Enumerated(EnumType.STRING)
     private Entrance entrance;
-
     @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)
     private ItemOption itemOption;
 
