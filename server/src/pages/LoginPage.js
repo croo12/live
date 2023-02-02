@@ -1,18 +1,18 @@
 import { useState } from "react";
 import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
-import Card from "../UI/Card";
+
+import classes from "./LoginPage.module.scss";
+import LoginLogo from "../assets/image/loginLogo.png";
 
 const LoginPage = () => {
   const [loginMode, setLoginMode] = useState("USER"); // 로그인 모드 상태 확인 ( USER , REALTOR )
 
-  const loginChangeHandler = (mode) => {
+  console.log(loginMode);
+
+  const loginModeHandler = (event) => {
     // 로그인 모드 변경 함수
-    if (mode === "USER") {
-      setLoginMode("REALTOR");
-      return;
-    }
-    setLoginMode("USER");
+    setLoginMode(event.target.value);
   };
 
   const userLoginHandler = (userLoginInfo) => {
@@ -26,23 +26,42 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-      <h1>안녕 나는 로그인 페이지</h1>
-      <Card>
-        {loginMode === "USER" && (
-          <UserLoginForm
-            onLoginModeChange={loginChangeHandler}
-            onUserLogin={userLoginHandler}
-          />
-        )}
-        {loginMode === "REALTOR" && (
-          <RealtorLoginForm
-            onLoginModeChange={loginChangeHandler}
-            onRealtorLogin={realtorLoginHandler}
-          />
-        )}
-      </Card>
-    </>
+    <div className={classes.login}>
+      <div className={classes.section}>
+        <div className={classes.loginArea}>
+          <div className={classes.loginHead}>
+            <img src={LoginLogo} alt="Live" />
+          </div>
+          <div className={classes.loginBox}>
+            <div className={classes.loginTab}>
+              <input
+                type="radio"
+                name="loginTab"
+                id="userTab"
+                onChange={loginModeHandler}
+                value="USER"
+                defaultChecked //defaultChecked 말고 그냥 checked 하면 체이닝 어쩌구하면서 에러 폭발함
+              />
+              <label htmlFor="userTab">일반 회원</label>
+              <input
+                type="radio"
+                name="loginTab"
+                id="realtorTab"
+                onChange={loginModeHandler}
+                value="REALTOR"
+              />
+              <label htmlFor="realtorTab">공인중개사</label>
+            </div>
+            {loginMode === "USER" && (
+              <UserLoginForm onUserLogin={userLoginHandler} />
+            )}
+            {loginMode === "REALTOR" && (
+              <RealtorLoginForm onRealtorLogin={realtorLoginHandler} />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
