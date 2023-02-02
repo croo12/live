@@ -1,28 +1,17 @@
 package com.ssafy.live.house.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.Entity.item.Direction;
 import com.ssafy.live.common.domain.Entity.item.Entrance;
 import com.ssafy.live.common.domain.Entity.item.Heating;
+import lombok.*;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,14 +27,20 @@ public class Item extends BaseEntity {
     private String description;
     @Column(name = "building_name")
     private String buildingName;
+
     @Column(name = "move_in_date")
     private LocalDate moveInDate;
+
     @Enumerated(EnumType.STRING)
     private Heating heating;
+
     @Enumerated(EnumType.STRING)
     private Direction direction;
+
     @Enumerated(EnumType.STRING)
     private Entrance entrance;
+
+    @JsonIgnore
     @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)
     private ItemOption itemOption;
 
@@ -53,10 +48,12 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "house_no")
     private House house;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "realtor_no")
     private Realtor realtor;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<ItemImage> houseImages = new ArrayList<>();
 }

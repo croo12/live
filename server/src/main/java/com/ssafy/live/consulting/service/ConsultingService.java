@@ -90,7 +90,7 @@ public class ConsultingService {
         if(list.isEmpty()) {
             consultingListNotFound();
         }
-        return response.success(list,"상담 목록을 조회합니다.", HttpStatus.OK);
+        return response.success(list,"상담 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> reservationListByUser(Long userNo, int status) {
@@ -119,7 +119,7 @@ public class ConsultingService {
         if (list.isEmpty()){
             consultingListNotFound();
         }
-        return response.success(list,"상담 목록을 조회합니다.", HttpStatus.OK);
+        return response.success(list,"상담 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> changeStatus(ConsultingRequest.ChangeStatus request) {
@@ -131,5 +131,20 @@ public class ConsultingService {
 
     public ResponseEntity<?> consultingListNotFound() {
         return response.success("상담 목록이 존재하지 않습니다.", HttpStatus.NO_CONTENT);
+    }
+
+    public ResponseEntity<?> detailReservation(Long consultingNo) {
+        // 상담 정보
+        Consulting consulting = consultingRepository.findByNo(consultingNo);
+        // 상담매물에서 상담번호로 리스트 얻기
+        List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(consultingNo);
+        // 매물번호로 매물 리스트 얻기
+        List<Item> items = new ArrayList<>();
+        consultingItems.stream()
+            .forEach(consultingItem -> {
+                items.add(itemRepository.findByNo(consultingItem.getItem().getNo()));
+            });
+        ConsultingResponse.ReservationDetail detail = new ConsultingResponse.ReservationDetail(consulting, items);
+        return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.ssafy.live.house.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class ItemOption {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
+    @JsonIgnore
     @JoinColumn(name = "item_id")
     private Item item;
 

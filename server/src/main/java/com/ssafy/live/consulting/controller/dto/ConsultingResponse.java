@@ -3,7 +3,9 @@ package com.ssafy.live.consulting.controller.dto;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.consulting.domain.entity.Consulting;
+import com.ssafy.live.house.domain.entity.Item;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -67,6 +69,25 @@ public class ConsultingResponse {
             this.status = consulting.getStatus().getConsultingStatus();
             this.representativeItem = buildingName;
             this.itemCount = count;
+        }
+    }
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    public static class ReservationDetail {
+
+        private Long consultingNo;
+        private LocalDateTime consultingDate;
+        private String requirement;
+        List<Item> itemList;
+
+        @Builder
+        public ReservationDetail(Consulting consulting, List<Item> itemList) {
+            this.consultingNo = consulting.getNo();
+            this.consultingDate = consulting.getConsultingDate();
+            this.requirement = consulting.getRequirement();
+            this.itemList = itemList;
         }
     }
 }

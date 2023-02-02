@@ -1,5 +1,6 @@
 package com.ssafy.live.consulting.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.ConsultingStatus;
@@ -33,6 +34,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Consulting extends BaseEntity {
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "realtor_no")
     private Realtor realtor;
