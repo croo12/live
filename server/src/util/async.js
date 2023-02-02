@@ -1,7 +1,9 @@
-import axios from "axios";
+import _axios from "axios";
 
-export default axios.create({
+const axios = _axios.create({
   Headers: {
     "Content-Type": "application/json",
   },
 });
+
+export default axios;

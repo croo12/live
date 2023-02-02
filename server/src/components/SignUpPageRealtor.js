@@ -1,5 +1,8 @@
 import React, { useState, useRef } from "react";
 import Card from "../UI/Card";
+import Modal from "../UI/Modal";
+import FindBrokerOfficeModalOverlay from "./FindBrokerOfficeModalOverly";
+import { Link } from "react-router-dom";
 
 const SignUpPageRealtor = () => {
   const onChangeHanldler = (e) => {
@@ -57,19 +60,39 @@ const SignUpPageRealtor = () => {
     console.log(file);
   };
 
+  const [findBrokerOffice, setFindBrokerOffice] = useState(null);
+
   const deleteImage = () => {
     setImgFile({
       imgFile: "",
     });
   };
 
+  const FindBrokerOfficeChangeHandler = () => {
+    if (findBrokerOffice === null) {
+      setFindBrokerOffice(true);
+      return;
+    }
+
+    setFindBrokerOffice(null);
+  };
+
   return (
     <Card>
+      <>
+        {findBrokerOffice && (
+          <Modal onConfirm={FindBrokerOfficeChangeHandler}>
+            <FindBrokerOfficeModalOverlay
+              onModalStateChange={FindBrokerOfficeChangeHandler}
+            />
+          </Modal>
+        )}
+      </>
+      <button onClick={FindBrokerOfficeChangeHandler}>중개 사무소 찾기</button>
       <form>
-        <button>조회하기</button>
         <div>
-          <label htmlFor="businessNumber">사업자 상호 </label>
-          <input id="businessNumber" name="businessNumber" type="text" />
+          <label htmlFor="businessCorp">사업자 상호 </label>
+          <input id="businessCorp" name="businessCorp" type="text" />
         </div>
         <div>
           <label htmlFor="realtorName">사업자 대표명 </label>
