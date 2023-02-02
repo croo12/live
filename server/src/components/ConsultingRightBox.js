@@ -1,35 +1,29 @@
 import { useState } from "react";
 import ListBox from "../UI/ListBox";
+import { REALTOR_STATUS, USER_STATUS } from "./ConsultingMeetPage";
 import HouseCardContent from "./HouseCardContent";
 import ReservationCardContent from "./ReservationCardContent";
 
-const ConsultingRightBox = (props) => {
-  const [status, setStatus] = useState("reservation"); //중개사만 이걸로 시작해야함
-
-  const statusChangeHandler = (action) => {
-    console.log("짜잔");
-    setStatus(action);
-  };
+const ConsultingRightBox = ({ statusChangeHandler, status, isRealtor }) => {
+  const [detail, setDetail] = useState(-1);
 
   return (
     <>
-      <h2>화상통화 오른쪽 상자</h2>
-      {status === "reservation" && (
+      {isRealtor && REALTOR_STATUS.BEFORE_START === status && (
         <ListBox dataArray={[1, 2, 3]}>
           <ReservationCardContent
             isConsulting={true}
-            statusChangeHandler={statusChangeHandler}
+            statusChangeHandler={() => statusChangeHandler()}
           />
         </ListBox>
       )}
-      {status === "house" && (
+      {((!isRealtor && detail === -1) ||
+        (REALTOR_STATUS.BEFORE_START !== status && detail === -1)) && (
         <ListBox dataArray={[0, 1]}>
           <HouseCardContent />
         </ListBox>
       )}
-      {status === "houseDetail" && (
-        <ReservationCardContent isConsulting={true} />
-      )}
+      {detail !== -1 && <ReservationCardContent isConsulting={true} />}
     </>
   );
 };
