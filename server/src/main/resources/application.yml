@@ -25,7 +25,7 @@ spring:
     include: aws
 
   redis:
-    host: localhost
+    host: redis-container
     port: '6379'
     password: 'liveB104'
 
@@ -33,7 +33,7 @@ spring:
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    url: jdbc:mysql://localhost/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://mysql-container/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
