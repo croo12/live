@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "consulting_no"))
-@SuperBuilder
+@Builder
 @Entity
 public class Consulting extends BaseEntity {
 

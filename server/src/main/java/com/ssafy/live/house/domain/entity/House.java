@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "house_no"))
 @Entity
-@SuperBuilder
 public class House extends BaseEntity {
 
     @OneToMany(mappedBy = "house")

@@ -1,21 +1,21 @@
 package com.ssafy.live.house.controller.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
-import com.ssafy.live.house.domain.entity.House;
-import com.ssafy.live.house.domain.entity.Item;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 
 @Getter
-@SuperBuilder
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class HouseResponse extends BaseEntity {
+public class HouseParam {
+    private Long houseNo;
     private int isActive;
     private String address;
     private float supplyArea;
@@ -31,4 +31,6 @@ public class HouseResponse extends BaseEntity {
     private int room;
     private int bathroom;
     private String regionCode;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 }
