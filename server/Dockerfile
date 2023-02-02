@@ -19,10 +19,10 @@ COPY --from=builder /build/build/libs/live-0.0.1-SNAPSHOT.jar .
 EXPOSE 8080
 
 # root권한으로 실행
-ENTRYPOINT [                                                \
-    "java",                                                 \
-    "-jar",                                                 \
-    "-Djava.security.egd=file:/dev/./urandom",              \
-    "-Dsun.net.inetaddr.ttl=0",                             \
-    "live-0.0.1-SNAPSHOT.jar"              \
+ENTRYPOINT [
+    "java",
+    "-jar",
+    "-Djava.security.egd=file:/dev/./urandom",
+    "-Dsun.net.inetaddr.ttl=0",
+    "live-0.0.1-SNAPSHOT.jar"
 ]
