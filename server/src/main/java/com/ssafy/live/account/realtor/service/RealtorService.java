@@ -188,9 +188,13 @@ public class RealtorService {
         return response.success("공인중개사 정보 수정을 완료했습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findPassword(RealtorRequest.FindPassword request) {
+
+    public ResponseEntity<?> temporaryPassword(RealtorRequest.FindPassword request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
-        emailService.joinEmail(realtor.getEmail(), realtor.getPassword(), realtor.getName());
+        String temporaryPwd = realtor.generateRandomPassword();
+        realtor.updatePassword(passwordEncoder.encode(temporaryPwd));
+        realtorRepository.save(realtor);
+        emailService.joinEmail(realtor.getEmail(), temporaryPwd, realtor.getName());
         return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
     }
 

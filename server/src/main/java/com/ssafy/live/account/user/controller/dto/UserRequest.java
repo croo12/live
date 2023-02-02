@@ -4,7 +4,11 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 
 import com.ssafy.live.account.user.domain.entity.Users;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -76,5 +80,15 @@ public class UserRequest {
     public  static class withdrawl {
         @NotEmpty(message = "해당하는 user_no가 없습니다.")
         private Long no;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class FindPassword {
+
+        private String id;
+        private String email;
     }
 }

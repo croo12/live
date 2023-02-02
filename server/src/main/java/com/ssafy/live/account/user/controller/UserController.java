@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,5 +72,11 @@ public class UserController {
     public ResponseEntity<?> authority() {
         log.info("ADD ROLE_ADMIN");
         return usersService.authority();
+    }
+
+    @PostMapping("/passcheck")
+    public ResponseEntity<?> temporaryPassword(@RequestBody UserRequest.FindPassword request) {
+        log.info("사용자 임시비밀번호 발급");
+        return usersService.temporaryPassword(request);
     }
 }
