@@ -25,6 +25,16 @@ public class ConsultingRequest {
     }
 
     @Getter
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class AddItem {
+
+        private Long consultingNo;
+        private List<Long> itemList;
+    }
+
+    @Getter
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class ChangeStatus {

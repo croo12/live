@@ -51,4 +51,14 @@ public class ConsultingController {
     public ResponseEntity<?> detailReservation(@PathVariable Long consultingNo) {
         return consultingService.detailReservation(consultingNo);
     }
+
+
+    @PostMapping("/items")
+    public ResponseEntity<?> addConsultingItems(@Validated @RequestBody ConsultingRequest.AddItem addItem, Errors errors)  {
+        // validation check
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
+        }
+        return consultingService.addConsultingItems(addItem);
+    }
 }

@@ -7,6 +7,7 @@ import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.ConsultingStatus;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
+import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.ChangeStatus;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationRealtor;
@@ -146,5 +147,20 @@ public class ConsultingService {
             });
         ConsultingResponse.ReservationDetail detail = new ConsultingResponse.ReservationDetail(consulting, items);
         return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> addConsultingItems(AddItem addItem) {
+        List<Item> list = addItem.getItemList().stream()
+            .map(r -> itemRepository.findByNo(r))
+            .collect(Collectors.toList());
+        Consulting consulting = consultingRepository.findByNo(addItem.getConsultingNo());
+        list.stream()
+            .forEach(item -> {
+                ConsultingItem consultingItem = ConsultingItem.builder()
+                    .consulting(consulting)
+                    .item(item).build();
+                consultingItemRepository.save(consultingItem);
+            });
+        return response.success("상담 매물 등록이 완료되었습니다.", HttpStatus.OK);
     }
 }
