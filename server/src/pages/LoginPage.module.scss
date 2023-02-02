@@ -1,7 +1,7 @@
 .login {
   width: 100%;
   height: calc(
-    100vh - 70px - 2px - 180px
+    100vh - 72px - 160px
   ); // 전체 - 헤더높이 - 푸터높이 ( 스크롤 없애고 딱 맞추기위해 )
   min-height: 680px;
 
@@ -20,7 +20,6 @@
 
       @media (max-width: 1024px) {
         width: 100%;
-        min-width: 560px;
       }
 
       .loginHead {
