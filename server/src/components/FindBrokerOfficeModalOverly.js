@@ -5,8 +5,6 @@ const FindBrokerOfficeModalOverlay = (props) => {
   const modalBusinessCorpRef = useRef();
   const modalRealtorName = useRef();
 
-  const [businessCorp, setBusinessCorp] = useState("");
-  const [realtorName, setRealtorName] = useState("");
   const [realtorList, setRealtorList] = useState([]);
 
   const modalStateChangeHandler = () => {
@@ -14,22 +12,17 @@ const FindBrokerOfficeModalOverlay = (props) => {
   };
 
   const onClickHandler = () => {
-    setBusinessCorp(modalBusinessCorpRef.current.value);
-    setRealtorName(modalRealtorName.current.value);
+    const bsnmCmpnm = modalBusinessCorpRef.current.value;
+    const brkrNm = modalRealtorName.current.value;
 
-    const url = `https://apis.data.go.kr/1611000/nsdi/EstateBrkpgService/attr/getEBOfficeInfo?IdCode=11110&bsnmCmpnm= ${businessCorp} 
-    &brkrNm=${realtorName} 
+    const url = `https://apis.data.go.kr/1611000/nsdi/EstateBrkpgService/attr/getEBOfficeInfo?bsnmCmpnm= ${bsnmCmpnm} 
+    &brkrNm=${brkrNm} 
     &format=json&SttusSeCode=1&ServiceKey=WJW00Su3vUYQxWl%2FCdTWnPqgt4dnBsErjbqIqeo9I7%2BWiVcC4HDx26kL%2BYDc0MRTL%2BjZ6RC1BWUVlf9Z8rWQPg%3D%3D`;
 
     fetch(url)
       .then((result) => result.json())
       .then((json) => {
-        console.log(json);
         const realtorList = json.EBOffices.field;
-        realtorList.map((item) => {
-          // console.log(item.bsnmCmpnm);
-          // console.log(item.ldCodeNm);
-        });
         setRealtorList(realtorList);
       });
   };
