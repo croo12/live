@@ -20,7 +20,6 @@ public class ConsultingRequest {
         private Long userNo;
         private LocalDateTime consultingDate;
         private String requirement;
-        private boolean status;
         private List<Long> itemList;
     }
 

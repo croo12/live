@@ -1,12 +1,6 @@
 package com.ssafy.live.account.realtor.controller.dto;
 
-import com.ssafy.live.account.realtor.domain.entity.Realtor;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 public class RealtorResponse {
 
@@ -20,8 +14,9 @@ public class RealtorResponse {
         private Long refreshTokenExpirationTime;
     }
 
+    @Builder
     @Getter
-    @Setter
+    @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class FindByRegion {
 
@@ -31,16 +26,6 @@ public class RealtorResponse {
         private String description;
         private String businessAddress;
         private String imageSrc;
-
-        @Builder
-        public FindByRegion(Realtor realtor) {
-            this.name = realtor.getName();
-            this.phone = realtor.getPhone();
-            this.corp = realtor.getCorp();
-            this.description = realtor.getDescription();
-            this.businessAddress = realtor.getBusinessAddress();
-            this.imageSrc = realtor.getImageSrc();
-        }
     }
 
     @Builder
@@ -72,15 +57,5 @@ public class RealtorResponse {
         private String description;
         private String businessAddress;
         private String imageSrc;
-
-        @Builder
-        public FindRealtorList(Realtor realtor) {
-            this.name = realtor.getName();
-            this.phone = realtor.getPhone();
-            this.corp = realtor.getCorp();
-            this.description = realtor.getDescription();
-            this.businessAddress = realtor.getBusinessAddress();
-            this.imageSrc = realtor.getImageSrc();
-        }
     }
 }

@@ -3,12 +3,15 @@ package com.ssafy.live.consulting.controller.dto;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.consulting.domain.entity.Consulting;
+import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import javax.persistence.Column;
 
 public class ConsultingResponse {
 
@@ -26,19 +29,6 @@ public class ConsultingResponse {
         private int status;
         private String representativeItem;
         private int itemCount;
-
-        @Builder
-        public ReservationRealtor(Consulting consulting, Users user, int count, String buildingName) {
-            this.consultingNo = consulting.getNo();
-            this.realtorNo = consulting.getRealtor().getNo();
-            this.userNo = user.getNo();
-            this.userName = user.getName();
-            this.userImage = user.getImageSrc();
-            this.consultingDate = consulting.getConsultingDate();
-            this.status = consulting.getStatus().getConsultingStatus();
-            this.representativeItem = buildingName;
-            this.itemCount = count;
-        }
     }
 
     @Builder
@@ -56,20 +46,6 @@ public class ConsultingResponse {
         private int status;
         private String representativeItem;
         private int itemCount;
-
-        @Builder
-        public ReservationUser(Consulting consulting, Realtor realtor, int count, String buildingName) {
-            this.consultingNo = consulting.getNo();
-            this.realtorNo = realtor.getNo();
-            this.userNo = consulting.getUsers().getNo();
-            this.realtorName = realtor.getName();
-            this.realtorCorp = realtor.getCorp();
-            this.realtorImage = realtor.getImageSrc();
-            this.consultingDate = consulting.getConsultingDate();
-            this.status = consulting.getStatus().getConsultingStatus();
-            this.representativeItem = buildingName;
-            this.itemCount = count;
-        }
     }
 
     @Builder
@@ -80,14 +56,19 @@ public class ConsultingResponse {
         private Long consultingNo;
         private LocalDateTime consultingDate;
         private String requirement;
-        List<Item> itemList;
+        List<MyConsultingItem> itemList;
 
         @Builder
-        public ReservationDetail(Consulting consulting, List<Item> itemList) {
-            this.consultingNo = consulting.getNo();
-            this.consultingDate = consulting.getConsultingDate();
-            this.requirement = consulting.getRequirement();
-            this.itemList = itemList;
+        @Getter
+        public static class MyConsultingItem {
+            private Long itemNo;
+            private int deposit;
+            private int rent;
+            private int maintenanceFee;
+            private String description;
+            private String buildingName;
+            private String address;
+            private String addressDetail;
         }
     }
 }

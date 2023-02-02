@@ -202,7 +202,14 @@ public class RealtorService {
         String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(sidoName, gugunName, dongName).getRegionCode();
         List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-            .map(r -> new RealtorResponse.FindByRegion(r))
+            .map(r -> RealtorResponse.FindByRegion.builder()
+                    .name(r.getName())
+                    .phone(r.getPhone())
+                    .corp(r.getCorp())
+                    .description(r.getDescription())
+                    .businessAddress(r.getBusinessAddress())
+                    .imageSrc(r.getImageSrc())
+                    .build())
             .collect(Collectors.toList());
         return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
@@ -210,8 +217,15 @@ public class RealtorService {
     public ResponseEntity<?> findRealtorList() {
         List<Realtor> findRealtors = realtorRepository.findAll();
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-                .map(r -> new RealtorResponse.FindByRegion(r))
+                .map(r -> RealtorResponse.FindByRegion.builder()
+                        .name(r.getName())
+                        .phone(r.getPhone())
+                        .corp(r.getCorp())
+                        .description(r.getDescription())
+                        .businessAddress(r.getBusinessAddress())
+                        .imageSrc(r.getImageSrc())
+                        .build())
                 .collect(Collectors.toList());
-        return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
+        return response.success(list,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 }
