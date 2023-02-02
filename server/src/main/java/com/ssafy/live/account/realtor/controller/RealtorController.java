@@ -78,9 +78,9 @@ public class RealtorController {
     }
 
     @PostMapping("/passcheck")
-    public ResponseEntity<?> findPassword(@RequestBody RealtorRequest.FindPassword request) {
-        log.info("공인중개사 비밀번호 찾기");
-        return realtorService.findPassword(request);
+    public ResponseEntity<?> temporaryPassword(@RequestBody RealtorRequest.FindPassword request) {
+        log.info("공인중개사 임시비밀번호 발급");
+        return realtorService.temporaryPassword(request);
     }
 
     @GetMapping ("/{realtorNo}")

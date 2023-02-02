@@ -30,7 +30,7 @@ spring:
     password: 'liveB104'
 
   datasource:
-    password: 'Abcd123@'
+    password: '1234'
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     url: jdbc:mysql://localhost:3306/live?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
