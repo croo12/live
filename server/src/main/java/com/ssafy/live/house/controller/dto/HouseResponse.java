@@ -1,6 +1,6 @@
 package com.ssafy.live.house.controller.dto;
 
-import com.ssafy.live.common.domain.BaseEntity;
+import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
 import lombok.*;
