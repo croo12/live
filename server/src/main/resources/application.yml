@@ -33,7 +33,7 @@ spring:
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    url: jdbc:mysql://mysql-container/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://13.209.12.115:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
