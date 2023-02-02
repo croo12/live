@@ -4,7 +4,6 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import java.util.Optional;
 
 import io.lettuce.core.dynamic.annotation.Param;
-import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
