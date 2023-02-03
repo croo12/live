@@ -29,3 +29,4 @@ spring:
     suffix: .html
     check-template-location: 'true'
     mode: HTML
+
