@@ -35,12 +35,6 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
-credentials:
-  accessKey: ${ACCESS_KEY_AWS_S3}
-  secretKey: ${SECRET_KEY_AWS_S3}
-s3:
-  bucket: ${BUCKET_ADDRESS}
-
 cloud:
   aws:
     credentials:
