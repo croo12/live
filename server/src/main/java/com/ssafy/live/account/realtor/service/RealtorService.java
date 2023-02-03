@@ -2,7 +2,7 @@ package com.ssafy.live.account.realtor.service;
 
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.auth.security.SecurityUtil;
-import com.ssafy.live.account.common.Authority;
+import com.ssafy.live.account.common.domain.Authority;
 import com.ssafy.live.account.common.dto.CommonResponse;
 import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
@@ -21,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

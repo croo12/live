@@ -8,6 +8,7 @@ public class RealtorResponse {
     @Getter
     @AllArgsConstructor
     public static class TokenInfo {
+
         private String grantType;
         private String accessToken;
         private String refreshToken;
