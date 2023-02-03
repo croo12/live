@@ -23,7 +23,6 @@ public class ItemOption {
     @MapsId
     @JoinColumn(name = "item_no", referencedColumnName = "no")
     @JsonIgnore
-    @JoinColumn(name = "item_id")
     private Item item;
 
     private boolean bed;

@@ -21,7 +21,6 @@ import java.util.List;
 @Builder
 public class Item extends BaseEntity {
 
-
     private int deposit;
 
     private int rent;
