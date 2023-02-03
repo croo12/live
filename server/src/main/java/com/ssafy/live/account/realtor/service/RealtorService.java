@@ -2,7 +2,7 @@ package com.ssafy.live.account.realtor.service;
 
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.auth.security.SecurityUtil;
-import com.ssafy.live.account.common.Authority;
+import com.ssafy.live.account.common.domain.Authority;
 import com.ssafy.live.account.common.dto.CommonResponse;
 import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
@@ -21,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -202,7 +201,14 @@ public class RealtorService {
         String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(sidoName, gugunName, dongName).getRegionCode();
         List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-            .map(r -> new RealtorResponse.FindByRegion(r))
+            .map(r -> RealtorResponse.FindByRegion.builder()
+                    .name(r.getName())
+                    .phone(r.getPhone())
+                    .corp(r.getCorp())
+                    .description(r.getDescription())
+                    .businessAddress(r.getBusinessAddress())
+                    .imageSrc(r.getImageSrc())
+                    .build())
             .collect(Collectors.toList());
         return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
@@ -210,8 +216,15 @@ public class RealtorService {
     public ResponseEntity<?> findRealtorList() {
         List<Realtor> findRealtors = realtorRepository.findAll();
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-                .map(r -> new RealtorResponse.FindByRegion(r))
+                .map(r -> RealtorResponse.FindByRegion.builder()
+                        .name(r.getName())
+                        .phone(r.getPhone())
+                        .corp(r.getCorp())
+                        .description(r.getDescription())
+                        .businessAddress(r.getBusinessAddress())
+                        .imageSrc(r.getImageSrc())
+                        .build())
                 .collect(Collectors.toList());
-        return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
+        return response.success(list,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package com.ssafy.live.account.realtor.domain.entity;
 
-import com.ssafy.live.account.common.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.live.account.common.domain.Member;
 import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
@@ -36,15 +37,18 @@ public class Realtor extends Member implements UserDetails {
     @Column(name = "business_address")
     private String businessAddress;
 
+    @JsonIgnore
     @Column
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
     @Builder.Default
     private List<Consulting> consultings = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
     @Builder.Default
     private List<Contract> contracts = new ArrayList<>();
@@ -57,6 +61,7 @@ public class Realtor extends Member implements UserDetails {
     @Builder.Default
     private List<Notice> notices = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "realtor", cascade = CascadeType.ALL)
     @Builder.Default
     private List<Item> items = new ArrayList<>();

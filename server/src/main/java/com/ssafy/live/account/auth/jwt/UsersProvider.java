@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UsersProvider implements AuthenticationProvider {
+
     @Autowired
     CustomUserDetailService userDetailsService;
     @SuppressWarnings("unchecked")

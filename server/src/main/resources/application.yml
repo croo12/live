@@ -4,6 +4,25 @@ com:
       path: /Live/Images/profile/
 
 spring:
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    username: sxott94@naver.com
+    host: smtp.naver.com
+    password:
+    port: 465
+    protocol: smtps
+    thymeleaf:
+      encoding: UTF-8
+      prefix: classpath:/templates/
+      cache: 'false'
+      suffix: .html
+      check-template-location: 'true'
+      mode: HTML
   jpa:
     database: mysql
     properties:
@@ -15,7 +34,22 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    defer-datasource-initialization: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: 'false'
 
+cloud:
+  aws:
+    credentials:
+      accessKey: ${ACCESS_KEY_AWS_S3}
+      secretKey: ${SECRET_KEY_AWS_S3}
+    s3:
+      bucket: ${BUCKET_ADDRESS}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
   servlet:
     multipart:
       max-file-size: 10MB
@@ -25,40 +59,20 @@ spring:
   profiles:
     include: aws
 
-  redis:
-    host: redis-container
-    port: '6379'
-    password: 'liveB104'
+redis:
+  host: redis-container
+  port: '6379'
+  password: 'liveB104'
 
-  datasource:
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://13.209.12.115:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC?createDatabaseIfNotExist=true
-    url: jdbc:mysql://localhost:3306/live?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-  mail:
-    properties:
-      mail:
-        smtp:
-          starttls:
-            enable: true
-          auth: true
-    username: mnb3559@naver.com
-    host: smtp.naver.com
-    password: gPwjd20180354!
-    port: 465
-    protocol: smtps
+datasource:
+  password: 1234
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  username: root
+  url: jdbc:mysql://13.209.12.115:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
 
-  thymeleaf:
-    encoding: UTF-8
-    prefix: classpath:/templates/
-    cache: 'false'
-    suffix: .html
-    check-template-location: 'true'
-    mode: HTML
+mvc:
+  pathmatch:
+    matching-strategy: ant_path_matcher
 
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
@@ -76,17 +90,3 @@ logging:
   level:
     org:
       hibernate: info
-
-
-cloud:
-  aws:
-    credentials:
-      accessKey: AKIASBJPUR7YXWRLBXC3
-      secretKey: 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
-    s3:
-      bucket: bje-s3-bucket
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-

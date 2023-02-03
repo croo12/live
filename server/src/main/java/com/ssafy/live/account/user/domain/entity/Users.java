@@ -1,6 +1,6 @@
 package com.ssafy.live.account.user.domain.entity;
 
-import com.ssafy.live.account.common.Member;
+import com.ssafy.live.account.common.domain.Member;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.notice.domain.entity.Notice;
@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @AttributeOverride(name = "no", column = @Column(name = "user_no"))
 @Entity
 public class Users extends Member implements UserDetails {
+
     private String id;
     private String score;
     private String region;
@@ -86,5 +87,4 @@ public class Users extends Member implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

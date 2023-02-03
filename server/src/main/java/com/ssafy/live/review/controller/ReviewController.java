@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/reviews")
+@RequestMapping("/reviews")
 public class ReviewController {
 
 }

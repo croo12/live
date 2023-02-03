@@ -1,5 +1,6 @@
 package com.ssafy.live.house.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Entity
 public class ItemImage extends BaseEntity {
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_no")
     private Item item;
