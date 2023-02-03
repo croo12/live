@@ -63,6 +63,11 @@ jwt:
 server:
   address: localhost
   port: '8080'
+  ssl:
+    key-store-password: kurento
+    key-store-type: JKS
+    key-store: classpath:keystore.jks
+    key-alias: kurento-selfsigned
 
 logging:
   level:
