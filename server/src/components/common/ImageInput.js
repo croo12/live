@@ -6,6 +6,7 @@
  *  - maxFileNum, 등록 가능한 최대 파일 수 ( 설정안했을 시 -> 기본 1개 )
  *  - maxFileSize, 등록 가능한 파일 최대 크기( 설정안했을 시 -> 기본 5MB )
  *  - isPreview, 이미지 미리보기 여부 ( true 일 때 미리보기 )
+ *  - setText : 사진 등록 라벨 이름 ( 기본 : 사진 업로드하기 )
  */
 
 import { useEffect, useState } from "react";
@@ -143,11 +144,10 @@ const ImageInput = (props) => {
           style={{ display: "none" }}
         />
         <label htmlFor="houseImage">
-          <strong style={{ color: "blue" }}>사진 업로드하기</strong>
+          <strong>{props.setText ? props.setText : "사진 업로드하기"}</strong>
         </label>
       </div>
       <div id="img__box">
-        미리보기
         {imagePreviewState.map((data) => {
           const image = data.image;
           const imageURL = data.url;

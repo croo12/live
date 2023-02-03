@@ -1,5 +1,8 @@
-import React, { useState, useRef } from "react";
-import Card from "../UI/Card";
+import React, { useState, useRef, useEffect } from "react";
+import classes from "./SignUpPageUser.module.scss";
+import ImageInput from "./common/ImageInput";
+
+import blankImage from "../assets/image/blank_profile.png";
 
 const SignUpPageUser = () => {
   const onChange = (e) => {
@@ -52,120 +55,131 @@ const SignUpPageUser = () => {
     setUserEmail(e.target.value);
   };
 
-  const [imgFile, setImgFile] = useState("");
-  const imgRef = useRef();
+  const [profile, setProfile] = useState("");
+  const [previewProfile, setPreviewProfile] = useState("");
 
-  // 이미지 업로드 input의 onChange
-  const saveImgFile = () => {
-    const file = imgRef.current.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImgFile(reader.result);
-    };
-    console.log(file);
+  const profileHandler = (data) => {
+    setProfile(data);
   };
 
-  const deleteImage = () => {
-    setImgFile({
-      imgFile: "",
-    });
+  useEffect(() => {
+    if (!profile) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(profile);
+
+    reader.onload = () => {
+      const preview = reader.result;
+
+      setPreviewProfile(preview);
+    };
+  }, [profile]);
+
+  const deleteProfile = () => {
+    setProfile("");
   };
 
   return (
-    <Card>
-      <form>
-        <div>
-          <label htmlFor="userId">아이디 </label>
-          <input
-            id="userId"
-            name="userId"
-            type="text"
-            value={userId}
-            onChange={onChangeUserId}
-          />
-          {userIdError && (
-            <div style={{ color: "red" }}>
-              최소 3자부터 최대 16자까지 입력가능합니다.
-            </div>
-          )}
-          <button>중복확인</button>
-        </div>
-        <div>
-          <label htmlFor="userPass">비밀번호 </label>
-          <input
-            id="userPass"
-            name="userPass"
-            type="password"
-            value={userPass}
-            onChange={onChangeUserPass}
-          />
-          {userPassError && (
-            <div style={{ color: "red" }}>
-              비밀번호는 문자,숫자,특수문자를 조합하여 9자이상 16자 이내이어야
-              합니다.
-            </div>
-          )}
-        </div>
-        <div>
-          <label htmlFor="userPassCheck">비밀번호 확인 </label>
-          <input
-            id="userPassCheck"
-            name="userPassCheck"
-            type="password"
-            value={userPassCheck}
-            onChange={onChangeUserPassCheck}
-          />
-          {userPassCheckError && (
-            <div style={{ color: "red" }}>비밀번호 입력값이 다릅니다!</div>
-          )}
-        </div>
-        <div>
-          <label htmlFor="userName">이름 </label>
-          <input id="userName" name="userName" type="text" />
-        </div>
-        <div>
-          <label htmlFor="userEmail">이메일 </label>
-          <input
-            id="userEmail"
-            name="userEmail"
-            type="email"
-            value={userEmail}
-            onChange={onChangeEmail}
-          />
-          {userEmailError && (
-            <div style={{ color: "red" }}>올바른 이메일 형식이 아닙니다!</div>
-          )}
-        </div>
-        <div>
-          <label htmlFor="userPhone">전화번호 </label>
-          <input id="userPhone" name="userPhone" type="text" />
-        </div>
-        <div>
-          <h4>사진등록</h4>
-          <div>
-            <img
-              src={imgFile ? imgFile : `/images/icon/user.png`}
-              alt="프로필 이미지"
+    <form className={classes.signupUser}>
+      <div className={classes.signupFieldSet}>
+        <h1>일반 회원 가입</h1>
+        <div className={classes.formInner}>
+          <div className={classes.profile}>
+            <ImageInput
+              setImage={profileHandler}
+              setText={
+                previewProfile ? (
+                  <div>
+                    <img src={previewProfile} alt="User Profile" />
+                    <p>변경</p>
+                  </div>
+                ) : (
+                  <div>
+                    <img src={blankImage} alt="Blank Profile" />
+                    <p>프로필 등록</p>
+                  </div>
+                )
+              }
             />
           </div>
-          <br />
-          <div>
+          <div className={classes.inputBox}>
+            <label htmlFor="userId">아이디 </label>
+            <div className={classes.inputButton}>
+              <input
+                id="userId"
+                name="userId"
+                type="text"
+                value={userId}
+                onChange={onChangeUserId}
+              />
+              <button>중복확인</button>
+            </div>
+            {userIdError && (
+              <div className={classes.errorText}>
+                최소 3자부터 최대 16자까지 입력가능합니다.
+              </div>
+            )}
+          </div>
+          <div className={classes.inputBox}>
+            <label htmlFor="userPass">비밀번호 </label>
             <input
-              type="file"
-              accept="image/*"
-              id="profileImg"
-              onChange={saveImgFile}
-              ref={imgRef}
+              id="userPass"
+              name="userPass"
+              type="password"
+              value={userPass}
+              onChange={onChangeUserPass}
             />
+            {userPassError && (
+              <div className={classes.errorText}>
+                비밀번호는 문자,숫자,특수문자를 조합하여 9자이상 16자 이내이어야
+                합니다.
+              </div>
+            )}
           </div>
-          <div>
-            <button onClick={deleteImage}>삭제</button>
+          <div className={classes.inputBox}>
+            <label htmlFor="userPassCheck">비밀번호 확인 </label>
+            <input
+              id="userPassCheck"
+              name="userPassCheck"
+              type="password"
+              value={userPassCheck}
+              onChange={onChangeUserPassCheck}
+            />
+            {userPassCheckError && (
+              <div className={classes.errorText}>
+                비밀번호 입력값이 다릅니다!
+              </div>
+            )}
+          </div>
+          <div className={classes.inputBox}>
+            <label htmlFor="userName">이름 </label>
+            <input id="userName" name="userName" type="text" />
+          </div>
+          <div className={classes.inputBox}>
+            <label htmlFor="userEmail">이메일 </label>
+            <input
+              id="userEmail"
+              name="userEmail"
+              type="email"
+              value={userEmail}
+              onChange={onChangeEmail}
+            />
+            {userEmailError && (
+              <div className={classes.errorText}>
+                올바른 이메일 형식이 아닙니다!
+              </div>
+            )}
+          </div>
+          <div className={classes.inputBox}>
+            <label htmlFor="userPhone">전화번호 </label>
+            <input id="userPhone" name="userPhone" type="text" />
           </div>
         </div>
         <button>회원가입</button>
-      </form>
-    </Card>
+      </div>
+    </form>
   );
 };
 
