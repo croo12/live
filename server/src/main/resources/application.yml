@@ -61,13 +61,8 @@ jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
 
 server:
-  address: 13.209.12.115
+  address: i8b104.p.ssafy.io
   port: '8080'
-  ssl:
-    key-store-password: kurento
-    key-store-type: JKS
-    key-store: classpath:keystore.jks
-    key-alias: kurento-selfsigned
 
 logging:
   level:
