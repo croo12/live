@@ -5,6 +5,8 @@ com:
 spring:
   jpa:
     database: mysql
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate.default_batch_fetch_size: 1000
       hibernate:
@@ -13,7 +15,6 @@ spring:
         show_sql: 'true'
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   mail:
     properties:
       mail:

@@ -25,10 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-/**
- * @author Ivan Gracia (izanmail@gmail.com)
- * @since 4.3.1
- */
 public class RoomManager {
 
   private final Logger log = LoggerFactory.getLogger(RoomManager.class);
@@ -38,14 +34,6 @@ public class RoomManager {
 
   private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
 
-  /**
-   * Looks for a room in the active room list.
-   *
-   * @param roomName
-   *          the name of the room
-   * @return the room if it was already created, or a new one if it is the first time this room is
-   *         accessed
-   */
   public Room getRoom(String roomName) {
     log.debug("Searching for room {}", roomName);
     Room room = rooms.get(roomName);
@@ -59,12 +47,6 @@ public class RoomManager {
     return room;
   }
 
-  /**
-   * Removes a room from the list of available rooms.
-   *
-   * @param room
-   *          the room to be removed
-   */
   public void removeRoom(Room room) {
     this.rooms.remove(room.getName());
     room.close();

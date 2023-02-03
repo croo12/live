@@ -30,11 +30,6 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-/**
- *
- * @author Ivan Gracia (izanmail@gmail.com)
- * @since 4.3.1
- */
 public class UserSession implements Closeable {
 
   private static final Logger log = LoggerFactory.getLogger(UserSession.class);
@@ -88,11 +83,6 @@ public class UserSession implements Closeable {
     return session;
   }
 
-  /**
-   * The room to which the user is currently attending.
-   *
-   * @return The room
-   */
   public String getRoomName() {
     return this.roomName;
   }
@@ -235,11 +225,6 @@ public class UserSession implements Closeable {
     }
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
   public boolean equals(Object obj) {
 
@@ -255,11 +240,6 @@ public class UserSession implements Closeable {
     return eq;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see java.lang.Object#hashCode()
-   */
   @Override
   public int hashCode() {
     int result = 1;

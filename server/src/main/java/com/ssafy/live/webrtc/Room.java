@@ -36,10 +36,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-/**
- * @author Ivan Gracia (izanmail@gmail.com)
- * @since 4.3.1
- */
 public class Room implements Closeable {
   private final Logger log = LoggerFactory.getLogger(Room.class);
 

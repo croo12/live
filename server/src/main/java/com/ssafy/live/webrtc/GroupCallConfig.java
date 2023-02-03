@@ -18,8 +18,6 @@
 package com.ssafy.live.webrtc;
 
 import org.kurento.client.KurentoClient;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -27,11 +25,6 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
-/**
- *
- * @author Ivan Gracia (izanmail@gmail.com)
- * @since 4.3.1
- */
 @Configuration
 @EnableWebSocket
 public class GroupCallConfig implements WebSocketConfigurer {
@@ -62,7 +55,6 @@ public class GroupCallConfig implements WebSocketConfigurer {
     container.setMaxTextMessageBufferSize(32768);
     return container;
   }
-
 
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
