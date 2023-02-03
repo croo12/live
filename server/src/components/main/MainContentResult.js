@@ -46,8 +46,9 @@ const MainContentResultBox = () => {
   const [data, setData] = useState(dummy);
 
   return (
-    <div>
-      편의시설
+    <div style={{ textAlign: "left" }}>
+      <strong style={{ fontSize: "1.1rem" }}>편의 시설</strong>
+      <br />
       <br />
       <div className={classes.results}>
         <ListBox dataArray={data} direction={true}>

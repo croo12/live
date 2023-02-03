@@ -10,7 +10,7 @@ const RealtorCardContent = ({
   contactCnt, //계약 건수
 }) => {
   return (
-    <>
+    <div className={classes.realtorCard}>
       <div className={classes.upCard}>
         <div className={classes.leftImg}>
           <img src={image} alt="realtor-profile" />
@@ -27,7 +27,7 @@ const RealtorCardContent = ({
           ★{starNum} | 체결 계약 {contactCnt}건 | 경력 10년
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
