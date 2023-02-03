@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "house_no"))
 @Entity
+@Builder
 public class House extends BaseEntity {
 
     @OneToMany(mappedBy = "house")
@@ -54,4 +55,6 @@ public class House extends BaseEntity {
 
     @Column(name = "region_code")
     private String regionCode;
+
+    private int completionYear;
 }

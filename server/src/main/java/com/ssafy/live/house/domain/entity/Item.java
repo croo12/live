@@ -17,7 +17,9 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "item_no"))
 @Entity
+@Builder
 public class Item extends BaseEntity {
+
 
     private int deposit;
 
@@ -40,7 +42,7 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Entrance entrance;
 
-    @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ItemOption itemOption;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,4 +55,8 @@ public class Item extends BaseEntity {
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<ItemImage> houseImages = new ArrayList<>();
+
+    public void setOption(ItemOption option) {
+        this.itemOption = option;
+    }
 }

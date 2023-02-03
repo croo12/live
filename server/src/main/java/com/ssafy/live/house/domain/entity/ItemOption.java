@@ -1,14 +1,14 @@
 package com.ssafy.live.house.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Builder
 public class ItemOption {
 
     @Id
@@ -17,7 +17,7 @@ public class ItemOption {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "item_no", referencedColumnName = "no")
     private Item item;
 
     private boolean bed;
