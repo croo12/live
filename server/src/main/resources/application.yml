@@ -24,7 +24,7 @@ spring:
           auth: true
     username: sxott94@naver.com
     host: smtp.naver.com
-    password: ${email_password}
+    password: ${EMAIL_PASSWORD}
     port: 465
     protocol: smtps
     thymeleaf:
@@ -77,10 +77,10 @@ logging:
 cloud:
   aws:
     credentials:
-      accessKey: ${access_key}
-      secretKey: ${secret_key}
+      accessKey: ${ACCESS_KEY_AWS_S3}
+      secretKey: ${SECRET_KEY_AWS_S3}
     s3:
-      bucket: ${bucket}
+      bucket: ${BUCKET_ADDRESS}
     region:
       static: ap-northeast-2
     stack:
