@@ -5,4 +5,4 @@ ARG JAR_FILE=server/build/libs/live-0.0.1-SNAPSHOT.jar
 # 빌드파일을 컨테이너로 복사
 COPY ${JAR_FILE} app.jar
 # jar 파일 실행
-ENTRYPOINT ["sh", "-c", "java ${ACCESS_KEY_AWS_S3} $SECRET_KEY_AWS_S3} ${BUCKET_ADDRESS} -jar /app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring-boot.run.arguments=--credentials.accessKey=${ACCESS_KEY_AWS_S3}, --credentials.secretKey=${SECRET_KEY_AWS_S3}, --s3.bucket=${BUCKET_ADDRESS}", "app.jar"]
