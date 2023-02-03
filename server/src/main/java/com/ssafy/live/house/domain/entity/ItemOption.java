@@ -1,5 +1,6 @@
 package com.ssafy.live.house.domain.entity;
 
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +10,9 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Builder
 public class ItemOption {
 
     @Id
@@ -18,6 +21,7 @@ public class ItemOption {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
+    @JoinColumn(name = "item_no", referencedColumnName = "no")
     @JsonIgnore
     @JoinColumn(name = "item_id")
     private Item item;
