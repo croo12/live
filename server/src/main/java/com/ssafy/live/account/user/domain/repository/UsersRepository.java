@@ -1,6 +1,7 @@
 package com.ssafy.live.account.user.domain.repository;
 
 import com.ssafy.live.account.user.domain.entity.Users;
+import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,8 @@ import java.util.Optional;
 public interface UsersRepository extends JpaRepository<Users, Long> {
     Optional<Users> findById(String id);
     boolean existsById(String Id);
-    Users findByNo(Long userNo);
+    Optional<Users> findById(Long userNo);
     Users findByEmailAndId(String email, String id);
+
+    Users findByIdIs(String Id);
 }

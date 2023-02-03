@@ -43,8 +43,8 @@ public class ConsultingService {
     private final HouseRepository houseRepository;
 
     public ResponseEntity<?> reserve(ConsultingRequest.Reserve reserve) {
-        Users users = usersRepository.findByNo(reserve.getUserNo());
-        Realtor realtor = realtorRepository.findByNo(reserve.getRealtorNo());
+        Users users = usersRepository.findById(reserve.getUserNo()).get();
+        Realtor realtor = realtorRepository.findById(reserve.getRealtorNo()).get();
         Consulting consulting = Consulting.builder()
                 .realtor(realtor)
                 .users(users)
@@ -57,7 +57,7 @@ public class ConsultingService {
         reserve.getItemList()
                 .stream()
                 .forEach(no -> {
-                    Item item = itemRepository.findByNo(no);
+                    Item item = itemRepository.findById(no).get();
                     ConsultingItem consultingItem = ConsultingItem.builder()
                             .consulting(consulting)
                             .item(item)
@@ -70,7 +70,7 @@ public class ConsultingService {
 
     public ResponseEntity<?> reservationListByRealtor(Long realtorNo, int status) {
         ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
-        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatus(realtorRepository.findByNo(realtorNo), statuses[0], statuses[1]);
+        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatus(realtorRepository.findById(realtorNo).get(), statuses[0], statuses[1]);
         if (consultingsList.isEmpty()) {
             consultingListNotFound();
         }
@@ -108,7 +108,7 @@ public class ConsultingService {
 
     public ResponseEntity<?> reservationListByUser(Long userNo, int status) {
         ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
-        List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatus(usersRepository.findByNo(userNo), statuses[0], statuses[1]);
+        List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatus(usersRepository.findById(userNo).get(), statuses[0], statuses[1]);
         if (consultingsList.isEmpty()) {
             consultingListNotFound();
         }
@@ -144,7 +144,7 @@ public class ConsultingService {
    }
 
     public ResponseEntity<?> changeStatus(ConsultingRequest.ChangeStatus request) {
-        Consulting consulting = consultingRepository.findByNo(request.getCounsultingNo());
+        Consulting consulting = consultingRepository.findById(request.getCounsultingNo()).get();
         consulting.updateStatus(request.getStatus());
         consultingRepository.save(consulting);
         return response.success("예약상태가 변경되었습니다.", HttpStatus.OK);
@@ -155,7 +155,7 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?> detailReservation(Long consultingNo) {
-        Consulting consulting = consultingRepository.findByNo(consultingNo);
+        Consulting consulting = consultingRepository.findById(consultingNo).get();
         List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(consultingNo);
         List<ConsultingResponse.ReservationDetail.MyConsultingItem> items = new ArrayList<>();
         consultingItems.stream()
@@ -184,9 +184,9 @@ public class ConsultingService {
 
     public ResponseEntity<?> addConsultingItems(AddItem addItem) {
         List<Item> list = addItem.getItemList().stream()
-                .map(r -> itemRepository.findByNo(r))
+                .map(r -> itemRepository.findById(r).get())
                 .collect(Collectors.toList());
-        Consulting consulting = consultingRepository.findByNo(addItem.getConsultingNo());
+        Consulting consulting = consultingRepository.findById(addItem.getConsultingNo()).get();
         list.stream()
                 .forEach(item -> {
                     ConsultingItem consultingItem = ConsultingItem.builder()
