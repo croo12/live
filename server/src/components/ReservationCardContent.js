@@ -35,3 +35,39 @@ const ReservationCardContent = (props) => {
 };
 
 export default ReservationCardContent;
+
+export const DUMMY4 = [
+  {
+    image: totoro,
+    name: "김희연",
+    date: "2023-02-01",
+    time: "12:30",
+    location: "대전",
+    state: "종료",
+    detail: "상세보기",
+    cancel: "취소 불가",
+    confirm: "예약 확정",
+  },
+  {
+    image: totoro,
+    name: "김희연",
+    date: "2023-02-01",
+    time: "12:30",
+    location: "대전",
+    state: "종료",
+    detail: "상세보기",
+    cancel: "취소 불가",
+    confirm: "예약 확정",
+  },
+  {
+    image: totoro,
+    name: "김희연",
+    date: "2023-02-01",
+    time: "12:30",
+    location: "대전",
+    state: "종료",
+    detail: "상세보기",
+    cancel: "취소 불가",
+    confirm: "예약 확정",
+  },
+];

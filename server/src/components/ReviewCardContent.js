@@ -16,7 +16,7 @@ const ReviewCardContent = ({
       }}
     >
       <h3>
-        {realtorName} ★{starNum}
+        {realtorName} ★ {starNum}
       </h3>
       <p>{location}</p>
       <br />

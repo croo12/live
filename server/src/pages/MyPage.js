@@ -8,6 +8,9 @@ import ListBox from "../UI/ListBox";
 import ReviewCardContent from "../components/ReviewCardContent";
 import { DUMMY2 } from "../components/ReviewCardContent";
 import AlarmCardContent, { DUMMY3 } from "../components/AlarmCardContent";
+import ReservationCardContent, {
+  DUMMY4,
+} from "../components/ReservationCardContent";
 
 const MyPage = () => {
 
@@ -65,7 +68,7 @@ const MyPage = () => {
                     width: "95%",
                     height: "100%",
                     borderRadius: "70%",
-                    padding: "0 0 0 15px",
+                    padding: "0 0 0 ",
                   }}
                 ></img>
               </div>
@@ -85,16 +88,18 @@ const MyPage = () => {
                       backgroundColor: "#42d395",
                       color: "white",
                       borderRadius: "3px",
+                      padding: "3px",
+                      fontSize: "small",
                     }}
                   >
-                    일반회원
+                    일반 회원
                   </span>
                 </p>
               </div>
             </div>
             <div
               className={classes.temperature}
-              style={{ flex: "3", padding: "50px 0 0 0" }}
+              style={{ flex: "3", padding: "50px 50px 0 0" }}
             >
               온도그래프
             </div>
@@ -117,93 +122,121 @@ const MyPage = () => {
             <div className={classes.privacy}>
               <button
                 style={{
-                  border: "0.3px solid #008A4F",
+                  border: "0.3px solid rgba(66, 211, 149, 1)",
                   backgroundColor: "white",
                   display: "flex",
                   width: "300px",
                   height: "70px",
                   padding: "20px 5px",
-                  value: 1,
+                  borderRadius: "5px",
                 }}
                 onClick={privacyOnclickHandler}
               >
-                <div className={classes.leftLogo} style={{ flex: "1" }}>
+                <div
+                  className={classes.leftLogo}
+                  style={{ flex: "1", fontSize: "1.9rem" }}
+                >
                   <BsPersonLinesFill style={{ color: "42D395" }} />
                 </div>
                 <div
                   className={classes.rightDesc}
-                  style={{ flex: "2", padding: "0 0 0 30px" }}
+                  style={{ flex: "2", padding: "3px 0 0 50px" }}
                 >
-                  개인정보
+                  <strong
+                    style={{ fontSize: "1.1rem", color: "rgba(85, 85, 85, 1)" }}
+                  >
+                    개인정보
+                  </strong>
                 </div>
               </button>
             </div>
             <div className={classes.alarm}>
               <button
                 style={{
-                  border: "0.3px solid #008A4F",
+                  border: "0.3px solid rgba(66, 211, 149, 1)",
                   backgroundColor: "white",
                   display: "flex",
                   width: "300px",
                   height: "70px",
                   padding: "20px 5px",
+                  borderRadius: "5px",
                 }}
                 onClick={alarmonClickHandler}
               >
-                <div className={classes.leftLogo} style={{ flex: "1" }}>
-                  <BsSearch style={{ color: "42D395" }} />
+                <div
+                  className={classes.leftLogo}
+                  style={{ flex: "1", fontSize: "1.8rem" }}
+                >
+                  <BsFillBellFill style={{ color: "42D395" }} />
                 </div>
                 <div
                   className={classes.rightDesc}
-                  style={{ flex: "2", padding: "0 0 0 30px" }}
+                  style={{
+                    flex: "2",
+                    padding: "3px 0 0 50px",
+                    fontSize: "1.1rem",
+                    color: "rgba(85, 85, 85, 1)",
+                  }}
                 >
-                  알람
+                  <strong>알람</strong>
                 </div>
               </button>
             </div>
             <div className={classes.review}>
               <button
                 style={{
-                  border: "0.3px solid #008A4F",
+                  border: "0.3px solid rgba(66, 211, 149, 1)",
                   backgroundColor: "white",
                   display: "flex",
                   width: "300px",
                   height: "70px",
                   padding: "20px 5px",
+                  borderRadius: "5px",
                 }}
                 onClick={reviewonClickHandler}
               >
                 <div className={classes.leftLogo} style={{ flex: "1" }}>
-                  <BsFillBellFill style={{ color: "42D395" }} />
+                  <BsSearch style={{ color: "42D395", fontSize: "1.8rem" }} />
                 </div>
                 <div
                   className={classes.rightDesc}
-                  style={{ flex: "2", padding: "0 0 0 50px" }}
+                  style={{
+                    flex: "2",
+                    padding: "0 0 0 50px",
+                    fontSize: "1.1rem",
+                    color: "rgba(85, 85, 85, 1)",
+                  }}
                 >
-                  리뷰조회
+                  <strong>리뷰조회</strong>
                 </div>
               </button>
             </div>
             <div className={classes.reservation}>
               <button
                 style={{
-                  border: "0.3px solid #008A4F",
+                  border: "0.3px solid rgba(66, 211, 149, 1)",
                   backgroundColor: "white",
                   display: "flex",
                   width: "300px",
                   height: "70px",
                   padding: "20px 5px",
+                  borderRadius: "5px",
                 }}
                 onClick={reservationonClickHandler}
               >
                 <div className={classes.leftLogo} style={{ flex: "1" }}>
-                  <TfiWrite style={{ color: "42D395" }} />
+                  <TfiWrite style={{ color: "42D395", fontSize: "1.8rem" }} />
                 </div>
                 <div
                   className={classes.rightDesc}
-                  style={{ flex: "2", padding: "0 0 0 30px" }}
+                  style={{
+                    flex: "2",
+                    padding: "0 0 0 30px",
+                    fontSize: "1.1rem",
+                    color: "rgba(85, 85, 85, 1)",
+                  }}
                 >
-                  예약현황
+                  <strong>예약현황</strong>
                 </div>
               </button>
             </div>
@@ -212,7 +245,7 @@ const MyPage = () => {
       </div>
       {btnActive === 1 && (
         <div>
-          <h3 style={{ textAlign: "left", padding: "0 0 20px 200px" }}>
+          <h3 style={{ textAlign: "left", padding: "0 0 20px 115px" }}>
             개인정보
           </h3>
           <div className={classes.viewPrivacy}>
@@ -338,6 +371,30 @@ const MyPage = () => {
                     </span>
                   </div>
                 </div>
+                <br />
+                <div style={{ textAlign: "right" }}>
+                  <button
+                    style={{
+                      backgroundColor: "#F5F5F5",
+                      border: "0.3px solid rgba(85, 85, 85, 1)",
+                      padding: "5px",
+                      borderRadius: "2px",
+                      marginRight: "5px",
+                    }}
+                  >
+                    회원탈퇴
+                  </button>
+                  <button
+                    style={{
+                      backgroundColor: "#F5F5F5",
+                      border: "0.3px solid rgba(85, 85, 85, 1)",
+                      padding: "5px",
+                      borderRadius: "2px",
+                    }}
+                  >
+                    정보수정
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -345,7 +402,7 @@ const MyPage = () => {
       )}
       {btnActive === 2 && (
         <div>
-          <h3 style={{ textAlign: "left", padding: "0 0 20px 200px" }}>알람</h3>
+          <h3 style={{ textAlign: "left", padding: "0 0 20px 115px" }}>알람</h3>
           <div className={classes.viewReview}>
             <div
               className={classes.inner}
@@ -357,28 +414,52 @@ const MyPage = () => {
             >
               <div
                 className={classes.reviewContent}
-                style={{ padding: "100px 0 100px 0" }}
+                style={{ padding: "0 0 100px 0" }}
               >
-                <table>
-                  <thead>
-                    <tr>
-                      <td>작성자 |</td>
-                      <td>날짜 |</td>
-                      <td>시간 |</td>
-                      <td>알람내용</td>
+                <table
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    border: "1px solid #42D395",
+                    borderCollapse: "collapse",
+                  }}
+                >
+                  <thead
+                    style={{
+                      color: "rgba(250, 250, 250, 1)",
+                      fontFamily: "Roboto",
+                      fontStyle: "normal",
+                      fontWeight: "700",
+                    }}
+                  >
+                    <tr className={classes.abx} style={{ height: "40px" }}>
+                      <td style={{ border: "1px solid white" }}> 작성자</td>
+                      <td style={{ border: "1px solid white" }}> 날짜 </td>
+                      <td style={{ border: "1px solid white" }}> 시간 </td>
+                      <td style={{ border: "1px solid white" }}> 알람내용</td>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody style={{ backgroundColor: "rgba(250, 250, 250, 1)" }}>
                     {DUMMY3.map((item) => {
                       return (
-                        <tr>
+                        <tr
+                          style={{
+                            border: "2px solid white",
+                            fontSize: "0.9rem",
+                            color: "rgba(85, 85, 85, 1)",
+                          }}
+                        >
                           <td>
                             <img
                               src={item.image}
-                              style={{ width: "10px", height: "auto" }}
+                              style={{
+                                width: "50px",
+                                height: "auto",
+                                borderRadius: "70%",
+                              }}
                             />
+                            <span>{item.writer}</span>
                           </td>
-                          <td>{item.writer}</td>
                           <td>{item.date}</td>
                           <td>{item.time}</td>
                           <td>{item.content}</td>
@@ -394,7 +475,7 @@ const MyPage = () => {
       )}
       {btnActive === 3 && (
         <div>
-          <h3 style={{ textAlign: "left", padding: "0 0 20px 200px" }}>
+          <h3 style={{ textAlign: "left", padding: "0 0 20px 115px" }}>
             리뷰조회
           </h3>
           <div
@@ -427,13 +508,10 @@ const MyPage = () => {
       )}
       {btnActive === 4 && (
         <div>
-          <h3 style={{ textAlign: "left", padding: "0 0 20px 200px" }}>
+          <h3 style={{ textAlign: "left", padding: "0 0 20px 115px" }}>
             예약현황
           </h3>
-          <div
-            className={classes.viewReview}
-            style={{ backgroundColor: "#022F1C" }}
-          >
+          <div className={classes.viewReview}>
             <div
               className={classes.inner}
               style={{
@@ -444,15 +522,68 @@ const MyPage = () => {
             >
               <div
                 className={classes.reviewContent}
-                style={{ padding: "100px 0 100px 0" }}
+                style={{ padding: "0 0 100px 0" }}
               >
-                <ListBox
-                  style={{ "justify-content": "space-between" }}
-                  dataArray={reviewList}
-                  direction={true}
+                <table
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    border: "1px solid #42D395",
+                    borderCollapse: "collapse",
+                  }}
                 >
-                  <ReviewCardContent />
-                </ListBox>
+                  <thead
+                    style={{
+                      color: "rgba(250, 250, 250, 1)",
+                      fontFamily: "Roboto",
+                      fontStyle: "normal",
+                      fontWeight: "700",
+                    }}
+                  >
+                    <tr className={classes.abx} style={{ height: "40px" }}>
+                      <td style={{ border: "1px solid white" }}>이름</td>
+                      <td style={{ border: "1px solid white" }}>날짜</td>
+                      <td style={{ border: "1px solid white" }}>시간</td>
+                      <td style={{ border: "1px solid white" }}>지역</td>
+                      <td style={{ border: "1px solid white" }}>상태</td>
+                      <td style={{ border: "1px solid white" }}>예약상세</td>
+                      <td style={{ border: "1px solid white" }}>예약취소</td>
+                      <td style={{ border: "1px solid white" }}>예약확정</td>
+                    </tr>
+                  </thead>
+                  <tbody style={{ backgroundColor: "rgba(250, 250, 250, 1)" }}>
+                    {DUMMY4.map((item) => {
+                      return (
+                        <tr
+                          style={{
+                            border: "2px solid white",
+                            fontSize: "0.9rem",
+                            color: "rgba(85, 85, 85, 1)",
+                          }}
+                        >
+                          <td>
+                            <img
+                              src={item.image}
+                              style={{
+                                width: "50px",
+                                height: "auto",
+                                borderRadius: "70%",
+                              }}
+                            />
+                            <span>{item.name}</span>
+                          </td>
+                          <td>{item.date}</td>
+                          <td>{item.time}</td>
+                          <td>{item.location}</td>
+                          <td>{item.state}</td>
+                          <td>{item.detail}</td>
+                          <td>{item.cancel}</td>
+                          <td>{item.confirm}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

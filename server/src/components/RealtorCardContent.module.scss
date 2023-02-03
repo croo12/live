@@ -1,27 +1,32 @@
-.upCard {
-  display: flex;
+.realtorCard{
+  background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30D08B;
+  padding:15px 0;
 
-  .leftImg {
-    width: 98px;
-    height: 80px;
-    flex: 1;
-    padding: 0 0 0 10px;
-
-    img {
-      width: 88px;
-      height: 80px;
-      border-radius: 70%;
+  .upCard {
+      display: flex;
+  
+      .leftImg {
+        width: 98px;
+        height: 80px;
+        flex: 1;
+        padding: 0 0 0 10px;
+  
+        img {
+          width: 88px;
+          height: 80px;
+          border-radius: 70%;
+        }
+      }
+  
+      .rightDesc {
+        flex: 2;
+        padding: 20px 10px 0 0;
+      }
     }
-  }
-
-  .rightDesc {
-    flex: 2; 
-    padding: 20px 10px 0 0;
-  }
-}
-
-.downCard {
-  text-align: center;
-  padding: 16px 0;
+  
+    .downCard {
+      text-align: center;
+      padding: 16px 0;
+    }
 }
 
