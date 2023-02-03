@@ -34,6 +34,7 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    defer-datasource-initialization: true
   jackson:
     serialization:
       fail-on-empty-beans: 'false'
