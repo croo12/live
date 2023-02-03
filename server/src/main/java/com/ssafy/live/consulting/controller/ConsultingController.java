@@ -52,7 +52,6 @@ public class ConsultingController {
         return consultingService.detailReservation(consultingNo);
     }
 
-
     @PostMapping("/items")
     public ResponseEntity<?> addConsultingItems(@Validated @RequestBody ConsultingRequest.AddItem addItem, Errors errors)  {
         // validation check

@@ -13,6 +13,5 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
     Consulting findByNo(Long realtorNo);
     List<Consulting> findByRealtorAndStatusOrStatus(Realtor realtor, ConsultingStatus reservervationProcessing, ConsultingStatus realtorResponseComplete);
-
     List<Consulting> findByUsersAndStatusOrStatus(Users user, ConsultingStatus status, ConsultingStatus status1);
 }
