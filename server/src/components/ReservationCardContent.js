@@ -4,13 +4,15 @@ import Button from "../UI/Button";
 
 import classes from "./ReservationCardContent.module.scss";
 import totoro from "../assets/image/sample.jpg";
+import { REALTOR_STATUS } from "../pages/ConsultingPage";
 
 const ReservationCardContent = (props) => {
   const [isConsulting, setConsulting] = useState(props.isConsulting);
   const realtor = useRef(props.isRealtor);
 
   const clickEventHandler = () => {
-    if (props.statusChangeHandler) props.statusChangeHandler(1);
+    if (props.statusChangeHandler)
+      props.statusChangeHandler(REALTOR_STATUS.START_BUT_NOT_CONNECT);
   };
 
   return (

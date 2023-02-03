@@ -1,4 +1,4 @@
-import classes from "./MainPage.modules.scss";
+import classes from "./MainPage.module.scss";
 
 import MainBanner from "../components/main/MainBanner";
 import MainContent from "../components/main/MainContent";

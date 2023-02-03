@@ -1,20 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import kurentoUtils from "kurento-utils";
 import Button from "../UI/Button";
 
 import classes from "./ConsultingMeetPage.module.scss";
-
-export const REALTOR_STATUS = {
-  BEFORE_START: 0,
-  START_BUT_NOT_CONNECT: 1,
-  CONNECTING: 2,
-};
-
-export const USER_STATUS = {
-  ENTER_SESSION: 0,
-  CONNECTING: 1,
-  END: 2,
-};
+import { REALTOR_STATUS, USER_STATUS } from "../pages/ConsultingPage";
 
 const ConsultingMeetPage = ({
   isRealtor,
@@ -26,98 +15,76 @@ const ConsultingMeetPage = ({
   const video = useRef();
   const video2 = useRef();
 
+  const [info, setInfo] = useState("준비중...");
+
   const setStatus = (action) => {
     statusChangeHandler(action);
   };
 
   useEffect(() => {
-    console.log(status);
+    switch (status) {
+      case REALTOR_STATUS.BEFORE_START:
+        // if(wep)
+        break;
+      case REALTOR_STATUS.START_BUT_NOT_CONNECT:
+        //오른쪽 리스트를 매물 목록으로 전환
 
-    if (isRealtor) {
-      switch (status) {
-        case REALTOR_STATUS.BEFORE_START:
-          console.log(`처음으로 돌아가기`);
-          //예약목록 보기
-          //현재 접속 중이 아니지롱 표시
-          //webrtc Peer 초기화
-          break;
+        //유저에게 알람을 보낸다
+        //유저의 접속을 기다리고 있습니다...
+        //방에 들어아고 내 화면 틀기
+        register();
+        break;
+      case REALTOR_STATUS.CONNECTING:
+        break;
 
-        case REALTOR_STATUS.START_BUT_NOT_CONNECT:
-          const confirm = window.confirm;
+      case USER_STATUS.ENTER_SESSION:
+        register();
+        break;
 
-          if (confirm(`정말로 함? 상담 시작함`)) {
-            //유저에게 알람을 보낸다
-
-            //오른쪽 리스트를 매물 목록으로 전환한다
-            //유저의 접속을 기다리고 있습니다...
-            //방에 들어아고 내 화면 틀기
-            register();
-          } else {
-          }
-
-          break;
-
-        case REALTOR_STATUS.CONNECTING:
-          //webrtc통신하기
-          break;
-
-        default:
-          console.log(`없는 상태인데`);
-          break;
-      }
-    } else {
-      switch (status) {
-        case USER_STATUS.ENTER_SESSION:
-          //중개사에게 연락 요청 보내기
-          //응답을 기다리는 중 띄우기
-          break;
-
-        case USER_STATUS.CONNECTING:
-          //반갑연결하기
-          //통화 진행하기
-          //내 오디오를 상대에게 보내면서
-          //상대 영상과 오디오 받아오기
-
-          //녹화버튼 활성화하기
-          break;
-
-        case USER_STATUS.END:
-          //끗, webrtc초기화
-          //리뷰 활성화하기
-          //신고 활성화하기
-          break;
-
-        default:
-          break;
-      }
+      case USER_STATUS.CONNECTING:
+        break;
     }
   }, [isRealtor, status]);
 
-  const ws = useRef(new WebSocket("wss://localhost:8443/groupcall"));
-  var participants = {};
-  var name = isRealtor ? "중개사맨" : "고객";
-  var room = sessionId;
+  const ws = useRef(new WebSocket("wss://localhost:8080/groupcall"));
+  const participants = {};
+  let name = isRealtor ? "중개사맨" : "고객";
+  let room = sessionId;
 
-  window.onbeforeunload = function () {
+  window.onbeforeunload = () => {
     ws.current.close();
   };
 
   ws.current.onclose = () => {
     console.log("나 걍 꺼지고 싶어...");
-    // setTimeout(ws.current = new WebSocket("wss://localhost:8443/groupcall"), 300)
+
+    // let newWS;
+    // setTimeout((newWS = new WebSocket("wss://localhost:8443/groupcall")), 300);
+
+    // while (newWS.readyState != 4) {
+    //   console.log(`...시도`);
+    // }
+
+    // ws.current = newWS;
+    // console.log("다시 일한다...");
   };
 
-  ws.current.onmessage = function (message) {
-    var parsedMessage = JSON.parse(message.data);
+  ws.current.onmessage = (message) => {
+    const parsedMessage = JSON.parse(message.data);
     console.info("Received message: " + message.data);
 
     switch (parsedMessage.id) {
+      //누가 있음
       case "existingParticipants":
         onExistingParticipants(parsedMessage);
         break;
+
+      //상대가 왔다.
       case "newParticipantArrived":
         onNewParticipant(parsedMessage);
         break;
+
+      //상대가 나갔다
       case "participantLeft":
         onParticipantLeft(parsedMessage);
         break;
@@ -140,26 +107,27 @@ const ConsultingMeetPage = ({
     }
   };
 
-  function register() {
-    // name = document.getElementById("name").value;
-    // room = document.getElementById("roomName").value;
-
-    // document.getElementById("room-header").innerText = "ROOM " + room;
-    // document.getElementById("join").style.display = "none";
-    // document.getElementById("room").style.display = "block";
-
-    var message = {
+  const register = () => {
+    const message = {
       id: "joinRoom",
       name: name,
       room: room,
     };
     sendMessage(message);
-  }
+  };
 
+  //상대가 연결되었습니다
   function onNewParticipant(request) {
+    if (isRealtor) {
+      setInfo("고객이 접속하였습니다");
+    } else {
+      console.log("중개사가 다시 방에 접속했습니다");
+    }
+
     receiveVideo(request.name);
   }
 
+  //비디오가 온다네
   function receiveVideoResponse(result) {
     participants[result.name].rtcPeer.processAnswer(
       result.sdpAnswer,
@@ -169,14 +137,17 @@ const ConsultingMeetPage = ({
     );
   }
 
-  function onExistingParticipants(msg) {
-    var constraints = {
+  //이미 누가 있어용
+  const onExistingParticipants = (msg) => {
+    if (!isRealtor) setInfo("중개사와 연결중입니다...");
+
+    const constraints = {
       audio: true,
       video: {
         mandatory: {
-          maxWidth: 320,
-          maxFrameRate: 15,
-          minFrameRate: 15,
+          maxWidth: 1280,
+          maxFrameRate: 30,
+          minFrameRate: 30,
         },
       },
     };
@@ -197,23 +168,21 @@ const ConsultingMeetPage = ({
           return console.error(error);
         }
         this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+        setInfo("");
       }
     );
 
     msg.data.forEach(receiveVideo);
-  }
+  };
 
   function leaveRoom() {
     sendMessage({
       id: "leaveRoom",
     });
 
-    for (var key in participants) {
+    for (let key in participants) {
       participants[key].dispose();
     }
-
-    document.getElementById("join").style.display = "block";
-    document.getElementById("room").style.display = "none";
 
     ws.current.close();
   }
@@ -221,11 +190,33 @@ const ConsultingMeetPage = ({
   function receiveVideo(sender) {
     const participant = Participant(sender);
     participants[sender] = participant;
-    // var video = participant.getVideoElement();
 
-    var options = {
-      remoteVideo: video2.current,
+    //상대가 고객이라면 -> 소리만 받음
+    //상대가 중개사라면 -> 화면과 소리 다 받기
+    let constraints;
+
+    if (isRealtor) {
+      constraints = {
+        audio: true,
+        video: false,
+      };
+    } else {
+      constraints = {
+        audio: true,
+        video: {
+          mandatory: {
+            maxWidth: 1280,
+            maxFrameRate: 30,
+            minFrameRate: 30,
+          },
+        },
+      };
+    }
+
+    const options = {
+      remoteVideo: isRealtor ? video2.current : video.current,
       onicecandidate: participant.onIceCandidate.bind(participant),
+      mediaConstraints: constraints,
     };
 
     participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
@@ -239,18 +230,19 @@ const ConsultingMeetPage = ({
     );
   }
 
-  function onParticipantLeft(request) {
-    console.log("Participant " + request.name + " left");
-    var participant = participants[request.name];
+  //상대가 떠남
+  const onParticipantLeft = (request) => {
+    console.log(`상대 ${request.name}가 나가버림`);
+    const participant = participants[request.name];
     participant.dispose();
     delete participants[request.name];
-  }
+  };
 
-  function sendMessage(message) {
+  const sendMessage = (message) => {
     var jsonMessage = JSON.stringify(message);
     console.log("Sending message: " + jsonMessage);
-    ws.current.send(jsonMessage);
-  }
+    if (ws.current.readyState) ws.current.send(jsonMessage);
+  };
 
   //============================================================================
   //==============Participant 객체 생성기========================================
@@ -290,9 +282,9 @@ const ConsultingMeetPage = ({
   return (
     <>
       <video autoPlay={true} ref={video}></video>
-      <video autoPlay={true} ref={video2}></video>
+      <video autoPlay={true} ref={video2} width="0" height="0"></video>
       <div className={classes.msgBox}>
-        <h1>멀르</h1>
+        <h1>{info}</h1>
         <Button
           clickEvent={() => {
             register();

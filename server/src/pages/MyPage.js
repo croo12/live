@@ -13,6 +13,7 @@ import ReservationCardContent, {
 } from "../components/ReservationCardContent";
 
 const MyPage = () => {
+
   const routerView = useRef(null);
   const [reviewList, setReviewList] = useState(DUMMY2);
   const [alarmList, setAlarmList] = useState(DUMMY3);
