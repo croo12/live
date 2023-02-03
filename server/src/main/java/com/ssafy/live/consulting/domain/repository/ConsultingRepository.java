@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
-    Optional<Consulting> findById(Long realtorNo);
     List<Consulting> findByRealtorAndStatusOrStatus(Realtor realtor, ConsultingStatus reservervationProcessing, ConsultingStatus realtorResponseComplete);
     List<Consulting> findByUsersAndStatusOrStatus(Users user, ConsultingStatus status, ConsultingStatus status1);
 }

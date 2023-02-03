@@ -3,6 +3,8 @@ package com.ssafy.live.house.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "house_no"))
 @Entity
+@Builder
 public class House extends BaseEntity {
 
     @JsonIgnore
@@ -54,4 +57,6 @@ public class House extends BaseEntity {
 
     @Column(name = "region_code")
     private String regionCode;
+
+    private int completionYear;
 }

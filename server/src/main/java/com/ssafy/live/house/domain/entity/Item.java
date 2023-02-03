@@ -18,12 +18,17 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "item_no"))
 @Entity
+@Builder
 public class Item extends BaseEntity {
 
+
     private int deposit;
+
     private int rent;
+
     @Column(name = "maintenance_fee")
     private int maintenanceFee;
+
     private String description;
     @Column(name = "building_name")
     private String buildingName;
@@ -56,4 +61,8 @@ public class Item extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<ItemImage> houseImages = new ArrayList<>();
+
+    public void setOption(ItemOption option) {
+        this.itemOption = option;
+    }
 }
