@@ -1,11 +1,16 @@
 package com.ssafy.live.consulting.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -13,6 +18,7 @@ import javax.persistence.*;
 @Entity
 public class Record extends BaseEntity {
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "consulting_item_no")
     private ConsultingItem consultingItem;
@@ -26,4 +32,3 @@ public class Record extends BaseEntity {
     @Column(name = "save_file")
     private String saveFile;
 }
-

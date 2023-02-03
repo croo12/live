@@ -1,5 +1,6 @@
 package com.ssafy.live.house.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 public class House extends BaseEntity {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "house")
     private List<Item> items = new ArrayList<>();
 

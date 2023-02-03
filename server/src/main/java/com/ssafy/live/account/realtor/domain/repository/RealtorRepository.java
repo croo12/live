@@ -4,6 +4,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import java.util.Optional;
 
 import io.lettuce.core.dynamic.annotation.Param;
+import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,5 +27,5 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
             "group by r.realtor_no order by AVG(v.rating_score) DESC", nativeQuery=true)
     List<Realtor> findDistinctRealtorWithItemsByHouseByRegion(@Param("region_code") String region_code);
 
-    Realtor findByNo(Long realtorNo);
+    Optional<Realtor> findById(Long realtorNo);
 }

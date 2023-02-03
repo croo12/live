@@ -34,6 +34,9 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  jackson:
+    serialization:
+      fail-on-empty-beans: 'false'
 
 cloud:
   aws:

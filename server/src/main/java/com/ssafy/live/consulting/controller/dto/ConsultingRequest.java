@@ -20,7 +20,25 @@ public class ConsultingRequest {
         private Long userNo;
         private LocalDateTime consultingDate;
         private String requirement;
-        private boolean status;
         private List<Long> itemList;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class AddItem {
+
+        private Long consultingNo;
+        private List<Long> itemList;
+    }
+
+    @Getter
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ChangeStatus {
+
+        private Long counsultingNo;
+        private int status;
     }
 }
