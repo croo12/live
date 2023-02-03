@@ -1,9 +1,9 @@
 .footer {
   width: 100%;
-  height: 160px;
+  height: 120px;
   box-sizing: border-box;
   background: #ededed;
-  padding: 40px 0;
+  padding: 32px 0;
 
   .footerInner {
     width: 100%;
@@ -17,6 +17,10 @@
       flex-direction: column;
       justify-content: space-between;
       width: 50vw;
+
+      @media (max-width: 1024px) {
+        width: 100vw;
+      }
 
       .partList {
         display: flex;
@@ -38,12 +42,15 @@
     }
 
     .snsIcon {
+      @media (max-width: 1024px) {
+        display: none;
+      }
+
       :hover {
         font-size: 24px;
       }
       span {
-        font-size: 20px;
-        margin: 6px;
+        margin: calc(6px / (1920px / 100vw));
         transition: all 0.2s ease;
         cursor: pointer;
       }

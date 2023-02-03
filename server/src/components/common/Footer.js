@@ -1,8 +1,10 @@
 import classes from "./Footer.module.scss";
-import { SiYoutubemusic } from "react-icons/si";
-import { BsFacebook } from "react-icons/bs";
-import { AiFillTwitterCircle } from "react-icons/ai";
-import { FiInstagram } from "react-icons/fi";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  YoutubeIcon,
+  TwitterIcon,
+} from "../../assets/Icons";
 
 const Footer = () => {
   return (
@@ -21,16 +23,16 @@ const Footer = () => {
         </div>
         <div className={classes.snsIcon}>
           <span>
-            <SiYoutubemusic />
+            <FacebookIcon />
           </span>
           <span>
-            <BsFacebook />
+            <InstagramIcon />
           </span>
           <span>
-            <AiFillTwitterCircle />
+            <YoutubeIcon />
           </span>
           <span>
-            <FiInstagram />
+            <TwitterIcon />
           </span>
         </div>
       </div>

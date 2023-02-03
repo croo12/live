@@ -29,9 +29,7 @@ const LoginPage = () => {
     <div className={classes.login}>
       <div className={classes.section}>
         <div className={classes.loginArea}>
-          <div className={classes.loginHead}>
-            <img src={LoginLogo} alt="Live" />
-          </div>
+          <div className={classes.loginHead}>LIVE</div>
           <div className={classes.loginBox}>
             <div className={classes.loginTab}>
               <input
