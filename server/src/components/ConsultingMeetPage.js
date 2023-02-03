@@ -38,6 +38,7 @@ const ConsultingMeetPage = ({
         break;
 
       case USER_STATUS.ENTER_SESSION:
+        register();
         break;
 
       case USER_STATUS.CONNECTING:
@@ -179,12 +180,9 @@ const ConsultingMeetPage = ({
       id: "leaveRoom",
     });
 
-    for (var key in participants) {
+    for (let key in participants) {
       participants[key].dispose();
     }
-
-    // document.getElementById("join").style.display = "block";
-    // document.getElementById("room").style.display = "none";
 
     ws.current.close();
   }

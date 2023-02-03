@@ -3,9 +3,12 @@ import ListBox from "../UI/ListBox";
 import { REALTOR_STATUS, USER_STATUS } from "../pages/ConsultingPage";
 import HouseCardContent from "./HouseCardContent";
 import ReservationCardContent from "./ReservationCardContent";
+import Button from "../UI/Button";
+import { useNavigate } from "react-router-dom";
 
 const ConsultingRightBox = ({ statusChangeHandler, status, isRealtor }) => {
   const [detail, setDetail] = useState(-1);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -24,6 +27,13 @@ const ConsultingRightBox = ({ statusChangeHandler, status, isRealtor }) => {
         </ListBox>
       )}
       {detail !== -1 && <ReservationCardContent isConsulting={true} />}
+      <Button
+        clickEvent={() => {
+          navigate("/");
+        }}
+      >
+        나가기
+      </Button>
     </>
   );
 };
