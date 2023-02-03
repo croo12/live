@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ListBox from "../UI/ListBox";
-import { REALTOR_STATUS, USER_STATUS } from "./ConsultingMeetPage";
+import { REALTOR_STATUS, USER_STATUS } from "../pages/ConsultingPage";
 import HouseCardContent from "./HouseCardContent";
 import ReservationCardContent from "./ReservationCardContent";
 
@@ -13,7 +13,7 @@ const ConsultingRightBox = ({ statusChangeHandler, status, isRealtor }) => {
         <ListBox dataArray={[1, 2, 3]}>
           <ReservationCardContent
             isConsulting={true}
-            statusChangeHandler={() => statusChangeHandler()}
+            statusChangeHandler={statusChangeHandler}
           />
         </ListBox>
       )}

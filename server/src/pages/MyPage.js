@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import classes from "./MyPage.modules.scss";
+import classes from "./MyPage.module.scss";
 import sample from "../assets/image/sample.jpg";
 import { BsPersonLinesFill, BsFillBellFill, BsSearch } from "react-icons/bs";
 import { TfiWrite } from "react-icons/tfi";
@@ -10,6 +10,7 @@ import { DUMMY2 } from "../components/ReviewCardContent";
 import AlarmCardContent, { DUMMY3 } from "../components/AlarmCardContent";
 
 const MyPage = () => {
+
   const routerView = useRef(null);
   const [reviewList, setReviewList] = useState(DUMMY2);
   const [alarmList, setAlarmList] = useState(DUMMY3);
