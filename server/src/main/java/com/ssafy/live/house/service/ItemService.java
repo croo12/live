@@ -11,7 +11,9 @@ import com.ssafy.live.house.controller.dto.ItemDto;
 import com.ssafy.live.house.controller.dto.ItemResponse;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
+import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.HouseRepository;
+import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class ItemService {
 
     private final Response response;
     private final ItemRepository itemRepository;
+    private final ItemImageRepository itemImageRepository;
     private final HouseRepository houseRepository;
     private final RealtorRepository realtorRepository;
     private final RegionRepository regionRepository;
@@ -63,6 +66,10 @@ public class ItemService {
         items.stream()
             .forEach(item -> {
                 House house = item.getHouse();
+                String image = itemImageRepository.findByItemNo(item.getNo());
+                if(image != null) {
+                   // image = itemImage.getImageSrc();
+                }
                 list.add(ItemResponse.ItemsByBuildingName.builder()
                     .itemNo(item.getNo())
                     .deposit(item.getDeposit())
@@ -70,6 +77,7 @@ public class ItemService {
                     .maintenanceFee(item.getMaintenanceFee())
                     .description(item.getDescription())
                     .buildingName(item.getBuildingName())
+                    .image(image)
                     .address(house.getAddress())
                     .addressDetail(house.getAddressDetail())
                     .build());

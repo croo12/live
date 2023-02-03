@@ -15,14 +15,14 @@ public class RegionService {
     private final RegionRepository regionRepository;
 
     public List<String> findSidoName() {
-        return regionRepository.findDistinctRegionBySidoName();
+        return regionRepository.findDistinctBySidoNameNotNullOrderBySidoNameAsc();
     }
 
     public List<String> findGugunName(String sidoName) {
-        return regionRepository.findDistinctRegionByGugunName(sidoName);
+        return regionRepository.findDistinctByGugunNameAndSidoNameAndGugunNameNotNullOrderByGugunNameAsc(sidoName);
     }
 
     public List<String> findDongName(String sidoName, String gugunName) {
-        return regionRepository.findDistinctRegionByDongName(sidoName, gugunName);
+        return regionRepository.findDistinctByDongNameAndSidoNameAndGugunNameDongNameNotNullOrderByDongNameAsc(sidoName, gugunName);
     }
 }

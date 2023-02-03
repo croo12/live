@@ -1,12 +1,14 @@
 package com.ssafy.live.consulting.controller.dto;
 
-import java.util.Set;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ConsultingRequest {
 
