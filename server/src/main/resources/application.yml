@@ -49,3 +49,35 @@ logging:
     org:
       hibernate: info
 
+cloud:
+  aws:
+    credentials:
+      accessKey: ${ACCESS_KEY_AWS_S3}
+      secretKey: ${SECRET_KEY_AWS_S3}
+    s3:
+      bucket: ${BUCKET_ADDRESS}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+spring:
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    username: sxott94@naver.com
+    host: smtp.naver.com
+    password:
+    port: 465
+    protocol: smtps
+  thymeleaf:
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    cache: 'false'
+    suffix: .html
+    check-template-location: 'true'
+    mode: HTML
+
