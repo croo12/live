@@ -11,7 +11,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/regions")
+@RequestMapping("/regions")
 public class RegionController {
 
     private final RegionService regionService;

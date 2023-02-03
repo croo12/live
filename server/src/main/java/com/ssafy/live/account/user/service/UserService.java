@@ -2,11 +2,10 @@ package com.ssafy.live.account.user.service;
 
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.auth.security.SecurityUtil;
-import com.ssafy.live.account.common.Authority;
+import com.ssafy.live.account.common.domain.Authority;
 import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.common.dto.CommonResponse;
-import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.controller.dto.UserRequest;
 import com.ssafy.live.account.user.controller.dto.UserRequest.FindPassword;
 import com.ssafy.live.account.user.domain.entity.Users;
@@ -20,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -158,6 +156,5 @@ public class UserService {
         usersRepository.save(user);
         emailService.joinEmail(user.getEmail(), temporaryPwd, user.getName());
         return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
-
     }
 }

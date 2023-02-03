@@ -10,11 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RealtorRequest {
 
@@ -25,14 +20,11 @@ public class RealtorRequest {
         @NotEmpty(message = "사업자 번호는 필수 입력값입니다.")
 //        @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "이메일 형식에 맞지 않습니다.")
         private String businessNumber;
-
         @NotEmpty(message = "비밀번호는 필수 입력값입니다.")
 //        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{9,16}$", message = "비밀번호는 9~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
         private String password;
-
-        @NotEmpty(message = "이메일은 필수 입력밧입니다.")
+        @NotEmpty(message = "이메일은 필수 입력값입니다.")
         private String email;
-
         private String name;
         private String phone;
         private String corp;
@@ -49,7 +41,6 @@ public class RealtorRequest {
         @NotEmpty(message = "사업자 번호는 필수 입력값입니다.")
 //        @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "이메일 형식에 맞지 않습니다.")
         private String businessNumber;
-
         @NotEmpty(message = "비밀번호는 필수 입력값입니다.")
         private String password;
 
@@ -63,7 +54,6 @@ public class RealtorRequest {
     public static class Reissue {
         @NotEmpty(message = "accessToken 을 입력해주세요.")
         private String accessToken;
-
         @NotEmpty(message = "refreshToken 을 입력해주세요.")
         private String refreshToken;
     }
@@ -128,5 +118,4 @@ public class RealtorRequest {
         private String businessNumber;
         private String email;
     }
-
 }

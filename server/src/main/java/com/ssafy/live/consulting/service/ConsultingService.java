@@ -1,6 +1,5 @@
 package com.ssafy.live.consulting.service;
 
-import com.ssafy.live.account.realtor.controller.dto.RealtorResponse;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.entity.Users;
@@ -8,21 +7,26 @@ import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.ConsultingStatus;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
+import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
+import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
+import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationRealtor;
+import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationUser;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.consulting.domain.entity.ConsultingItem;
 import com.ssafy.live.consulting.domain.repository.ConsultingItemRepository;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
+import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
+import com.ssafy.live.house.domain.repository.HouseRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -36,15 +40,11 @@ public class ConsultingService {
     private final RealtorRepository realtorRepository;
     private final ItemRepository itemRepository;
     private final ConsultingItemRepository consultingItemRepository;
-    
-    public ResponseEntity<?> reserve(ConsultingRequest.Reserve reserve) {
-        System.out.println(reserve.getUserNo());
-        Users users = usersRepository.findByNo(reserve.getUserNo());
-        Realtor realtor = realtorRepository.findByNo(reserve.getRealtorNo());
-        List<Item> list = reserve.getItemList().stream()
-                .map(r -> itemRepository.findByNo(r))
-                .collect(Collectors.toList());
+    private final HouseRepository houseRepository;
 
+    public ResponseEntity<?> reserve(ConsultingRequest.Reserve reserve) {
+        Users users = usersRepository.findById(reserve.getUserNo()).get();
+        Realtor realtor = realtorRepository.findById(reserve.getRealtorNo()).get();
         Consulting consulting = Consulting.builder()
                 .realtor(realtor)
                 .users(users)
@@ -54,6 +54,139 @@ public class ConsultingService {
                 .build();
         consultingRepository.save(consulting);
 
+        reserve.getItemList()
+                .stream()
+                .forEach(no -> {
+                    Item item = itemRepository.findById(no).get();
+                    ConsultingItem consultingItem = ConsultingItem.builder()
+                            .consulting(consulting)
+                            .item(item)
+                            .build();
+                    consultingItemRepository.save(consultingItem);
+                });
+
+        return response.success("예약이 완료되었습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> reservationListByRealtor(Long realtorNo, int status) {
+        ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
+        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatus(realtorRepository.findById(realtorNo).get(), statuses[0], statuses[1]);
+        if (consultingsList.isEmpty()) {
+            consultingListNotFound();
+        }
+
+        List<ConsultingResponse.ReservationRealtor> list = new ArrayList<>();
+        consultingsList.stream()
+                .forEach(consulting -> {
+                        Users user = consulting.getUsers();
+                        List<ConsultingItem> consultingItems = consulting.getConsultingItems();
+                        int count = 0;
+                        String buildingName = "";
+                        if (consultingItems.size()>0) {
+                            count = consultingItems.size() - 1;
+                            buildingName = consultingItems.get(0).getItem().getBuildingName();
+                        }
+                        list.add(ReservationRealtor.builder()
+                                        .consultingNo(consulting.getNo())
+                                        .realtorNo(consulting.getRealtor().getNo())
+                                        .userNo(user.getNo())
+                                        .userName(user.getName())
+                                        .userImage(user.getImageSrc())
+                                        .consultingDate(consulting.getConsultingDate())
+                                        .status(consulting.getStatus().getConsultingStatus())
+                                        .representativeItem(buildingName)
+                                        .itemCount(count)
+                                .build());
+
+                });
+        if (list.isEmpty()) {
+            consultingListNotFound();
+        }
+
+        return response.success( list, "상담 목록을 조회하였습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> reservationListByUser(Long userNo, int status) {
+        ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
+        List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatus(usersRepository.findById(userNo).get(), statuses[0], statuses[1]);
+        if (consultingsList.isEmpty()) {
+            consultingListNotFound();
+        }
+
+        List<ConsultingResponse.ReservationUser> list = new ArrayList<>();
+        consultingsList.stream()
+                .forEach(consulting -> {
+                    Realtor realtor = consulting.getRealtor();
+                    List<ConsultingItem> consultingItems = consulting.getConsultingItems();
+                    int count = 0;
+                    String buildingName = "";
+                    if (consultingItems.size()>0) {
+                        count = consultingItems.size() - 1;
+                        buildingName = consultingItems.get(0).getItem().getBuildingName();
+                    }
+                    list.add(ReservationUser.builder()
+                            .consultingNo(consulting.getNo())
+                            .realtorNo(realtor.getNo())
+                            .userNo(consulting.getUsers().getNo())
+                            .realtorName(realtor.getName())
+                            .realtorCorp(realtor.getCorp())
+                            .realtorImage(realtor.getImageSrc())
+                            .consultingDate(consulting.getConsultingDate())
+                            .status(consulting.getStatus().getConsultingStatus())
+                            .representativeItem(buildingName)
+                            .itemCount(count)
+                            .build());
+                });
+        if (list.isEmpty()) {
+            consultingListNotFound();
+        }
+         return response.success("상담 목록을 조회하였습니다.", HttpStatus.OK);
+   }
+
+    public ResponseEntity<?> changeStatus(ConsultingRequest.ChangeStatus request) {
+        Consulting consulting = consultingRepository.findById(request.getCounsultingNo()).get();
+        consulting.updateStatus(request.getStatus());
+        consultingRepository.save(consulting);
+        return response.success("예약상태가 변경되었습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> consultingListNotFound() {
+        return response.success("상담 목록이 존재하지 않습니다.", HttpStatus.NO_CONTENT);
+    }
+
+    public ResponseEntity<?> detailReservation(Long consultingNo) {
+        Consulting consulting = consultingRepository.findById(consultingNo).get();
+        List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(consultingNo);
+        List<ConsultingResponse.ReservationDetail.MyConsultingItem> items = new ArrayList<>();
+        consultingItems.stream()
+                .forEach(consultingItem -> {
+                    Item item = consultingItem.getItem();
+                    House house = consultingItem.getItem().getHouse();
+                    items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.builder()
+                                    .itemNo(item.getNo())
+                                    .deposit(item.getDeposit())
+                                    .rent(item.getRent())
+                                    .maintenanceFee(item.getMaintenanceFee())
+                                    .description(item.getDescription())
+                                    .buildingName(item.getBuildingName())
+                                    .address(house.getAddress())
+                                    .addressDetail(house.getAddressDetail())
+                            .build());
+                });
+        ConsultingResponse.ReservationDetail detail = ConsultingResponse.ReservationDetail.builder()
+                .consultingNo(consultingNo)
+                .consultingDate(consulting.getConsultingDate())
+                .requirement(consulting.getRequirement())
+                .itemList(items)
+                .build();
+        return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> addConsultingItems(AddItem addItem) {
+        List<Item> list = addItem.getItemList().stream()
+                .map(r -> itemRepository.findById(r).get())
+                .collect(Collectors.toList());
+        Consulting consulting = consultingRepository.findById(addItem.getConsultingNo()).get();
         list.stream()
                 .forEach(item -> {
                     ConsultingItem consultingItem = ConsultingItem.builder()
@@ -61,6 +194,6 @@ public class ConsultingService {
                             .item(item).build();
                     consultingItemRepository.save(consultingItem);
                 });
-        return response.success("예약이 완료되었습니다.", HttpStatus.OK);
+        return response.success("상담 매물 등록이 완료되었습니다.", HttpStatus.OK);
     }
 }
