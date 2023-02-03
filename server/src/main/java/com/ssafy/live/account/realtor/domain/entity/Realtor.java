@@ -1,7 +1,7 @@
 package com.ssafy.live.account.realtor.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.live.account.common.Member;
+import com.ssafy.live.account.common.domain.Member;
 import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;

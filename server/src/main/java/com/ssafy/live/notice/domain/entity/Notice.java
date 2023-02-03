@@ -33,4 +33,3 @@ public class Notice extends BaseEntity {
     @Column(name = "notice_date")
     private LocalDateTime noticeDate;
 }
-

@@ -1,4 +1,4 @@
-package com.ssafy.live.account.common;
+package com.ssafy.live.account.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,7 +2,6 @@ package com.ssafy.live.common.domain.Entity.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
