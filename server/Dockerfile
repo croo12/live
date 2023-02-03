@@ -7,3 +7,4 @@ COPY ${JAR_FILE} app.jar
 # jar 파일 실행
 ENTRYPOINT ["java", "-jar", "-Dspring-boot.run.arguments=--cloud.aws.credentials.accesskey=${ACCESS_KEY_AWS_S3}, --cloud.aws.credentials.secretkey=${SECRET_KEY_AWS_S3}, --cloud.aws.s3.bucket=${BUCKET_ADDRESS}", "app.jar"]
 #ENTRYPOINT ["java", "-jar", "-Dspring-boot.run.arguments=--credentials.accessKey=${ACCESS_KEY_AWS_S3}, --credentials.secretKey=${SECRET_KEY_AWS_S3}, --s3.bucket=${BUCKET_ADDRESS}", "app.jar"]
+
