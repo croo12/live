@@ -1,16 +1,8 @@
-FROM openjdk:8-jdk-alpine as builder
-WORKDIR application
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} application.jar
-RUN java -Djarmode=layertools -jar application.jar extract
-
+# base-imagee
 FROM openjdk:8-jdk-alpine
-WORKDIR application
-ENV port 8080
-ENV spring.profiles.active local
-COPY --from=builder application/dependencies/ ./
-COPY --from=builder application/spring-boot-loader/ ./
-COPY --from=builder application/snapshot-dependencies/ ./
-COPY --from=builder application/application/ ./
-
-ENTRYPOINT ["java", "-jar", "/app.jar", "org.springframework.boot.loader.JarLauncher"]
+# 변수 설정 (빌드 파일의 경로)
+ARG JAR_FILE=server/build/libs/live-0.0.1-SNAPSHOT.jar
+# 빌드파일을 컨테이너로 복사
+COPY ${JAR_FILE} app.jar
+# jar 파일 실행
+ENTRYPOINT ["java", "-jar", "-Dspring-boot.run.arguments=--credentials.accessKey=${ACCESS_KEY_AWS_S3}, --credentials.secretKey=${SECRET_KEY_AWS_S3}, --s3.bucket=${BUCKET_ADDRESS}", "app.jar"]

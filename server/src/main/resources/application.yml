@@ -2,7 +2,27 @@ com:
   example:
     upload:
       path: /Live/Images/profile/
+
 spring:
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    username: sxott94@naver.com
+    host: smtp.naver.com
+    password:
+    port: 465
+    protocol: smtps
+    thymeleaf:
+      encoding: UTF-8
+      prefix: classpath:/templates/
+      cache: 'false'
+      suffix: .html
+      check-template-location: 'true'
+      mode: HTML
   jpa:
     database: mysql
     properties:
@@ -18,6 +38,23 @@ spring:
     serialization:
       fail-on-empty-beans: 'false'
 
+credentials:
+  accessKey: ${ACCESS_KEY_AWS_S3}
+  secretKey: ${SECRET_KEY_AWS_S3}
+s3:
+  bucket: ${BUCKET_ADDRESS}
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${ACCESS_KEY_AWS_S3}
+      secretKey: ${SECRET_KEY_AWS_S3}
+    s3:
+      bucket: ${BUCKET_ADDRESS}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
   servlet:
     multipart:
       max-file-size: 10MB
@@ -27,19 +64,21 @@ spring:
   profiles:
     include: aws
 
-  redis:
-    host: localhost
-    port: '6379'
-    password: 'liveB104'
+redis:
+  host: redis-container
+  port: '6379'
+  password: 'liveB104'
 
-  datasource:
-    password: '1234'
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    url: jdbc:mysql://localhost:3306/live?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+datasource:
+  password: 1234
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  username: root
+  url: jdbc:mysql://13.209.12.115:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+
+mvc:
+  pathmatch:
+    matching-strategy: ant_path_matcher
+
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
 server:
