@@ -39,6 +39,12 @@ spring:
     serialization:
       fail-on-empty-beans: 'false'
 
+datasource:
+  url: jdbc:mysql://i8b104.p.ssafy.io:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  username: root
+  password: 1234
+
 cloud:
   aws:
     credentials:
@@ -63,12 +69,6 @@ redis:
   host: redis-container
   port: '6379'
   password: 'liveB104'
-
-datasource:
-  url: jdbc:mysql://i8b104.p.ssafy.io:33060/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
-  driver-class-name: com.mysql.cj.jdbc.Driver
-  username: root
-  password: 1234
 
 mvc:
   pathmatch:
