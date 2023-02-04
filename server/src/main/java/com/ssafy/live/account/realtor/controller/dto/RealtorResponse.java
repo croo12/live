@@ -1,5 +1,6 @@
 package com.ssafy.live.account.realtor.controller.dto;
 
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import lombok.*;
 
 public class RealtorResponse {
@@ -27,6 +28,17 @@ public class RealtorResponse {
         private String description;
         private String businessAddress;
         private String imageSrc;
+
+        public static RealtorResponse.FindByRegion toEntity(Realtor r) {
+            return RealtorResponse.FindByRegion.builder()
+                    .name(r.getName())
+                    .phone(r.getPhone())
+                    .corp(r.getCorp())
+                    .description(r.getDescription())
+                    .businessAddress(r.getBusinessAddress())
+                    .imageSrc(r.getImageSrc())
+                    .build();
+        }
     }
 
     @Builder
@@ -45,6 +57,21 @@ public class RealtorResponse {
         private String registrationNumber;
         private String description;
         private String businessAddress;
+
+        public static FindDetail toEntity(Realtor realtor) {
+            return RealtorResponse.FindDetail.builder()
+                    .no(realtor.getNo())
+                    .businessNumber(realtor.getBusinessNumber())
+                    .name(realtor.getName())
+                    .email(realtor.getEmail())
+                    .phone(realtor.getPhone())
+                    .corp(realtor.getCorp())
+                    .registrationNumber(realtor.getRegistrationNumber())
+                    .description(realtor.getDescription())
+                    .businessAddress(realtor.getBusinessAddress())
+                    .imageSrc(realtor.getImageSrc())
+                    .build();
+        }
     }
 
     @Getter

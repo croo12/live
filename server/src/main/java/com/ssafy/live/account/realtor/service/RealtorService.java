@@ -163,19 +163,7 @@ public class RealtorService {
     public ResponseEntity<?> findRealtorDetail(Long realtorNo) throws IOException {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
         if(realtor == null) return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        RealtorResponse.FindDetail realtorDetail = RealtorResponse.FindDetail.builder()
-            .no(realtor.getNo())
-            .businessNumber(realtor.getBusinessNumber())
-            .name(realtor.getName())
-            .email(realtor.getEmail())
-            .phone(realtor.getPhone())
-            .corp(realtor.getCorp())
-            .registrationNumber(realtor.getRegistrationNumber())
-            .description(realtor.getDescription())
-            .businessAddress(realtor.getBusinessAddress())
-            .imageSrc(realtor.getImageSrc())
-            .build();
-        return response.success(realtorDetail,"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
+        return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
     @Transactional
@@ -208,14 +196,7 @@ public class RealtorService {
         String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(sidoName, gugunName, dongName).getRegionCode();
         List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-            .map(r -> RealtorResponse.FindByRegion.builder()
-                    .name(r.getName())
-                    .phone(r.getPhone())
-                    .corp(r.getCorp())
-                    .description(r.getDescription())
-                    .businessAddress(r.getBusinessAddress())
-                    .imageSrc(r.getImageSrc())
-                    .build())
+            .map(r -> RealtorResponse.FindByRegion.toEntity(r))
             .collect(Collectors.toList());
         return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }

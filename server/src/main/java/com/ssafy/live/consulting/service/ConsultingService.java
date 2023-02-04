@@ -87,17 +87,7 @@ public class ConsultingService {
                             count = consultingItems.size() - 1;
                             buildingName = consultingItems.get(0).getItem().getBuildingName();
                         }
-                        list.add(ReservationRealtor.builder()
-                                        .consultingNo(consulting.getNo())
-                                        .realtorNo(consulting.getRealtor().getNo())
-                                        .userNo(user.getNo())
-                                        .userName(user.getName())
-                                        .userImage(user.getImageSrc())
-                                        .consultingDate(consulting.getConsultingDate())
-                                        .status(consulting.getStatus().getConsultingStatus())
-                                        .representativeItem(buildingName)
-                                        .itemCount(count)
-                                .build());
+                        list.add(ReservationRealtor.toEntity(consulting, user, buildingName, count));
                 });
         if (list.isEmpty()) {
             listNotFound();
@@ -124,18 +114,7 @@ public class ConsultingService {
                         count = consultingItems.size() - 1;
                         buildingName = consultingItems.get(0).getItem().getBuildingName();
                     }
-                    list.add(ReservationUser.builder()
-                            .consultingNo(consulting.getNo())
-                            .realtorNo(realtor.getNo())
-                            .userNo(consulting.getUsers().getNo())
-                            .realtorName(realtor.getName())
-                            .realtorCorp(realtor.getCorp())
-                            .realtorImage(realtor.getImageSrc())
-                            .consultingDate(consulting.getConsultingDate())
-                            .status(consulting.getStatus().getConsultingStatus())
-                            .representativeItem(buildingName)
-                            .itemCount(count)
-                            .build());
+                    list.add(ReservationUser.toEntity(consulting, realtor, buildingName, count));
                 });
         if (list.isEmpty()) {
             listNotFound();
@@ -164,16 +143,7 @@ public class ConsultingService {
                 .forEach(consultingItem -> {
                     Item item = consultingItem.getItem();
                     House house = consultingItem.getItem().getHouse();
-                    items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.builder()
-                                    .itemNo(item.getNo())
-                                    .deposit(item.getDeposit())
-                                    .rent(item.getRent())
-                                    .maintenanceFee(item.getMaintenanceFee())
-                                    .description(item.getDescription())
-                                    .buildingName(item.getBuildingName())
-                                    .address(house.getAddress())
-                                    .addressDetail(house.getAddressDetail())
-                            .build());
+                    items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.toEntity(item, house));
                 });
         ConsultingResponse.ReservationDetail detail = ConsultingResponse.ReservationDetail.builder()
                 .consultingNo(consultingNo)
