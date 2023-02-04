@@ -53,10 +53,9 @@ public class RealtorResponse {
     public static class FindRealtorList {
 
         private String name;
-        private String phone;
-        private String corp;
-        private String description;
-        private String businessAddress;
         private String imageSrc;
+        private String corp;
+        private int review;
+        private float starScore;
     }
 }

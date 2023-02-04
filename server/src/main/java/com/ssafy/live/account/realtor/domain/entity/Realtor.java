@@ -8,6 +8,8 @@ import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.review.domain.entity.Review;
+
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -37,7 +39,7 @@ public class Realtor extends Member implements UserDetails {
     @Column(name = "business_address")
     private String businessAddress;
     @Column(name = "start_date")
-    private String startDate;
+    private LocalDate startDate;
 
     @JsonIgnore
     @Column
