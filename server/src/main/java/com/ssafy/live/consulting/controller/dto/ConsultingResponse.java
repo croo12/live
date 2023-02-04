@@ -62,6 +62,7 @@ public class ConsultingResponse {
             private String buildingName;
             private String address;
             private String addressDetail;
+            private String imageSrc;
         }
     }
 }

@@ -36,6 +36,8 @@ public class Realtor extends Member implements UserDetails {
     private String description;
     @Column(name = "business_address")
     private String businessAddress;
+    @Column(name = "start_date")
+    private String startDate;
 
     @JsonIgnore
     @Column
