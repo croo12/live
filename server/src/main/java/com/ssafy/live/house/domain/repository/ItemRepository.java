@@ -15,7 +15,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
         + "inner join House h on h.house_no=i.house_no "
         + "inner join Realtor r on r.realtor_no=i.realtor_no "
         + "WHERE i.building_name LIKE %:word% "
-        + "AND r.realtor_no=:realtorNo "
-        + "AND h.region_code=:regionCode ", nativeQuery = true)
-    List<Item> findByRealtorLikeBuildingName(String word, Long realtorNo, String regionCode);
+        + "AND h.sido LIKE %:sido% "
+        + "AND h.gugun LIKE %:gugun% "
+        + "AND h.dong LIKE %:dong% "
+        + "AND r.realtor_no=:realtorNo", nativeQuery = true)
+    List<Item> findByRealtorLikeBuildingName(String word, Long realtorNo, String sido, String gugun, String dong);
 }

@@ -57,15 +57,10 @@ public class ItemService {
 
     public ResponseEntity<?> itemsByBuildingName(ItemDto.ItemsByBuildingName request) {
         List<ItemResponse.ItemsByBuildingName> list = new ArrayList<>();
-        String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(request.getSidoName(), request.getGugunName(),request.getDongName()).getRegionCode();
-        List<Item> items = itemRepository.findByRealtorLikeBuildingName(request.getWord(), request.getRealtorNo(), regionCode);
+        List<Item> items = itemRepository.findByRealtorLikeBuildingName(request.getWord(), request.getRealtorNo(), request.getSidoName(), request.getGugunName(),request.getDongName());
         items.stream()
             .forEach(item -> {
                 House house = item.getHouse();
-                String image = itemImageRepository.findByItemNo(item.getNo());
-                if(image != null) {
-                   // image = itemImage.getImageSrc();
-                }
                 list.add(ItemResponse.ItemsByBuildingName.builder()
                     .itemNo(item.getNo())
                     .deposit(item.getDeposit())
@@ -73,7 +68,7 @@ public class ItemService {
                     .maintenanceFee(item.getMaintenanceFee())
                     .description(item.getDescription())
                     .buildingName(item.getBuildingName())
-                    .image(image)
+                    .image(itemImageRepository.findByItemNo(item.getNo()))
                     .address(house.getAddress())
                     .addressDetail(house.getAddressDetail())
                     .build());

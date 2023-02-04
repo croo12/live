@@ -46,11 +46,10 @@ public class S3Service {
     }
 
     public String upload(MultipartFile file) throws IOException {
-        String fileName = "";
         if(file.isEmpty()) {
             return null;
         } else {
-            fileName = file.getOriginalFilename()+ "_" +UUID.randomUUID();
+            String fileName = file.getOriginalFilename()+ "_" +UUID.randomUUID();
             s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return s3Client.getUrl(bucket, fileName).toString();
