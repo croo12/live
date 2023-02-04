@@ -53,11 +53,7 @@ public class ConsultingController {
     }
 
     @PostMapping("/items")
-    public ResponseEntity<?> addConsultingItems(@Validated @RequestBody ConsultingRequest.AddItem addItem, Errors errors)  {
-        // validation check
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
-        }
+    public ResponseEntity<?> addConsultingItems(@RequestBody ConsultingRequest.AddItem addItem)  {
         return consultingService.addConsultingItems(addItem);
     }
 }

@@ -1,10 +1,14 @@
 package com.ssafy.live.consulting.controller.dto;
 
-import javax.validation.constraints.NotEmpty;
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ConsultingRequest {
 
@@ -14,9 +18,9 @@ public class ConsultingRequest {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Reserve {
 
-        @NotEmpty(message = "공인중개사 번호는 필수 입력값입니다.")
+        @NotNull(message = "공인중개사 번호는 필수 입력값입니다.")
         private Long realtorNo;
-        @NotEmpty(message = "고객 번호는 필수 입력값입니다.")
+        @NotNull(message = "고객 번호는 필수 입력값입니다.")
         private Long userNo;
         private LocalDateTime consultingDate;
         private String requirement;
@@ -30,7 +34,7 @@ public class ConsultingRequest {
     public static class AddItem {
 
         private Long consultingNo;
-        private List<Long> itemList;
+        private Set<Long> itemList;
     }
 
     @Getter

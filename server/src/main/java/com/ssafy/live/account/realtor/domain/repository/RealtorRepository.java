@@ -16,8 +16,6 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
 
     Optional<Realtor> findByBusinessNumber(String businessNumber);
     boolean existsByBusinessNumber(String businessNumber);
-    Optional<Realtor> findByEmail(String email);
-    boolean existsByEmail(String email);
     Realtor findByEmailAndBusinessNumber(String email, String businessNumber);
 
     @Query(value = "SELECT r.* FROM realtor r " +

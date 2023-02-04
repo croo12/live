@@ -154,5 +154,15 @@ public class ItemDto {
 
     }
 
+    @Getter
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ItemsByBuildingName {
 
+        private Long realtorNo;
+        private String word;
+        private String sidoName;
+        private String gugunName;
+        private String dongName;
+    }
 }

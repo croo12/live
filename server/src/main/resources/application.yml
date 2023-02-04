@@ -2,6 +2,7 @@ com:
   example:
     upload:
       path: /Live/Images/profile/
+
 spring:
   jpa:
     database: mysql
@@ -34,40 +35,21 @@ spring:
       suffix: .html
       check-template-location: 'true'
       mode: HTML
-
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      enabled: 'true'
-      max-request-size: 30MB
-      location: /Live/Images/profile/
-  profiles:
-    include: aws
-
-  redis:
-    host: redis-container
-    port: '6379'
-    password: 'liveB104'
-
-  datasource:
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    url: jdbc:mysql://13.209.12.115:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-jwt:
-  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
-
-server:
-  address: i8b104.p.ssafy.io
-  port: '8080'
-
-logging:
-  level:
-    org:
-      hibernate: info
+  jpa:
+    database: mysql
+    properties:
+      hibernate.default_batch_fetch_size: 1000
+      hibernate:
+        use_sql_comments: 'true'
+        format_sql: 'true'
+        show_sql: 'true'
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    defer-datasource-initialization: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: 'false'
 
 cloud:
   aws:
@@ -80,5 +62,43 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      enabled: 'true'
+      max-request-size: 30MB
+      location: /Live/Images/profile/
+  profiles:
+    include: aws
 
+redis:
+  host: redis-container
+  port: '6379'
+  password: 'liveB104'
 
+datasource:
+  password: 1234
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  username: root
+  url: jdbc:mysql://13.209.12.115:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+
+mvc:
+  pathmatch:
+    matching-strategy: ant_path_matcher
+
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
+
+server:
+  address: i8b104.p.ssafy.io
+  port: '8080'
+#  ssl:
+#    key-store-password: kurento
+#    key-store-type: JKS
+#    key-store: classpath:keystore.jks
+#    key-alias: kurento-selfsigned
+
+logging:
+  level:
+    org:
+      hibernate: info

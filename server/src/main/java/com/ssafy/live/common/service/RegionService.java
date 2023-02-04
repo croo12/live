@@ -1,5 +1,6 @@
 package com.ssafy.live.common.service;
 
+import com.ssafy.live.common.domain.Entity.Region;
 import com.ssafy.live.common.domain.repository.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,3 +27,4 @@ public class RegionService {
         return regionRepository.findDistinctRegionByDongName(sidoName, gugunName);
     }
 }
+

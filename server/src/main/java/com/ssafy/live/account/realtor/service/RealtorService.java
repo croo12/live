@@ -54,7 +54,6 @@ public class RealtorService {
         if (realtorRepository.existsByBusinessNumber(signUp.getBusinessNumber())) {
             return response.fail("이미 회원가입된 중개사번호입니다.", HttpStatus.BAD_REQUEST);
         }
-
         String imgSrc = s3Service.upload(file);
         Realtor realtor = Realtor.builder()
             .password(passwordEncoder.encode(signUp.getPassword()))
@@ -158,6 +157,7 @@ public class RealtorService {
 
     public ResponseEntity<?> findRealtorDetail(Long realtorNo) throws IOException {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
+        if(realtor == null) return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         RealtorResponse.FindDetail realtorDetail = RealtorResponse.FindDetail.builder()
             .no(realtor.getNo())
             .businessNumber(realtor.getBusinessNumber())
@@ -176,6 +176,7 @@ public class RealtorService {
     @Transactional
     public ResponseEntity<?> updateRealtor(Long realtorNo, RealtorRequest.Update request, MultipartFile file) throws IOException {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
+        if(realtor == null) return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         String preImg = realtor.getImageSrc();
         System.out.println("name " + file.getOriginalFilename());
         if(file != null) {
@@ -190,6 +191,7 @@ public class RealtorService {
 
     public ResponseEntity<?> temporaryPassword(RealtorRequest.FindPassword request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
+        if(realtor == null) return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
         String temporaryPwd = realtor.generateRandomPassword();
         realtor.updatePassword(passwordEncoder.encode(temporaryPwd));
         realtorRepository.save(realtor);
