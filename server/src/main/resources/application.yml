@@ -3,6 +3,10 @@ com:
     upload:
       path: /Live/Images/profile/
 
+server:
+  address: localhost
+  port: '8080'
+
 spring:
     jpa:
       database: mysql
@@ -19,25 +23,25 @@ spring:
       jackson:
         serialization:
           fail-on-empty-beans: 'false'
-  mail:
-    properties:
-      mail:
-        smtp:
-          starttls:
-            enable: true
-          auth: true
-    username: sxott94@naver.com
-    host: smtp.naver.com
-    password: ${EMAIL_PASSWORD}
-    port: 465
-    protocol: smtps
-    thymeleaf:
-      encoding: UTF-8
-      prefix: classpath:/templates/
-      cache: 'false'
-      suffix: .html
-      check-template-location: 'true'
-      mode: HTML
+    mail:
+      properties:
+        mail:
+          smtp:
+            starttls:
+              enable: true
+            auth: true
+      username: sxott94@naver.com
+      host: smtp.naver.com
+      password: ${EMAIL_PASSWORD}
+      port: 465
+      protocol: smtps
+      thymeleaf:
+        encoding: UTF-8
+        prefix: classpath:/templates/
+        cache: 'false'
+        suffix: .html
+        check-template-location: 'true'
+        mode: HTML
 
   servlet:
     multipart:
@@ -63,10 +67,6 @@ spring:
       matching-strategy: ant_path_matcher
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
-
-server:
-  address: localhost
-  port: '8080'
 
 logging:
   level:
