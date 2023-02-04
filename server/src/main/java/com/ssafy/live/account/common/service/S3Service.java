@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
@@ -45,11 +46,15 @@ public class S3Service {
     }
 
     public String upload(MultipartFile file) throws IOException {
-        String fileName = file.getOriginalFilename()+ "_" +UUID.randomUUID();
-
-        s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-        return s3Client.getUrl(bucket, fileName).toString();
+        String fileName = "";
+        if(file.isEmpty()) {
+            return null;
+        } else {
+            fileName = file.getOriginalFilename()+ "_" +UUID.randomUUID();
+            s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+            return s3Client.getUrl(bucket, fileName).toString();
+        }
     }
 
     public void deleteFile(String imageSrc) {

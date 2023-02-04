@@ -54,7 +54,6 @@ public class RealtorService {
         if (realtorRepository.existsByBusinessNumber(signUp.getBusinessNumber())) {
             return response.fail("이미 회원가입된 중개사번호입니다.", HttpStatus.BAD_REQUEST);
         }
-
         String imgSrc = s3Service.upload(file);
         Realtor realtor = Realtor.builder()
             .password(passwordEncoder.encode(signUp.getPassword()))
