@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React, { useRef } from "react";
 
 import { useParams } from "react-router-dom";
 import ConsultingMeetPage from "../components/ConsultingMeetPage";
@@ -124,3 +125,85 @@ const ConsultingPage = (props) => {
 };
 
 export default ConsultingPage;
+
+export const VideoCallPage = () => {
+  const localVideoRef = useRef();
+  const remoteVideoRef = useRef();
+  const [peerConnection, setPeerConnection] = useState(null);
+  const [localStream, setLocalStream] = useState(null);
+  const [remoteStream, setRemoteStream] = useState(null);
+  const [callActive, setCallActive] = useState(false);
+
+  const startCall = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+      setLocalStream(stream);
+      localVideoRef.current.srcObject = stream;
+
+      const peer = new RTCPeerConnection();
+      setPeerConnection(peer);
+
+      peer.addEventListener("icecandidate", (event) => {
+        if (event.candidate) {
+          console.log("New ICE candidate:", event.candidate);
+        }
+      });
+
+      peer.addEventListener("track", (event) => {
+        console.log("Remote track added:", event.streams[0]);
+        setRemoteStream(event.streams[0]);
+        remoteVideoRef.current.srcObject = event.streams[0];
+      });
+
+      stream.getTracks().forEach((track) => peer.addTrack(track, stream));
+
+      const offer = await peer.createOffer();
+      await peer.setLocalDescription(offer);
+      console.log("Offer created:", offer);
+
+      // here you would send the offer to a signaling server
+      // for the purpose of this example, we'll just log it
+      console.log("Sending offer:", offer);
+    } catch (error) {
+      console.error("Failed to start call:", error);
+    }
+  };
+
+  const endCall = () => {
+    peerConnection.close();
+    setPeerConnection(null);
+    setLocalStream(null);
+    setRemoteStream(null);
+    setCallActive(false);
+  };
+
+  return (
+    <div className="video-call-page">
+      <video
+        ref={localVideoRef}
+        autoPlay
+        className="local-video"
+        width="300"
+        height="300"
+      />
+      <video
+        ref={remoteVideoRef}
+        autoPlay
+        className="remote-video"
+        width="300"
+        height="300"
+      />
+      <div className="controls">
+        {callActive ? (
+          <button onClick={endCall}>End Call</button>
+        ) : (
+          <button onClick={startCall}>Start Call</button>
+        )}
+      </div>
+    </div>
+  );
+};
