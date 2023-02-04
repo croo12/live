@@ -1,5 +1,6 @@
 package com.ssafy.live.common.service;
 
+import com.ssafy.live.common.domain.Entity.Region;
 import com.ssafy.live.common.domain.repository.RegionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +16,15 @@ public class RegionService {
     private final RegionRepository regionRepository;
 
     public List<String> findSidoName() {
-        return regionRepository.findDistinctBySidoNameNotNullOrderBySidoNameAsc();
+        return regionRepository.findDistinctRegionBySidoName();
     }
 
     public List<String> findGugunName(String sidoName) {
-        return regionRepository.findDistinctByGugunNameAndSidoNameAndGugunNameNotNullOrderByGugunNameAsc(sidoName);
+        return regionRepository.findDistinctRegionByGugunName(sidoName);
     }
 
     public List<String> findDongName(String sidoName, String gugunName) {
-        return regionRepository.findDistinctByDongNameAndSidoNameAndGugunNameDongNameNotNullOrderByDongNameAsc(sidoName, gugunName);
+        return regionRepository.findDistinctRegionByDongName(sidoName, gugunName);
     }
 }
+

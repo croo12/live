@@ -7,15 +7,19 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public interface RegionRepository extends JpaRepository<Region, String> {
 
-//    List<String> findDistinctBySidoNameAndSidoNameNotNullOrderBySidoNameAsc();
-    List<String> findDistinctBySidoNameNotNullOrderBySidoNameAsc();
+    @Query("SELECT DISTINCT r.sidoName FROM Region r WHERE r.sidoName IS NOT NULL ORDER BY r.sidoName")
+    List<String> findDistinctRegionBySidoName();
 
-    List<String> findDistinctByGugunNameAndSidoNameAndGugunNameNotNullOrderByGugunNameAsc(String sidoName);
+    @Query("SELECT DISTINCT r.gugunName FROM Region r WHERE r.sidoName = :sidoName AND r.gugunName IS NOT NULL ORDER BY r.gugunName")
+    List<String> findDistinctRegionByGugunName(String sidoName);
 
-    List<String> findDistinctByDongNameAndSidoNameAndGugunNameDongNameNotNullOrderByDongNameAsc(String sidoName, String gugunName);
+    @Query("SELECT DISTINCT r.dongName FROM Region r WHERE r.sidoName = :sidoName AND r.gugunName = :gugunName AND r.dongName IS NOT NULL ORDER BY r.dongName")
+    List<String> findDistinctRegionByDongName(String sidoName, String gugunName);
 
     Region findBySidoNameAndGugunNameAndDongName(String sidoName, String gugunName, String dongName);
 }
+

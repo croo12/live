@@ -1,5 +1,6 @@
 package com.ssafy.live.common.controller;
 
+import com.ssafy.live.common.domain.Entity.Region;
 import com.ssafy.live.common.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class RegionController {
 
     @GetMapping ("/dongs")
     public ResponseEntity<List<String>> findDongName(@RequestParam String sidoName, @RequestParam String gugunName) {
-        log.info("구군 이름 조회");
+        log.info("동 이름 조회");
         return ResponseEntity.ok()
                 .body(regionService.findDongName(sidoName, gugunName));
     }
