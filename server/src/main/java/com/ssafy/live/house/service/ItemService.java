@@ -1,23 +1,19 @@
 package com.ssafy.live.house.service;
 
-import com.ssafy.live.account.realtor.controller.dto.RealtorResponse;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
-import com.ssafy.live.common.domain.Entity.Region;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.repository.RegionRepository;
-import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
 import com.ssafy.live.house.controller.dto.ItemDto;
 import com.ssafy.live.house.controller.dto.ItemResponse;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
-import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.HouseRepository;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -38,8 +34,8 @@ public class ItemService {
     private final RegionRepository regionRepository;
 
     public ResponseEntity<?> registItem(ItemDto.ItemRegistRequest itemRegistRequest) {
-
-        Realtor realtor = realtorRepository.findById(itemRegistRequest.getRealtorNo()).orElse(null);
+        Realtor realtor = realtorRepository.findById(itemRegistRequest.getRealtorNo()).get();
+        if(realtor == null) return response.fail("해당하는 공인중개사 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         Long houseNo = itemRegistRequest.getHouseNo();
         House house;
         if(houseNo!=null && !houseNo.equals("")) {
