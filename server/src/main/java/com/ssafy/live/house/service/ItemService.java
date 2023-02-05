@@ -8,6 +8,7 @@ import com.ssafy.live.house.controller.dto.ItemDto;
 import com.ssafy.live.house.controller.dto.ItemResponse;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
+import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.HouseRepository;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
@@ -61,17 +62,8 @@ public class ItemService {
         items.stream()
             .forEach(item -> {
                 House house = item.getHouse();
-                list.add(ItemResponse.ItemsByBuildingName.builder()
-                    .itemNo(item.getNo())
-                    .deposit(item.getDeposit())
-                    .rent(item.getRent())
-                    .maintenanceFee(item.getMaintenanceFee())
-                    .description(item.getDescription())
-                    .buildingName(item.getBuildingName())
-                    .image(itemImageRepository.findByItemNo(item.getNo()))
-                    .address(house.getAddress())
-                    .addressDetail(house.getAddressDetail())
-                    .build());
+                String image = itemImageRepository.findByItemNo(item.getNo());
+                list.add(ItemResponse.ItemsByBuildingName.toEntity(item, house, image));
             });
         return response.success(list, "매물 목록이 조회되었습니다.", HttpStatus.OK);
     }

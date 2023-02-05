@@ -96,8 +96,8 @@ public class RealtorController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findRealtorList() {
+    public ResponseEntity<?> findRealtorList(@RequestParam String orderBy) {
         log.info("메인페이지 공인중개사 목록 조회");
-        return realtorService.findRealtorList();
+        return realtorService.findRealtorList(orderBy);
     }
 }

@@ -6,16 +6,17 @@ import com.ssafy.live.account.common.domain.Authority;
 import com.ssafy.live.account.common.dto.CommonResponse;
 import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
-import com.ssafy.live.account.realtor.controller.dto.*;
+import com.ssafy.live.account.realtor.controller.dto.RealtorProjectionInterface;
+import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
+import com.ssafy.live.account.realtor.controller.dto.RealtorResponse;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.repository.RegionRepository;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -64,6 +68,7 @@ public class RealtorService {
             .description(signUp.getDescription())
             .businessNumber(signUp.getBusinessNumber())
             .businessAddress(signUp.getBusinessAddress())
+            .startDate(signUp.getStartDate())
             .registrationNumber(signUp.getRegistrationNumber())
             .imageSrc(imgSrc)
             .roles(Collections.singletonList(Authority.ROLE_REALTOR.name()))
@@ -158,19 +163,7 @@ public class RealtorService {
     public ResponseEntity<?> findRealtorDetail(Long realtorNo) throws IOException {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
         if(realtor == null) return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        RealtorResponse.FindDetail realtorDetail = RealtorResponse.FindDetail.builder()
-            .no(realtor.getNo())
-            .businessNumber(realtor.getBusinessNumber())
-            .name(realtor.getName())
-            .email(realtor.getEmail())
-            .phone(realtor.getPhone())
-            .corp(realtor.getCorp())
-            .registrationNumber(realtor.getRegistrationNumber())
-            .description(realtor.getDescription())
-            .businessAddress(realtor.getBusinessAddress())
-            .imageSrc(realtor.getImageSrc())
-            .build();
-        return response.success(realtorDetail,"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
+        return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
     @Transactional
@@ -203,30 +196,18 @@ public class RealtorService {
         String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(sidoName, gugunName, dongName).getRegionCode();
         List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-            .map(r -> RealtorResponse.FindByRegion.builder()
-                    .name(r.getName())
-                    .phone(r.getPhone())
-                    .corp(r.getCorp())
-                    .description(r.getDescription())
-                    .businessAddress(r.getBusinessAddress())
-                    .imageSrc(r.getImageSrc())
-                    .build())
+            .map(r -> RealtorResponse.FindByRegion.toEntity(r))
             .collect(Collectors.toList());
         return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findRealtorList() {
-        List<Realtor> findRealtors = realtorRepository.findAll();
-        List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-                .map(r -> RealtorResponse.FindByRegion.builder()
-                        .name(r.getName())
-                        .phone(r.getPhone())
-                        .corp(r.getCorp())
-                        .description(r.getDescription())
-                        .businessAddress(r.getBusinessAddress())
-                        .imageSrc(r.getImageSrc())
-                        .build())
-                .collect(Collectors.toList());
-        return response.success(list,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
+    public ResponseEntity<?> findRealtorList(String orderBy) {
+        List<RealtorProjectionInterface> findRealtors = null;
+        if(orderBy.equals("review")){
+            findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc();
+        } else if(orderBy.equals("star")) {
+            findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc();
+        }
+        return response.success(findRealtors,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 }
