@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Button from "../UI/Button";
-import kurentoUtils from "kurento-utils";
 
 import classes from "./ConsultingMeetPage.module.scss";
 import { REALTOR_STATUS, USER_STATUS } from "../pages/ConsultingPage";
@@ -130,12 +129,7 @@ const ConsultingMeetPage = ({
 
   return (
     <>
-      <video
-        autoPlay={true}
-        width={"100%"}
-        height={"640vw"}
-        ref={localVideo}
-      ></video>
+      <video autoPlay={true} ref={localVideo}></video>
       <video autoPlay={true} width={0} height={0} ref={remoteVideo}></video>
       <div className={classes.msgBox}>
         <h1>{info}</h1>
@@ -147,29 +141,32 @@ const ConsultingMeetPage = ({
           {!isRealtor ? "중개사" : "고객"} 해보기
         </Button>
       </div>
+
       <div className={classes.controllerBox}>
-        <div>
-          <Button clickEvent={toggleAudio}>
-            {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
-          </Button>
-        </div>
-        <div className={"recordBtn"}>
-          <Button
-            clickEvent={() => {
-              console.log("recording start");
-            }}
-          >
-            <BsRecordCircle />
-          </Button>
-        </div>
-        <div>
-          <Button
-            clickEvent={() => {
-              leaveRoom();
-            }}
-          >
-            <IoExitOutline />
-          </Button>
+        <div className={classes.controllerBox_inner}>
+          <div>
+            <Button clickEvent={toggleAudio}>
+              {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
+            </Button>
+          </div>
+          <div className={"recordBtn"}>
+            <Button
+              clickEvent={() => {
+                console.log("recording start");
+              }}
+            >
+              <BsRecordCircle />
+            </Button>
+          </div>
+          <div>
+            <Button
+              clickEvent={() => {
+                leaveRoom();
+              }}
+            >
+              <IoExitOutline />
+            </Button>
+          </div>
         </div>
       </div>
     </>

@@ -6,8 +6,14 @@ import { ConsultingReservationCardContent } from "./ReservationCardContent";
 import Button from "../UI/Button";
 import { useNavigate } from "react-router-dom";
 import HouseDetailCom from "./HouseDetailCom";
+import classes from "./ConsultingRightBox.module.scss";
 
-const ConsultingRightBox = ({ statusChangeHandler, status, isRealtor }) => {
+const ConsultingRightBox = ({
+  statusChangeHandler,
+  status,
+  isRealtor,
+  toggleListInMobile,
+}) => {
   const [detail, setDetail] = useState(-1);
   const navigate = useNavigate();
 
@@ -21,6 +27,9 @@ const ConsultingRightBox = ({ statusChangeHandler, status, isRealtor }) => {
 
   return (
     <>
+      <div className={classes.mobileBtn} onClick={toggleListInMobile}>
+        올려 올려!
+      </div>
       {isRealtor && REALTOR_STATUS.BEFORE_START === status && (
         <ListBox toStart={true} dataArray={[1, 2, 3]}>
           <ConsultingReservationCardContent
@@ -36,13 +45,13 @@ const ConsultingRightBox = ({ statusChangeHandler, status, isRealtor }) => {
         </ListBox>
       )}
       {detail !== -1 && <HouseDetailCom isConsulting={true} />}
-      <Button
+      {/* <Button
         clickEvent={() => {
           navigate("/");
         }}
       >
         통화종료
-      </Button>
+      </Button> */}
     </>
   );
 };
