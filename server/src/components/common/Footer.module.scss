@@ -20,17 +20,27 @@
 
       @media (max-width: 1024px) {
         width: 100vw;
+        align-items: center;
       }
 
       .partList {
         display: flex;
         color: #555555;
 
+        @media (max-width: 1024px) {
+          justify-content: center;
+          width: 100%;
+        }
+
         li {
           font-size: 14px;
           font-weight: 400;
           margin: 0 1%;
           cursor: pointer;
+
+          @media (max-width: 1024px) {
+            font-size: calc(14 * 0.1vw);
+          }
         }
       }
 
