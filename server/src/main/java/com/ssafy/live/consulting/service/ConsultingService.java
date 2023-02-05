@@ -19,14 +19,15 @@ import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -87,7 +88,7 @@ public class ConsultingService {
                             count = consultingItems.size() - 1;
                             buildingName = consultingItems.get(0).getItem().getBuildingName();
                         }
-                        list.add(ReservationRealtor.toEntity(consulting, user, buildingName, count));
+                        list.add(ReservationRealtor.toResponse(consulting, user, buildingName, count));
                 });
         if (list.isEmpty()) {
             listNotFound();
@@ -145,12 +146,7 @@ public class ConsultingService {
                     House house = consultingItem.getItem().getHouse();
                     items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.toEntity(item, house));
                 });
-        ConsultingResponse.ReservationDetail detail = ConsultingResponse.ReservationDetail.builder()
-                .consultingNo(consultingNo)
-                .consultingDate(consulting.getConsultingDate())
-                .requirement(consulting.getRequirement())
-                .itemList(items)
-                .build();
+        ConsultingResponse.ReservationDetail detail = ConsultingResponse.ReservationDetail.toEntity(consultingNo, consulting, items);
         return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
     }
 

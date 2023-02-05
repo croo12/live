@@ -11,23 +11,25 @@ import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.account.realtor.controller.dto.RealtorResponse;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
+import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.repository.RegionRepository;
+import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
@@ -38,6 +40,8 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -45,6 +49,8 @@ public class RealtorService {
 
     private final S3Service s3Service;
     private final RealtorRepository realtorRepository;
+    private final UsersRepository usersRepository;
+    private final ItemImageRepository itemImageRepository;
     private final PasswordEncoder passwordEncoder;
     private final Response response;
     private final JwtTokenProvider jwtTokenProvider;
@@ -160,16 +166,28 @@ public class RealtorService {
         return response.success();
     }
 
-    public ResponseEntity<?> findRealtorDetail(Long realtorNo) throws IOException {
+    public ResponseEntity<?> findRealtorDetail(Long realtorNo) {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        if(realtor == null) return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(realtor == null) return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> findAllRealtorDetail(Long realtorNo) {
+        Realtor realtor = realtorRepository.findById(realtorNo).get();
+        if(realtor == null) return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
+                .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findByItemNo(item.getNo()), item.getHouse()))
+                .collect(Collectors.toList());
+        List<RealtorResponse.FindAllDetail.Reviews> reviews = realtor.getReviews().stream()
+                .map(review -> RealtorResponse.FindAllDetail.Reviews.toEntity(review))
+                .collect(Collectors.toList());
+        return response.success(RealtorResponse.FindAllDetail.toEntity(realtor, items, reviews),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
     @Transactional
     public ResponseEntity<?> updateRealtor(Long realtorNo, RealtorRequest.Update request, MultipartFile file) throws IOException {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        if(realtor == null) return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(realtor == null) return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         String preImg = realtor.getImageSrc();
         System.out.println("name " + file.getOriginalFilename());
         if(file != null) {
@@ -180,7 +198,6 @@ public class RealtorService {
         realtorRepository.save(realtor);
         return response.success("공인중개사 정보 수정을 완료했습니다.", HttpStatus.OK);
     }
-
 
     public ResponseEntity<?> temporaryPassword(RealtorRequest.FindPassword request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
@@ -201,12 +218,19 @@ public class RealtorService {
         return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findRealtorList(String orderBy) {
+    public ResponseEntity<?> findRealtorList(@RequestHeader(AUTHORIZATION) String token, String orderBy) {
+        if (!jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        }
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        String region = "";
+        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")))
+            region = usersRepository.findById(authentication.getName()).get().getRegion();
         List<RealtorProjectionInterface> findRealtors = null;
         if(orderBy.equals("review")){
-            findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc();
+            findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc(region);
         } else if(orderBy.equals("star")) {
-            findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc();
+            findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc(region);
         }
         return response.success(findRealtors,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
