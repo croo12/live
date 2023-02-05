@@ -1,4 +1,261 @@
-.abx{
-background: linear-gradient(269.81deg, rgba(173, 166, 255, 0.2) 34.39%, rgba(114, 91, 91, 0) 76.78%), linear-gradient(140.06deg, #7BE495 -6.44%, #42D395 87.63%);
-    border-radius: 4px 4px 0px 0px;
+.itemBox{
+    .inner{
+        border: 0; 
+        width: 67.7%;
+        margin: auto;
+
+        .itemBoxContent{
+            padding: 3% 0;
+            display: flex;
+
+            .privacy{
+              flex:1;
+              padding-right:2%;
+                button{
+                    border: 0.3px solid rgba(66, 211, 149, 1);
+                    background-color: white;
+                    display: flex;
+                    width: 100%;
+                    height: 70px;
+                    padding: 6.5% 5%;
+                    border-radius: 5px;
+
+                    .leftLogo{
+                        flex:1; 
+                        font-size: 1.9rem;
+                    }
+
+                    .rightDesc{
+                        flex: 2; 
+                        padding: 1% 0 0 15%;
+
+                        strong{
+                            font-size: 1.1rem;
+                            color: rgba(85, 85, 85, 1);
+                        }
+                    }
+                }
+            }
+
+            .alarm{
+                flex: 1;
+                padding-right: 2%;
+                button {
+                        border: 0.3px solid rgba(66, 211, 149, 1);
+                        background-color: white;
+                        display: flex;
+                        width: 100%;
+                        height: 70px;
+                        padding: 6.5% 5%;
+                        border-radius: 5px;
+                
+                        .leftLogo {
+                            flex: 1;
+                            font-size: 1.9rem;
+                        }
+                
+                        .rightDesc {
+                            flex: 2;
+                            padding: 1% 0 0 15%;
+                
+                            strong {
+                                font-size: 1.1rem;
+                                color: rgba(85, 85, 85, 1);
+                            }
+                        }
+                    }
+                }
+             .review{
+                flex: 1;
+                padding-right: 2%;
+            button {
+                    border: 0.3px solid rgba(66, 211, 149, 1);
+                    background-color: white;
+                    display: flex;
+                    width: 100%;
+                    height: 70px;
+                    padding: 6.5% 5%;
+                    border-radius: 5px;
+            
+                    .leftLogo {
+                        flex: 1;
+                        font-size: 1.9rem;
+                    }
+            
+                    .rightDesc {
+                        flex: 2;
+                        padding: 1% 0 0 15%;
+            
+                        strong {
+                            font-size: 1.1rem;
+                            color: rgba(85, 85, 85, 1);
+                        }
+                    }
+                }
+            }
+            .reservation{
+                flex: 1;
+                button {
+                        border: 0.3px solid rgba(66, 211, 149, 1);
+                        background-color: white;
+                        display: flex;
+                        width: 100%;
+                        height: 70px;
+                        padding: 6.5% 5%;
+                        border-radius: 5px;
+                
+                        .leftLogo {
+                            flex: 1;
+                            font-size: 1.9rem;
+                        }
+                
+                        .rightDesc {
+                            flex: 2;
+                            padding: 1% 0 0 15%;
+                
+                            strong {
+                                font-size: 1.1rem;
+                                color: rgba(85, 85, 85, 1);
+                            }
+                        }
+                    }
+                }
+        }
+    }
+}
+
+@media(max-width:768px){
+    .itemBox {
+            .inner {
+                border: 0;
+                width: 100%;
+                margin: auto;
+    
+                .itemBoxContent {
+                    padding: 3% 0;
+                    display: flex;
+                    flex-direction: column;
+    
+                    .privacy {
+                        flex: 1;
+                        padding: 2%;
+    
+                        button {
+                            border: 0.3px solid rgba(66, 211, 149, 1);
+                            background-color: white;
+                            display: flex;
+                            width: 100%;
+                            height: 70px;
+                            padding: 6.5% 5%;
+                            border-radius: 5px;
+    
+                            .leftLogo {
+                                flex: 1;
+                                font-size: 1.9rem;
+                            }
+    
+                            .rightDesc {
+                                flex: 2;
+                                padding: 1% 0 0 15%;
+    
+                                strong {
+                                    font-size: 1.1rem;
+                                    color: rgba(85, 85, 85, 1);
+                                }
+                            }
+                        }
+                    }
+    
+                    .alarm {
+                        flex: 1;
+                        padding: 2%;
+    
+                        button {
+                            border: 0.3px solid rgba(66, 211, 149, 1);
+                            background-color: white;
+                            display: flex;
+                            width: 100%;
+                            height: 70px;
+                            padding: 6.5% 5%;
+                            border-radius: 5px;
+    
+                            .leftLogo {
+                                flex: 1;
+                                font-size: 1.9rem;
+                            }
+    
+                            .rightDesc {
+                                flex: 2;
+                                padding: 1% 0 0 15%;
+    
+                                strong {
+                                    font-size: 1.1rem;
+                                    color: rgba(85, 85, 85, 1);
+                                }
+                            }
+                        }
+                    }
+    
+                    .review {
+                        flex: 1;
+                        padding: 2%;
+    
+                        button {
+                            border: 0.3px solid rgba(66, 211, 149, 1);
+                            background-color: white;
+                            display: flex;
+                            width: 100%;
+                            height: 70px;
+                            padding: 6.5% 5%;
+                            border-radius: 5px;
+    
+                            .leftLogo {
+                                flex: 1;
+                                font-size: 1.9rem;
+                            }
+    
+                            .rightDesc {
+                                flex: 2;
+                                padding: 1% 0 0 15%;
+    
+                                strong {
+                                    font-size: 1.1rem;
+                                    color: rgba(85, 85, 85, 1);
+                                }
+                            }
+                        }
+                    }
+    
+                    .reservation {
+                        flex: 1;
+                        padding: 2%;
+    
+                        button {
+                            border: 0.3px solid rgba(66, 211, 149, 1);
+                            background-color: white;
+                            display: flex;
+                            width: 100%;
+                            height: 70px;
+                            padding: 6.5% 5%;
+                            border-radius: 5px;
+    
+                            .leftLogo {
+                                flex: 1;
+                                font-size: 1.9rem;
+                            }
+    
+                            .rightDesc {
+                                flex: 2;
+                                padding: 1% 0 0 15%;
+    
+                                strong {
+                                    font-size: 1.1rem;
+                                    color: rgba(85, 85, 85, 1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 }

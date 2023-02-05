@@ -7,7 +7,7 @@ import MainRanking from "../components/main/MainRanking";
 const MainPage = () => {
   return (
     <>
-      <section className={classes.intro}>
+      <section>
         <MainBanner />
       </section>
       <section className={classes.about} style={{ backgroundColor: "#022F1C" }}>

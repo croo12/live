@@ -18,7 +18,8 @@ const MainRanking = () => {
     <div className={classes.inner}>
       <div className={classes.rankingContent}>
         <h2>
-          지금 <strong>인기</strong>있는 <strong>공인중개사</strong>
+          지금 <strong className={classes.popularity}>인기</strong>있는{" "}
+          <strong className={classes.realtor}>공인중개사</strong>
         </h2>
         <div className={classes.buttonBox}>
           {data.map((item, idx) => {
@@ -37,7 +38,7 @@ const MainRanking = () => {
           })}
         </div>
         <ListBox
-          style={{ "justify-content": "space-between" }}
+          className={classes.listbox}
           dataArray={realtorList}
           direction={true}
         >
