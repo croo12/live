@@ -8,7 +8,7 @@ import classes from "./Button.module.scss";
  *
  * @returns
  */
-const Button = ({ isSubmit, clickEvent, children }) => {
+const Button = ({ isSubmit, clickEvent, children, type }) => {
   //bool isSubmit을 true로 받으면 버튼은 submit 버튼이 된다
 
   //받은 클릭 이벤트를 감싼 이벤트
@@ -19,7 +19,11 @@ const Button = ({ isSubmit, clickEvent, children }) => {
 
   //버튼 컴포넌트 리턴
   return (
-    <button type={isSubmit ? "submit" : "button"} onClick={clickEventHandler}>
+    <button
+      className={`${classes.button}`}
+      type={isSubmit ? "submit" : "button"}
+      onClick={clickEventHandler}
+    >
       {children}
     </button>
   );
