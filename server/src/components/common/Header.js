@@ -4,7 +4,7 @@ import logo from "../../assets/image/liveLogo.png";
 import { makeUUID } from "../../util/UUID";
 import { useState } from "react";
 
-import { TiThMenu } from "react-icons/ti";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Header = () => {
   const [isToggled, setIsToggled] = useState(false);
@@ -21,7 +21,7 @@ const Header = () => {
             <img src={logo} alt="Live Logo" />
           </NavLink>
           <button className={classes.toggleBtn}>
-            <TiThMenu onClick={isToggledHandler} />
+            <GiHamburgerMenu onClick={isToggledHandler} />
           </button>
         </div>
         <ul className={`${classes["menu"]} ${isToggled && classes.active}`}>

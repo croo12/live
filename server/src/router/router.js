@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   Route,
 } from "react-router-dom";
 import App from "../App";
@@ -40,8 +41,10 @@ const router = createBrowserRouter(
       <Route index element={<MainPage />}></Route>
       <Route path="login" element={<LoginPage />}></Route>
       <Route path="signup" element={<SignUpPage />}>
-        <Route path="signup-user" element={<SignUpPageUser />}></Route>
-        <Route path="signup-realtor" element={<SignUpPageRealtor />}></Route>
+        {/* for Redirect */}
+        <Route path="" element={<Navigate replace to="user" />} />
+        <Route path="user" element={<SignUpPageUser />}></Route>
+        <Route path="realtor" element={<SignUpPageRealtor />}></Route>
       </Route>
       <Route path="reservation" element={<ReservationPage />}></Route>
       <Route path="consulting/:sessionId" element={<ConsultingPage />}></Route>
