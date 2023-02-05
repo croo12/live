@@ -2,7 +2,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRef, useState, useEffect } from "react";
-import Card from "../pages/Card";
+import CarouselData from "../pages/CarouselData";
+import classes from "./Carousel.module.scss";
 
 const num = [{ a: 0 }, { a: 0 }, { a: 0 }];
 
@@ -52,32 +53,9 @@ function Carousel() {
     slidesToShow: 1,
     speed: 500,
     arrows: false,
-    dots: true,
+    dots: false,
     variableWidth: true,
     afterChange: (current) => setCurrent(current),
-    appendDots: () => {
-      return (
-        <div
-          style={{ width: "70vw", display: "flex", justifyContent: "center" }}
-        >
-          {num.map((_, i) => {
-            return (
-              <button
-                style={{
-                  width: "15px",
-                  height: "px",
-                  backgroundColor: "gray",
-                  borderRadius: "100%",
-                  marginRight: "10px",
-                }}
-                key={i}
-                onClick={() => handleClick(i)}
-              ></button>
-            );
-          })}
-        </div>
-      );
-    },
   };
 
   return (
@@ -89,7 +67,7 @@ function Carousel() {
         {num.map((item, i) => {
           return (
             <div key={i}>
-              <Card data={i} key={i} />
+              <CarouselData data={i} key={i} />
             </div>
           );
         })}

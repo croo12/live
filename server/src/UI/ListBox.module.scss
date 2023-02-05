@@ -1,24 +1,44 @@
-.list_box {
-  display: flex;
-  flex-direction: column;
-  width:100%;
-  height:100%;
-  justify-content: flex-start;
-  
 
-  &.row {
-    flex-direction: row;
-  }
+ .list_box {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   height: 100%;
+
+
+   &.row {
+     flex-direction: row;
+   }
+
+
+   li {
+     flex: 1;
+     flex-basis: 0;
+   }
+ }
+
+@media(max-width:768px){
+  .list_box {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+  
+  
+      &.row {
+        flex-direction: column;
+      }
+  
+      li {
+        flex: 1;
+        flex-basis: 0;
+      }
+    }
 
   &.toStart {
     
     > li {
       flex: 0;
     }
-  }
-
-  li {
-    flex: 1;
-    flex-basis: 0;
   }
 }

@@ -1,21 +1,43 @@
 import Button from "../../UI/Button";
+import classes from "./MyInfoDetailUser.module.scss";
 
 const MyInfoDetailUser = () => {
   return (
     <>
-      <h1>안녕 나는 마이페이지 - 유저 상세</h1>
       <div>
-        <form>
-          {/* 정보 전달해주기 */}
-          프로필 사진 맨 <br />
-          아이디 : 아이디 <br />
-          이름 : 이름 <br />
-          비밀번호 : 비밀번호 <br />
-          이메일 : 이메일 <br />
-          전화번호 : 전화번호 <br />
-        </form>
-        <Button>수정페이지</Button>
-        <Button>회원탈퇴</Button>
+        <div className={classes.viewPrivacy}>
+          <div className={classes.inner}>
+            <div className={classes.privacyContent}>
+              <div className={classes.privacyInfo}>
+                <div>
+                  <strong>아이디</strong>
+                  <span>parksj0230</span>
+                </div>
+                <div>
+                  <strong>이름</strong>
+                  <span>박세준</span>
+                </div>
+                <div>
+                  <strong>지역</strong>
+                  <span>대전</span>
+                </div>
+                <div>
+                  <strong>이메일</strong>
+                  <span>qkr0000@gmail.com</span>
+                </div>
+                <div>
+                  <strong>휴대폰 번호</strong>
+                  <span>010-1111-2222</span>
+                </div>
+              </div>
+              <br />
+              <div className={classes.buttonItem}>
+                <button>회원탈퇴</button>
+                <button>정보수정</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

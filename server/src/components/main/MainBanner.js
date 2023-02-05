@@ -4,7 +4,7 @@ import mainpicture from "../../assets/image/MainPicture.png";
 
 const MainBanner = () => {
   return (
-    <>
+    <div className={classes.intro}>
       <div className={classes.inner}>
         <div className={classes.introContent}>
           <div className={classes.desc}>
@@ -20,7 +20,7 @@ const MainBanner = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

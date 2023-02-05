@@ -1,13 +1,27 @@
 .inner {
   border: 0;
-  width: 1300px;
+  width: 67.7%;
   margin: auto;
 
-  margin-bottom: 128px;
+  margin-bottom: 6.67%;
 
   .aboutContent {
-    padding: 150px 10px; display: flex;
-  
-    
+    padding: 10% 0%; 
+    display: flex;
   }
+}
+
+@media(max-width:768px) {
+  .inner {
+      border: 0;
+      width: 100%;
+      margin: auto;
+  
+      margin-bottom: 6.67%;
+  
+      .aboutContent {
+        padding: 10% 0%;
+        display: flex;
+      }
+    }
 }
