@@ -37,7 +37,7 @@ public class ConsultingResponse {
                     .userName(user.getName())
                     .userImage(user.getImageSrc())
                     .consultingDate(consulting.getConsultingDate())
-                    .status(consulting.getStatus().getConsultingStatus())
+                    .status(consulting.getStatus().getValue())
                     .representativeItem(buildingName)
                     .itemCount(count)
                     .build();
@@ -69,7 +69,7 @@ public class ConsultingResponse {
                     .realtorCorp(realtor.getCorp())
                     .realtorImage(realtor.getImageSrc())
                     .consultingDate(consulting.getConsultingDate())
-                    .status(consulting.getStatus().getConsultingStatus())
+                    .status(consulting.getStatus().getValue())
                     .representativeItem(buildingName)
                     .itemCount(count)
                     .build();

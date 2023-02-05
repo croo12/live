@@ -3,7 +3,8 @@ package com.ssafy.live.consulting.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
-import com.ssafy.live.common.domain.ConsultingStatus;
+import com.ssafy.live.common.domain.Entity.status.ConsultingStatus;
+import com.ssafy.live.common.domain.Entity.status.ConsultingStatusConverter;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.review.domain.entity.Review;
 import lombok.*;
@@ -46,6 +47,7 @@ public class Consulting extends BaseEntity {
 
     private String requirement;
 
+    @Convert(converter = ConsultingStatusConverter.class)
     @Enumerated(EnumType.ORDINAL)
     private ConsultingStatus status;
 

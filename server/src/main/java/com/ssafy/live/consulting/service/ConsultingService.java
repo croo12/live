@@ -4,7 +4,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
-import com.ssafy.live.common.domain.ConsultingStatus;
+import com.ssafy.live.common.domain.Entity.status.ConsultingStatus;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
@@ -44,9 +44,13 @@ public class ConsultingService {
 
     public ResponseEntity<?> reserve(ConsultingRequest.Reserve reserve) {
         Users users = usersRepository.findById(reserve.getUserNo()).get();
-        if(users == null) return response.success("해당하는 사용자 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(users == null) {
+            return response.success("해당하는 사용자 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         Realtor realtor = realtorRepository.findById(reserve.getRealtorNo()).get();
-        if(realtor == null) return response.success("해당하는 공인중개사 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(realtor == null) {
+            return response.success("해당하는 공인중개사 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         Consulting consulting = Consulting.builder()
                 .realtor(realtor)
                 .users(users)
@@ -125,7 +129,9 @@ public class ConsultingService {
 
     public ResponseEntity<?> changeStatus(ConsultingRequest.ChangeStatus request) {
         Consulting consulting = consultingRepository.findById(request.getCounsultingNo()).get();
-        if(consulting == null) return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(consulting == null) {
+            return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         consulting.updateStatus(request.getStatus());
         consultingRepository.save(consulting);
         return response.success("예약상태가 변경되었습니다.", HttpStatus.OK);
@@ -137,7 +143,9 @@ public class ConsultingService {
 
     public ResponseEntity<?> detailReservation(Long consultingNo) {
         Consulting consulting = consultingRepository.findById(consultingNo).get();
-        if(consulting == null) return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(consulting == null) {
+            return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(consultingNo);
         List<ConsultingResponse.ReservationDetail.MyConsultingItem> items = new ArrayList<>();
         consultingItems.stream()
@@ -153,7 +161,9 @@ public class ConsultingService {
     public ResponseEntity<?> addConsultingItems(AddItem addItem) {
         Set<Long> noList = addItem.getItemList();
         Consulting consulting = consultingRepository.findById(addItem.getConsultingNo()).get();
-        if(consulting == null) return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(consulting == null) {
+            return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(addItem.getConsultingNo());
         consultingItems.stream()
                 .forEach(consultingItem -> {
