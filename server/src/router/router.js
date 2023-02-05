@@ -52,7 +52,7 @@ const router = createBrowserRouter(
         <Route index element={<HouseList />}></Route>
         <Route path="regist" element={<HouseRegist />}></Route>
         <Route path="detail/:itemNo" element={<HouseDetail />}></Route>
-        <Route path="modify" element={<HouseModify />}></Route>
+        <Route path="modify/:itemNo" element={<HouseModify />}></Route>
       </Route>
       <Route path="mypage" element={<MyPage />}>
         <Route path="info-detail-user" element={<MyInfoDetailUser />}></Route>

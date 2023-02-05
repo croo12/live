@@ -80,6 +80,7 @@ const HouseDetailCom = (props) => {
         <div>
           <button>계약</button>
           <button>담기</button>
+          <button>수정</button>
         </div>
         <hr />
       </div>
