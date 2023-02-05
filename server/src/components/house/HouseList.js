@@ -9,7 +9,7 @@ import ListBox from "../../UI/ListBox";
 import HouseCardContent from "../HouseCardContent";
 import { GiConversation } from "react-icons/gi";
 
-const HouseView = () => {
+const HouseList = () => {
   const searchInputRef = useRef(); // 매물 검색 입력 Ref
   const navigate = useNavigate(); // 페이지 이동을 위해 navigate 사용
 
@@ -60,4 +60,4 @@ const HouseView = () => {
   );
 };
 
-export default HouseView;
+export default HouseList;
