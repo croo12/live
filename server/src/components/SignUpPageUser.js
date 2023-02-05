@@ -78,6 +78,11 @@ const SignUpPageUser = () => {
     };
   }, [profile]);
 
+  useEffect(() => {
+    // 화면나올때 스크롤 맨위로 올려주는 용도로 작성
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <form className={classes.signupUser}>
       <div className={classes.signupFieldSet}>
