@@ -168,13 +168,17 @@ public class RealtorService {
 
     public ResponseEntity<?> findRealtorDetail(Long realtorNo) {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        if(realtor == null) return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(realtor == null) {
+            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> findAllRealtorDetail(Long realtorNo) {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        if(realtor == null) return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(realtor == null) {
+            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
                 .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findByItemNo(item.getNo()), item.getHouse()))
                 .collect(Collectors.toList());
@@ -187,7 +191,9 @@ public class RealtorService {
     @Transactional
     public ResponseEntity<?> updateRealtor(Long realtorNo, RealtorRequest.Update request, MultipartFile file) throws IOException {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        if(realtor == null) return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(realtor == null) {
+            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         String preImg = realtor.getImageSrc();
         System.out.println("name " + file.getOriginalFilename());
         if(file != null) {
@@ -201,7 +207,9 @@ public class RealtorService {
 
     public ResponseEntity<?> temporaryPassword(RealtorRequest.FindPassword request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
-        if(realtor == null) return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
+        if(realtor == null) {
+            return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
+        }
         String temporaryPwd = realtor.generateRandomPassword();
         realtor.updatePassword(passwordEncoder.encode(temporaryPwd));
         realtorRepository.save(realtor);
@@ -224,10 +232,11 @@ public class RealtorService {
         }
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         String region = "";
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")))
+        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             region = usersRepository.findById(authentication.getName()).get().getRegion();
+        }
         List<RealtorProjectionInterface> findRealtors = null;
-        if(orderBy.equals("review")){
+        if(orderBy.equals("review")) {
             findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc(region);
         } else if(orderBy.equals("star")) {
             findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc(region);

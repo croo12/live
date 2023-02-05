@@ -36,7 +36,9 @@ public class ItemService {
 
     public ResponseEntity<?> registItem(ItemDto.ItemRegistRequest itemRegistRequest) {
         Realtor realtor = realtorRepository.findById(itemRegistRequest.getRealtorNo()).get();
-        if(realtor == null) return response.fail("해당하는 공인중개사 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(realtor == null) {
+            return response.fail("해당하는 공인중개사 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         Long houseNo = itemRegistRequest.getHouseNo();
         House house;
         if(houseNo!=null && !houseNo.equals("")) {
