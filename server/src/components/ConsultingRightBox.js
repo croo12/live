@@ -7,19 +7,21 @@ import Button from "../UI/Button";
 import { useNavigate } from "react-router-dom";
 import HouseDetailCom from "./HouseDetailCom";
 import classes from "./ConsultingRightBox.module.scss";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const ConsultingRightBox = ({
   statusChangeHandler,
   status,
   isRealtor,
   toggleListInMobile,
+  viewList,
 }) => {
   const [detail, setDetail] = useState(-1);
   const navigate = useNavigate();
 
-  const clickHandler = () => {
+  const clickHandler = (idx) => {
     if (detail === -1) {
-      setDetail(1);
+      setDetail(idx);
     } else {
       setDetail(-1);
     }
@@ -28,30 +30,33 @@ const ConsultingRightBox = ({
   return (
     <>
       <div className={classes.mobileBtn} onClick={toggleListInMobile}>
-        올려 올려!
+        <GiHamburgerMenu />
       </div>
-      {isRealtor && REALTOR_STATUS.BEFORE_START === status && (
-        <ListBox toStart={true} dataArray={[1, 2, 3]}>
-          <ConsultingReservationCardContent
-            isConsulting={true}
-            statusChangeHandler={statusChangeHandler}
-          />
-        </ListBox>
-      )}
-      {((!isRealtor && detail === -1) ||
-        (REALTOR_STATUS.BEFORE_START !== status && detail === -1)) && (
-        <ListBox toStart={true} dataArray={[0, 1]}>
-          <ConsultingHouseCardContent clickHandler={clickHandler} />
-        </ListBox>
-      )}
-      {detail !== -1 && <HouseDetailCom isConsulting={true} />}
-      {/* <Button
-        clickEvent={() => {
-          navigate("/");
-        }}
+      <div
+        className={`${classes.inner_content} ${
+          viewList ? classes.isActive : ""
+        }`}
       >
-        통화종료
-      </Button> */}
+        {isRealtor && REALTOR_STATUS.BEFORE_START === status && (
+          <ListBox
+            toStart={true}
+            dataArray={[{ idx: 0 }, { idx: 1 }, { idx: 2 }]}
+          >
+            <ConsultingReservationCardContent
+              isConsulting={true}
+              statusChangeHandler={statusChangeHandler}
+            />
+          </ListBox>
+        )}
+        {(!isRealtor || REALTOR_STATUS.BEFORE_START !== status) && (
+          <ListBox toStart={true} dataArray={[{ idx: 0 }, { idx: 1 }]}>
+            <ConsultingHouseCardContent
+              clickHandler={clickHandler}
+              detail={detail}
+            />
+          </ListBox>
+        )}
+      </div>
     </>
   );
 };

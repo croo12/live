@@ -8,6 +8,7 @@ const useWebRTC = ({
   localVideo,
   remoteVideo,
   name,
+  audio, //오디오 보낼지말지 정하기
   sessionId,
 }) => {
   //============================================================================
@@ -23,7 +24,7 @@ const useWebRTC = ({
 
         sendMessage({
           id: "receiveVideoFrom",
-          sender: this.name,
+          sender: name,
           sdpOffer: offerSdp,
         });
       },
@@ -40,7 +41,6 @@ const useWebRTC = ({
       dispose() {
         console.log("Disposing participant " + this.name);
         this.rtcPeer.dispose();
-        // container.parentNode.removeChild(container);
       },
     };
   };
@@ -63,7 +63,7 @@ const useWebRTC = ({
         audio: true,
         video: {
           mandatory: {
-            maxWidth: 920,
+            width: 1980,
             maxFrameRate: 30,
             minFrameRate: 30,
           },
@@ -72,7 +72,7 @@ const useWebRTC = ({
     }
 
     const options = {
-      remoteVideo: isRealtor ? remoteVideo.current : remoteVideo.current,
+      remoteVideo: isRealtor ? remoteVideo.current : localVideo.current,
       onicecandidate: participant.onIceCandidate.bind(participant),
       mediaConstraints: constraints,
     };
@@ -91,12 +91,6 @@ const useWebRTC = ({
   return {
     //상대가 연결되었습니다
     onNewParticipant(request) {
-      // if (isRealtor) {
-      //   setInfo("고객이 접속하였습니다");
-      // } else {
-      //   console.log("중개사가 다시 방에 접속했습니다");
-      // }
-
       receiveVideo(request.name);
     },
 
@@ -112,28 +106,28 @@ const useWebRTC = ({
       );
     },
 
-    //이미 누가 있어용
+    //나 자신과의 연결임 이거
     onExistingParticipants(msg) {
-      // if (!isRealtor) setInfo("중개사와 연결중입니다...");
+      console.log(`onExistingParticipants 작동중...`);
 
       const constraints = {
         audio: true,
-        video: {
-          mandatory: {
-            maxWidth: 920,
-            maxFrameRate: 30,
-            minFrameRate: 30,
-          },
-        },
+        video: isRealtor
+          ? {
+              mandatory: {
+                width: 1980,
+                maxFrameRate: 30,
+                minFrameRate: 30,
+              },
+            }
+          : false,
       };
-      const name = "중개사맨";
-      // console.log(name + " registered in sessionID " + sessionId);
+
       const participant = Participant({ name, sendMessage });
       participants.current[name] = participant;
-      // var video = participant.getVideoElement();
 
       var options = {
-        localVideo: localVideo.current,
+        localVideo: isRealtor ? localVideo.current : remoteVideo.current,
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
@@ -144,7 +138,6 @@ const useWebRTC = ({
             return console.error(error);
           }
           this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-          // setInfo("");
         }
       );
 
