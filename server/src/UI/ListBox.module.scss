@@ -1,3 +1,4 @@
+
  .list_box {
    display: flex;
    flex-direction: column;
@@ -8,6 +9,7 @@
    &.row {
      flex-direction: row;
    }
+
 
    li {
      flex: 1;
@@ -32,4 +34,11 @@
         flex-basis: 0;
       }
     }
+
+  &.toStart {
+    
+    > li {
+      flex: 0;
+    }
+  }
 }

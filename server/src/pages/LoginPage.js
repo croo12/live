@@ -3,7 +3,6 @@ import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
 
 import classes from "./LoginPage.module.scss";
-import LoginLogo from "../assets/image/loginLogo.png";
 
 const LoginPage = () => {
   const [loginMode, setLoginMode] = useState("USER"); // 로그인 모드 상태 확인 ( USER , REALTOR )

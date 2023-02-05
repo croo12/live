@@ -79,7 +79,7 @@ const UserLoginForm = (props) => {
               <label>로그인 상태 유지</label>
             </div>
             <div className={classes.connList}>
-              <Link to="/signup">회원가입</Link> |{" "}
+              <Link to="/signup/user">회원가입</Link> |{" "}
               <Link onClick={findPasswordModalHandler}>비밀번호 찾기</Link>
             </div>
           </div>

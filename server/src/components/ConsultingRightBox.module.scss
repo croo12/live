@@ -1,0 +1,10 @@
+.mobileBtn {
+  display: none;
+
+  @media( max-width: 480px) {
+    display: block;
+
+    border-top-right-radius: 16vw;
+    border-top-left-radius: 16vw;
+  }
+}

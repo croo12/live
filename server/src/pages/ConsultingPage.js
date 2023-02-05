@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React, { useRef } from "react";
 
 import { useParams } from "react-router-dom";
 import ConsultingMeetPage from "../components/ConsultingMeetPage";
@@ -24,6 +25,7 @@ const ConsultingPage = (props) => {
   const { sessionId } = useParams();
   const [isRealtor, toggleRealtor] = useState(true);
   const [status, setStatus] = useState(isRealtor ? 0 : 3);
+  const [viewList, toggleList] = useState(false, true);
 
   const statusChangeHandler = (status) => {
     console.log(status);
@@ -94,6 +96,10 @@ const ConsultingPage = (props) => {
     toggleRealtor(!isRealtor);
   };
 
+  const toggleListInMobile = () => {
+    toggleList(!viewList);
+  };
+
   return (
     <>
       {/* <h1> 안녕 나는 통화 페이지</h1> */}
@@ -111,10 +117,11 @@ const ConsultingPage = (props) => {
             sessionId={sessionId}
           />
         </div>
-        <div className={classes.lists}>
+        <div className={`${classes.lists} ${viewList ? classes.isActive : ""}`}>
           <ConsultingRightBox
             isRealtor={isRealtor}
             statusChangeHandler={statusChangeHandler}
+            toggleListInMobile={toggleListInMobile}
             status={status}
           />
         </div>

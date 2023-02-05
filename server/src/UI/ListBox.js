@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Card from "./Card";
 import classes from "./ListBox.module.scss";
 
-const ListBox = (props) => {
+const ListBox = ({ dataArray, children, direction, toStart }) => {
   /**
    * 1. 배열과 컴포넌트(contextBox)를 props로 받는다.
    * 2. contextBox를 <Card>와 <li>로 감싼다.
@@ -10,19 +10,19 @@ const ListBox = (props) => {
    * 4. 배열 길이만큼 반복한다
    */
 
-  const dataArray = props.dataArray;
-
-  const [data, setData] = useState(dataArray ? dataArray : []);
-  const contentBox = props.children;
-  const [direction, setDirection] = useState(props.direction);
+  const [data] = useState(dataArray ? dataArray : []);
 
   //가로세로 props로 받기 그래서 플렉스 박스 방향 바꾸기
   return (
-    <ul className={`${classes.list_box} ${direction ? classes.row : ""}`}>
+    <ul
+      className={`${classes.list_box} ${direction ? classes.row : ""} ${
+        toStart ? classes.toStart : ""
+      }`}
+    >
       {data.map((element, idx) => {
         return (
           <li key={idx}>
-            <Card>{React.cloneElement(contentBox, element)}</Card>
+            <Card>{React.cloneElement(children, element)}</Card>
           </li>
         );
       })}

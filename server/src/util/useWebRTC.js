@@ -1,220 +1,183 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import kurentoUtils from "kurento-utils";
-import { useNavigate } from "react-router-dom";
-import useWebSocket from "./useWebSocket";
-
-export const getWebRtcPeer = ({ options, sdpOfferFunc }) => {
-  let webRtcPeer = null;
-
-  const WEBRTCPEER = kurentoUtils.WebRtcPeer;
-
-  // console.log(WEBRTCPEER);
-
-  function callbackFunc(err) {
-    if (err) console.error(err);
-    else this.generateOffer(sdpOfferFunc);
-  }
-
-  if (options)
-    webRtcPeer = options.mediaConstraints
-      ? new WEBRTCPEER.WebRtcPeerSendonly(options, callbackFunc)
-      : new WEBRTCPEER.WebRtcPeerRecvonly(options, callbackFunc);
-  else webRtcPeer = null;
-
-  return webRtcPeer;
-};
 
 const useWebRTC = ({
+  isRealtor,
+  participants,
+  socket,
+  sendMessage,
   localVideo,
   remoteVideo,
+  name,
   sessionId,
-  isRealtor,
-  responseMsg,
-  sendMsg,
 }) => {
-  const navi = useNavigate();
-
-  const participants = useRef({});
-
-  // const { responseMsg, sendMsg } = useWebSocket();
-
   //============================================================================
   //==============Participant 객체 생성기========================================
   //============================================================================
-  const Participant = useCallback(
-    (name) => {
-      return {
-        name,
-        offerToReceiveVideo(error, offerSdp, wp) {
-          if (error) return console.error("sdp offer error");
-
-          console.log("Invoking SDP offer callback function");
-
-          sendMsg({
-            id: "receiveVideoFrom",
-            sender: name,
-            sdpOffer: offerSdp,
-          });
-        },
-        onIceCandidate(candidate, wp) {
-          console.log("Local candidate" + JSON.stringify(candidate));
-
-          sendMsg({
-            id: "onIceCandidate",
-            candidate: candidate,
-            name,
-          });
-        },
-        rtcPeer: null,
-        dispose() {
-          console.log("Disposing participant " + this.name);
-          this.rtcPeer.dispose();
-          // container.parentNode.removeChild(container);
-        },
-      };
-    },
-    [sendMsg]
-  );
-
-  //============================================================================
-  //======================Send Message Action===================================
-  //============================================================================
-
-  //방 만들어줘요, 날 등록해줘용
-  const register = () => {
-    const name = isRealtor ? `중개사님` : `고갱님`;
-    const room = sessionId;
-
-    sendMsg({
-      id: "joinRoom",
+  const Participant = ({ name, sendMessage }) => {
+    return {
       name,
-      room,
-    });
+      offerToReceiveVideo(error, offerSdp, wp) {
+        if (error) return console.error("sdp offer error");
+
+        console.log(`Invoking SDP offer callback function`);
+
+        sendMessage({
+          id: "receiveVideoFrom",
+          sender: this.name,
+          sdpOffer: offerSdp,
+        });
+      },
+      onIceCandidate(candidate, wp) {
+        console.log("Local candidate" + JSON.stringify(candidate));
+
+        sendMessage({
+          id: "onIceCandidate",
+          candidate: candidate,
+          name,
+        });
+      },
+      rtcPeer: null,
+      dispose() {
+        console.log("Disposing participant " + this.name);
+        this.rtcPeer.dispose();
+        // container.parentNode.removeChild(container);
+      },
+    };
   };
 
-  const leaveRoom = () => {
-    sendMsg({ id: "leaveRoom" });
+  const receiveVideo = (sender) => {
+    const participant = Participant({ name: sender, sendMessage });
+    participants.current[sender] = participant;
 
-    for (let key in participants) {
-      participants[key].dispose();
+    //상대가 고객이라면 -> 소리만 받음
+    //상대가 중개사라면 -> 화면과 소리 다 받기
+    let constraints;
+
+    if (isRealtor) {
+      constraints = {
+        audio: true,
+        video: false,
+      };
+    } else {
+      constraints = {
+        audio: true,
+        video: {
+          mandatory: {
+            maxWidth: 920,
+            maxFrameRate: 30,
+            minFrameRate: 30,
+          },
+        },
+      };
     }
 
-    navi("/");
-  };
+    const options = {
+      remoteVideo: isRealtor ? remoteVideo.current : remoteVideo.current,
+      onicecandidate: participant.onIceCandidate.bind(participant),
+      mediaConstraints: constraints,
+    };
 
-  const receiveVideo = useCallback(
-    (sender) => {
-      const participant = new Participant(sender);
-      participants[sender] = participant;
-      const video = remoteVideo;
-
-      const options = {
-        remoteVideo: video,
-        onicecandidate: participant.onIceCandidate.bind(participant),
-      };
-
-      participant.rtcPeer = getWebRtcPeer({
-        options,
-        sdpOfferFunc: participant.offerToReceiveVideo.bind(participant),
-      });
-    },
-    [Participant, remoteVideo]
-  );
-
-  const onNewParticipant = useCallback(
-    (request) => {
-      receiveVideo(request.name);
-    },
-    [receiveVideo]
-  );
-
-  const receiveVideoResponse = (result) => {
-    participants[result.name].rtcPeer.processAnswer(
-      result.sdpAnswer,
-      (error) => {
-        if (error) return console.error(error);
+    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+      options,
+      function (error) {
+        if (error) {
+          return console.error(error);
+        }
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
       }
     );
   };
 
-  const onExistingParticipants = useCallback(
-    (msg) => {
+  return {
+    //상대가 연결되었습니다
+    onNewParticipant(request) {
+      // if (isRealtor) {
+      //   setInfo("고객이 접속하였습니다");
+      // } else {
+      //   console.log("중개사가 다시 방에 접속했습니다");
+      // }
+
+      receiveVideo(request.name);
+    },
+
+    //비디오가 온다네
+    receiveVideoResponse(result) {
+      console.log("난 뭘까...");
+
+      participants.current[result.name].rtcPeer.processAnswer(
+        result.sdpAnswer,
+        function (error) {
+          if (error) return console.error(error);
+        }
+      );
+    },
+
+    //이미 누가 있어용
+    onExistingParticipants(msg) {
+      // if (!isRealtor) setInfo("중개사와 연결중입니다...");
+
       const constraints = {
         audio: true,
         video: {
           mandatory: {
-            maxWidth: 320,
-            maxFrameRate: 15,
-            minFrameRate: 15,
+            maxWidth: 920,
+            maxFrameRate: 30,
+            minFrameRate: 30,
           },
         },
       };
+      const name = "중개사맨";
+      // console.log(name + " registered in sessionID " + sessionId);
+      const participant = Participant({ name, sendMessage });
+      participants.current[name] = participant;
+      // var video = participant.getVideoElement();
 
-      const name = "고객";
-
-      console.log(name + " registered in room " + sessionId);
-      const participant = Participant(name);
-      participants[name] = participant;
-      const video = localVideo;
-
-      const options = {
-        localVideo: video,
+      var options = {
+        localVideo: localVideo.current,
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
       };
-      participant.rtcPeer = getWebRtcPeer({
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
         options,
-        sdpOfferFunc: participant.offerToReceiveVideo.bind(participant),
-      });
+        function (error) {
+          if (error) {
+            return console.error(error);
+          }
+          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+          // setInfo("");
+        }
+      );
 
       msg.data.forEach(receiveVideo);
     },
-    [Participant, localVideo, receiveVideo, sessionId]
-  );
 
-  const onParticipantLeft = (request) => {
-    console.log("Participant " + request.name + " left");
-    const participant = participants[request.name];
-    participant.dispose();
-    delete participants[request.name];
+    //상대가 떠남
+    onParticipantLeft(request) {
+      console.log(`상대 ${request.name}가 나가버림`);
+      const participant = participants.current[request.name];
+      participant.dispose();
+      delete participants.current[request.name];
+    },
+    register() {
+      const message = {
+        id: "joinRoom",
+        name: name,
+        room: sessionId,
+      };
+      sendMessage(message);
+    },
+    leaveRoom() {
+      sendMessage({
+        id: "leaveRoom",
+      });
+
+      for (let key in participants.current) {
+        participants.current[key].dispose();
+      }
+
+      socket.current.close();
+    },
   };
-
-  useEffect(() => {
-    console.log(`받은 메시지 ${responseMsg}`);
-    switch (responseMsg.id) {
-      case "WEBSOCKET_CONNECTION_OK":
-        register();
-        break;
-
-      case "existingParticipants":
-        onExistingParticipants(responseMsg);
-        break;
-      case "newParticipantArrived":
-        onNewParticipant(responseMsg);
-        break;
-      case "participantLeft":
-        onParticipantLeft(responseMsg);
-        break;
-      case "receiveVideoAnswer":
-        receiveVideoResponse(responseMsg);
-        break;
-      case "iceCandidate":
-        participants[responseMsg.name].rtcPeer.addIceCandidate(
-          responseMsg.candidate,
-          function (error) {
-            if (error) {
-              console.error("Error adding candidate: " + error);
-              return;
-            }
-          }
-        );
-        break;
-      default:
-        if (responseMsg) console.error("Unrecognized message", responseMsg);
-    }
-  }, [responseMsg, onExistingParticipants, onNewParticipant]);
-
-  return { register, leaveRoom };
 };
 
 export default useWebRTC;
