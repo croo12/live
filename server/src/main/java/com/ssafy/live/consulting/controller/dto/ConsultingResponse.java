@@ -1,8 +1,5 @@
 package com.ssafy.live.consulting.controller.dto;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.consulting.domain.entity.Consulting;
@@ -11,6 +8,9 @@ import com.ssafy.live.house.domain.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class ConsultingResponse {
 
@@ -29,7 +29,7 @@ public class ConsultingResponse {
         private String representativeItem;
         private int itemCount;
 
-        public static ReservationRealtor toEntity(Consulting consulting, Users user, String buildingName, int count) {
+        public static ReservationRealtor toResponse(Consulting consulting, Users user, String buildingName, int count) {
             return ReservationRealtor.builder()
                     .consultingNo(consulting.getNo())
                     .realtorNo(consulting.getRealtor().getNo())
@@ -111,6 +111,16 @@ public class ConsultingResponse {
                         .addressDetail(house.getAddressDetail())
                         .build();
             }
+        }
+
+        @Builder
+        public static ReservationDetail toEntity(Long consultingNo, Consulting consulting,List<ConsultingResponse.ReservationDetail.MyConsultingItem> items) {
+            return ReservationDetail.builder()
+                    .consultingNo(consultingNo)
+                    .consultingDate(consulting.getConsultingDate())
+                    .requirement(consulting.getRequirement())
+                    .itemList(items)
+                    .build();
         }
     }
 }
