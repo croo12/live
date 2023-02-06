@@ -4,7 +4,7 @@ import classes from "./HouseListContent.module.scss";
 
 const ListItem = (props) => {
   const house = props.house;
-  const responsiveTextLen = [10, 15, 21, 25, 31];
+  const responsiveTextLen = [10, 15, 21, 25, 30];
 
   return (
     <div className={classes.houseItem}>
