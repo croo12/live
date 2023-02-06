@@ -6,6 +6,7 @@ import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.Entity.item.Direction;
 import com.ssafy.live.common.domain.Entity.item.Entrance;
 import com.ssafy.live.common.domain.Entity.item.Heating;
+import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -64,5 +65,11 @@ public class Item extends BaseEntity {
 
     public void setOption(ItemOption option) {
         this.itemOption = option;
+    }
+
+    public void updatePayment(int deposit, int rent, int maintenanceFee) {
+        this.deposit = deposit;
+        this.rent = rent;
+        this.maintenanceFee = maintenanceFee;
     }
 }

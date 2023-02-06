@@ -96,9 +96,9 @@ public class RealtorController {
     }
 
     @GetMapping("/region")
-    public ResponseEntity<?> findRealtorByRegion(@RequestParam String sidoName, @RequestParam String gugunName, @RequestParam String dongName) {
+    public ResponseEntity<?> findRealtorByRegion(@RequestParam String regionCode) {
         log.info("특정 지역 공인중개사 목록 조회");
-        return realtorService.findDistinctRealtorWithItemsByHouseByRegion(sidoName, gugunName, dongName);
+        return realtorService.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
     }
 
     @GetMapping

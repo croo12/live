@@ -3,18 +3,15 @@ package com.ssafy.live.house.service;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.repository.RegionRepository;
 import com.ssafy.live.house.controller.dto.ItemDto;
 import com.ssafy.live.house.controller.dto.ItemResponse;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
-import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.HouseRepository;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,13 +23,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ItemService {
 
-
     private final Response response;
     private final ItemRepository itemRepository;
     private final ItemImageRepository itemImageRepository;
     private final HouseRepository houseRepository;
     private final RealtorRepository realtorRepository;
-    private final RegionRepository regionRepository;
 
     public ResponseEntity<?> registItem(ItemDto.ItemRegistRequest itemRegistRequest) {
         Realtor realtor = realtorRepository.findById(itemRegistRequest.getRealtorNo()).get();
