@@ -4,6 +4,8 @@ import classes from "./HouseListContent.module.scss";
 
 const ListItem = (props) => {
   const house = props.house;
+  const responsiveTextLen = [10, 15, 21, 25, 31];
+
   return (
     <div className={classes.houseItem}>
       <div className={classes.houseImg}>
@@ -11,11 +13,17 @@ const ListItem = (props) => {
       </div>
       <div className={classes.houseInfo}>
         <h3>{house.price}</h3>
-        <p>{house.area}</p>
-        <p>{house.address}</p>
+        <div>
+          <p>{house.area}</p>
+          <ResponsiveText
+            text={house.address}
+            textLength={responsiveTextLen}
+            className={classes.desc}
+          />
+        </div>
         <ResponsiveText
           text={house.description}
-          textLength={[10, 15, 20, 25, 28]}
+          textLength={responsiveTextLen}
           className={classes.desc}
         />
       </div>
