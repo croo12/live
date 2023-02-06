@@ -1,22 +1,48 @@
-import Button from "../../UI/Button";
-import Input from "../../UI/Input";
+import classes from "./MyInfoModifyUser.module.scss";
 
 const MyInfoModifyUser = () => {
   return (
     <>
-      <h1>안녕 나는 마이페이지 - 유저 수정</h1>
       <div>
-        <form>
-          {/* 정보 전달해주기 */}
-          프로필 사진 맨 <br />
-          아이디 : <Input /> <br />
-          이름 : <Input /> <br />
-          비밀번호 : <Input /> <br />
-          이메일 : <Input /> <br />
-          전화번호 : <Input /> <br />
-        </form>
-        <Button isSubmit={true}>수정하기</Button>
-        <Button>취소</Button>
+        <div className={classes.viewPrivacy}>
+          <div className={classes.inner}>
+            <div className={classes.privacyContent}>
+              <div className={classes.privacyInfo}>
+                <div>
+                  <strong>아이디</strong>
+                  <span>parksj0230</span>
+                </div>
+                <div>
+                  <strong>이름</strong>
+                  <span>박세준</span>
+                </div>
+                <div>
+                  <label>
+                    <strong>주소 </strong>
+                  </label>
+                  <input type="text" />
+                </div>
+                <div>
+                  <label>
+                    <strong>이메일</strong>
+                  </label>
+                  <input type="text" />
+                </div>
+                <div>
+                  <label>
+                    <strong>휴대폰 번호 </strong>
+                  </label>
+                  <input type="text" />
+                </div>
+              </div>
+              <br />
+              <div className={classes.buttonItem}>
+                <button>회원탈퇴</button>
+                <button>정보수정</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -2,16 +2,18 @@ import { useRef, useState } from "react";
 import classes from "./MyPage.module.scss";
 import { BsPersonLinesFill, BsFillBellFill, BsSearch } from "react-icons/bs";
 import { TfiWrite } from "react-icons/tfi";
-import MyInfoDetailUser from "../components/mypage/MyInfoDetailUser";
+import MyInfoDetailUser from "../components/mypage/MyInfoDetail";
 import MyIntro from "../components/mypage/MyIntro";
 import MyAlert from "../components/mypage/MyAlert";
 import MyReview from "../components/mypage/MyReview";
 import MyReservation from "../components/mypage/MyReservation";
+import { Outlet } from "react-router-dom";
 
 const MyPage = () => {
   const routerView = useRef(null);
 
   const [btnActive, setBtnActive] = useState(0);
+  const [infoDetail, setInfoDetail] = useState(null);
 
   const privacyOnclickHandler = () => {
     setBtnActive(1);
@@ -32,7 +34,11 @@ const MyPage = () => {
   return (
     <>
       <MyIntro />
-      <MyInfoDetailUser />
+      {infoDetail === null ? (
+        <MyInfoDetailUser infoState={setInfoDetail} />
+      ) : (
+        <Outlet />
+      )}
       <div className={classes.itemBox}>
         <div className={classes.inner}>
           <div className={classes.itemBoxContent}>
