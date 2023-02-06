@@ -1,5 +1,6 @@
 package com.ssafy.live.house.controller.dto;
 
+import com.ssafy.live.house.domain.entity.ItemOption;
 import lombok.*;
 
 public class ItemOptionResponse {
@@ -10,7 +11,7 @@ public class ItemOptionResponse {
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     public static class ItemOptionDetailResponse {
 
-        //Option
+        private Long itemNo;
         private boolean bed;
         private boolean washingMachine;
         private boolean airConditioner;
@@ -40,6 +41,41 @@ public class ItemOptionResponse {
         private boolean terrace;
         private boolean garden;
         private boolean parkingLot;
+
+        public static ItemOptionDetailResponse toDto(ItemOption itemOption) {
+            return ItemOptionDetailResponse.builder()
+                    .itemNo(itemOption.getItemNo())
+                    .bed(itemOption.isBed())
+                    .washingMachine(itemOption.isWashingMachine())
+                    .airConditioner(itemOption.isAirConditioner())
+                    .desk(itemOption.isDesk())
+                    .closet(itemOption.isCloset())
+                    .bath(itemOption.isBath())
+                    .sink(itemOption.isSink())
+                    .cctv(itemOption.isCctv())
+                    .diningTable(itemOption.isDiningTable())
+                    .sofa(itemOption.isSofa())
+                    .shoeRack(itemOption.isShoeRack())
+                    .refrigerator(itemOption.isRefrigerator())
+                    .dryingMachine(itemOption.isDryingMachine())
+                    .bathtub(itemOption.isBathtub())
+                    .bidet(itemOption.isBidet())
+                    .dishwasher(itemOption.isDishwasher())
+                    .gasStove(itemOption.isGasStove())
+                    .inductionCooktop(itemOption.isInductionCooktop())
+                    .microwave(itemOption.isMicrowave())
+                    .oven(itemOption.isOven())
+                    .guard(itemOption.isGuard())
+                    .intercom(itemOption.isIntercom())
+                    .keycard(itemOption.isKeycard())
+                    .elevator(itemOption.isElevator())
+                    .fireAlarm(itemOption.isFireAlarm())
+                    .veranda(itemOption.isVeranda())
+                    .terrace(itemOption.isTerrace())
+                    .garden(itemOption.isGarden())
+                    .parkingLot(itemOption.isParkingLot())
+                    .build();
+        }
 
     }
 

@@ -34,13 +34,50 @@ public class ItemRequest {
         private Entrance entrance;
 
         @NotNull(message = "주택 정보가 없습니다.")
-        private HouseResponse.HouseRequest house;
+        private HouseRequest.HouseRegistRequest house;
         private ItemOptionRequest.ItemOptionRegistRequest itemOption;
 
         public Item toEntity(Realtor realtor, House house) {
             return Item.builder()
                     .realtor(realtor)
                     .house(house)
+                    .deposit(deposit)
+                    .rent(rent)
+                    .maintenanceFee(maintenanceFee)
+                    .description(description)
+                    .moveInDate(moveInDate)
+                    .heating(heating)
+                    .direction(direction)
+                    .entrance(entrance)
+                    .build();
+        }
+
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ItemUpdateRequest{
+        @NotBlank(message = "매물 정보가 없습니다.")
+        private Long itemNo;
+        @NotBlank(message = "보증금을 입력하세요. 없을 경우 0을 입력하세요")
+        private int deposit;
+        @NotBlank(message = "월세를 입력하세요. 없을 경우 0을 입력하세요")
+        private int rent;
+        @NotBlank(message = "관리비를 입력하세요. 없을 경우 0을 입력하세요")
+        private int maintenanceFee;
+        private String description;
+        private LocalDate moveInDate;
+        private Heating heating;
+        private Direction direction;
+        private Entrance entrance;
+
+        @NotNull(message = "주택 정보가 없습니다.")
+        private ItemOptionRequest.ItemOptionRegistRequest itemOption;
+
+        public Item toEntity() {
+            return Item.builder()
                     .deposit(deposit)
                     .rent(rent)
                     .maintenanceFee(maintenanceFee)
