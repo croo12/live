@@ -20,7 +20,8 @@ const DUMMY_HOUSE_DATA = [
     price: "월세 1,000/501",
     area: "23.14m²ㆍ반지하",
     address: "용산구 청파동2가1",
-    description: "여유있는면적오픈형/지층이지만삭...",
+    description:
+      "여유있는면적오픈형/지층이지만삭오픈형/지층이지만삭오픈형/지층이지만삭",
   },
   {
     itemNo: "2",
@@ -114,10 +115,10 @@ const HouseList = () => {
   };
 
   const [houseList, setHouseList] = useState([]);
+  const itemsPerPage = 4;
 
   const paginateHandler = (pageNum) => {
     let tempArr = [];
-    const itemsPerPage = 10;
     let endNum = pageNum * itemsPerPage;
     const srtNum = endNum - itemsPerPage;
     endNum =
@@ -162,7 +163,7 @@ const HouseList = () => {
           <HouseListContent houses={houseList} />
         </div>
         <Pagination
-          itemsPerPage={3}
+          itemsPerPage={itemsPerPage}
           totalItems={DUMMY_HOUSE_DATA.length}
           paginate={paginateHandler}
         />
