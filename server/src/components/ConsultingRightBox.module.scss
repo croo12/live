@@ -1,10 +1,21 @@
 .mobileBtn {
   display: none;
+  > svg {
+    padding: 1vw;
+    width: 8vw;
+    height: 8vw;
+  }
 
-  @media( max-width: 480px) {
+  @media( max-width: 768px) {
     display: block;
+  }
+}
 
-    border-top-right-radius: 16vw;
-    border-top-left-radius: 16vw;
+.inner_content {
+    overflow-y: hidden;
+    height: 100%;
+
+  &.isActive{
+      overflow-y: auto;
   }
 }

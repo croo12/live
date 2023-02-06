@@ -58,7 +58,7 @@ export const ConsultingHouseCardContent = (props) => {
     console.log(location);
 
     if (props.clickHandler) {
-      props.clickHandler();
+      props.clickHandler(props.idx);
       return;
     }
 
@@ -71,7 +71,9 @@ export const ConsultingHouseCardContent = (props) => {
 
   return (
     <>
-      <div className={classes.houseCardContent}>
+      <div
+        className={`${classes.houseCardContent} ${classes.consulting_inner}`}
+      >
         <div className={classes.upperCard}>
           <div className={classes.leftBox}>
             <h3> 월세 500/ 60 </h3>
@@ -85,6 +87,11 @@ export const ConsultingHouseCardContent = (props) => {
         <div className={classes.downCard}>
           <button onClick={clickEventHandler}>상세 정보 보기 </button>
         </div>
+        {props.detail === props.idx && (
+          <div className={classes.badge}>
+            <HouseDetailCom isConsulting={true} />
+          </div>
+        )}
       </div>
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
