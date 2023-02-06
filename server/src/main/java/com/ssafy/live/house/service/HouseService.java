@@ -1,7 +1,7 @@
 package com.ssafy.live.house.service;
 
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.house.controller.dto.HouseDto;
+import com.ssafy.live.house.controller.dto.HouseResponse;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.repository.HouseRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class HouseService {
 
         if(house==null) return response.fail("주택 정보가 없습니다.", HttpStatus.NO_CONTENT);
 
-        HouseDto.HouseResponse houseResponse = HouseDto.HouseResponse.builder()
+        HouseResponse.HouseDetailResponse houseDetailResponse = HouseResponse.HouseDetailResponse.builder()
                 .houseNo(house.getNo())
                 .isActive(house.getIsActive())
                 .address(house.getAddress())
@@ -41,7 +41,7 @@ public class HouseService {
                 .dong(house.getDong())
                 .build();
 
-        return response.success(houseResponse,"주택 정보가 조회되었습니다.", HttpStatus.OK);
+        return response.success(houseDetailResponse,"주택 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
 

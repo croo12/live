@@ -1,37 +1,17 @@
 package com.ssafy.live.house.controller.dto;
 
-import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.house.domain.entity.House;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
-public class HouseDto {
+public class HouseRequest {
 
-    @Getter
-    @Builder
-    public static class HouseResponse {
-        private Long houseNo;
-        private int isActive;
-        private String address;
-        private String addressDetail;
-        private float supplyArea;
-        private float exclusivePrivateArea;
-        private int floor;
-        private int totalFloor;
-        private String purpose;
-        private int room;
-        private int bathroom;
-        private int completionYear;
-        private String sido;
-        private String gugun;
-        private String dong;
-    }
 
     @Getter
     @Builder
-    public static class HouseRequest {
+    public static class HouseRegistRequest {
         //House
         private Long houseNo;
         @NotBlank(message = "주소를 입력하세요")

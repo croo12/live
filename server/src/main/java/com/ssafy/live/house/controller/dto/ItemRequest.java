@@ -34,7 +34,7 @@ public class ItemRequest {
         private Entrance entrance;
 
         @NotNull(message = "주택 정보가 없습니다.")
-        private HouseDto.HouseRequest house;
+        private HouseResponse.HouseRequest house;
         private ItemOptionRequest.ItemOptionRegistRequest itemOption;
 
         public Item toEntity(Realtor realtor, House house) {
