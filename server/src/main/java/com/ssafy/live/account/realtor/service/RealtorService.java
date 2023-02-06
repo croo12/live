@@ -173,8 +173,6 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> findRealtorDetail(Long realtorNo, String regionCode) {
-        // 특정 지역 매물 상위 표시
-        // 사용자 정보, 매물 정보, 리뷰 정보
         Realtor realtor = realtorRepository.findById(realtorNo).get();
         List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
                 .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc(), item.getHouse()))
@@ -240,5 +238,4 @@ public class RealtorService {
         }
         return response.success(findRealtors,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
-
 }
