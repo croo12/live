@@ -6,8 +6,10 @@ import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.Entity.item.Direction;
 import com.ssafy.live.common.domain.Entity.item.Entrance;
 import com.ssafy.live.common.domain.Entity.item.Heating;
-import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -22,6 +24,7 @@ import java.util.List;
 @AttributeOverride(name = "no", column = @Column(name = "item_no"))
 @Entity
 public class Item extends BaseEntity {
+
 
     private int deposit;
 
@@ -47,7 +50,7 @@ public class Item extends BaseEntity {
     private Entrance entrance;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ItemOption itemOption;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,10 +64,13 @@ public class Item extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<ItemImage> houseImages = new ArrayList<>();
+    private List<ItemImage> itemImages = new ArrayList<>();
 
     public void setOption(ItemOption option) {
         this.itemOption = option;
+    }
+    public void setItemImages(List<ItemImage> itemImages) {
+        this.itemImages = itemImages;
     }
 
     public void updatePayment(int deposit, int rent, int maintenanceFee) {

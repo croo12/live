@@ -19,7 +19,7 @@ public class ItemOption {
     @Column(name = "item_no")
     private Long itemNo;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "item_no", referencedColumnName = "no")
     @JsonIgnore
@@ -63,4 +63,8 @@ public class ItemOption {
     private boolean garden;
     @Column(name = "parking_lot")
     private boolean parkingLot;
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
 }

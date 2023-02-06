@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -191,7 +190,7 @@ public class RealtorService {
            // findRealtors = realtorRepository.findDistinctRealtorWithItemsSidoAndGugunAndDong(regionCode);
         }
         List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
-                .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findByItemNo(item.getNo()), item.getHouse()))
+                .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc(), item.getHouse()))
                 .collect(Collectors.toList());
         List<RealtorResponse.FindAllDetail.Reviews> reviews = realtor.getReviews().stream()
                 .map(review -> RealtorResponse.FindAllDetail.Reviews.toEntity(review))

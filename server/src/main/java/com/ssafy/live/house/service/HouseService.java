@@ -1,7 +1,7 @@
 package com.ssafy.live.house.service;
 
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.house.controller.dto.HouseDto;
+import com.ssafy.live.house.controller.dto.HouseResponse;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.repository.HouseRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,26 +21,11 @@ public class HouseService {
     public ResponseEntity<?> findHouseByAddress(String address, String addressDetail){
         House house = houseRepository.findTop1ByAddressAndAddressDetail(address,addressDetail);
 
-        if(house==null) {
+        if(house==null){
             return response.fail("주택 정보가 없습니다.", HttpStatus.NO_CONTENT);
         }
-
-        HouseDto.HouseResponse houseResponse = HouseDto.HouseResponse.builder()
-                .houseNo(house.getNo())
-                .isActive(house.getIsActive())
-                .address(house.getAddress())
-                .supplyArea(house.getSupplyArea())
-                .exclusivePrivateArea(house.getExclusivePrivateArea())
-                .floor(house.getFloor())
-                .totalFloor(house.getTotalFloor())
-                .purpose(house.getPurpose())
-                .addressDetail(house.getAddressDetail())
-                .room(house.getRoom())
-                .bathroom(house.getBathroom())
-                .completionYear(house.getCompletionYear())
-                .build();
-
-        return response.success(houseResponse,"주택 정보가 조회되었습니다.", HttpStatus.OK);
+        HouseResponse.HouseDetailResponse houseDetailResponse = HouseResponse.HouseDetailResponse.toDto(house);
+        return response.success(houseDetailResponse,"주택 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
 
