@@ -47,7 +47,7 @@ const MainContentResultBox = () => {
 
   return (
     <div style={{ textAlign: "left" }}>
-      <strong style={{ fontSize: "1.1rem" }}>편의 시설</strong>
+      <strong style={{ fontSize: "1.3rem" }}>편의 시설</strong>
       <br />
       <br />
       <div className={classes.results}>

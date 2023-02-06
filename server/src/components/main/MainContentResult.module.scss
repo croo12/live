@@ -2,4 +2,9 @@
   display: flex;
   justify-content: space-between;
   text-align: center;
+  padding:0 0 7% 0;
+
+  ul {
+    overflow: hidden;
+  }
 }

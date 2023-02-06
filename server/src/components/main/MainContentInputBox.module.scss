@@ -1,0 +1,56 @@
+.inputbox{
+    text-align: left;
+    .singleroom{
+        padding:0 0 3% 0;
+
+        label{
+            font-size: 1.1rem;
+            background: #FAFAFA;
+            border: 1px solid #D9D9D9;
+            border-radius: 4px;
+        }
+
+        input{
+            padding:2.5% 0%;
+            margin-right: 8%;
+            background: #FAFAFA;
+            border: 1px solid #D9D9D9;
+            border-radius: 4px;
+        }
+    }
+
+    .tworoom{
+        padding: 0 0 3% 0;
+        label {
+                background: #FAFAFA;
+                border: 1px solid #D9D9D9;
+                border-radius: 4px;
+            }
+        
+            input {
+                padding: 2.5% 0%;
+                margin-right: 8%;
+                background: #FAFAFA;
+                border: 1px solid #D9D9D9;
+                border-radius: 4px;
+            }
+    }
+
+    .houselease{
+        padding: 0 0 3% 0;
+        label {
+                background: #FAFAFA;
+                border: 1px solid #D9D9D9;
+                border-radius: 4px;
+            }
+        
+            input {
+                padding: 2.5% 0;
+                margin-right: 4%;
+                background: #FAFAFA;
+                border: 1px solid #D9D9D9;
+                border-radius: 4px;
+                width:90.3%;
+            }
+    }
+}
