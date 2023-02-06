@@ -152,7 +152,9 @@ public class UserService {
 
     public ResponseEntity<?> temporaryPassword(FindPassword request) {
         Users user = usersRepository.findByEmailAndId(request.getEmail(), request.getId());
-        if(user == null) return response.fail("해당하는 사용자 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        if(user == null) {
+            return response.fail("해당하는 사용자 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         String temporaryPwd = user.generateRandomPassword();
         user.updatePassword(passwordEncoder.encode(temporaryPwd));
         usersRepository.save(user);
