@@ -13,13 +13,13 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.repository.RegionRepository;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -55,7 +55,6 @@ public class RealtorService {
     private final Response response;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
-    private final RegionRepository regionRepository;
     private final EmailService emailService;
     private final AuthenticationManager authenticationManager;
 
@@ -217,13 +216,12 @@ public class RealtorService {
         return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findDistinctRealtorWithItemsByHouseByRegion(String sidoName, String gugunName, String dongName) {
-        String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(sidoName, gugunName, dongName).getRegionCode();
+    public ResponseEntity<?> findDistinctRealtorWithItemsByHouseByRegion(String regionCode) {
         List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
             .map(r -> RealtorResponse.FindByRegion.toEntity(r))
             .collect(Collectors.toList());
-        return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
+        return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> findRealtorList(@RequestHeader(AUTHORIZATION) String token, String orderBy) {

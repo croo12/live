@@ -34,9 +34,9 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
     List<RealtorProjectionInterface> findAllByOrderByCountByStarRatingDesc(String dong);
 
     @Query(value = "SELECT r.* FROM realtor r " +
-            "inner join review v on v.realtor_no = r.realtor_no " +
-            "inner join item i on i.realtor_no = r.realtor_no " +
-            "inner join house h where h.house_no=i.house_no and h.region_code=:region_code " +
+            "left join review v on v.realtor_no = r.realtor_no " +
+            "left join item i on i.realtor_no = r.realtor_no " +
+            "inner join house h on h.house_no=i.house_no where h.region_code=:region_code " +
             "group by r.realtor_no order by AVG(v.rating_score) DESC", nativeQuery=true)
     List<Realtor> findDistinctRealtorWithItemsByHouseByRegion(@Param("region_code") String region_code);
 }
