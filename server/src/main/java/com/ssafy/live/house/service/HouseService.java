@@ -19,9 +19,8 @@ public class HouseService {
     private final Response response;
 
     public ResponseEntity<?> findHouseByAddress(String address, String addressDetail){
-        House house = houseRepository.findTop1ByAddressAndAddressDetail(address,addressDetail)
+        House house = houseRepository.findTop1ByAddressAndAddressDetail(address,addressDetail);
 
-        return response.success(houseResponse,"주택 정보가 조회되었습니다.", HttpStatus.OK);
         if(house==null){
             return response.fail("주택 정보가 없습니다.", HttpStatus.NO_CONTENT);
         }

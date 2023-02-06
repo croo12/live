@@ -2,7 +2,11 @@ package com.ssafy.live.house.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -11,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "item_image_no"))
 @Entity
-@Builder
+@SuperBuilder
 public class ItemImage extends BaseEntity {
 
     @JsonIgnore

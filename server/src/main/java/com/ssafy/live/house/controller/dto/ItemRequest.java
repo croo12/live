@@ -81,6 +81,7 @@ public class ItemRequest {
 
         public Item toEntity() {
             return Item.builder()
+                    .no(itemNo)
                     .deposit(deposit)
                     .rent(rent)
                     .maintenanceFee(maintenanceFee)
@@ -89,10 +90,22 @@ public class ItemRequest {
                     .heating(heating)
                     .direction(direction)
                     .entrance(entrance)
+                    .itemOption(itemOption.toEntity(itemNo))
                     .build();
         }
 
     }
 
+    @Getter
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ItemsByBuildingName {
+
+        private Long realtorNo;
+        private String word;
+        private String sidoName;
+        private String gugunName;
+        private String dongName;
+    }
 
 }

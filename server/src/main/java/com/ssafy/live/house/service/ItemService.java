@@ -88,9 +88,6 @@ public class ItemService {
             return response.fail("매물 정보가 없습니다.", HttpStatus.BAD_REQUEST);
         }
         Item updatedItem = itemUpdateRequest.toEntity();
-        ItemOption updatedItemOption = itemUpdateRequest.getItemOption().toEntity(item.getNo());
-        updatedItem.setNo(item.getNo());
-        updatedItem.setOption(updatedItemOption);
 
         List<ItemImage> itemImages = itemImageRepository.findAllByItemNo(item.getNo());
         Set<Long> newImageNoSet = itemUpdateRequest.getItemImages();
@@ -114,4 +111,17 @@ public class ItemService {
         itemRepository.save(updatedItem);
         return response.success("매물 정보가 수정되었습니다.", HttpStatus.OK);
     }
+
+    public ResponseEntity<?> itemsByBuildingName(ItemRequest.ItemsByBuildingName request) {
+        List<ItemResponse.ItemsByBuildingName> list = new ArrayList<>();
+        List<Item> items = itemRepository.findByRealtorLikeBuildingName(request.getWord(), request.getRealtorNo(), request.getSidoName(), request.getGugunName(),request.getDongName());
+        items.stream()
+                .forEach(item -> {
+                    House house = item.getHouse();
+                    String image = itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc();
+                    list.add(ItemResponse.ItemsByBuildingName.toEntity(item, house, image));
+                });
+        return response.success(list, "매물 목록이 조회되었습니다.", HttpStatus.OK);
+    }
+
 }
