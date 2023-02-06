@@ -2,19 +2,14 @@ package com.ssafy.live.contract.controller.dto;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
-import com.ssafy.live.common.domain.Entity.status.ContractStatus;
-import com.ssafy.live.common.domain.Entity.status.ContractStatusConverter;
 import com.ssafy.live.contract.domain.entity.Contract;
-import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import lombok.*;
-
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ContractResponse {
 

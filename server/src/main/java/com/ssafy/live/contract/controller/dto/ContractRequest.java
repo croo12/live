@@ -1,16 +1,12 @@
 package com.ssafy.live.contract.controller.dto;
 
-import com.ssafy.live.account.realtor.domain.entity.Realtor;
-import com.ssafy.live.account.user.domain.entity.Users;
-import com.ssafy.live.contract.domain.entity.Contract;
-import com.ssafy.live.house.domain.entity.Item;
-import lombok.*;
-
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ContractRequest {
 
@@ -31,6 +27,23 @@ public class ContractRequest {
         private String specialContract;
         private String tenantAddress;
         private int tenantAge;
+        private int commission;
+        private int termOfContract;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class Update {
+
+        private Long contractNo;
+        private int deposit;
+        private int rent;
+        private int maintenanceFee;
+        private LocalDate moveOnDate;
+        private int termOfContract;
+        private String specialContract;
         private int commission;
     }
 }
