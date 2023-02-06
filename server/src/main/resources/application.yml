@@ -11,11 +11,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://13.209.12.115:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
-    password: ${MYSQL_ROOT_PASSWORD}
+    password: ${COMMON_PASSWORD}
   redis:
     host: redis-container
     port: '6379'
-    password: 'liveB104'
+    password: ${COMMON_PASSWORD}
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
