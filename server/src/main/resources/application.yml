@@ -16,6 +16,9 @@ spring:
     host: redis-container
     port: '6379'
     password: 'liveB104'
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     database: mysql
     properties:
@@ -50,10 +53,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: 'false'
-
-mvc:
-  pathmatch:
-    matching-strategy: ant_path_matcher
 
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
