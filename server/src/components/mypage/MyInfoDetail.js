@@ -1,6 +1,7 @@
 import classes from "./MyInfoDetail.module.scss";
-import { useNavigate, useState } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MyInfoModifyUser from "./MyInfoModifyUser";
+import { useState } from "react";
 
 const MyInfoDetail = () => {
   const navigate = useNavigate();

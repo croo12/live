@@ -80,30 +80,32 @@ const CarouselTemp = (props) => {
                   justifyContent: "center",
                 }}
               >
-                {items.map((item, idx) => {
-                  return (
-                    <li
-                      style={{
-                        width: "10%",
-                        height: "3rem",
-                        border: "1px solid",
-                        marginRight: "1px",
-                      }}
-                      key={idx}
-                      onClick={() => dotClickHandler(idx)}
-                    >
-                      <img
-                        src={item.imgSrc}
-                        alt={idx}
+                <ul>
+                  {items.map((item, idx) => {
+                    return (
+                      <li
                         style={{
-                          width: "100%",
-                          height: "100%",
-                          background: "rgba(0,0,0,0.1)",
+                          width: "10%",
+                          height: "3rem",
+                          border: "1px solid",
+                          marginRight: "1px",
                         }}
-                      />
-                    </li>
-                  );
-                })}
+                        key={idx}
+                        onClick={() => dotClickHandler(idx)}
+                      >
+                        <img
+                          src={item.imgSrc}
+                          alt={idx}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            background: "rgba(0,0,0,0.1)",
+                          }}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             );
           }),
