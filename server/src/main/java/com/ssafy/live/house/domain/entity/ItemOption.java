@@ -21,8 +21,8 @@ public class ItemOption {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "item_no")
-    //@JsonIgnore
+    @JoinColumn(name = "item_no", referencedColumnName = "no")
+    @JsonIgnore
     private Item item;
 
     private boolean bed;
