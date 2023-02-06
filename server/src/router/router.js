@@ -10,17 +10,17 @@ import HouseRegist from "../components/house/HouseRegist";
 import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
 import MyAlert from "../components/mypage/MyAlert";
-import MyConsulting from "../components/mypage/MyConsulting";
-import MyContractUser from "../components/mypage/MyContractUser";
-import MyContractDetailUser from "../components/mypage/MyContractDetailUser";
-import MyContractRegistUser from "../components/mypage/MyContractRegistUser";
-import MyContractViewUser from "../components/mypage/MyContractViewUser";
-import MyContractRealtor from "../components/mypage/MyContractRealtor";
-import MyContractViewRealtor from "../components/mypage/MyContractViewRealtor";
-import MyContractModifyRealtor from "../components/mypage/MyContractModifyRealtor";
-import MyContractDetailRealtor from "../components/mypage/MyContractDetailRealtor";
-import MyInfoDetailRealtor from "../components/mypage/MyInfoDetailRealtor";
-import MyInfoDetailUser from "../components/mypage/MyInfoDetailUser";
+import MyReservation from "../components/mypage/MyReservation";
+// import MyContractUser from "../components/mypage/MyContractUser";
+// import MyContractDetailUser from "../components/mypage/MyContractDetailUser";
+// import MyContractRegistUser from "../components/mypage/MyContractRegistUser";
+// import MyContractViewUser from "../components/mypage/MyContractViewUser";
+// import MyContractRealtor from "../components/mypage/MyContractRealtor";
+// import MyContractViewRealtor from "../components/mypage/MyContractViewRealtor";
+// import MyContractModifyRealtor from "../components/mypage/MyContractModifyRealtor";
+// import MyContractDetailRealtor from "../components/mypage/MyContractDetailRealtor";
+// import MyInfoDetailRealtor from "../components/mypage/MyInfoDetailRealtor";
+import MyInfoDetail from "../components/mypage/MyInfoDetail";
 import MyInfoModifyRealtor from "../components/mypage/MyInfoModifyRealtor";
 import MyInfoModifyUser from "../components/mypage/MyInfoModifyUser";
 import ConsultingPage from "../pages/ConsultingPage";
@@ -32,7 +32,7 @@ import MyPage from "../pages/MyPage";
 import ReservationPage from "../pages/ReservationPage";
 import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
-import MyConsultingDetail from "../components/mypage/MyConsultingDetail";
+import MyReservationDetail from "../components/mypage/MyConsultingDetail";
 import SignUpPage from "../pages/SignUpPage";
 
 const router = createBrowserRouter(
@@ -55,22 +55,22 @@ const router = createBrowserRouter(
         <Route path="modify/:itemNo" element={<HouseModify />}></Route>
       </Route>
       <Route path="mypage" element={<MyPage />}>
-        <Route path="info-detail-user" element={<MyInfoDetailUser />}></Route>
+        <Route path="info-detail" element={<MyInfoDetail />}></Route>
         <Route path="info-modify-user" element={<MyInfoModifyUser />}></Route>
-        <Route
+        {/* <Route
           path="info-detail-realtor"
           element={<MyInfoDetailRealtor />}
-        ></Route>
+        ></Route> */}
         <Route
           path="info-modify-realtor"
           element={<MyInfoModifyRealtor />}
         ></Route>
-        <Route path="consulting" element={<MyConsulting />}></Route>
+        <Route path="reservation" element={<MyReservation />}></Route>
         <Route
-          path="consulting-detail"
-          element={<MyConsultingDetail />}
+          path="reservation-detail"
+          element={<MyReservationDetail />}
         ></Route>
-        <Route path="contract-user" element={<MyContractUser />}>
+        {/* <Route path="contract-user" element={<MyContractUser />}>
           <Route index element={<MyContractViewUser />}></Route>
           <Route
             path="contract-regist-user"
@@ -92,7 +92,7 @@ const router = createBrowserRouter(
             path="contract-modify-realtor"
             element={<MyContractModifyRealtor />}
           ></Route>
-        </Route>
+        </Route> */}
         <Route path="alert" element={<MyAlert />}></Route>
         {/* 부동산 아저씨 일정관리 */}
       </Route>
