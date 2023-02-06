@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import HouseDetailCom from "./HouseDetailCom";
 
 const HouseDetail = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   return (
     <>
       <h1>안녕 나는 매물 - 매물 상세</h1>
