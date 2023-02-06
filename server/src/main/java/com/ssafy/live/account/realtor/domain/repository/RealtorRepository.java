@@ -34,9 +34,35 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
     List<RealtorProjectionInterface> findAllByOrderByCountByStarRatingDesc(String dong);
 
     @Query(value = "SELECT r.* FROM realtor r " +
-            "left join review v on v.realtor_no = r.realtor_no " +
-            "left join item i on i.realtor_no = r.realtor_no " +
-            "inner join house h on h.house_no=i.house_no where h.region_code=:region_code " +
-            "group by r.realtor_no order by AVG(v.rating_score) DESC", nativeQuery=true)
-    List<Realtor> findDistinctRealtorWithItemsByHouseByRegion(@Param("region_code") String region_code);
+        "left join review v on v.realtor_no = r.realtor_no " +
+        "left join item i on i.realtor_no = r.realtor_no " +
+        "inner join house h on h.house_no=i.house_no " +
+        "group by r.realtor_no order by AVG(v.rating_score) DESC", nativeQuery=true)
+    List<Realtor> findDistinctRealtor();
+    @Query(value = "SELECT r.* FROM realtor r "
+        + "left join review v on v.realtor_no = r.realtor_no "
+        + "left join item i on i.realtor_no = r.realtor_no "
+        + "inner join house h on h.house_no=i.house_no "
+        + "where substr(h.region_code, 1,2) = :sido "
+        + "group by r.realtor_no order by AVG(v.rating_score) DESC", nativeQuery=true)
+    List<Realtor> findDistinctRealtorWithSido(@Param("sido") String sido);
+
+    @Query(value = "SELECT r.* FROM realtor r "
+        + "left join review v on v.realtor_no = r.realtor_no "
+        + "left join item i on i.realtor_no = r.realtor_no "
+        + "inner join house h on h.house_no=i.house_no "
+        + "where substr(h.region_code, 1,2) = :sido "
+        + "and substr(h.region_code, 3,3) = :gugun "
+        + "group by r.realtor_no order by AVG(v.rating_score) DESC", nativeQuery=true)
+    List<Realtor> findDistinctRealtorWithSidoAndGugun(@Param("sido") String sido, @Param("gugun") String gugun);
+
+    @Query(value = "SELECT r.* FROM realtor r "
+        + "left join review v on v.realtor_no = r.realtor_no "
+        + "left join item i on i.realtor_no = r.realtor_no "
+        + "inner join house h on h.house_no=i.house_no "
+        + "where substr(h.region_code, 1,2) = :sido "
+        + "and substr(h.region_code, 3,3) = :gugun "
+        + "and substr(h.region_code, 6) = :dong "
+        + "group by r.realtor_no order by AVG(v.rating_score) DESC", nativeQuery=true)
+    List<Realtor> findDistinctRealtorWithSidoAndGugunAndDong(@Param("sido") String sido, @Param("gugun") String gugun, @Param("dong") String dong);
 }
