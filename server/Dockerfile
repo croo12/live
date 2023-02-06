@@ -16,6 +16,4 @@ ADD ./build ./build
 # cp nginx.conf in host PC
 # COPY ./nginx.conf /etc/nginx/conf.d
 
-EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
