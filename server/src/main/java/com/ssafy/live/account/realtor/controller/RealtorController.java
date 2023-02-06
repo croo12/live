@@ -1,18 +1,27 @@
 package com.ssafy.live.account.realtor.controller;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 import com.ssafy.live.account.common.error.ErrorHandler;
-import com.ssafy.live.account.realtor.controller.dto.*;
+import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.account.realtor.service.RealtorService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,7 +53,6 @@ public class RealtorController {
 
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(@Validated RealtorRequest.Reissue reissue, Errors errors) {
-        // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -53,7 +61,6 @@ public class RealtorController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@Validated RealtorRequest.Logout logout, Errors errors) {
-        // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -84,20 +91,26 @@ public class RealtorController {
     }
 
     @GetMapping ("/{realtorNo}")
-    public ResponseEntity<?> findRealtorDetail(@PathVariable("realtorNo") Long realtorNo) throws IOException {
+    public ResponseEntity<?> findRealtorDetail(@PathVariable("realtorNo") Long realtorNo) {
         log.info("공인중개사 정보 상세 조회");
         return realtorService.findRealtorDetail(realtorNo);
     }
 
+    @GetMapping ("/{realtorNo}/consultings")
+    public ResponseEntity<?> findAllRealtorDetail(@PathVariable("realtorNo") Long realtorNo) {
+        log.info("예약페이지 - 공인중개사 정보 상세 조회");
+        return realtorService.findAllRealtorDetail(realtorNo);
+    }
+
     @GetMapping("/region")
-    public ResponseEntity<?> findRealtorByRegion(@RequestParam String sidoName, @RequestParam String gugunName, @RequestParam String dongName) {
+    public ResponseEntity<?> findRealtorByRegion(@RequestParam String regionCode) {
         log.info("특정 지역 공인중개사 목록 조회");
-        return realtorService.findDistinctRealtorWithItemsByHouseByRegion(sidoName, gugunName, dongName);
+        return realtorService.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
     }
 
     @GetMapping
-    public ResponseEntity<?> findRealtorList() {
+    public ResponseEntity<?> findRealtorList(@RequestHeader(AUTHORIZATION) String token, @RequestParam String orderBy) {
         log.info("메인페이지 공인중개사 목록 조회");
-        return realtorService.findRealtorList();
+        return realtorService.findRealtorList(token, orderBy);
     }
 }

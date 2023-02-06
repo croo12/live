@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "house_no"))
 @Entity
-@Builder
 public class House extends BaseEntity {
 
     @JsonIgnore

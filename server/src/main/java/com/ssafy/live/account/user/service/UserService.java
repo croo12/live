@@ -12,6 +12,7 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
 import java.io.IOException;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -151,6 +152,9 @@ public class UserService {
 
     public ResponseEntity<?> temporaryPassword(FindPassword request) {
         Users user = usersRepository.findByEmailAndId(request.getEmail(), request.getId());
+        if(user == null) {
+            return response.fail("해당하는 사용자 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         String temporaryPwd = user.generateRandomPassword();
         user.updatePassword(passwordEncoder.encode(temporaryPwd));
         usersRepository.save(user);

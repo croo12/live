@@ -2,26 +2,18 @@ package com.ssafy.live.consulting.domain.entity;
 
 import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.house.domain.entity.Item;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
+@SuperBuilder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints= @UniqueConstraint(columnNames = {"consulting_no", "item_no"}))
 @AttributeOverride(name = "no", column = @Column(name = "consulting_item_no"))
 @Entity
 public class ConsultingItem extends BaseEntity {

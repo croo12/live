@@ -8,8 +8,6 @@ import com.ssafy.live.account.realtor.service.CustomRealtorDetailService;
 import com.ssafy.live.account.user.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @RequiredArgsConstructor
 @EnableWebSecurity
-@Order(Ordered.HIGHEST_PRECEDENCE)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -31,7 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailService customUserDetailService;
     private final UsersProvider usersProvider;
     private final CustomRealtorDetailService customRealtorDetailService;
-
     private final RealtorsProvider realtorsProvider;
 
     @Override

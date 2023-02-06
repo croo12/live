@@ -6,7 +6,9 @@ import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.Entity.item.Direction;
 import com.ssafy.live.common.domain.Entity.item.Entrance;
 import com.ssafy.live.common.domain.Entity.item.Heating;
+import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "item_no"))
@@ -67,5 +70,11 @@ public class Item extends BaseEntity {
     }
     public void setItemImages(List<ItemImage> itemImages) {
         this.itemImages = itemImages;
+    }
+
+    public void updatePayment(int deposit, int rent, int maintenanceFee) {
+        this.deposit = deposit;
+        this.rent = rent;
+        this.maintenanceFee = maintenanceFee;
     }
 }

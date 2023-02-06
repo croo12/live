@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public interface RegionRepository extends JpaRepository<Region, String> {
 
@@ -21,3 +22,4 @@ public interface RegionRepository extends JpaRepository<Region, String> {
 
     Region findBySidoNameAndGugunNameAndDongName(String sidoName, String gugunName, String dongName);
 }
+

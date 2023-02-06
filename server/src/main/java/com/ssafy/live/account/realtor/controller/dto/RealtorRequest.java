@@ -1,15 +1,11 @@
 package com.ssafy.live.account.realtor.controller.dto;
 
-import com.ssafy.live.account.realtor.domain.entity.Realtor;
+import lombok.*;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import java.time.LocalDate;
 
 public class RealtorRequest {
 
@@ -18,10 +14,8 @@ public class RealtorRequest {
     public static class SignUp {
 
         @NotEmpty(message = "사업자 번호는 필수 입력값입니다.")
-//        @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "이메일 형식에 맞지 않습니다.")
         private String businessNumber;
         @NotEmpty(message = "비밀번호는 필수 입력값입니다.")
-//        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{9,16}$", message = "비밀번호는 9~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
         private String password;
         @NotEmpty(message = "이메일은 필수 입력값입니다.")
         private String email;
@@ -31,6 +25,7 @@ public class RealtorRequest {
         private String registrationNumber;
         private String description;
         private String businessAddress;
+        private LocalDate startDate;
         @Column(columnDefinition = "TEXT")
         private String filePath;
     }
@@ -39,7 +34,6 @@ public class RealtorRequest {
     @Setter
     public static class Login {
         @NotEmpty(message = "사업자 번호는 필수 입력값입니다.")
-//        @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "이메일 형식에 맞지 않습니다.")
         private String businessNumber;
         @NotEmpty(message = "비밀번호는 필수 입력값입니다.")
         private String password;
@@ -87,26 +81,6 @@ public class RealtorRequest {
         private String businessAddress;
         @Column(columnDefinition = "TEXT")
         private String imageSrc;
-
-        @Builder
-        public Update(String name, String phone, String corp, String description, String businessAddress) {
-            this.name = name;
-            this.phone = phone;
-            this.corp = corp;
-            this.description = description;
-            this.businessAddress = businessAddress;
-        }
-
-        public Realtor toEntity(String imageSrc) {
-            return Realtor.builder()
-                .name(name)
-                .phone(phone)
-                .corp(corp)
-                .description(description)
-                .businessAddress(businessAddress)
-                .imageSrc(imageSrc)
-                .build();
-        }
     }
 
     @Getter

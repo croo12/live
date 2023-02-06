@@ -6,33 +6,41 @@ import com.ssafy.live.account.common.domain.Authority;
 import com.ssafy.live.account.common.dto.CommonResponse;
 import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
-import com.ssafy.live.account.realtor.controller.dto.*;
+import com.ssafy.live.account.realtor.controller.dto.RealtorProjectionInterface;
+import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
+import com.ssafy.live.account.realtor.controller.dto.RealtorResponse;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
+import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.repository.RegionRepository;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
+import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @Service
@@ -41,11 +49,12 @@ public class RealtorService {
 
     private final S3Service s3Service;
     private final RealtorRepository realtorRepository;
+    private final UsersRepository usersRepository;
+    private final ItemImageRepository itemImageRepository;
     private final PasswordEncoder passwordEncoder;
     private final Response response;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
-    private final RegionRepository regionRepository;
     private final EmailService emailService;
     private final AuthenticationManager authenticationManager;
 
@@ -54,7 +63,6 @@ public class RealtorService {
         if (realtorRepository.existsByBusinessNumber(signUp.getBusinessNumber())) {
             return response.fail("이미 회원가입된 중개사번호입니다.", HttpStatus.BAD_REQUEST);
         }
-
         String imgSrc = s3Service.upload(file);
         Realtor realtor = Realtor.builder()
             .password(passwordEncoder.encode(signUp.getPassword()))
@@ -65,6 +73,7 @@ public class RealtorService {
             .description(signUp.getDescription())
             .businessNumber(signUp.getBusinessNumber())
             .businessAddress(signUp.getBusinessAddress())
+            .startDate(signUp.getStartDate())
             .registrationNumber(signUp.getRegistrationNumber())
             .imageSrc(imgSrc)
             .roles(Collections.singletonList(Authority.ROLE_REALTOR.name()))
@@ -156,26 +165,34 @@ public class RealtorService {
         return response.success();
     }
 
-    public ResponseEntity<?> findRealtorDetail(Long realtorNo) throws IOException {
+    public ResponseEntity<?> findRealtorDetail(Long realtorNo) {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        RealtorResponse.FindDetail realtorDetail = RealtorResponse.FindDetail.builder()
-            .no(realtor.getNo())
-            .businessNumber(realtor.getBusinessNumber())
-            .name(realtor.getName())
-            .email(realtor.getEmail())
-            .phone(realtor.getPhone())
-            .corp(realtor.getCorp())
-            .registrationNumber(realtor.getRegistrationNumber())
-            .description(realtor.getDescription())
-            .businessAddress(realtor.getBusinessAddress())
-            .imageSrc(realtor.getImageSrc())
-            .build();
-        return response.success(realtorDetail,"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
+        if(realtor == null) {
+            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+        return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> findAllRealtorDetail(Long realtorNo) {
+        Realtor realtor = realtorRepository.findById(realtorNo).get();
+        if(realtor == null) {
+            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+        List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
+                .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findByItemNo(item.getNo()), item.getHouse()))
+                .collect(Collectors.toList());
+        List<RealtorResponse.FindAllDetail.Reviews> reviews = realtor.getReviews().stream()
+                .map(review -> RealtorResponse.FindAllDetail.Reviews.toEntity(review))
+                .collect(Collectors.toList());
+        return response.success(RealtorResponse.FindAllDetail.toEntity(realtor, items, reviews),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
     @Transactional
     public ResponseEntity<?> updateRealtor(Long realtorNo, RealtorRequest.Update request, MultipartFile file) throws IOException {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
+        if(realtor == null) {
+            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         String preImg = realtor.getImageSrc();
         System.out.println("name " + file.getOriginalFilename());
         if(file != null) {
@@ -187,9 +204,11 @@ public class RealtorService {
         return response.success("공인중개사 정보 수정을 완료했습니다.", HttpStatus.OK);
     }
 
-
     public ResponseEntity<?> temporaryPassword(RealtorRequest.FindPassword request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
+        if(realtor == null) {
+            return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
+        }
         String temporaryPwd = realtor.generateRandomPassword();
         realtor.updatePassword(passwordEncoder.encode(temporaryPwd));
         realtorRepository.save(realtor);
@@ -197,34 +216,29 @@ public class RealtorService {
         return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findDistinctRealtorWithItemsByHouseByRegion(String sidoName, String gugunName, String dongName) {
-        String regionCode = regionRepository.findBySidoNameAndGugunNameAndDongName(sidoName, gugunName, dongName).getRegionCode();
+    public ResponseEntity<?> findDistinctRealtorWithItemsByHouseByRegion(String regionCode) {
         List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-            .map(r -> RealtorResponse.FindByRegion.builder()
-                    .name(r.getName())
-                    .phone(r.getPhone())
-                    .corp(r.getCorp())
-                    .description(r.getDescription())
-                    .businessAddress(r.getBusinessAddress())
-                    .imageSrc(r.getImageSrc())
-                    .build())
+            .map(r -> RealtorResponse.FindByRegion.toEntity(r))
             .collect(Collectors.toList());
-        return response.success(list,sidoName+" "+ gugunName+" "+dongName+" 지역의 매물을 보유한 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
+        return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findRealtorList() {
-        List<Realtor> findRealtors = realtorRepository.findAll();
-        List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-                .map(r -> RealtorResponse.FindByRegion.builder()
-                        .name(r.getName())
-                        .phone(r.getPhone())
-                        .corp(r.getCorp())
-                        .description(r.getDescription())
-                        .businessAddress(r.getBusinessAddress())
-                        .imageSrc(r.getImageSrc())
-                        .build())
-                .collect(Collectors.toList());
-        return response.success(list,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
+    public ResponseEntity<?> findRealtorList(@RequestHeader(AUTHORIZATION) String token, String orderBy) {
+        if (!jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        }
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        String region = "";
+        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            region = usersRepository.findById(authentication.getName()).get().getRegion();
+        }
+        List<RealtorProjectionInterface> findRealtors = null;
+        if(orderBy.equals("review")) {
+            findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc(region);
+        } else if(orderBy.equals("star")) {
+            findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc(region);
+        }
+        return response.success(findRealtors,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 }
