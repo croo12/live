@@ -172,18 +172,15 @@ public class RealtorService {
         return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findAllRealtorDetail(Long realtorNo) {
+    public ResponseEntity<?> findRealtorDetail(Long realtorNo, String regionCode) {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        if(realtor == null) {
-            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
         List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
                 .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc(), item.getHouse()))
                 .collect(Collectors.toList());
         List<RealtorResponse.FindAllDetail.Reviews> reviews = realtor.getReviews().stream()
                 .map(review -> RealtorResponse.FindAllDetail.Reviews.toEntity(review))
                 .collect(Collectors.toList());
-        return response.success(RealtorResponse.FindAllDetail.toEntity(realtor, items, reviews),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
+        return response.success(RealtorResponse.FindAllDetail.toEntity(realtor, items, reviews),"공인중개사의 정보, 보유 매물 및 리뷰 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
     @Transactional
@@ -216,7 +213,8 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> findDistinctRealtorWithItemsByHouseByRegion(String regionCode) {
-        List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
+        // 지역코드 시/도/군 나눠서 조회
+        List<Realtor> findRealtors = realtorRepository.findDistinctRealtor(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
             .map(r -> RealtorResponse.FindByRegion.toEntity(r))
             .collect(Collectors.toList());

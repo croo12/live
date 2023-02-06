@@ -7,6 +7,7 @@ import com.ssafy.live.consulting.domain.entity.Consulting;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "review_no"))
 @Entity
+@SuperBuilder
 public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)

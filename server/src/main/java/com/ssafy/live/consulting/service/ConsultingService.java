@@ -1,5 +1,6 @@
 package com.ssafy.live.consulting.service;
 
+import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.entity.Users;
@@ -17,12 +18,15 @@ import com.ssafy.live.consulting.domain.repository.ConsultingItemRepository;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
-import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
+import com.ssafy.live.notice.domain.entity.Notice;
+import com.ssafy.live.notice.domain.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,8 +43,9 @@ public class ConsultingService {
     private final UsersRepository usersRepository;
     private final RealtorRepository realtorRepository;
     private final ItemRepository itemRepository;
+    private final NoticeRepository noticeRepository;
     private final ConsultingItemRepository consultingItemRepository;
-    private final ItemImageRepository itemImageRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public ResponseEntity<?> reserve(ConsultingRequest.Reserve reserve) {
         Users users = usersRepository.findById(reserve.getUserNo()).get();
@@ -127,13 +132,32 @@ public class ConsultingService {
          return response.success("상담 목록을 조회하였습니다.", HttpStatus.OK);
    }
 
-    public ResponseEntity<?> changeStatus(ConsultingRequest.ChangeStatus request) {
-        Consulting consulting = consultingRepository.findById(request.getCounsultingNo()).get();
-        if(consulting == null) {
-            return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> changeStatus(String token, ConsultingRequest.ChangeStatus request) {
+        if (!jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
+        Consulting consulting = consultingRepository.findById(request.getCounsultingNo()).get();
         consulting.updateStatus(request.getStatus());
         consultingRepository.save(consulting);
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        String writer, info;
+        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            writer = consulting.getRealtor().getName();
+        } else {
+            writer = consulting.getUsers().getName();
+        }
+        if(request.getStatus()==ConsultingStatus.CONSULTING_CONFIRMED.getValue()) {
+            info = "예약이 확정되었습니다.";
+        } else {
+            info = "예약이 취소되었습니다.";
+        }
+        Notice notice = Notice.builder()
+                .users(consulting.getUsers())
+                .realtor(consulting.getRealtor())
+                .noticeInfo(info)
+                .noticeWriter(writer)
+                .build();
+        noticeRepository.save(notice);
         return response.success("예약상태가 변경되었습니다.", HttpStatus.OK);
     }
 
@@ -181,6 +205,13 @@ public class ConsultingService {
                     .item(item).build();
                 consultingItemRepository.save(consultingItem);
             });
+        Notice notice = Notice.builder()
+                .users(consulting.getUsers())
+                .realtor(consulting.getRealtor())
+                .noticeInfo("상담 매물이 변경되었습니다.")
+                .noticeWriter(consulting.getRealtor().getName())
+                .build();
+        noticeRepository.save(notice);
         return response.success("상담 매물 수정이 완료되었습니다.", HttpStatus.OK);
     }
 }
