@@ -1,14 +1,14 @@
 #use nginx image
 FROM nginx
 
-RUN mkdir /front_app
+# RUN mkdir /var/www/html
 
-WORKDIR /front_app
+WORKDIR /var/www/html
 
-# make directory /front_app/build 
-RUN mkdir ./build
+# make directory /var/www/html/build 
+# RUN mkdir ./build
 
-ADD ./build ./build
+ADD ./build build
 
 # delete nginx default.conf
 RUN rm /etc/nginx/conf.d/default.conf
