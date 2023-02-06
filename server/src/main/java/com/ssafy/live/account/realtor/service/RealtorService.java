@@ -172,23 +172,10 @@ public class RealtorService {
         return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findAllRealtorDetail(Long realtorNo, String regionCode) {
+    public ResponseEntity<?> findRealtorDetail(Long realtorNo, String regionCode) {
         // 특정 지역 매물 상위 표시
         // 사용자 정보, 매물 정보, 리뷰 정보
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        if(realtor == null) {
-            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
-        List<Realtor> findRealtors = null;
-        if(regionCode.equals("")) {
-            findRealtors = findRealtors;
-        } else if(regionCode.substring(2, 5).equals("000")) {
-            findRealtors = realtorRepository.findDistinctRealtorWithSido(regionCode.substring(0, 2));
-        } else if(regionCode.substring(5).equals("00000")) {
-            findRealtors = realtorRepository.findDistinctRealtorWithSidoAndGugun(regionCode.substring(0, 2), regionCode.substring(2, 5));
-        } else {
-           // findRealtors = realtorRepository.findDistinctRealtorWithItemsSidoAndGugunAndDong(regionCode);
-        }
         List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
                 .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc(), item.getHouse()))
                 .collect(Collectors.toList());
@@ -229,17 +216,7 @@ public class RealtorService {
 
     public ResponseEntity<?> findDistinctRealtorWithItemsByHouseByRegion(String regionCode) {
         // 지역코드 시/도/군 나눠서 조회
-        List<Realtor> findRealtors = null;
-        if(regionCode.equals("")) {
-            findRealtors = realtorRepository.findDistinctRealtor();
-        } else if(regionCode.substring(2, 5).equals("000")) {
-            findRealtors = realtorRepository.findDistinctRealtorWithSido(regionCode.substring(0, 2));
-        } else if(regionCode.substring(5).equals("00000")) {
-            findRealtors = realtorRepository.findDistinctRealtorWithSidoAndGugun(regionCode.substring(0, 2), regionCode.substring(2, 5));
-        } else {
-            findRealtors = realtorRepository.findDistinctRealtorWithSidoAndGugunAndDong(regionCode.substring(0, 2), regionCode.substring(2, 5), regionCode.substring(5));
-        }
-        //List<Realtor> findRealtors = realtorRepository.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
+        List<Realtor> findRealtors = realtorRepository.findDistinctRealtor(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
             .map(r -> RealtorResponse.FindByRegion.toEntity(r))
             .collect(Collectors.toList());
@@ -263,4 +240,5 @@ public class RealtorService {
         }
         return response.success(findRealtors,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
+
 }
