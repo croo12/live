@@ -9,7 +9,7 @@ const MyReview = () => {
   return (
     <div className={classes.review}>
       <div className={classes.viewReview}>
-        <div className={classes.inner} style={{}}>
+        <div className={classes.inner}>
           <h3>리뷰조회</h3>
           <div className={classes.reviewContent}>
             <ListBox

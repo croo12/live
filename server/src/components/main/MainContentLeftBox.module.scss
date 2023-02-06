@@ -4,16 +4,22 @@
   p {
     color: #fff;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 
   .searchBox {
     line-height: 1.5em;
+    border: 0.2px solid;
+    
+    border-image-source: linear-gradient(84.09deg, rgba(250, 250, 250, 0.5) -13.07%, rgba(242, 242, 242, 0.3) 22.4%, rgba(250, 250, 250, 0) 134.96%),
+        linear-gradient(213.53deg, rgba(250, 250, 250, 0.6) 0.66%, rgba(242, 242, 242, 0.43125) 26.99%, rgba(220, 220, 220, 0) 55.61%, rgba(244, 244, 244, 0.48125) 69.34%, rgba(250, 250, 250, 0.6) 110.55%);
 
     background: linear-gradient(176.42deg, rgba(232, 232, 232, 0.15) -3.71%, rgba(0, 0, 0, 0) 109.3%), rgba(250, 250, 250, 0.3);
-    width: 400px;
-    height: 450px;
-    padding: 10% 3%;
+    filter: blur(0.5px);
+    border-radius: 16px;
+    width: 440px;
+    height: 506px;
+    padding: 10% 7% 0 7%;
     border-radius: 5%;
     color: #fff;
 
