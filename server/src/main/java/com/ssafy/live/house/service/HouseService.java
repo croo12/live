@@ -36,6 +36,9 @@ public class HouseService {
                 .room(house.getRoom())
                 .bathroom(house.getBathroom())
                 .completionYear(house.getCompletionYear())
+                .sido(house.getSido())
+                .gugun(house.getGugun())
+                .dong(house.getDong())
                 .build();
 
         return response.success(houseResponse,"주택 정보가 조회되었습니다.", HttpStatus.OK);

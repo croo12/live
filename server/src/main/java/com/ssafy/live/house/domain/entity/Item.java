@@ -46,7 +46,7 @@ public class Item extends BaseEntity {
     private Entrance entrance;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "item", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ItemOption itemOption;
 
     @ManyToOne(fetch = FetchType.LAZY)

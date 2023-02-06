@@ -1,6 +1,6 @@
 package com.ssafy.live.house.controller;
 
-import com.ssafy.live.house.controller.dto.ItemDto;
+import com.ssafy.live.house.controller.dto.ItemRequest;
 import com.ssafy.live.house.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,8 @@ public class ItemController {
 
     private final ItemService itemService;
     @PostMapping("")
-    private ResponseEntity<?> registItem(@RequestBody ItemDto.ItemRegistRequest itemRegistRequest) {
+    private ResponseEntity<?> registItem(@RequestBody ItemRequest.ItemRegistRequest itemRegistRequest)
+    {
         return itemService.registItem(itemRegistRequest);
     }
 
