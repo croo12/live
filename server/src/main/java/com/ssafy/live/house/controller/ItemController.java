@@ -5,6 +5,10 @@ import com.ssafy.live.house.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -13,19 +17,22 @@ public class ItemController {
 
     private final ItemService itemService;
     @PostMapping("")
-    private ResponseEntity<?> registItem(@RequestBody ItemRequest.ItemRegistRequest itemRegistRequest)
-    {
-        return itemService.registItem(itemRegistRequest);
+    private ResponseEntity<?> registItem(
+            @RequestPart(value = "ItemRegistRequest") ItemRequest.ItemRegistRequest itemRegistRequest,
+            @RequestPart(value = "files") List<MultipartFile> files) throws IOException {
+        return itemService.registItem(itemRegistRequest, files);
     }
 
     @GetMapping("/{itemNo}")
     private ResponseEntity<?> inquiryItemDetail(@PathVariable Long itemNo){
-        return itemService.inquiryItemDetail(itemNo);
+        return itemService.findItemDetail(itemNo);
     }
 
     @PutMapping("/{itemNo}")
-    private ResponseEntity<?> updateItemDetail(@RequestBody ItemRequest.ItemUpdateRequest itemUpdateRequest){
-        return itemService.updateItemDetail(itemUpdateRequest);
+    private ResponseEntity<?> updateItemDetail(
+            @RequestPart ItemRequest.ItemUpdateRequest itemUpdateRequest,
+            @RequestPart List<MultipartFile> files) throws IOException {
+        return itemService.updateItemDetail(itemUpdateRequest, files);
     }
 
 }

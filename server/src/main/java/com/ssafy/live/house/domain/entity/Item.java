@@ -60,9 +60,12 @@ public class Item extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<ItemImage> houseImages = new ArrayList<>();
+    private List<ItemImage> itemImages = new ArrayList<>();
 
     public void setOption(ItemOption option) {
         this.itemOption = option;
+    }
+    public void setItemImages(List<ItemImage> itemImages) {
+        this.itemImages = itemImages;
     }
 }

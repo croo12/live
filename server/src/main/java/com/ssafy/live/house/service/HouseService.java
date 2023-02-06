@@ -20,27 +20,10 @@ public class HouseService {
 
     public ResponseEntity<?> findHouseByAddress(String address, String addressDetail){
         House house = houseRepository.findTop1ByAddressAndAddressDetail(address,addressDetail);
-
-        if(house==null) return response.fail("주택 정보가 없습니다.", HttpStatus.NO_CONTENT);
-
-        HouseResponse.HouseDetailResponse houseDetailResponse = HouseResponse.HouseDetailResponse.builder()
-                .houseNo(house.getNo())
-                .isActive(house.getIsActive())
-                .address(house.getAddress())
-                .supplyArea(house.getSupplyArea())
-                .exclusivePrivateArea(house.getExclusivePrivateArea())
-                .floor(house.getFloor())
-                .totalFloor(house.getTotalFloor())
-                .purpose(house.getPurpose())
-                .addressDetail(house.getAddressDetail())
-                .room(house.getRoom())
-                .bathroom(house.getBathroom())
-                .completionYear(house.getCompletionYear())
-                .sido(house.getSido())
-                .gugun(house.getGugun())
-                .dong(house.getDong())
-                .build();
-
+        if(house==null){
+            return response.fail("주택 정보가 없습니다.", HttpStatus.NO_CONTENT);
+        }
+        HouseResponse.HouseDetailResponse houseDetailResponse = HouseResponse.HouseDetailResponse.toDto(house);
         return response.success(houseDetailResponse,"주택 정보가 조회되었습니다.", HttpStatus.OK);
     }
 

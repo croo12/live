@@ -14,7 +14,7 @@ public class HouseController {
 
     private final HouseService houseService;
 
-    @GetMapping(value ="", headers = { "Content-type=application/json" })
+    @GetMapping(value ="")
     private ResponseEntity<?> findHouseByAddress(
             @RequestParam String address,
             @RequestParam String addressDetail) {

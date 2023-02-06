@@ -11,8 +11,10 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class ItemRequest {
+
 
     @Getter
     @Builder
@@ -73,6 +75,7 @@ public class ItemRequest {
         private Direction direction;
         private Entrance entrance;
 
+        private Set<Long> itemImages;
         @NotNull(message = "주택 정보가 없습니다.")
         private ItemOptionRequest.ItemOptionRegistRequest itemOption;
 
