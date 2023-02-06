@@ -1,0 +1,109 @@
+.viewPrivacy {
+    .inner {
+        border: 0;
+        width: 67.7%;
+        margin: auto;
+
+        .privacyContent {
+            padding: 3% 0;
+
+            .privacyInfo {
+                background-color: #65DE96;
+                display: flex;
+                padding: 1.5% 1%;
+                // flex-direction: column;
+
+                div {
+                    flex: 1.5;
+                    border: 1px solid white;
+                    background-color: white;
+                    display: flex;
+                    padding: 1% 0;
+                    margin-right: 0.7%;
+
+                   label{
+                    strong {
+                            text-align: left;
+                            flex: 1;
+                        }
+                   }
+
+                    span {
+                        text-align: right;
+                        flex: 1;
+                        color: gray;
+                    }
+
+                    input{
+                        margin-left:1.5%;
+                    }
+                }
+            }
+
+            .buttonItem {
+                text-align: right;
+
+                button {
+                    background-color: #F5F5F5;
+                    border: 0.3px solid rgba(85, 85, 85, 1);
+                    padding: 0.5%;
+                    border-radius: 3%;
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width:768px) {
+    .viewPrivacy {
+        .inner {
+            border: 0;
+            width: 100%;
+            margin: auto;
+
+            .privacyContent {
+                padding: 3% 0;
+
+                .privacyInfo {
+                    background-color: #65DE96;
+                    display: flex;
+                    padding: 1.5% 1%;
+                    flex-direction: column;
+
+                    div {
+                        flex: 1.5;
+                        border: 1px solid white;
+                        background-color: white;
+                        display: flex;
+                        padding: 1%;
+                        margin: 0.2%;
+
+                        strong {
+                            text-align: left;
+                            flex: 1;
+                        }
+
+                        span {
+                            text-align: right;
+                            flex: 1;
+                            color: gray;
+                        }
+                    }
+                }
+
+                .buttonItem {
+                    text-align: right;
+
+                    button {
+                        background-color: #F5F5F5;
+                        border: 0.3px solid rgba(85, 85, 85, 1);
+                        padding: 0.5%;
+                        border-radius: 3%;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+}

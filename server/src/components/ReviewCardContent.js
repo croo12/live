@@ -1,3 +1,5 @@
+import classes from "./ReviewCardContent.module.scss";
+
 const ReviewCardContent = ({
   realtorName,
   starNum,
@@ -6,15 +8,7 @@ const ReviewCardContent = ({
   review,
 }) => {
   return (
-    <div
-      style={{
-        backgroundColor: "#42D395",
-        color: "white",
-        padding: "40px 20px",
-        textAlign: "left",
-        borderRadius: "10px",
-      }}
-    >
+    <div className={classes.content}>
       <h3>
         {realtorName} ★ {starNum}
       </h3>

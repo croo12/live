@@ -7,24 +7,11 @@ import ReviewCardContent from "../ReviewCardContent";
 const MyReview = () => {
   const [reviewList, setReviewList] = useState(DUMMY2);
   return (
-    <div>
-      <h3 style={{ textAlign: "left", padding: "0 0 20px 115px" }}>리뷰조회</h3>
-      <div
-        className={classes.viewReview}
-        style={{ backgroundColor: "#022F1C" }}
-      >
-        <div
-          className={classes.inner}
-          style={{
-            border: "0",
-            width: "1300px",
-            margin: "auto",
-          }}
-        >
-          <div
-            className={classes.reviewContent}
-            style={{ padding: "100px 0 100px 0" }}
-          >
+    <div className={classes.review}>
+      <div className={classes.viewReview}>
+        <div className={classes.inner} style={{}}>
+          <h3>리뷰조회</h3>
+          <div className={classes.reviewContent}>
             <ListBox
               style={{ "justify-content": "space-between" }}
               dataArray={reviewList}
