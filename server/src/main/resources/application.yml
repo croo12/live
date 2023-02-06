@@ -3,10 +3,13 @@ com:
     upload:
       path: /Live/Images/profile/
 
+server:
+  port: '8080'
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://i8b104.p.ssafy.io:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://13.209.12.115:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
     password: ${MYSQL_ROOT_PASSWORD}
   redis:
@@ -54,10 +57,6 @@ mvc:
 
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
-
-server:
-  port: '8080'
-  address: localhost
 
 logging:
   level:
