@@ -8,7 +8,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://i8b104.p.ssafy.io:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
-    password: 1234
+    password: ${MYSQL_ROOT_PASSWORD}
+  redis:
+    host: redis-container
+    port: '6379'
+    password: 'liveB104'
   jpa:
     database: mysql
     properties:
@@ -43,11 +47,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: 'false'
-
-redis:
-  host: redis-container
-  port: '6379'
-  password: 'liveB104'
 
 mvc:
   pathmatch:
