@@ -7,6 +7,7 @@ import ConsultingRightBox from "../components/ConsultingRightBox";
 import { usePrompt } from "../util/usePrompt";
 
 import classes from "./ConsultingPage.module.scss";
+import useRecording from "../util/useRecording";
 
 export const REALTOR_STATUS = {
   BEFORE_START: 0,
@@ -24,8 +25,11 @@ export const USER_STATUS = {
 const ConsultingPage = (props) => {
   const { sessionId } = useParams();
   const [isRealtor, toggleRealtor] = useState(true);
-  const [status, setStatus] = useState(isRealtor ? 0 : 3);
+  const [status, setStatus] = useState(
+    isRealtor ? REALTOR_STATUS.BEFORE_START : USER_STATUS.ENTER_SESSION
+  );
   const [viewList, toggleList] = useState(false, true);
+  const [recordingFiles, setRecordingFiles] = useState([]);
 
   const statusChangeHandler = (status) => {
     console.log(status);
@@ -44,6 +48,7 @@ const ConsultingPage = (props) => {
 
           if (confirm(`정말로 함? 상담 시작함`)) {
             setStatus(REALTOR_STATUS.START_BUT_NOT_CONNECT);
+            return;
           } else {
             setStatus(REALTOR_STATUS.BEFORE_START);
           }
@@ -84,7 +89,7 @@ const ConsultingPage = (props) => {
           break;
       }
     }
-    setStatus(status);
+    // setStatus(status);
   };
 
   usePrompt({
@@ -107,14 +112,16 @@ const ConsultingPage = (props) => {
         왼쪽 박스는 통화 화면임
         오른쪽 박스는 예약 목록, 매물 목록 혹은 매물 세부 (어쩌면 채팅창 추가도 가능성)
       */}
+      <h1>{isRealtor ? `너 중개사` : `너 유저`} </h1>
       <div className={classes.consulting_page}>
         <div className={classes.video_box}>
           <ConsultingMeetPage
             isRealtor={isRealtor}
-            toggleTest={toggleTest}
             status={status}
             statusChangeHandler={statusChangeHandler}
             sessionId={sessionId}
+            recordingFiles={recordingFiles}
+            setRecordingFiles={setRecordingFiles}
           />
         </div>
         <div className={`${classes.lists} ${viewList ? classes.isActive : ""}`}>
@@ -123,6 +130,7 @@ const ConsultingPage = (props) => {
             statusChangeHandler={statusChangeHandler}
             toggleListInMobile={toggleListInMobile}
             status={status}
+            viewList={viewList}
           />
         </div>
       </div>

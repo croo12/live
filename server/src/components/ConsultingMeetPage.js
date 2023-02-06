@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../UI/Button";
+import { makeUUID } from "../util/UUID";
 
 import classes from "./ConsultingMeetPage.module.scss";
 import { REALTOR_STATUS, USER_STATUS } from "../pages/ConsultingPage";
@@ -8,19 +9,34 @@ import { AiOutlineSound } from "react-icons/ai";
 import { IoExitOutline, IoVolumeMuteOutline } from "react-icons/io5";
 import useWebSocket from "../util/useWebSocket";
 import useWebRTC from "../util/useWebRTC";
+import { useNavigate } from "react-router-dom";
+import useRecording from "../util/useRecording";
 
 const ConsultingMeetPage = ({
   isRealtor,
-  toggleTest,
   status,
   statusChangeHandler,
   sessionId,
+  recordingFiles,
+  setRecordingFiles,
 }) => {
+  const navi = useNavigate();
+
   const localVideo = useRef();
   const remoteVideo = useRef();
 
+  //비디오 가운데에 나오는 문구 세팅용
   const [info, setInfo] = useState("준비중...");
-  const [name, setName] = useState(isRealtor ? "중개사맨" : "고객");
+
+  //이름 만들기용 현재 무작위지만 나중에 실제 닉네임으로 변경 필요
+  const [name] = useState(makeUUID());
+
+  //녹화 관리용 [녹화 상태인가? , 녹화시작, 녹화종료]
+  const [recording, startRecording, stopRecording] = useRecording({
+    stream: localVideo.current?.srcObject,
+    recordingFiles,
+    setRecordingFiles,
+  });
 
   const [audio, setAudio] = useState(true);
   // const [record, setRecord] = useState(false);
@@ -42,12 +58,9 @@ const ConsultingMeetPage = ({
     localVideo,
     remoteVideo,
     name,
+    audio,
     sessionId,
   });
-
-  const setStatus = (action) => {
-    statusChangeHandler(action);
-  };
 
   useEffect(() => {
     console.info(`Received message: `, responseMsg);
@@ -55,7 +68,13 @@ const ConsultingMeetPage = ({
     switch (responseMsg.id) {
       //누가 있음
       case "existingParticipants":
+        setInfo(`내 기기 연결 중...`);
         onExistingParticipants(responseMsg);
+        if (isRealtor) {
+          // statusChangeHandler(REALTOR_STATUS.START_BUT_NOT_CONNECT);
+        } else {
+          // statusChangeHandler(USER_STATUS.)
+        }
         break;
 
       //상대가 왔다.
@@ -70,6 +89,13 @@ const ConsultingMeetPage = ({
 
       case "receiveVideoAnswer":
         console.log("잘되용");
+        setInfo(``);
+        if (isRealtor) {
+          statusChangeHandler(REALTOR_STATUS.CONNECTING);
+        } else {
+          statusChangeHandler(USER_STATUS.CONNECTING);
+        }
+
         receiveVideoResponse(responseMsg);
         break;
       case "iceCandidate":
@@ -96,10 +122,8 @@ const ConsultingMeetPage = ({
       case REALTOR_STATUS.BEFORE_START:
         break;
       case REALTOR_STATUS.START_BUT_NOT_CONNECT:
-        //오른쪽 리스트를 매물 목록으로 전환
-
         //유저에게 알람을 보낸다
-        //유저의 접속을 기다리고 있습니다...
+        setInfo(`유저의 접속을 기다리고 있습니다...`);
         //방에 들어아고 내 화면 틀기
         console.log(`이건 댐`);
         register();
@@ -108,13 +132,16 @@ const ConsultingMeetPage = ({
         break;
 
       case USER_STATUS.ENTER_SESSION:
+        setInfo(`중개사에게 연결 중입니다...`);
         register();
         break;
 
       case USER_STATUS.CONNECTING:
+        setInfo(``);
         break;
 
       case USER_STATUS.END:
+        setInfo(`통화 종료`);
         localVideo.current.pause();
         break;
 
@@ -133,13 +160,13 @@ const ConsultingMeetPage = ({
       <video autoPlay={true} width={0} height={0} ref={remoteVideo}></video>
       <div className={classes.msgBox}>
         <h1>{info}</h1>
-        <Button
+        {/* <Button
           clickEvent={() => {
             toggleTest();
           }}
         >
           {!isRealtor ? "중개사" : "고객"} 해보기
-        </Button>
+        </Button> */}
       </div>
 
       <div className={classes.controllerBox}>
@@ -152,7 +179,14 @@ const ConsultingMeetPage = ({
           <div className={"recordBtn"}>
             <Button
               clickEvent={() => {
-                console.log("recording start");
+                if (recording) {
+                  console.log("recording stop");
+                  stopRecording();
+                  return;
+                } else {
+                  console.log("recording start");
+                  startRecording();
+                }
               }}
             >
               <BsRecordCircle />
@@ -161,7 +195,7 @@ const ConsultingMeetPage = ({
           <div>
             <Button
               clickEvent={() => {
-                leaveRoom();
+                navi("/");
               }}
             >
               <IoExitOutline />
