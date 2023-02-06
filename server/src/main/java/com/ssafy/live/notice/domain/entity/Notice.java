@@ -6,6 +6,7 @@ import com.ssafy.live.common.domain.Entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AttributeOverride(name = "no", column = @Column(name = "notice_no"))
 @Entity
+@SuperBuilder
 public class Notice extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +31,4 @@ public class Notice extends BaseEntity {
 
     @Column(name = "notice_writer")
     private String noticeWriter;
-
-    @Column(name = "notice_date")
-    private LocalDateTime noticeDate;
 }

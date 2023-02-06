@@ -9,6 +9,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/consultings")
@@ -36,8 +38,8 @@ public class ConsultingController {
     }
 
     @PatchMapping
-    public ResponseEntity<?> changeStatus(@RequestBody ConsultingRequest.ChangeStatus request) {
-        return consultingService.changeStatus(request);
+    public ResponseEntity<?> changeStatus(@RequestHeader(AUTHORIZATION) String token, @RequestBody ConsultingRequest.ChangeStatus request) {
+        return consultingService.changeStatus(token, request);
     }
 
     @GetMapping("/{consultingNo}")
