@@ -12,16 +12,18 @@ const SelectBox = (props) => {
   const [datas] = useState(props.dataArray ? props.dataArray : []);
 
   return (
-    <select className={classes.select} onChange={props.changeEventHandler}>
-      {props.default && <option value=""> {props.default} </option>}
-      {datas.map((el, idx) => {
-        return (
-          <option key={idx} value={el.value} name={el.name}>
-            {el.name}
-          </option>
-        );
-      })}
-    </select>
+    <div className={classes.customSelector}>
+      <select className={classes.select} onChange={props.changeEventHandler}>
+        {props.default && <option value=""> {props.default} </option>}
+        {datas.map((el, idx) => {
+          return (
+            <option key={idx} value={el.value} name={el.name}>
+              {el.name}
+            </option>
+          );
+        })}
+      </select>
+    </div>
   );
 };
 

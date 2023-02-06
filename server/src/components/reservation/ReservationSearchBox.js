@@ -57,25 +57,24 @@ const ReservationSearchBox = (props) => {
             changeEventHandler(e, dong);
           }}
         />
-
         <DateSelector
           changeEventHandler={(e) => {
             changeEventHandler(e, refDate);
           }}
         />
+        <Button
+          clickEvent={() =>
+            props.clickSearchEventHandler(
+              sido.current,
+              gugun.current,
+              dong.current,
+              refDate.current
+            )
+          }
+        >
+          적용
+        </Button>
       </div>
-      <Button
-        clickEvent={() =>
-          props.clickSearchEventHandler(
-            sido.current,
-            gugun.current,
-            dong.current,
-            refDate.current
-          )
-        }
-      >
-        적용
-      </Button>
     </div>
   );
 };

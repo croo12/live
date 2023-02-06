@@ -1,4 +1,5 @@
 import ReservationRealtorInfo from "./ReservationRealtorInfo";
+import classes from "./ReservationRightDiv.module.scss";
 
 import { useState } from "react";
 import Button from "../../UI/Button";
@@ -11,7 +12,7 @@ const ReservationRightDiv = () => {
   };
 
   return (
-    <div>
+    <div className={classes.rightContainer}>
       <h2>오른쪽 박스</h2>
       {status === "none" && (
         <>
