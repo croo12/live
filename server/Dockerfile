@@ -1,13 +1,15 @@
-FROM nginx:latest
+FROM node:latest
 
-RUN rm -rf /etc/nginx/conf.d/default.conf
+WORKDIR /frontend
 
-ADD ./default.conf /etc/nginx/conf.d/default.conf
+COPY ./package*.json /frontend
 
-ADD ./build /usr/share/nginx/html
+RUN npm install
 
-# 80 포트 오픈
+COPY / /frontend
+
+RUN npm run build
+
+CMD ["npx", "serve", "-s", "build"]
+
 EXPOSE 3000
-
-# container 실행 시 자동으로 실행할 command. nginx 시작함
-CMD ["nginx", "-g", "daemon off;"]
