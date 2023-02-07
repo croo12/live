@@ -1,81 +1,101 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./MyPage.module.scss";
-import { BsPersonLinesFill, BsFillBellFill, BsSearch } from "react-icons/bs";
+import { BsFillBellFill, BsSearch } from "react-icons/bs";
+import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { TfiWrite } from "react-icons/tfi";
-import MyInfoDetailUser from "../components/mypage/MyInfoDetail";
+import MyInfoDetail from "../components/mypage/MyInfoDetail";
 import MyIntro from "../components/mypage/MyIntro";
 import MyAlert from "../components/mypage/MyAlert";
 import MyReview from "../components/mypage/MyReview";
 import MyReservation from "../components/mypage/MyReservation";
-import { Outlet } from "react-router-dom";
+import MyInfoModify from "../components/mypage/MyInfoModify";
+import axiosInstance from "../util/axios";
 
 const MyPage = () => {
   const routerView = useRef(null);
 
   const [btnActive, setBtnActive] = useState(0);
-  const [infoDetail, setInfoDetail] = useState(null);
 
   const privacyOnclickHandler = () => {
     setBtnActive(1);
   };
-
   const alarmonClickHandler = () => {
     setBtnActive(2);
   };
-
   const reviewonClickHandler = () => {
     setBtnActive(3);
   };
-
   const reservationonClickHandler = () => {
     setBtnActive(4);
+  };
+
+  const [infoState, setInfoState] = useState(null);
+
+  const onInfoChangeHandler = (infoState) => {
+    setInfoState(infoState);
   };
 
   return (
     <>
       <MyIntro />
-      {infoDetail === null ? (
-        <MyInfoDetailUser infoState={setInfoDetail} />
+      {infoState === null ? (
+        <MyInfoDetail onInfoChangeHandler={onInfoChangeHandler} />
       ) : (
-        <Outlet />
+        <MyInfoModify onInfoChangeHandler={onInfoChangeHandler} />
       )}
       <div className={classes.itemBox}>
         <div className={classes.inner}>
           <div className={classes.itemBoxContent}>
-            <div className={classes.privacy}>
+            <div
+              className={`${classes.privacy} ${
+                btnActive === 1 ? classes.active : ""
+              }`}
+            >
               <button onClick={privacyOnclickHandler}>
                 <div className={classes.leftLogo}>
-                  <BsPersonLinesFill style={{ color: "42D395" }} />
+                  <AiOutlineVideoCameraAdd />
                 </div>
                 <div className={classes.rightDesc}>
-                  <strong>계약</strong>
+                  <strong>녹화</strong>
                 </div>
               </button>
             </div>
-            <div className={classes.alarm}>
+            <div
+              className={`${classes.alarm} ${
+                btnActive === 2 ? classes.active : ""
+              }`}
+            >
               <button onClick={alarmonClickHandler}>
                 <div className={classes.leftLogo}>
-                  <BsFillBellFill style={{ color: "42D395" }} />
+                  <BsFillBellFill />
                 </div>
                 <div className={classes.rightDesc} style={{}}>
                   <strong>알람</strong>
                 </div>
               </button>
             </div>
-            <div className={classes.review}>
+            <div
+              className={`${classes.review} ${
+                btnActive === 3 ? classes.active : ""
+              }`}
+            >
               <button onClick={reviewonClickHandler}>
                 <div className={classes.leftLogo}>
-                  <BsSearch style={{ color: "42D395", fontSize: "1.8rem" }} />
+                  <BsSearch />
                 </div>
                 <div className={classes.rightDesc}>
                   <strong>리뷰조회</strong>
                 </div>
               </button>
             </div>
-            <div className={classes.reservation}>
+            <div
+              className={`${classes.reservation} ${
+                btnActive === 4 ? classes.active : ""
+              }`}
+            >
               <button onClick={reservationonClickHandler}>
                 <div className={classes.leftLogo}>
-                  <TfiWrite style={{ color: "42D395", fontSize: "1.8rem" }} />
+                  <TfiWrite />
                 </div>
                 <div className={classes.rightDesc}>
                   <strong>예약현황</strong>

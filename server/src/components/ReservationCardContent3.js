@@ -1,10 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import classes from "./ReservationCardContent2.module.scss";
+import classes from "./ReservationCardContent3.module.scss";
 import sample from "../assets/image/sample.jpg";
 
-const ReservationCardContent2 = ({
-  realtoroffice,
-  realtorname,
+const ReservationCardContent3 = ({
+  userstate,
+  username,
   consultingdate,
   consultinglocation,
   onDetailReservationHandler,
@@ -23,9 +23,9 @@ const ReservationCardContent2 = ({
         <div className={classes.rightDesc}>
           <div className={classes.personalInfo}>
             <p>
-              {realtoroffice}
+              {userstate}
               <br />
-              <strong>{realtorname}</strong>
+              <strong>{username}</strong>
             </p>
           </div>
           <div className={classes.consultingInfo}>
@@ -49,7 +49,7 @@ const ReservationCardContent2 = ({
       <div className={classes.rightContent}>
         {tabActive === 0 && (
           <div>
-            <button className={classes.btn0}>예약 취소하기</button>
+            <button className={classes.btn0}>예약 거절하기</button>
           </div>
         )}
         {tabActive === 1 && (
@@ -73,17 +73,17 @@ const ReservationCardContent2 = ({
   );
 };
 
-export default ReservationCardContent2;
-export const DUMMY5 = [
+export default ReservationCardContent3;
+export const DUMMY6 = [
   {
-    realtoroffice: "SSAFY 공인중개사 사무소",
-    realtorname: "김희연",
+    userstate: "일반회원",
+    username: "김희연",
     consultingdate: "1월 25일 (수)",
     consultinglocation: "싸피 하우스 외 5건",
   },
   {
-    realtoroffice: "SSAFY 공인중개사 사무소",
-    realtorname: "김희연",
+    userstate: "일반회원",
+    username: "김희연",
     consultingdate: "1월 25일 (수)",
     consultinglocation: "싸피 하우스 외 5건",
   },

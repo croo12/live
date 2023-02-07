@@ -1,6 +1,9 @@
-import classes from "./MyInfoModifyUser.module.scss";
+import classes from "./MyInfoModify.module.scss";
 
-const MyInfoModifyUser = () => {
+const MyInfoModify = (props) => {
+  const onInfoStateChangeHanler = () => {
+    props.onInfoChangeHandler(null);
+  };
   return (
     <>
       <div>
@@ -18,7 +21,7 @@ const MyInfoModifyUser = () => {
                 </div>
                 <div>
                   <label>
-                    <strong>주소 </strong>
+                    <strong>비밀번호 </strong>
                   </label>
                   <input type="text" />
                 </div>
@@ -28,7 +31,7 @@ const MyInfoModifyUser = () => {
                   </label>
                   <input type="text" />
                 </div>
-                <div>
+                <div style={{ flex: "1.6" }}>
                   <label>
                     <strong>휴대폰 번호 </strong>
                   </label>
@@ -37,7 +40,7 @@ const MyInfoModifyUser = () => {
               </div>
               <br />
               <div className={classes.buttonItem}>
-                <button>회원탈퇴</button>
+                <button onClick={onInfoStateChangeHanler}>회원정보</button>
                 <button>정보수정</button>
               </div>
             </div>
@@ -48,4 +51,4 @@ const MyInfoModifyUser = () => {
   );
 };
 
-export default MyInfoModifyUser;
+export default MyInfoModify;

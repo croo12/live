@@ -65,25 +65,24 @@
             top: 77%;
             padding: 0 5% 5% 0;
 
-            .btn0{
+            .btn0 {
                 margin-right: 2%;
                 padding: 2% 3%;
-                border:none;
+                border: none;
                 font-size: 1rem;
                 background: #FF5959;
                 border-radius: 4px;
-                width:40%;
-                color:white;
-                font-weight:700;
-                position:relative;
-                left:55%;
+                width: 40%;
+                color: white;
+                font-weight: 700;
+                position: relative;
+                left: 55%;
             }
 
             .btn1 {
                 flex: 1;
                 margin-right: 2%;
                 padding: 1% 0;
-                border: 0.3px solid rgba(112, 112, 112, 1);
                 font-size: 1rem;
                 border-radius: 4px;
                 font-weight: 700;
@@ -95,14 +94,14 @@
                 padding: 1.5% 0;
                 margin-right: 2%;
                 background: #42D395;
-                border:none;
+                border: none;
                 color: white;
                 font-size: 1rem;
                 border-radius: 4px;
                 font-weight: 700;
             }
 
-            .btn3{
+            .btn3 {
                 flex: 1;
                 padding: 1.5% 0;
                 background: white;
@@ -113,16 +112,15 @@
                 font-weight: 700;
             }
 
-            .btn4{
+            .btn4 {
                 margin-right: 2%;
-                padding: 2% 3%;
-                border: 0.3px solid rgba(112, 112, 112, 1);
+                padding: 2% 1%;
                 font-size: 1rem;
                 border-radius: 4px;
-                width:40%;
-                font-weight:700;
-                position:relative;
-                left:55%;
+                width: 40%;
+                font-weight: 700;
+                position: relative;
+                left: 55%;
                 border:none;
             }
         }
