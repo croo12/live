@@ -108,4 +108,8 @@ public class Realtor extends Member implements UserDetails {
         this.description = request.getDescription();
         this.businessAddress = request.getBusinessAddress();
     }
+
+    public void updateRatingScore(Long count, int ratingScore) {
+        //this.ratingScore = (double)Math.round((this.ratingScore+ratingScore)/count);
+    }
 }

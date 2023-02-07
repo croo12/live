@@ -13,4 +13,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByUsers(Users users);
 
     List<Review> findByRealtor(Realtor realtor);
+
+    Long countBy(Realtor realtor);
 }

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class Users extends Member implements UserDetails {
 
     private String id;
-    private String score;
+    private float score;
     private String region;
     private String gender;
 

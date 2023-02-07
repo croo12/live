@@ -1,6 +1,7 @@
 package com.ssafy.live.review.service;
 
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
@@ -38,6 +39,14 @@ public class ReviewService {
         if (!jwtTokenProvider.validateToken(token)) {
             return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        int ratingScore;
+        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            // ratingScore = (usersRepository.findById(authentication.getName()).get().getScore()+regist.getRatingScore());
+        } else {
+            // notices = noticeRepository.findByRealtor(realtorRepository.findByBusinessNumber(authentication.getName()).get());
+        }
+        Realtor realtor = realtorRepository.findByBusinessNumber(authentication.getName()).get();
         reviewRepository.save(Review.builder()
                 .realtor(realtorRepository.findById(regist.getRealtorNo()).get())
                         .users(usersRepository.findById(regist.getUserNo()).get())
@@ -45,6 +54,9 @@ public class ReviewService {
                         .reviewInfo(regist.getReviewInfo())
                         .ratingScore(regist.getRatingScore())
                 .build());
+        Long count = reviewRepository.countBy(realtor);
+        realtor.updateRatingScore(count, regist.getRatingScore());
+        realtorRepository.save(realtor);
         return response.success("리뷰를 등록하였습니다.", HttpStatus.OK);
     }
 
