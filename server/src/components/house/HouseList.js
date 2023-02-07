@@ -13,7 +13,7 @@ import HouseListContent from "./HouseListContent";
 import tempImg from "../../assets/image/sample.jpg";
 import Pagination from "../common/Pagination";
 
-const DUMMY_HOUSE_DATA = [
+export const DUMMY_HOUSE_DATA = [
   {
     itemNo: "1",
     image: tempImg,

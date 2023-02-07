@@ -1,6 +1,13 @@
 .leftContainer {
   flex: 1;
 
-  max-height: 700px;
-  overflow: scroll;
+  h2 {
+    text-align: left;
+  }
+
+  > ul {
+
+    max-height: 700px;
+    overflow: scroll;
+  }
 }

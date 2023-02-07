@@ -2,14 +2,16 @@ import { ReservationHouseCardContent } from "../components/HouseCardContent";
 import ReservationLeftDiv from "../components/reservation/ReservationLeftDiv";
 import ReservationRightDiv from "../components/reservation/ReservationRightDiv";
 import ListBox from "../UI/ListBox";
-import Button from "../UI/Button";
 import ReservationSearchBox from "../components/reservation/ReservationSearchBox";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // import sample from "../assets/image/sample.jpg";
 
 import classes from "./ReservationPage.module.scss";
-import { CiCircleAlert } from "react-icons/ci";
+import { FiAlertCircle } from "react-icons/fi";
+import axios from "../util/axios";
+import { useLoaderData } from "react-router-dom";
+import axiosInstance from "../util/axios";
 
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
@@ -19,12 +21,58 @@ const ReservationPage = () => {
     date: null,
   });
 
+  const isMount = useRef(false);
+
+  const sidos = useLoaderData().data.data;
+  // const gugun = useState([]);
+  // const dong = useState([]);
+
   //리덕스로 수정하는 것도 염두에 둘 수 있음
   const [selectedItems, addItem] = useState([]);
 
   const clickSearchEventHandler = (sido, gugun, dong, date) => {
-    setReserveData({ sido, gugun, dong, date });
+    console.log(sido, gugun, dong, date);
+
+    if (!sido) {
+      alert(`광역시도는 반드시 입력해야 합니다!`);
+    } else if (!date) {
+      alert(`날짜는 반드시 입력해야 합니다!`);
+    } else {
+      setReserveData({ sido, gugun, dong, date });
+    }
   };
+
+  useEffect(() => {
+    if (!isMount.current) {
+      isMount.current = true;
+      return;
+    }
+
+    // 뭐 보낼래?
+    const params = {};
+
+    if (!reserveData.sido) {
+      console.log(`sido is nothing...`);
+      return;
+    }
+    if (!reserveData.gugun) {
+      params[`regionCode`] = reserveData.sido.substring(0, 2);
+    } else if (!reserveData.dong) {
+      params[`regionCode`] = reserveData.gugun.substring(0, 5);
+    } else {
+      params[`regionCode`] = reserveData.dong;
+    }
+
+    (async () => {
+      try {
+        const result = await axiosInstance.get("realtors/region", { params });
+
+        console.log(result);
+      } catch (err) {
+        throw new Error(err);
+      }
+    })();
+  }, [reserveData]);
 
   return (
     <>
@@ -35,6 +83,7 @@ const ReservationPage = () => {
           <h3>어느 지역을 원하세요?</h3>
           <ReservationSearchBox
             clickSearchEventHandler={clickSearchEventHandler}
+            sidos={sidos}
           />
         </div>
       </div>
@@ -54,7 +103,7 @@ const ReservationPage = () => {
       <div>
         <div className={classes.infomationBox}>
           <div className={classes.iconContainer}>
-            <CiCircleAlert />
+            <FiAlertCircle />
           </div>
           <div className={classes.ulContainer}>
             <ul>
@@ -84,3 +133,15 @@ const ReservationPage = () => {
 };
 
 export default ReservationPage;
+
+export const sidoLoader = async () => {
+  try {
+    return axiosInstance.get("regions", {
+      params: {
+        regionCode: "",
+      },
+    });
+  } catch {
+    throw new Error("sido Loader Error");
+  }
+};

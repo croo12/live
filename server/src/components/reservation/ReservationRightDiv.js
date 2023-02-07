@@ -13,7 +13,7 @@ const ReservationRightDiv = () => {
 
   return (
     <div className={classes.rightContainer}>
-      <h2>오른쪽 박스</h2>
+      <h2>상세정보</h2>
       {status === "none" && (
         <>
           <p>내가 누구냐고? 알필요 없다.</p>
@@ -22,11 +22,7 @@ const ReservationRightDiv = () => {
           </Button>
         </>
       )}
-      {status === "realtor" && (
-        <>
-          <ReservationRealtorInfo />
-        </>
-      )}
+      {status === "realtor" && <ReservationRealtorInfo />}
     </div>
   );
 };

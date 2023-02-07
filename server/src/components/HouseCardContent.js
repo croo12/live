@@ -5,6 +5,7 @@ import HouseDetailCom from "./HouseDetailCom";
 import classes from "./HouseCardContent.module.scss";
 
 import sample from "../assets/image/sample.jpg";
+import ResponsiveText from "./common/ResponsiveText";
 
 const HouseCardContent = (props) => {
   const location = useLocation();
@@ -140,6 +141,24 @@ export const ReservationHouseCardContent = (props) => {
           <HouseDetailCom houseId={123} />
         </Modal>
       )}
+    </div>
+  );
+};
+
+export const RealtorHousesCardContent = (props) => {
+  const house = props;
+
+  return (
+    <div className={classes.houseItem}>
+      <div className={classes.houseImg}>
+        <img src={house.image} alt={house.address} />
+      </div>
+      <div className={classes.houseInfo}>
+        <h3>{house.price}</h3>
+        <p>{house.area}</p>
+        <p>{house.address}</p>
+        <button>매물 상세보기 </button>
+      </div>
     </div>
   );
 };
