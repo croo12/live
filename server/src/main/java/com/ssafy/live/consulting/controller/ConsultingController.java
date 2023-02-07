@@ -47,8 +47,8 @@ public class ConsultingController {
         return consultingService.detailReservation(consultingNo);
     }
 
-    @PostMapping("/items")
-    public ResponseEntity<?> addConsultingItems(@RequestBody ConsultingRequest.AddItem addItem)  {
-        return consultingService.addConsultingItems(addItem);
+    @PostMapping("/{consultingNo}/items")
+    public ResponseEntity<?> addConsultingItems(@PathVariable Long consultingNo, @RequestBody ConsultingRequest.AddItem addItem)  {
+        return consultingService.addConsultingItems(consultingNo, addItem);
     }
 }

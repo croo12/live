@@ -15,19 +15,19 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
     boolean existsByBusinessNumber(String businessNumber);
     Realtor findByEmailAndBusinessNumber(String email, String businessNumber);
 
-    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, ROUND(avg(v.rating_score), 1) as starScore FROM live.realtor r " +
+    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, r.rating_score as starScore FROM live.realtor r " +
             "left join review v on r.realtor_no=v.realtor_no " +
             "where r.realtor_no in (select distinct i.realtor_no from item i inner join house h on h.house_no=i.house_no where h.dong LIKE %:dong%)" +
             "group by r.realtor_no " +
-            "order by COUNT(v.review_no) desc, ROUND(avg(v.rating_score), 1) " +
+            "order by review desc, starScore " +
             "desc", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByReviewsDesc(String dong);
 
-    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, ROUND(avg(v.rating_score), 1) as starScore FROM live.realtor r " +
+    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, r.rating_score as starScore FROM live.realtor r " +
             "left join review v on r.realtor_no=v.realtor_no " +
             "where r.realtor_no in (select distinct i.realtor_no from item i inner join house h on h.house_no=i.house_no where h.dong LIKE %:dong%)" +
             "group by r.realtor_no " +
-            "order by ROUND(avg(v.rating_score), 1) desc, COUNT(v.review_no) " +
+            "order by starScore desc, review " +
             "desc", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByStarRatingDesc(String dong);
 

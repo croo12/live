@@ -8,6 +8,7 @@ import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.review.domain.entity.Review;
+import java.text.NumberFormat;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
@@ -107,5 +108,17 @@ public class Realtor extends Member implements UserDetails {
         this.corp = request.getCorp();
         this.description = request.getDescription();
         this.businessAddress = request.getBusinessAddress();
+    }
+
+    public void updateRatingScore(Long count, int ratingScore) {
+        this.ratingScore = cutDemical(1, ((this.ratingScore*(count-1))+(float)ratingScore)/(float)count);
+        System.out.println("result = "+this.ratingScore);
+    }
+
+    private float cutDemical(int cutSize, float value) {
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMaximumFractionDigits(cutSize);
+        nf.setGroupingUsed(false);
+        return Float.parseFloat(nf.format(value));
     }
 }

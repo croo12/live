@@ -62,6 +62,7 @@ public class UserService {
                 .region(signUp.getRegion())
                 .gender(signUp.getGender())
                 .imageSrc(imgSrc)
+                .score((float)36.5)
                 .roles(Collections.singletonList(Authority.ROLE_USER.name()))
                 .build();
         usersRepository.save(users);

@@ -29,8 +29,6 @@ public class ConsultingRequest {
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class AddItem {
-
-        private Long consultingNo;
         private Set<Long> itemList;
     }
 
