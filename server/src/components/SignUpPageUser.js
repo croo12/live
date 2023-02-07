@@ -3,6 +3,7 @@ import classes from "./SignUpPageUser.module.scss";
 import ImageInput from "./common/ImageInput";
 import blankImage from "../assets/image/blank_profile.png";
 import { Link } from "react-router-dom";
+import axiosInstance from "../util/axios";
 
 const SignUpPageUser = () => {
   const [userId, setUserId] = useState("");
@@ -12,6 +13,7 @@ const SignUpPageUser = () => {
 
   // 에러 메세지
   const [userIdError, setUserIdError] = useState(false);
+  const [idDuplicateError, setIdDuplicateError] = useState(0);
   const [userPassError, setUserPassError] = useState(false);
   const [userPassCheckError, setUserPassCheckError] = useState(false);
   const [userEmailError, setUserEmailError] = useState(false);
@@ -83,8 +85,27 @@ const SignUpPageUser = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const idDuplicateChecker = async () => {
+    try {
+      const result = await axiosInstance.get("users/id");
+      console.log(result.message);
+
+      if (result.message === "중복된 아이디입니다") {
+        setIdDuplicateError(-1);
+      } else {
+        setIdDuplicateError(1);
+      }
+    } catch (err) {
+      console.error("이거 없음");
+    }
+  };
+
+  const joinUser = async (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <form className={classes.signupUser}>
+    <form className={classes.signupUser} onSubmit={joinUser}>
       <div className={classes.signupFieldSet}>
         <h1>일반 회원 가입</h1>
         <div className={classes.formInner}>
@@ -124,12 +145,22 @@ const SignUpPageUser = () => {
                 value={userId}
                 onChange={onChangeUserId}
               />
-              <button type="button">중복확인</button>
+              <button onClick={idDuplicateChecker} type="button">
+                중복확인
+              </button>
             </div>
             {userIdError && (
               <div className={classes.errorText}>
                 최소 3자부터 최대 16자까지 입력가능합니다.
               </div>
+            )}
+            {idDuplicateError === -1 && (
+              <div className={classes.errorText}>
+                이미 사용하고 있는 아이디입니다.
+              </div>
+            )}
+            {idDuplicateError === 1 && (
+              <div className={classes.errorText}>사용 가능한 아이디입니다.</div>
             )}
           </div>
           <div className={classes.inputBox}>
