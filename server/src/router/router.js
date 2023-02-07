@@ -21,8 +21,7 @@ import MyReservation from "../components/mypage/MyReservation";
 // import MyContractDetailRealtor from "../components/mypage/MyContractDetailRealtor";
 // import MyInfoDetailRealtor from "../components/mypage/MyInfoDetailRealtor";
 import MyInfoDetail from "../components/mypage/MyInfoDetail";
-import MyInfoModifyRealtor from "../components/mypage/MyInfoModifyRealtor";
-import MyInfoModifyUser from "../components/mypage/MyInfoModifyUser";
+import MyInfoModify from "../components/mypage/MyInfoModify";
 import ConsultingPage from "../pages/ConsultingPage";
 import ErrorCommonPage from "../pages/ErrorCommonPage";
 import HousePage from "../pages/HousePage";
@@ -32,7 +31,8 @@ import MyPage from "../pages/MyPage";
 import ReservationPage from "../pages/ReservationPage";
 import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
-import MyReservationDetail from "../components/mypage/MyConsultingDetail";
+import MyReservationDetailUser from "../components/mypage/MyReservationDetailUser";
+import MyReservationDetailRealtor from "../components/mypage/MyReservationDetailRealtor";
 import SignUpPage from "../pages/SignUpPage";
 
 const router = createBrowserRouter(
@@ -56,19 +56,23 @@ const router = createBrowserRouter(
       </Route>
       <Route path="mypage" element={<MyPage />}>
         <Route path="info-detail" element={<MyInfoDetail />}></Route>
-        <Route path="info-modify-user" element={<MyInfoModifyUser />}></Route>
+        <Route path="info-modify" element={<MyInfoModify />}></Route>
         {/* <Route
           path="info-detail-realtor"
           element={<MyInfoDetailRealtor />}
         ></Route> */}
-        <Route
+        {/* <Route
           path="info-modify-realtor"
           element={<MyInfoModifyRealtor />}
-        ></Route>
+        ></Route> */}
         <Route path="reservation" element={<MyReservation />}></Route>
         <Route
-          path="reservation-detail"
-          element={<MyReservationDetail />}
+          path="reservation-detail-user"
+          element={<MyReservationDetailUser />}
+        ></Route>
+        <Route
+          path="reservation-detail-realtor"
+          element={<MyReservationDetailRealtor />}
         ></Route>
         {/* <Route path="contract-user" element={<MyContractUser />}>
           <Route index element={<MyContractViewUser />}></Route>

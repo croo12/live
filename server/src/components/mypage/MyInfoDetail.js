@@ -1,26 +1,14 @@
 import classes from "./MyInfoDetail.module.scss";
 import { useNavigate } from "react-router-dom";
-import MyInfoModifyUser from "./MyInfoModifyUser";
 import { useState } from "react";
 
-const MyInfoDetail = () => {
-  const navigate = useNavigate();
-
-  const [infoState, setInfoState] = useState(null);
-
+const MyInfoDetail = (props) => {
   const onQuitHandler = () => {
     alert("정말로 탈퇴하시겠습니까?");
   };
-  const onModifyHandler = (props) => {
-    // 일반 회원인지, 중개사 회원인지에 따라 구분
-    navigate("/mypage/info-modify-user");
 
-    if (infoState === null) {
-      setInfoState(true);
-      return;
-    }
-
-    setInfoState(null);
+  const onInfoStateChangeHanler = () => {
+    props.onInfoChangeHandler(true);
   };
 
   return (
@@ -54,7 +42,7 @@ const MyInfoDetail = () => {
               <br />
               <div className={classes.buttonItem}>
                 <button onClick={onQuitHandler}>회원탈퇴</button>
-                <button onClick={onModifyHandler}>정보수정</button>
+                <button onClick={onInfoStateChangeHanler}>정보수정</button>
               </div>
             </div>
           </div>
