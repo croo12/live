@@ -86,7 +86,7 @@
         border-color: black;
         border-style: solid;
         border-collapse: collapse;
-
+        margin-top: 12px;
         tr {
           border-width: 0 0 1px 0;
           border-color: #bababa;
@@ -94,20 +94,21 @@
           display: flex;
           text-align: start;
 
+          .infoTitle {
+            width: 120px;
+            padding: 24px 16px;
+
+            h3 {
+              font-weight: 700;
+              font-size: 16px;
+            }
+          }
+
           td {
             padding: 12px;
             justify-content: baseline;
+            width: calc(1024px - 120px);
           }
-        }
-      }
-
-      .infoTitle {
-        width: 120px;
-        padding: 24px 16px;
-
-        h3 {
-          font-weight: 700;
-          font-size: 16px;
         }
       }
 
@@ -115,6 +116,7 @@
         display: flex;
         flex-direction: column;
         align-items: baseline;
+        margin: 40px 0;
 
         .mainAddress {
           box-sizing: border-box;
@@ -224,12 +226,14 @@
       }
 
       .additionalInfo {
+        margin: 40px 0;
         display: flex;
         flex-direction: column;
         align-items: baseline;
 
         td {
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
         }
 
@@ -238,12 +242,12 @@
         }
 
         label {
-          margin: 0 4px;
+          margin: 4px;
           display: flex;
           justify-content: center;
           align-items: center;
           box-sizing: border-box;
-          width: 70px;
+          width: 100px;
           height: 40px;
           color: #bbbbbb;
           background: #fafafa;
@@ -264,14 +268,164 @@
           border: none;
         }
 
-        input[type="date"] {
-          width: 300px;
-          height: 40px;
-          font-size: 14px;
-          padding-left: 80px;
+        .dateInput {
+          input[type="date"] {
+            box-sizing: border-box;
+            width: 280px;
+            height: 40px;
+            background: #fafafa;
+            border: 1px solid #bbbbbb;
+            border-radius: 4px 4px 4px 4px;
+            padding: 8px;
+            margin: 0;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            padding-left: 100px;
+          }
+
+          input[type="date"]::-webkit-calendar-picker-indicator {
+            // visibility: hidden;
+            background: transparent;
+            width: 72px;
+            height: 72px;
+            transform: translateX(-203px);
+          }
+
+          .calendar {
+            position: absolute;
+            float: left;
+            width: 60px;
+            color: #bbbbbb;
+            background: transparent;
+            margin: 0;
+            border-width: 0 1px 0 0;
+            border-radius: 4px 0 0px 4px;
+
+            svg {
+              width: 20px;
+              height: 22px;
+            }
+          }
+
+          p {
+            font-size: 12px;
+            span {
+              font-size: 14px;
+              color: red;
+            }
+          }
         }
-        input[type="date"]::-webkit-calendar-picker-indicator {
-          transform: translateX(-260px);
+
+        .optionRow {
+          border: none;
+          .optionBox {
+            font-size: 16px;
+            border: none;
+
+            input[type="checkbox"] {
+              display: none;
+            }
+
+            label {
+              width: 100px;
+            }
+
+            label:hover {
+              color: #42d395;
+              border-color: #42d395;
+            }
+
+            input[type="checkbox"]:checked + label {
+              color: white;
+              background: #42d395;
+              border: none;
+            }
+          }
+        }
+      }
+
+      .detailInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        margin: 40px 0;
+
+        .deatailDesc {
+          display: block;
+          width: fit-content;
+          p {
+            font-weight: 400;
+            font-size: 18px;
+            height: 30px;
+            color: #707070;
+          }
+        }
+
+        .detailDescInput {
+          width: 100%;
+          height: 200px;
+          font-size: 16px;
+          padding: 8px;
+        }
+      }
+
+      .houseImage {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        margin: 40px 0;
+
+        .imageDesc {
+          display: block;
+          width: fit-content;
+          p {
+            font-weight: 400;
+            font-size: 18px;
+            height: 30px;
+            color: #707070;
+          }
+        }
+
+        .addButton {
+          box-sizing: border-box;
+          width: 120px;
+          height: 120px;
+          background: #fafafa;
+          border: 1px solid #bbbbbb;
+          border-radius: 4px;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          align-items: center;
+
+          cursor: pointer;
+
+          div {
+            box-sizing: border-box;
+            width: 35px;
+            height: 35px;
+            border-radius: 100px;
+            border: 2px solid #707070;
+            color: #707070;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            font-size: 30px;
+          }
+          p {
+            color: #707070;
+          }
+        }
+
+        .imagePreview {
+          display: flex;
+          // width: 1024-120px;
+          overflow-x: scroll;
+          scroll div {
+            margin: 4px;
+          }
         }
       }
     }

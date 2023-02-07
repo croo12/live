@@ -11,7 +11,6 @@
  */
 
 import { useEffect, useState } from "react";
-import Card from "../../UI/Card";
 
 const ImageInput = (props) => {
   const [imagePreviewState, setImagePreviewState] = useState([]); // 매물 이미지 미리보기
@@ -174,27 +173,31 @@ const ImageInput = (props) => {
         <div onClick={removeAllHandler}>{props.delButton}</div>
       )}
       {props.isPreview && (
-        <div id="img__box">
+        <>
           {imagePreviewState.map((data) => {
             const image = data.image;
             const imageURL = data.url;
             return (
-              <Card key={image.name}>
+              <div key={image.name}>
                 <img
-                  width="100px"
-                  height="100px"
+                  width="120px"
+                  height="120px"
                   type="image"
                   src={imageURL}
                   alt={image.name}
                   id={image.name}
                 />
-                <button onClick={imageRemoveEventHandler} value={image.name}>
+                <button
+                  type="button"
+                  onClick={imageRemoveEventHandler}
+                  value={image.name}
+                >
                   X[삭제버튼]
                 </button>
-              </Card>
+              </div>
             );
           })}
-        </div>
+        </>
       )}
     </>
   );
