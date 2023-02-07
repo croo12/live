@@ -29,6 +29,7 @@ public class ItemRequest {
         private int rent;
         @NotBlank(message = "관리비를 입력하세요. 없을 경우 0을 입력하세요")
         private int maintenanceFee;
+        private String buildingName;
         private String description;
         private LocalDate moveInDate;
         private Heating heating;
@@ -46,6 +47,7 @@ public class ItemRequest {
                     .deposit(deposit)
                     .rent(rent)
                     .maintenanceFee(maintenanceFee)
+                    .buildingName(buildingName)
                     .description(description)
                     .moveInDate(moveInDate)
                     .heating(heating)
@@ -69,6 +71,7 @@ public class ItemRequest {
         private int rent;
         @NotBlank(message = "관리비를 입력하세요. 없을 경우 0을 입력하세요")
         private int maintenanceFee;
+        private String buildingName;
         private String description;
         private LocalDate moveInDate;
         private Heating heating;
@@ -85,6 +88,7 @@ public class ItemRequest {
                     .deposit(deposit)
                     .rent(rent)
                     .maintenanceFee(maintenanceFee)
+                    .buildingName(buildingName)
                     .description(description)
                     .moveInDate(moveInDate)
                     .heating(heating)
