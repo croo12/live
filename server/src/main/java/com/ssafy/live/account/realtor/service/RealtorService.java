@@ -75,6 +75,7 @@ public class RealtorService {
             .startDate(signUp.getStartDate())
             .registrationNumber(signUp.getRegistrationNumber())
             .imageSrc(imgSrc)
+            .ratingScore((float) 36.5)
             .roles(Collections.singletonList(Authority.ROLE_REALTOR.name()))
             .build();
         realtorRepository.save(realtor);

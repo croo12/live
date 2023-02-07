@@ -3,6 +3,7 @@ package com.ssafy.live.review.service;
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
@@ -36,19 +37,9 @@ public class ReviewService {
     private final Response response;
 
     public ResponseEntity<?> regist(String token, ReviewRequest.Regist regist) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-        int ratingScore;
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            // ratingScore = (usersRepository.findById(authentication.getName()).get().getScore()+regist.getRatingScore());
-        } else {
-            // notices = noticeRepository.findByRealtor(realtorRepository.findByBusinessNumber(authentication.getName()).get());
-        }
-        Realtor realtor = realtorRepository.findByBusinessNumber(authentication.getName()).get();
+        Realtor realtor = realtorRepository.findById(regist.getRealtorNo()).get();
         reviewRepository.save(Review.builder()
-                .realtor(realtorRepository.findById(regist.getRealtorNo()).get())
+                .realtor(realtor)
                         .users(usersRepository.findById(regist.getUserNo()).get())
                         .consulting(consultingRepository.findById(regist.getConsultingNo()).get())
                         .reviewInfo(regist.getReviewInfo())
@@ -76,7 +67,6 @@ public class ReviewService {
             list = reviews.stream().map((review)-> ReviewResponse.Reviews.toEntity(review.getUsers(), review))
                     .collect(Collectors.toList());
         }
-
         return response.success(list,"리뷰 목록을 조회하였습니다.", HttpStatus.OK);
     }
 }

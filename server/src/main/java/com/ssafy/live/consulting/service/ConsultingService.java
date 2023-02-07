@@ -182,13 +182,13 @@ public class ConsultingService {
         return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> addConsultingItems(AddItem addItem) {
+    public ResponseEntity<?> addConsultingItems(Long consultingNo, AddItem addItem) {
         Set<Long> noList = addItem.getItemList();
-        Consulting consulting = consultingRepository.findById(addItem.getConsultingNo()).get();
+        Consulting consulting = consultingRepository.findById(consultingNo).get();
         if(consulting == null) {
             return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         }
-        List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(addItem.getConsultingNo());
+        List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(consultingNo);
         consultingItems.stream()
                 .forEach(consultingItem -> {
                     if(noList.contains(consultingItem.getItem().getNo())) {
