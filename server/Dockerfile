@@ -1,21 +1,25 @@
-# nginx 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용.
+# nginx 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용합니다.
 FROM nginx
 
+# root 에 app 폴더를 생성
 RUN mkdir /app
 
+# work dir 고정
 WORKDIR /app
 
-# nginx의 기본 설정을 삭제한다.
-RUN rm -rf /etc/nginx/conf.d
+# work dir 에 build 폴더 생성 /app/build
+RUN mkdir ./build
 
-# 디폴트 리소스 경로에 있는 conf 폴더를 도커의 /etc/nginx 폴더로 복사한다.
-COPY ./default.conf /etc/nginx/con.d
+# host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
+ADD ./build ./build
 
-# 맨위의 as builder 로부터 복사한다는 것을 선언한다. 
-# 그리고 builder의 /app/build를 새로 생성된 컨테이너의 /usr/share/nginx/html로 복사한다.
-COPY --from=builder /app/build /usr/share/nginx/html
+# nginx 의 default.conf 를 삭제
+RUN rm /etc/nginx/conf.d/default.conf
 
-# 80포트 오픈하고 nginx 실행
+# host pc 의 nginx.conf 를 아래 경로에 복사
+COPY ./default.conf /etc/nginx/conf.d
+
+# 80 포트 오픈
 EXPOSE 80
 
 # container 실행 시 자동으로 실행할 command. nginx 시작함
