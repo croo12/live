@@ -1,15 +1,25 @@
-FROM node:latest
+## Dockerfile(client)
 
-WORKDIR /frontend
+# nginx 이미지를 사용
+FROM nginx
 
-COPY ./package.json /frontend
+# work dir
+WORKDIR /usr/share/nginx/html
 
-RUN npm install
+# work dir 에 build 폴더 생성 : /home/test/client/build
+RUN mkdir ./build
 
-COPY / /frontend
+# host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
+ADD ./build ./build
 
-RUN npm run build
+# nginx 의 default.conf 를 삭제
+RUN rm /etc/nginx/conf.d/default.conf
 
-CMD ["npx", "serve", "-s", "build"]
+# host pc 의 nginx.conf 를 복사
+COPY ./default.conf /etc/nginx/conf.d
 
+# 80 포트 오픈
 EXPOSE 3000
+
+# container 실행 시 자동으로 실행할 command. nginx 시작
+CMD ["nginx", "-g", "daemon off;"]
