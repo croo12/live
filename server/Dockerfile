@@ -4,7 +4,7 @@
 FROM nginx
 
 # work dir
-WORKDIR /usr/share/nginx/html
+WORKDIR /app
 
 # work dir 에 build 폴더 생성 : /home/test/client/build
 RUN mkdir ./build
@@ -23,3 +23,4 @@ EXPOSE 3000
 
 # container 실행 시 자동으로 실행할 command. nginx 시작
 CMD ["nginx", "-g", "daemon off;"]
+
