@@ -1,19 +1,30 @@
 package com.ssafy.live.account.realtor.service;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.auth.security.SecurityUtil;
 import com.ssafy.live.account.common.domain.Authority;
 import com.ssafy.live.account.common.dto.CommonResponse;
 import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
+import com.ssafy.live.account.realtor.controller.dto.RealtorByRegionProjectionInterface;
 import com.ssafy.live.account.realtor.controller.dto.RealtorProjectionInterface;
 import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.account.realtor.controller.dto.RealtorResponse;
+import com.ssafy.live.account.realtor.controller.dto.RealtorResponse.FindAllDetail.Items;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,16 +41,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @Service
@@ -173,10 +174,11 @@ public class RealtorService {
         return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findRealtorDetail(Long realtorNo, String regionCode) {
+    public ResponseEntity<?> findRealtorDetailByRegion(Long realtorNo, String regionCode) {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
-                .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc(), item.getHouse()))
+        List<RealtorByRegionProjectionInterface> result = realtorRepository.findRealtorDetailByRegion(realtorNo, regionCode);
+        List< Items > items= result.stream().map(item ->
+                RealtorResponse.FindAllDetail.Items.toEntity(item))
                 .collect(Collectors.toList());
         List<RealtorResponse.FindAllDetail.Reviews> reviews = realtor.getReviews().stream()
                 .map(review -> RealtorResponse.FindAllDetail.Reviews.toEntity(review))

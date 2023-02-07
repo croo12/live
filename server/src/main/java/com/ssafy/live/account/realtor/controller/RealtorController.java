@@ -97,9 +97,9 @@ public class RealtorController {
     }
 
     @GetMapping ("/{realtorNo}/consultings")
-    public ResponseEntity<?> findAllRealtorDetail(@PathVariable("realtorNo") Long realtorNo, @PathVariable("regionCode") String regionCode) {
+    public ResponseEntity<?> findRealtorDetailByRegion(@PathVariable("realtorNo") Long realtorNo, @RequestParam("regionCode") String regionCode) {
         log.info("예약페이지 - 공인중개사 정보 상세 조회");
-        return realtorService.findRealtorDetail(realtorNo, regionCode);
+        return realtorService.findRealtorDetailByRegion(realtorNo, regionCode);
     }
 
     @GetMapping("/region")
