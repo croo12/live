@@ -1,4 +1,3 @@
-import { useState } from "react";
 import classes from "./SelectBox.module.scss";
 
 /**
@@ -8,20 +7,33 @@ import classes from "./SelectBox.module.scss";
  * @param { onChange Function } changeEventHandler
  * @returns { conponent : SelectBox }
  */
-const SelectBox = (props) => {
-  const [datas] = useState(props.dataArray ? props.dataArray : []);
-
+const SelectBox = ({
+  dataArray,
+  id,
+  defaultValue,
+  value,
+  name,
+  first,
+  changeEventHandler,
+}) => {
   return (
-    <select className={classes.select} onChange={props.changeEventHandler}>
-      {props.default && <option value=""> {props.default} </option>}
-      {datas.map((el, idx) => {
-        return (
-          <option key={idx} value={el.value} name={el.name}>
-            {el.name}
-          </option>
-        );
-      })}
-    </select>
+    <div className={classes.customSelector}>
+      <select
+        className={classes.select}
+        id={id}
+        onChange={changeEventHandler}
+        value={defaultValue}
+      >
+        {first && <option value=""> {first} </option>}
+        {dataArray?.map((el, idx) => {
+          return (
+            <option key={idx} value={el[value]} name={el[name]}>
+              {el[name]}
+            </option>
+          );
+        })}
+      </select>
+    </div>
   );
 };
 
