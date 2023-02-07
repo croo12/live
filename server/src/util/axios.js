@@ -4,7 +4,7 @@ const axiosInstance = _axios.create({
   Headers: {
     "Content-Type": "application/json",
   },
-  baseURL: `https://localhost:8080/`,
+  baseURL: `https://live-live.store:8080/`,
 });
 
 export default axiosInstance;
