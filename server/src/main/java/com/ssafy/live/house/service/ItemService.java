@@ -45,7 +45,8 @@ public class ItemService {
             return response.fail("중개사 정보가 없습니다. 다시 로그인해주세요.", HttpStatus.UNAUTHORIZED);
         }
 
-        Long houseNo = itemRegistRequest.getHouse().getHouseNo();
+        Long houseNo = 0L;
+        houseNo = itemRegistRequest.getHouse().getHouseNo();
         House house = houseRepository.findById(houseNo).orElse(null);
         if(house==null) {
             house = itemRegistRequest.getHouse().toEntity();
@@ -67,6 +68,7 @@ public class ItemService {
             itemImages.add(itemImage);
         }
         item.setItemImages(itemImages);
+
 
         itemRepository.save(item);
         return response.success("매물이 등록되었습니다.", HttpStatus.OK);

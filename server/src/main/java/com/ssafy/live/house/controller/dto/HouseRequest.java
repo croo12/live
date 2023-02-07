@@ -18,6 +18,7 @@ public class HouseRequest {
         private String address;
         @NotBlank(message = "상세주소를 입력하세요")
         private String addressDetail;
+        private String buildingName;
         @NotBlank(message = "공급면적을 입력하세요")
         private float supplyArea;
         @NotBlank(message = "전용면적을 입력하세요")
