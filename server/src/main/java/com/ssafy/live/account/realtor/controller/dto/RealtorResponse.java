@@ -2,15 +2,10 @@ package com.ssafy.live.account.realtor.controller.dto;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.review.domain.entity.Review;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.persistence.Column;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class RealtorResponse {
 

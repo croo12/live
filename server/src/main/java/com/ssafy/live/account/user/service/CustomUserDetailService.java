@@ -1,9 +1,8 @@
 package com.ssafy.live.account.user.service;
 
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
-
-import com.ssafy.live.account.user.domain.entity.Users;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

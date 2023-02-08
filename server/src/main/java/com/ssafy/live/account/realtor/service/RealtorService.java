@@ -1,9 +1,5 @@
 package com.ssafy.live.account.realtor.service;
 
-import static com.ssafy.live.common.domain.exception.ErrorCode.ACCESS_TOKEN_EXPIRED;
-import static com.ssafy.live.common.domain.exception.ErrorCode.REALTOR_NOT_FOUND;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.auth.security.SecurityUtil;
 import com.ssafy.live.account.common.domain.Authority;
@@ -21,13 +17,6 @@ import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.exception.NotFoundException;
 import com.ssafy.live.common.domain.exception.UnauthorizedException;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -44,6 +33,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
+import static com.ssafy.live.common.domain.exception.ErrorCode.ACCESS_TOKEN_EXPIRED;
+import static com.ssafy.live.common.domain.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @Service

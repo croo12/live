@@ -5,11 +5,12 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class ConsultingResponse {
 
