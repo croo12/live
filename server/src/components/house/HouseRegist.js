@@ -382,8 +382,6 @@ const HouseRegist = () => {
               </table>
             </div>
 
-            {/* ---------------- 추가정보 ------------- */}
-
             <div className={classes.additionalInfo}>
               <h2>추가정보</h2>
               <table>
@@ -648,7 +646,6 @@ const HouseRegist = () => {
               </table>
             </div>
 
-            {/* -----------상세정보------------- */}
             <div className={classes.detailInfo}>
               <h2>상세정보</h2>
               <table>
@@ -716,9 +713,7 @@ const HouseRegist = () => {
                         isPreview={true}
                         addButton={
                           <div className={classes.addButton}>
-                            <div>
-                              <p>+</p>
-                            </div>
+                            <p className={classes.plus}>+</p>
                             <p>사진 추가</p>
                           </div>
                         }
