@@ -7,6 +7,8 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ContractStatus;
 import com.ssafy.live.common.domain.Response;
+import com.ssafy.live.common.domain.exception.BadRequestException;
+import com.ssafy.live.common.domain.exception.NotFoundException;
 import com.ssafy.live.contract.controller.dto.ContractRequest;
 import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import com.ssafy.live.contract.controller.dto.ContractResponse;
@@ -27,6 +29,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ssafy.live.common.domain.exception.ErrorCode.*;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -40,16 +44,16 @@ public class ContractService {
     private final ItemRepository itemRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public ResponseEntity<?> regist(ContractRequest.Regist regist) {
-        Users users = usersRepository.findById(regist.getUserNo()).get();
-        if(users == null) {
-            return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> regist(String token, ContractRequest.Regist regist) {
+        if (!jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
-        Realtor realtor = realtorRepository.findById(regist.getRealtorNo()).get();
-        if (realtor == null) {
-            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
-        Item item = itemRepository.findById(regist.getItemNo()).get();
+        Users users = usersRepository.findById(regist.getUserNo())
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
+                .orElseThrow(() -> new NotFoundException(REALTOR_NOT_FOUND));
+        Item item = itemRepository.findById(regist.getItemNo())
+                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
         Contract contract = Contract.builder()
             .users(users)
             .realtor(realtor)
@@ -97,7 +101,7 @@ public class ContractService {
                 )
                 .collect(Collectors.toList());
         } else {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(WRONG_AUTHENTICATION_TYPE);
         }
         return response.success(list, "계약 목록을 조회하였습니다.", HttpStatus.OK);
     }

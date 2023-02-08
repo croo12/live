@@ -86,7 +86,9 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> login(RealtorRequest.Login login) {
-        realtorRepository.findByBusinessNumber(login.getBusinessNumber()).orElseThrow(()->new NotFoundException(REALTOR_NOT_FOUND));
+        if (realtorRepository.findByBusinessNumber(login.getBusinessNumber()).orElse(null) == null) {
+            return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
 
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
