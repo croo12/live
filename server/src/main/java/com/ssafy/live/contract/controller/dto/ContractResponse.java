@@ -4,12 +4,10 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.house.domain.entity.Item;
+import lombok.*;
+
 import java.time.LocalDate;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.List;
 
 public class ContractResponse {
 
@@ -131,13 +129,15 @@ public class ContractResponse {
             private int deposit;
             private int rent;
             private int mainteneceFee;
-            public static ItemInfo toEntity(Item item) {
+            private List<String> images;
+            public static ItemInfo toEntity(Item item, List<String> images) {
                 return ItemInfo.builder()
                     .address(item.getHouse().getAddress())
                     .buildingName(item.getBuildingName())
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
                     .mainteneceFee(item.getMaintenanceFee())
+                        .images(images)
                     .build();
             }
         }

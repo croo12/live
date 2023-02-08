@@ -6,9 +6,11 @@ import com.ssafy.live.account.common.domain.Authority;
 import com.ssafy.live.account.common.dto.CommonResponse;
 import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
+import com.ssafy.live.account.realtor.controller.dto.RealtorByRegionProjectionInterface;
 import com.ssafy.live.account.realtor.controller.dto.RealtorProjectionInterface;
 import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.account.realtor.controller.dto.RealtorResponse;
+import com.ssafy.live.account.realtor.controller.dto.RealtorResponse.FindAllDetail.Items;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
@@ -173,10 +175,11 @@ public class RealtorService {
         return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findRealtorDetail(Long realtorNo, String regionCode) {
+    public ResponseEntity<?> findRealtorDetailByRegion(Long realtorNo, String regionCode) {
         Realtor realtor = realtorRepository.findById(realtorNo).get();
-        List<RealtorResponse.FindAllDetail.Items> items = realtor.getItems().stream()
-                .map(item -> RealtorResponse.FindAllDetail.Items.toEntity(item, itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc(), item.getHouse()))
+        List<RealtorByRegionProjectionInterface> result = realtorRepository.findRealtorDetailByRegion(realtorNo, regionCode);
+        List< Items > items= result.stream().map(item ->
+                RealtorResponse.FindAllDetail.Items.toEntity(item))
                 .collect(Collectors.toList());
         List<RealtorResponse.FindAllDetail.Reviews> reviews = realtor.getReviews().stream()
                 .map(review -> RealtorResponse.FindAllDetail.Reviews.toEntity(review))
@@ -236,6 +239,8 @@ public class RealtorService {
             findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc(region);
         } else if(orderBy.equals("star")) {
             findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc(region);
+        } else if(orderBy.equals("item")) {
+            findRealtors = realtorRepository.findAllByOrderByCountByItemDesc();
         }
         return response.success(findRealtors,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }

@@ -1,27 +1,20 @@
 package com.ssafy.live.account.realtor.controller;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-
 import com.ssafy.live.account.common.error.ErrorHandler;
 import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.account.realtor.service.RealtorService;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -97,9 +90,9 @@ public class RealtorController {
     }
 
     @GetMapping ("/{realtorNo}/consultings")
-    public ResponseEntity<?> findAllRealtorDetail(@PathVariable("realtorNo") Long realtorNo, @PathVariable("regionCode") String regionCode) {
+    public ResponseEntity<?> findRealtorDetailByRegion(@PathVariable("realtorNo") Long realtorNo, @RequestParam("regionCode") String regionCode) {
         log.info("예약페이지 - 공인중개사 정보 상세 조회");
-        return realtorService.findRealtorDetail(realtorNo, regionCode);
+        return realtorService.findRealtorDetailByRegion(realtorNo, regionCode);
     }
 
     @GetMapping("/region")
