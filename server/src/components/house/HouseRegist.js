@@ -3,9 +3,9 @@ import ImageInput from "../common/ImageInput";
 import Modal from "../../UI/Modal";
 import SearchAddress from "../common/SearchAddress";
 import classes from "./HouseRegist.module.scss";
-
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 const HouseRegist = () => {
   const [SearchAddressModal, setSearchAddressModal] = useState(false); // 주소 검색 모달창 상태 관리용
@@ -22,16 +22,14 @@ const HouseRegist = () => {
     setImages(data);
   };
 
-  const registHouseInfo = () => {
-    //registEnvet
+  const registHouseInfo = (event) => {
+    event.preventDefault();
   };
 
-  // 건축물 용도 모달 on/off 함수
   const purposeModalHandler = () => {
     PurposeModal ? setPurposeModal(false) : setPurposeModal(true);
   };
 
-  // 주소 검색 모달 on/off 함수
   const searchAddressModalHandler = () => {
     if (SearchAddressModal === false) {
       setSearchAddressModal(true);
@@ -89,8 +87,8 @@ const HouseRegist = () => {
     const data = event.target.value;
     const valid = /^[0-9]$/;
 
-    if (data.length > 9) {
-      event.target.value = data.substring(0, 9);
+    if (data.length > 7) {
+      event.target.value = data.substring(0, 7);
       return;
     }
 
@@ -174,7 +172,6 @@ const HouseRegist = () => {
                           placeholder="우편번호"
                           onClick={searchAddressModalHandler}
                           readOnly
-                          style={{ display: "none" }}
                         />
                         <input
                           type="text"
@@ -192,7 +189,6 @@ const HouseRegist = () => {
                           placeholder="지번주소"
                           onClick={searchAddressModalHandler}
                           readOnly
-                          style={{ display: "none" }}
                         />
                         <button
                           type="button"
@@ -216,7 +212,6 @@ const HouseRegist = () => {
                         placeholder="참고항목"
                         onClick={searchAddressModalHandler}
                         readOnly
-                        style={{ display: "none" }}
                       />
                     </td>
                   </tr>

@@ -1,6 +1,11 @@
 .purposeContent {
   height: 600px;
+  width: 100%;
   overflow-y: scroll;
+
+  @media (max-width: 1024px) {
+    height: calc(600 * 0.1vw);
+  }
 
   header {
     box-sizing: border-box;
@@ -9,10 +14,20 @@
     border-style: solid;
     border-color: #707070;
 
+    @media (max-width: 1024px) {
+      height: calc(56 * 0.1vw);
+      font-size: calc(16 * 0.1vw);
+    }
+
     img {
       width: 80px;
       height: auto;
       margin: 12px;
+
+      @media (max-width: 1024px) {
+        width: calc(80 * 0.1vw);
+        margin: calc(12 * 0.1vw);
+      }
     }
 
     button {
@@ -23,6 +38,11 @@
       border: none;
       cursor: pointer;
       transition: all 0.2s ease;
+
+      @media (max-width: 1024px) {
+        margin: calc(12 * 0.1vw);
+        font-size: calc(22 * 0.1vw);
+      }
     }
 
     button:hover {
@@ -33,16 +53,38 @@
   .purposeInner {
     margin: 8px;
 
+    @media (max-width: 1024px) {
+      margin: calc(8 * 0.1vw);
+    }
+
     .innerBlock {
       margin: 0 0 24px 0;
+      @media (max-width: 1024px) {
+        font-size: calc(16 * 0.1vw);
+      }
+
+      @media (max-width: 1024px) {
+        margin: 0 0 calc(24 * 0.1vw) 0;
+      }
+
       h2 {
         font-size: 22px;
         margin: 12px 0;
+
+        @media (max-width: 1024px) {
+          margin: calc(12 * 0.1vw);
+          font-size: calc(22 * 0.1vw);
+        }
       }
 
       p {
         margin: 12px 8px;
+
+        @media (max-width: 1024px) {
+          margin: calc(12 * 0.1vw) calc(8 * 0.1vw);
+        }
       }
+
       span {
         font-weight: 600;
       }
@@ -53,6 +95,11 @@
         background: #ededed;
         border-radius: 6px;
         line-height: 24px;
+
+        @media (max-width: 1024px) {
+          padding: calc(8 * 0.1vw);
+          margin: calc(4 * 0.1vw) calc(8 * 0.1vw);
+        }
       }
 
       figure {
@@ -61,6 +108,11 @@
         margin: 10px;
         border-radius: 5px;
         background: #f5fbcb;
+
+        @media (max-width: 1024px) {
+          padding: calc(20 * 0.1vw);
+          margin: calc(10 * 0.1vw);
+        }
 
         div {
           display: flex;

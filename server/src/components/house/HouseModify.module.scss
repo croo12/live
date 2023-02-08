@@ -128,7 +128,7 @@
           td {
             padding: 12px;
             justify-content: baseline;
-            width: 800px;
+            width: 920px;
 
             @media (max-width: 1024px) {
               width: calc(800 * 0.1vw);
@@ -294,6 +294,7 @@
             border-radius: 4px;
             padding: 8px;
             margin: 4px;
+            font-size: 16px;
 
             @media (max-width: 1024px) {
               width: calc(120 * 0.1vw);
@@ -592,7 +593,7 @@
 
           cursor: pointer;
 
-          p {
+          .plus {
             font-size: 34px;
 
             @media (max-width: 1024px) {

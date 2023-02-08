@@ -7,12 +7,13 @@
  */
 
 import DaumPostcode from "react-daum-postcode";
-
+import classes from "./SearchAddress.module.scss";
 import Logo from "../../assets/image/liveLogo.png";
 
 const SearchAddress = (props) => {
   // 주소 선택 시 주소 정보를 반환하는 함수
   const PostHandler = (data) => {
+    console.log(data);
     let roadAddr = data.roadAddress; // 도로명 주소 변수
     let extraRoadAddr = ""; // 참고 항목 변수
     let postcode = "";
@@ -71,15 +72,16 @@ const SearchAddress = (props) => {
   };
 
   return (
-    <div>
-      <header style={{ margin: "20px" }}>
-        <img src={Logo} />
-        <button style={{ float: "right" }}>
-          <strong onClick={props.onClose}>X</strong>
+    <div className={classes.addressContent}>
+      <header>
+        <img src={Logo} alt="Live Logo" />
+        <button>
+          <strong onClick={props.onClose}>✖</strong>
         </button>
       </header>
-      <hr />
-      <DaumPostcode onComplete={PostHandler} />;
+      <div>
+        <DaumPostcode onComplete={PostHandler} classNam />
+      </div>
     </div>
   );
 };

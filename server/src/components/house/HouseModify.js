@@ -89,8 +89,8 @@ const HouseModify = () => {
     const data = event.target.value;
     const valid = /^[0-9]$/;
 
-    if (data.length > 9) {
-      event.target.value = data.substring(0, 9);
+    if (data.length > 7) {
+      event.target.value = data.substring(0, 7);
       return;
     }
 
