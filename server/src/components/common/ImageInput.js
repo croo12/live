@@ -11,6 +11,7 @@
  */
 
 import { useEffect, useState } from "react";
+import classes from "./ImageInput.module.scss";
 
 const ImageInput = (props) => {
   const [imagePreviewState, setImagePreviewState] = useState([]); // 매물 이미지 미리보기
@@ -178,21 +179,14 @@ const ImageInput = (props) => {
             const image = data.image;
             const imageURL = data.url;
             return (
-              <div key={image.name}>
-                <img
-                  width="120px"
-                  height="120px"
-                  type="image"
-                  src={imageURL}
-                  alt={image.name}
-                  id={image.name}
-                />
+              <div className={classes.previewImage} key={image.name}>
+                <img src={imageURL} alt={image.name} id={image.name} />
                 <button
                   type="button"
                   onClick={imageRemoveEventHandler}
                   value={image.name}
                 >
-                  X[삭제버튼]
+                  ✖
                 </button>
               </div>
             );
