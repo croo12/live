@@ -1,4 +1,3 @@
-import Button from "../../UI/Button";
 import HousePurpose from "./HousePurpose";
 import ImageInput from "../common/ImageInput";
 import Modal from "../../UI/Modal";
@@ -24,7 +23,7 @@ const HouseRegist = () => {
   };
 
   const registHouseInfo = () => {
-    console.log(images);
+    //registEnvet
   };
 
   // 건축물 용도 모달 on/off 함수
@@ -69,8 +68,6 @@ const HouseRegist = () => {
       .substring(0, 10)
       .replaceAll("-", "");
 
-    console.log(value, today, futureValid);
-
     if (!value) {
       alert("정확한 날짜를 입력바랍니다.");
       event.target.value = new Date().toISOString().substring(0, 10);
@@ -88,13 +85,44 @@ const HouseRegist = () => {
     }
   };
 
+  const inputNumVaild = (event, dotValid) => {
+    const data = event.target.value;
+    const valid = /^[0-9]$/;
+
+    if (data.length > 9) {
+      event.target.value = data.substring(0, 9);
+      return;
+    }
+
+    let result = "";
+    let dotChk = false;
+    let dotCnt = 0;
+
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index];
+
+      if (valid.test(element)) {
+        if (dotChk && dotCnt < dotValid) {
+          dotCnt++;
+        } else if (dotChk) {
+          break;
+        }
+        result += element;
+      } else {
+        if (dotValid !== 0 && !dotChk && element === ".") {
+          result += element;
+          dotChk = true;
+        } else {
+          break;
+        }
+      }
+    }
+
+    event.target.value = result;
+  };
+
   return (
     <>
-      {/*
-        그림 여러개 넣기 (미리보기 가능 / 최대 10개)
-
-        유효성 검사
-      */}
       {SearchAddressModal && (
         <Modal onConfirm={searchAddressModalHandler}>
           <SearchAddress
@@ -105,14 +133,14 @@ const HouseRegist = () => {
       )}
 
       {PurposeModal && (
-        <Modal onConfirm={purposeModalHandler}>
+        <Modal onConfirm={purposeModalHandler} className={classes.purposeModal}>
           <HousePurpose onClose={purposeModalHandler} />
         </Modal>
       )}
 
       <form className={classes.houseRegist} onSubmit={registHouseInfo}>
         <div className={classes.registFieldSet}>
-          <h1>매물 등록하기</h1>
+          <h1>매물 정보 등록</h1>
           <div className={classes.registDescription}>
             <div className={classes.descIcon}>
               <BsFillExclamationCircleFill className={classes.icon} />
@@ -204,7 +232,7 @@ const HouseRegist = () => {
                           id="deposit"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          min={0}
+                          onChange={(event) => inputNumVaild(event, 1)}
                         />
                         <p>만원</p>
                       </div>
@@ -215,8 +243,7 @@ const HouseRegist = () => {
                           id="rent"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          step={0.1}
-                          min={0}
+                          onChange={(event) => inputNumVaild(event, 1)}
                         />
                         <p>만원</p>
                       </div>
@@ -228,7 +255,7 @@ const HouseRegist = () => {
                           step={0.1}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          min={0}
+                          onChange={(event) => inputNumVaild(event, 1)}
                         />
                         <p>만원</p>
                       </div>
@@ -246,6 +273,7 @@ const HouseRegist = () => {
                           id="room"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
+                          onChange={(event) => inputNumVaild(event, 0)}
                           min={0}
                         />
                         <p>개</p>
@@ -257,6 +285,7 @@ const HouseRegist = () => {
                           id="bathroom"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
+                          onChange={(event) => inputNumVaild(event, 0)}
                           min={0}
                         />
                         <p>개</p>
@@ -275,7 +304,7 @@ const HouseRegist = () => {
                           id="floor"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          step={0.1}
+                          onChange={(event) => inputNumVaild(event, 1)}
                         />
                         <p>층</p>
                       </div>
@@ -286,7 +315,7 @@ const HouseRegist = () => {
                           id="totalFloor"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          step={0.1}
+                          onChange={(event) => inputNumVaild(event, 1)}
                         />
                         <p>층</p>
                       </div>
@@ -304,7 +333,7 @@ const HouseRegist = () => {
                           id="supplyArea"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          step={0.001}
+                          onChange={(event) => inputNumVaild(event, 2)}
                         />
                         <p>㎡</p>
                       </div>
@@ -315,7 +344,7 @@ const HouseRegist = () => {
                           id="exclusivePrivateArea"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          step={0.001}
+                          onChange={(event) => inputNumVaild(event, 2)}
                         />
                         <p>㎡</p>
                       </div>
@@ -653,54 +682,56 @@ const HouseRegist = () => {
                   </tr>
                 </tbody>
               </table>
+            </div>
 
-              <div className={classes.houseImage}>
-                <h2>사진등록</h2>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td className={classes.imageDesc}>
-                        <p>
-                          * 최소 5장 이상의 사진을 등록해야 하며 최대 10장까지
-                          등록이 가능합니다. (한 장당 10MB 이내)
-                        </p>
-                        <p>
-                          * 첫번째 사진이 대표 이미지로 보여지며 순서를 변경할
-                          수 있습니다.
-                        </p>
-                        <p>
-                          * 워터마크, 상호, 전화번호 등이 포함된 사진이나 관련
-                          없는 사진을 등록할 경우 서비스 이용이 제한됩니다.
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={classes.infoTitle}>
-                        <h3>사진 추가</h3>
-                      </td>
-                      <td className={classes.imagePreview}>
-                        <ImageInput
-                          setImage={setImageHandler}
-                          maxFileNum={10}
-                          maxFileSize={10}
-                          isPreview={true}
-                          addButton={
-                            <div className={classes.addButton}>
-                              <div>
-                                <p>+</p>
-                              </div>
-                              <p>사진 추가</p>
+            <div className={classes.houseImage}>
+              <h2>사진등록</h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <td className={classes.imageDesc}>
+                      <p>
+                        * 최소 5장 이상의 사진을 등록해야 하며 최대 10장까지
+                        등록이 가능합니다. (한 장당 10MB 이내)
+                      </p>
+                      <p>
+                        * 첫번째 사진이 대표 이미지로 보여지며 순서를 변경할 수
+                        있습니다.
+                      </p>
+                      <p>
+                        * 워터마크, 상호, 전화번호 등이 포함된 사진이나 관련
+                        없는 사진을 등록할 경우 서비스 이용이 제한됩니다.
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className={classes.infoTitle}>
+                      <h3>사진 추가</h3>
+                    </td>
+                    <td className={classes.imagePreview}>
+                      <ImageInput
+                        setImage={setImageHandler}
+                        maxFileNum={10}
+                        maxFileSize={10}
+                        isPreview={true}
+                        addButton={
+                          <div className={classes.addButton}>
+                            <div>
+                              <p>+</p>
                             </div>
-                          }
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                            <p>사진 추가</p>
+                          </div>
+                        }
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-          <button type="submit">등록</button>
+          <div className={classes.registBtn}>
+            <button type="submit">등록</button>
+          </div>
         </div>
       </form>
     </>
