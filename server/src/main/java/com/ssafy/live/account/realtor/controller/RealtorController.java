@@ -62,6 +62,7 @@ public class RealtorController {
 
     @DeleteMapping()
     public ResponseEntity<?> withdrawl(@RequestHeader(AUTHORIZATION) String token) {
+        log.info("회원 탈퇴");
         return realtorService.withdrawl(token);
     }
 

@@ -1,5 +1,9 @@
 package com.ssafy.live.consulting.service;
 
+import static com.ssafy.live.common.domain.exception.ErrorCode.CONSULTING_NOT_FOUND;
+import static com.ssafy.live.common.domain.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static com.ssafy.live.common.domain.exception.ErrorCode.USER_NOT_FOUND;
+
 import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
@@ -7,6 +11,8 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ConsultingStatus;
 import com.ssafy.live.common.domain.Response;
+import com.ssafy.live.common.domain.exception.ErrorCode;
+import com.ssafy.live.common.domain.exception.NotFoundException;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
@@ -21,6 +27,9 @@ import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.repository.ItemRepository;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,10 +37,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -47,15 +52,15 @@ public class ConsultingService {
     private final ConsultingItemRepository consultingItemRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public ResponseEntity<?> reserve(ConsultingRequest.Reserve reserve) {
-        Users users = usersRepository.findById(reserve.getUserNo()).get();
-        if(users == null) {
-            return response.success("해당하는 사용자 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> reserve(String token, ConsultingRequest.Reserve reserve) {
+        if (!jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
-        Realtor realtor = realtorRepository.findById(reserve.getRealtorNo()).get();
-        if(realtor == null) {
-            return response.success("해당하는 공인중개사 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        Users users = usersRepository.findById(authentication.getName())
+            .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        Realtor realtor = realtorRepository.findById(reserve.getRealtorNo())
+            .orElseThrow(() -> new NotFoundException(REALTOR_NOT_FOUND));
         Consulting consulting = Consulting.builder()
                 .realtor(realtor)
                 .users(users)
@@ -79,41 +84,49 @@ public class ConsultingService {
         return response.success("예약이 완료되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> reservationListByRealtor(Long realtorNo, int status) {
+    public ResponseEntity<?>  reservationListByRealtor(String token, int status) {
+        if (!jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        }
         ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
-        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatus(realtorRepository.findById(realtorNo).get(), statuses[0], statuses[1]);
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            return listByUser(usersRepository.findById(authentication.getName()).get().getNo(), statuses);
+        } else {
+            return listByRealtor(realtorRepository.findByBusinessNumber(authentication.getName()).get().getNo(), statuses);
+        }
+    }
+
+    private ResponseEntity<?> listByRealtor(Long realtoNo, ConsultingStatus[] statuses) {
+        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatus(realtorRepository.findById(realtoNo).get(), statuses[0], statuses[1]);
+        List<ConsultingResponse.ReservationRealtor> list = new ArrayList<>();
         if (consultingsList.isEmpty()) {
             listNotFound();
         }
-
-        List<ConsultingResponse.ReservationRealtor> list = new ArrayList<>();
         consultingsList.stream()
-                .forEach(consulting -> {
-                        Users user = consulting.getUsers();
-                        List<ConsultingItem> consultingItems = consulting.getConsultingItems();
-                        int count = 0;
-                        String buildingName = "";
-                        if (consultingItems.size()>0) {
-                            count = consultingItems.size() - 1;
-                            buildingName = consultingItems.get(0).getItem().getBuildingName();
-                        }
-                        list.add(ReservationRealtor.toResponse(consulting, user, buildingName, count));
-                });
+            .forEach(consulting -> {
+                Users user = consulting.getUsers();
+                List<ConsultingItem> consultingItems = consulting.getConsultingItems();
+                int count = 0;
+                String buildingName = "";
+                if (consultingItems.size()>0) {
+                    count = consultingItems.size() - 1;
+                    buildingName = consultingItems.get(0).getItem().getBuildingName();
+                }
+                list.add(ReservationRealtor.toResponse(consulting, user, buildingName, count));
+            });
         if (list.isEmpty()) {
             listNotFound();
         }
-
         return response.success( list, "상담 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> reservationListByUser(Long userNo, int status) {
-        ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
+    public ResponseEntity<?> listByUser(Long userNo, ConsultingStatus[] statuses) {
         List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatus(usersRepository.findById(userNo).get(), statuses[0], statuses[1]);
+        List<ConsultingResponse.ReservationUser> list = new ArrayList<>();
         if (consultingsList.isEmpty()) {
             listNotFound();
         }
-
-        List<ConsultingResponse.ReservationUser> list = new ArrayList<>();
         consultingsList.stream()
                 .forEach(consulting -> {
                     Realtor realtor = consulting.getRealtor();
@@ -129,15 +142,17 @@ public class ConsultingService {
         if (list.isEmpty()) {
             listNotFound();
         }
-         return response.success("상담 목록을 조회하였습니다.", HttpStatus.OK);
+         return response.success(list, "상담 목록을 조회하였습니다.", HttpStatus.OK);
    }
 
     public ResponseEntity<?> changeStatus(String token, ConsultingRequest.ChangeStatus request) {
         if (!jwtTokenProvider.validateToken(token)) {
             return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
-        Consulting consulting = consultingRepository.findById(request.getCounsultingNo()).get();
-        consulting.updateStatus(request.getStatus());
+        Consulting consulting = consultingRepository.findById(request.getCounsultingNo())
+            .orElseThrow(() -> new NotFoundException(CONSULTING_NOT_FOUND));
+
+            consulting.updateStatus(request.getStatus());
         consultingRepository.save(consulting);
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         String writer, info;
@@ -165,7 +180,10 @@ public class ConsultingService {
         return response.success("목록이 존재하지 않습니다.", HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<?> detailReservation(Long consultingNo) {
+    public ResponseEntity<?> detailReservation(String token, Long consultingNo) {
+        if (!jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        }
         Consulting consulting = consultingRepository.findById(consultingNo).get();
         if(consulting == null) {
             return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
@@ -182,13 +200,17 @@ public class ConsultingService {
         return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> addConsultingItems(Long consultingNo, AddItem addItem) {
+    public ResponseEntity<?> addConsultingItems(String token, Long consultingNo, AddItem addItem) {
+        if (!jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        }
         Set<Long> noList = addItem.getItemList();
         Consulting consulting = consultingRepository.findById(consultingNo).get();
-        if(consulting == null) {
+
+        List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(consultingNo);
+        if(consultingItems.isEmpty()) {
             return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         }
-        List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(consultingNo);
         consultingItems.stream()
                 .forEach(consultingItem -> {
                     if(noList.contains(consultingItem.getItem().getNo())) {
