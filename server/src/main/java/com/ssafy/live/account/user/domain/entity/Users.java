@@ -26,7 +26,8 @@ import java.util.stream.Collectors;
 public class Users extends Member implements UserDetails {
 
     private String id;
-    private float score;
+    @Builder.Default
+    private float score = (float) 36.5;
     private String region;
     private String gender;
 

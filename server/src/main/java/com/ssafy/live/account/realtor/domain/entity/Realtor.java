@@ -41,7 +41,8 @@ public class Realtor extends Member implements UserDetails {
     @Column(name = "start_date")
     private LocalDate startDate;
     @Column(name = "rating_score")
-    private float ratingScore;
+    @Builder.Default
+    private float ratingScore = (float) 36.5;
 
     @JsonIgnore
     @Column
