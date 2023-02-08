@@ -17,7 +17,7 @@ spring:
     username: root
     password: ${COMMON_PASSWORD}
   redis:
-    host: redis-container
+    host: redis
     port: '6379'
     password: ${COMMON_PASSWORD}
   mvc:
@@ -85,5 +85,4 @@ cloud:
       location: /Live/Images/profile/
   profiles:
     include: aws
-
 
