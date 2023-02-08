@@ -154,3 +154,140 @@
     top: 14vw;
   }
 }
+
+
+///예약 - 매물 카드 컨텐트
+
+.reservationItem {
+  display: flex;
+  flex-direction: column;
+
+  padding: 12px;
+
+  width: 24vw;
+
+  background: linear-gradient(0deg, #f3f0f0, #FAFAFA),
+  linear-gradient(0deg, #FAFAFA, #FAFAFA);
+
+  text-align: left;
+
+  img {
+    display: block;
+    width: 100%;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    margin-top: 8px;
+    margin-bottom: 4px;
+    font-size: 1.5rem;
+
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  button:last-child {
+    display: block;
+    font-size: 0.8rem;
+    
+    padding: 4px;
+    padding-top: 2vw;
+    
+    border: 0;
+    
+    
+    text-decoration: underline;
+    text-align: left;
+
+    cursor: pointer;
+  }
+}
+
+
+///예약 - 중개사의 매물목록 
+
+.houseItem {
+  display: flex;
+  margin: 0px;
+  cursor: default;
+
+  .houseImg {
+    display: flex;
+
+    img {
+      width: 198px;
+      height: 144px;
+      border-radius: 6px;
+
+      @media (max-width: 1024px) {
+        width: calc(198 * 0.1vw);
+        height: calc(144 * 0.1vw);
+      }
+    }
+  }
+
+  .houseInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: baseline;
+    margin: 0 32px;
+    padding: 8px 0;
+
+    @media (max-width: 1024px) {
+      margin: 0 calc(32 * 0.1vw);
+      padding: 0;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 6px;
+
+      @media (max-width: 1024px) {
+        font-size: calc(20 * 0.1vw);
+
+        margin-bottom: 4px;
+      }
+    }
+
+    p {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 1px 0;
+      color: #4e4e4e;
+
+      @media (max-width: 1024px) {
+        font-size: calc(17 * 0.1vw);
+      }
+    }
+
+    .desc {
+      color: #767676;
+      margin-top: 6px;
+      @media (max-width: 1024px) {
+        margin-top: 2px;
+      }
+    }
+  }
+
+  button:last-child {
+    display: block;
+    font-size: 0.8rem;
+    
+    padding: 4px;
+    padding-top: 2vw;
+    
+    border: 0;
+
+    background-color: #FFFFFF;
+    
+    text-decoration: underline;
+    text-align: left;
+
+    cursor: pointer;
+  }
+}

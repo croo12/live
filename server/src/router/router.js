@@ -28,7 +28,7 @@ import HousePage from "../pages/HousePage";
 import LoginPage from "../pages/LoginPage";
 import MainPage from "../pages/MainPage";
 import MyPage from "../pages/MyPage";
-import ReservationPage from "../pages/ReservationPage";
+import ReservationPage, { sidoLoader } from "../pages/ReservationPage";
 import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
 import MyReservationDetailUser from "../components/mypage/MyReservationDetailUser";
@@ -46,7 +46,11 @@ const router = createBrowserRouter(
         <Route path="user" element={<SignUpPageUser />}></Route>
         <Route path="realtor" element={<SignUpPageRealtor />}></Route>
       </Route>
-      <Route path="reservation" element={<ReservationPage />}></Route>
+      <Route
+        path="reservation"
+        element={<ReservationPage />}
+        loader={sidoLoader}
+      ></Route>
       <Route path="consulting/:sessionId" element={<ConsultingPage />}></Route>
       <Route path="house" element={<HousePage />}>
         <Route index element={<HouseList />}></Route>

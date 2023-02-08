@@ -59,8 +59,8 @@ const MyReservation = () => {
                   {tabActive === 0 && (
                     <div>
                       <p>신청된 상담</p>
-                      <ListBox dataArray={reservationRealtor} direction={false}>
-                        <ReservationCardContent2
+                      <ListBox dataArray={reservationUser} direction={false}>
+                        <ReservationCardContent3
                           onDetailReservationHandler={
                             onDetailReservationHandler
                           }
@@ -73,8 +73,8 @@ const MyReservation = () => {
                   {tabActive === 1 && (
                     <div>
                       <p>확정된 상담</p>
-                      <ListBox dataArray={reservationRealtor} direction={false}>
-                        <ReservationCardContent2
+                      <ListBox dataArray={reservationUser} direction={false}>
+                        <ReservationCardContent3
                           onDetailReservationHandler={
                             onDetailReservationHandler
                           }
@@ -87,8 +87,8 @@ const MyReservation = () => {
                   {tabActive === 2 && (
                     <div>
                       <p>종료된 상담</p>
-                      <ListBox dataArray={reservationRealtor} direction={false}>
-                        <ReservationCardContent2
+                      <ListBox dataArray={reservationUser} direction={false}>
+                        <ReservationCardContent3
                           onDetailReservationHandler={
                             onDetailReservationHandler
                           }
@@ -101,7 +101,7 @@ const MyReservation = () => {
                 </div>
               </div>
             ) : (
-              <MyReservationDetailUser
+              <MyReservationDetailRealtor
                 onDetailReservationHandler={onDetailReservationHandler}
               />
             )}

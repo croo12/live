@@ -12,12 +12,24 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  
+  
+  
   ::-webkit-scrollbar {
     display: none;
   }
 }
 
+body {
+  font-family:'Roboto';
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url("./assets/font/Roboto.ttf");
 }

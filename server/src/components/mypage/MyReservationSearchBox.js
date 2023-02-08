@@ -36,21 +36,29 @@ const MyReservationSearchBox = (props) => {
       <div className={classes.selectBox}>
         <SelectBox
           dataArray={dummyMaker("시")}
-          default={"시를 선택해 주세요"}
+          first={"시를 선택해 주세요"}
+          value={"value"}
+          name={"name"}
+          id={"sidoSelector"}
           changeEventHandler={(e) => {
             changeEventHandler(e, sido);
           }}
         />
         <SelectBox
           dataArray={dummyMaker("구")}
-          default={"구를 선택해 주세요"}
+          first={"구를 선택해 주세요"}
+          value={"value"}
+          name={"name"}
+          id={""}
           changeEventHandler={(e) => {
             changeEventHandler(e, gugun);
           }}
         />
         <SelectBox
           dataArray={dummyMaker("동")}
-          default={"동을 선택해 주세요"}
+          first={"동을 선택해 주세요"}
+          value={"value"}
+          name={"name"}
           changeEventHandler={(e) => {
             changeEventHandler(e, dong);
           }}
@@ -59,7 +67,7 @@ const MyReservationSearchBox = (props) => {
       <div className={classes.searchInput}>
         <input placeholder="건물명을 입력해주세요." />{" "}
         <button
-          clickEvent={() =>
+          onClick={() =>
             props.clickSearchEventHandler(
               sido.current,
               gugun.current,

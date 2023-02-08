@@ -24,14 +24,15 @@ const DateSelector = (props) => {
 
   return (
     <>
-      {/* <span> Calendar</span> */}
-      <input
-        onClick={clickEvent}
-        type="date"
-        value={`${year}-${month}-${day}`}
-        className={classes.dateSelectorSommoner}
-        readOnly
-      />
+      <div className={classes.dateSelector}>
+        <input
+          onClick={clickEvent}
+          type="date"
+          value={`${year}-${month}-${day}`}
+          className={classes.dateSelectorSommoner}
+          readOnly
+        />
+      </div>
       {activeModal && (
         <Modal onConfirm={clickEvent}>
           <Calendar startDateChangeEvent={startDateChangeEvent} />

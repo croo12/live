@@ -1,34 +1,67 @@
 .searchBox {
+  padding: 1%;
+  border-radius: 12px;
+  overflow: none;
+
+  //   position: relative;
+
+  .selectBox {
+    display: flex;
+
+    margin: 0 auto;
+    margin-right: auto;
+
+    // position: absolute;
+
+    width: 80%;
+
+    &::after {
+      position: static;
+    }
+
+    > div {
+      width: calc(33%);
+      height: 2.5vw;
+    }
+    // :first-child {
+    //   border-top-left-radius: 8px;
+    //   border-bottom-left-radius: 8px;
+
+    //   // border: ;
+    // }
+
+    // :last-child {
+    //   border-top-right-radius: 8px;
+    //   border-bottom-right-radius: 8px;
+    // }
+  }
+
+  .searchInput {
+    display: flex;
+
+    width: 80%;
+
     padding: 1%;
-    border-radius: 12px;
-    overflow: none;
 
-    .selectBox {
-        :first-child {
-            border-top-left-radius: 8px;
-            border-bottom-left-radius: 8px;
+    text-align: center;
+    margin: 0 auto;
 
-            // border: ;
-        }
+    input {
+      //   padding: 0.7% 1%;
+      margin-right: 4px;
+      border-radius: 7px;
+      flex: auto;
 
-        :last-child {
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-        }
+      height: 2.5vw;
     }
 
-    .searchInput{
-        padding:1%;
+    button {
+      padding: 0.7% 1%;
+      border-radius: 7px;
+      border: none;
 
-        input{
-            padding:0.7% 1%;
-            border-radius: 7px;
-        }
-
-        button{
-            padding: 0.7% 1%;
-            border-radius: 7px;
-            border:none;
-        }
+      width: 4vw;
+      height: 2.5vw;
     }
+  }
 }

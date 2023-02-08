@@ -1,4 +1,134 @@
+.reserveHeader {
+
+  background-color: #0F4E33;
+  height: 20vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h1 {
+    display: inline-block;
+
+    text-align: left;
+    color: #FAFAFA;
+    
+    width: 80%;
+    margin: 4vw auto;
+  }
+
+  .reservationSearchBoxContainer {
+    padding-bottom: 2vw;
+
+    > h3 {
+      display: inline-block;
+
+      margin: 0 auto;
+      padding: 0;
+      color: #FAFAFA;
+      width: 80%;
+
+      padding: 1vw;
+
+      text-align: left;
+    } 
+  }
+}
+
 .content {
   display: flex;
-  // justify-content: ;
+
+  margin: 0 auto;
+
+  width: 90%;
+  padding-top: 32px;
+  justify-content: center;
+}
+
+.listBox {
+  padding: 32px;
+
+  h2 {
+    text-align: left;
+    margin-bottom: 16px;
+  }
+}
+
+
+
+
+
+.infomationBox {
+  display: flex;
+
+  border: 1px solid rgba(66, 211, 149, 1);
+  border-radius: 12px;
+
+  padding:32px;
+  width: 80%;
+
+  margin: 0 auto;
+  font-weight: 500;
+
+  line-height: 190%;
+
+  background-color: (250, 250, 250, 1);
+
+  .iconContainer {
+
+    width: 6vw;
+    height: 6vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+
+      width: 5vw;
+      height: 5vw;
+      
+      color: rgba(66, 211, 149, 1);
+      
+      margin-right: 2vw;
+    }
+  }
+
+  .ulContainer {
+    display: flex;
+    
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    ul {
+      padding-left: 8px;
+      text-align: left;
+      
+      li {list-style: disc;}
+    }
+  }
+}
+
+.reserveBtnContainer {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 4vw;
+  
+  button {
+    width : 16vw;
+    height : 4vw;
+
+    background-color: #42D395;
+    border: 0;
+    border-radius: 8px;
+
+    color: #FAFAFA;
+    font-weight: 700;
+
+    cursor: pointer;
+  }
 }
