@@ -17,7 +17,7 @@ spring:
     username: root
     password: ${COMMON_PASSWORD}
   redis:
-    host: host.docker.internal
+    host: live-live.store
     port: '6379'
     password: ${COMMON_PASSWORD}
   mvc:
