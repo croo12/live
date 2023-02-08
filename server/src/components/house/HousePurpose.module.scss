@@ -1,0 +1,72 @@
+.purposeContent {
+  height: 600px;
+  overflow-y: scroll;
+
+  header {
+    box-sizing: border-box;
+    height: 56px;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #707070;
+
+    img {
+      width: 80px;
+      height: auto;
+      margin: 12px;
+    }
+
+    button {
+      float: right;
+      font-size: 22px;
+      margin: 12px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .purposeInner {
+    margin: 8px;
+
+    .innerBlock {
+      margin: 0 0 24px 0;
+      h2 {
+        font-size: 22px;
+        margin: 12px 0;
+      }
+
+      p {
+        margin: 12px 8px;
+      }
+      span {
+        font-weight: 600;
+      }
+
+      blockquote {
+        margin: 4px 8px;
+        padding: 8px;
+        background: #ededed;
+        border-radius: 6px;
+        line-height: 24px;
+      }
+
+      figure {
+        display: flex;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 5px;
+        background: #f5fbcb;
+
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}
