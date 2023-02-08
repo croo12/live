@@ -1,4 +1,4 @@
-.houseRegist {
+.houseModify {
   height: 100%;
   width: 1024px;
   margin: 32px calc((100vw - 1024px) / 2);
@@ -15,7 +15,7 @@
     margin: calc(32 * 0.1vw) calc((100vw - (1024px * 0.1vw) / 1px) / 2);
   }
 
-  .registFieldSet {
+  .modifyFieldSet {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,7 +30,7 @@
       margin: 0 0 24px 0;
     }
 
-    .registDescription {
+    .modifyDescription {
       box-sizing: border-box;
       width: 920px;
       height: 106px;
@@ -644,7 +644,7 @@
     }
   }
 
-  .registBtn {
+  .modifyBtn {
     button {
       width: 252px;
       height: 52px;

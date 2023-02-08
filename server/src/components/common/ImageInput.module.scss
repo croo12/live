@@ -1,0 +1,33 @@
+.previewImage {
+  width: 122px;
+  height: 122px;
+  background: #fafafa;
+  border: 1px solid #bbbbbb;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+
+  img {
+    width: 120px;
+    height: 120px;
+    border-radius: 4px;
+  }
+  button {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    float: right;
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 12px;
+  }
+  button:hover {
+    font-size: 16px;
+    width: 20px;
+    color: red;
+  }
+}
