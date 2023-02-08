@@ -46,8 +46,9 @@ public class ItemService {
         }
 
         Long houseNo = 0L;
+        House house = null;
         houseNo = itemRegistRequest.getHouse().getHouseNo();
-        House house = houseRepository.findById(houseNo).orElse(null);
+        if(houseNo!=null) house = houseRepository.findById(houseNo).orElse(null);
         if(house==null) {
             house = itemRegistRequest.getHouse().toEntity();
             houseRepository.save(house);
