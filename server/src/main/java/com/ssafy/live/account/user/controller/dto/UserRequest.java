@@ -72,6 +72,17 @@ public class UserRequest {
     }
 
     @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class Update {
+
+        private String phone;
+        private String password;
+        private String email;
+        private String region;
+    }
+
+    @Getter
     @Builder
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)

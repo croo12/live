@@ -74,13 +74,10 @@ public class RealtorRequest {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Update {
 
-        private String name;
         private String phone;
-        private String corp;
+        private String password;
         private String description;
-        private String businessAddress;
-        @Column(columnDefinition = "TEXT")
-        private String imageSrc;
+        private String email;
     }
 
     @Getter

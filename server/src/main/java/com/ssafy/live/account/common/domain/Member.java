@@ -1,5 +1,6 @@
 package com.ssafy.live.account.common.domain;
 
+import com.ssafy.live.account.realtor.controller.dto.RealtorRequest.Update;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,9 +28,10 @@ public class Member {
     @Column(name = "image_src")
     private String imageSrc;
 
-    protected void updateInformation(String name, String phone, String imageSrc) {
-        this.name = name;
+    protected void updateInformation(String password, String phone, String email, String imageSrc) {
+        this.password = password;
         this.phone = phone;
+        this.email = email;
         this.imageSrc = imageSrc;
     }
 
