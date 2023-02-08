@@ -2,7 +2,7 @@ package com.ssafy.live.account.realtor.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.live.account.common.domain.Member;
-import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
+import com.ssafy.live.account.realtor.controller.dto.RealtorRequest.Update;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.house.domain.entity.Item;
@@ -103,11 +103,9 @@ public class Realtor extends Member implements UserDetails {
         return true;
     } //계정이 사용 가능한지 여부를 리턴한다. (true: 사용 가능)
 
-    public void updateRealtor(RealtorRequest.Update request, String imgSrc) {
-        super.updateInformation(request.getName(), request.getPhone(), imgSrc);
-        this.corp = request.getCorp();
+    public void updateRealtor(Update request, String password, String imgSrc) {
+        super.updateInformation(password, request.getPhone(), request.getEmail(), imgSrc);
         this.description = request.getDescription();
-        this.businessAddress = request.getBusinessAddress();
     }
 
     public void updateRatingScore(Long count, int ratingScore) {

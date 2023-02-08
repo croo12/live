@@ -1,6 +1,7 @@
 package com.ssafy.live.account.user.domain.entity;
 
 import com.ssafy.live.account.common.domain.Member;
+import com.ssafy.live.account.user.controller.dto.UserRequest.Update;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.notice.domain.entity.Notice;
@@ -86,5 +87,10 @@ public class Users extends Member implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void updateUser(Update request, String password, String imgSrc) {
+        super.updateInformation(password, request.getPhone(), request.getEmail(), imgSrc);
+        this.region = request.getRegion();
     }
 }

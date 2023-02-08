@@ -9,6 +9,8 @@ import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.user.controller.dto.UserRequest;
 import com.ssafy.live.account.user.controller.dto.UserRequest.FindPassword;
 import com.ssafy.live.account.user.controller.dto.UserRequest.IdDuplcate;
+import com.ssafy.live.account.user.controller.dto.UserRequest.Update;
+import com.ssafy.live.account.user.controller.dto.UserResponse;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
@@ -168,5 +170,27 @@ public class UserService {
             return response.success(false, "이미 사용 중인 아이디입니다.", HttpStatus.OK);
         }
         return response.success(true, "사용 가능한 아이디입니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> updateRealtor(Long userNo, Update request, MultipartFile file)
+        throws IOException {
+        Users user = usersRepository.findById(userNo).get();
+        if(user == null) {
+            return response.fail("해당하는 사용자를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+        String preImg = user.getImageSrc();
+        if(file != null) {
+            s3Service.deleteFile(preImg);
+        }
+        String imgSrc = s3Service.upload(file);
+        user.updateUser(request, passwordEncoder.encode(request.getPassword()), imgSrc);
+        usersRepository.save(user);
+        UserResponse.Update updateUser = UserResponse.Update.builder()
+            .phone(user.getPhone())
+            .email(user.getEmail())
+            .imageSrc(user.getImageSrc())
+            .region(user.getRegion())
+            .build();
+        return response.success(updateUser, "회원 정보 수정을 완료했습니다.", HttpStatus.OK);
     }
 }
