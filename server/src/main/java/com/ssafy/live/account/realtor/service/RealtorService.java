@@ -146,7 +146,7 @@ public class RealtorService {
 
     public ResponseEntity<?> withdrawl(String token) {
         if(!jwtTokenProvider.validateToken(token)) {
-            throw new UnauthorizedException(ACCESS_TOKEN_EXPIRED);
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
 
         Authentication authentication = jwtTokenProvider.getAuthentication(token);

@@ -25,6 +25,7 @@ public class HouseResponse {
         private String sido;
         private String gugun;
         private String dong;
+        private String regionCode;
 
         public static HouseDetailResponse toDto(House house){
             return HouseDetailResponse.builder()
@@ -42,6 +43,7 @@ public class HouseResponse {
                     .sido(house.getSido())
                     .gugun(house.getGugun())
                     .dong(house.getDong())
+                    .regionCode(house.getRegionCode())
                     .build();
         }
     }

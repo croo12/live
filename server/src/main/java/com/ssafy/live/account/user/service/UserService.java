@@ -130,7 +130,7 @@ public class UserService {
     }
 
     public ResponseEntity<?> withdrawl(String token) {
-        if(jwtTokenProvider.validateToken(token)) {
+        if(!jwtTokenProvider.validateToken(token)) {
             return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
 
