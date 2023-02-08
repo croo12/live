@@ -10,13 +10,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/items")
 public class ItemController {
 
     private final ItemService itemService;
-    @PostMapping("")
+    @PostMapping
     private ResponseEntity<?> registItem(
             @RequestPart ItemRequest.ItemRegistRequest itemRegistRequest,
             @RequestPart List<MultipartFile> files) throws IOException {
@@ -36,7 +38,7 @@ public class ItemController {
     }
 
     @GetMapping("/regions")
-    public ResponseEntity<?> itemsByBuildingName(@RequestBody ItemRequest.ItemsByBuildingName request)  {
-        return itemService.itemsByBuildingName(request);
+    public ResponseEntity<?> itemsByBuildingName(@RequestHeader(AUTHORIZATION) String token, @RequestBody ItemRequest.ItemsByBuildingName request)  {
+        return itemService.itemsByBuildingName(token, request);
     }
 }

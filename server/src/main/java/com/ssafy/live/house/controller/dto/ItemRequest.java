@@ -105,11 +105,8 @@ public class ItemRequest {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class ItemsByBuildingName {
 
-        private Long realtorNo;
         private String word;
-        private String sidoName;
-        private String gugunName;
-        private String dongName;
+        private String regionCode;
     }
 
 }
