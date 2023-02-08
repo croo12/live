@@ -80,4 +80,12 @@ public class UserRequest {
         private String id;
         private String email;
     }
+    @Getter
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class IdDuplcate {
+
+        private String id;
+    }
 }
