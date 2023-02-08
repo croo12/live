@@ -8,6 +8,7 @@ import com.ssafy.live.account.common.service.EmailService;
 import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.user.controller.dto.UserRequest;
 import com.ssafy.live.account.user.controller.dto.UserRequest.FindPassword;
+import com.ssafy.live.account.user.controller.dto.UserRequest.IdDuplcate;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
@@ -160,5 +161,12 @@ public class UserService {
         usersRepository.save(user);
         emailService.joinEmail(user.getEmail(), temporaryPwd, user.getName());
         return response.success("비밀번호 찾기 이메일을 전송하였습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> idDuplicate(IdDuplcate idDuplcate) {
+        if(usersRepository.existsById(idDuplcate.getId())) {
+            return response.success("이미 사용 중인 아이디입니다.", HttpStatus.OK);
+        }
+        return response.success("사용 가능한 아이디입니다.", HttpStatus.OK);
     }
 }

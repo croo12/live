@@ -75,4 +75,10 @@ public class UserController {
         log.info("사용자 임시비밀번호 발급");
         return usersService.temporaryPassword(request);
     }
+
+    @PostMapping("/id")
+    public ResponseEntity<?> idDuplicate(@RequestBody UserRequest.IdDuplcate idDuplcate) {
+        log.info("아이디 중복체크");
+        return usersService.idDuplicate(idDuplcate);
+    }
 }
