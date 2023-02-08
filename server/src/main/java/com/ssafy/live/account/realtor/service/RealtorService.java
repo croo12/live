@@ -13,6 +13,7 @@ import com.ssafy.live.account.realtor.controller.dto.RealtorResponse;
 import com.ssafy.live.account.realtor.controller.dto.RealtorResponse.FindAllDetail.Items;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
@@ -143,10 +144,15 @@ public class RealtorService {
         return response.success("로그아웃 되었습니다.");
     }
 
-    public ResponseEntity<?> withdrawl(RealtorRequest.withdrawl withdrawl) {
-        Optional<Realtor> realtor = realtorRepository.findById(withdrawl.getNo());
+    public ResponseEntity<?> withdrawl(String token) {
+        if(jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        Optional<Realtor> realtor = realtorRepository.findByBusinessNumber(authentication.getName());
         if(realtor.isPresent()) {
-            realtorRepository.deleteById(withdrawl.getNo());
+            realtorRepository.deleteById(realtor.get().getNo());
             return response.success("회원탈퇴 되었습니다.");
         }
         return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);

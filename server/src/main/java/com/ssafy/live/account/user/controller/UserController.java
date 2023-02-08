@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,6 +51,15 @@ public class UserController {
         return usersService.reissue(reissue);
     }
 
+    @DeleteMapping()
+    public ResponseEntity<?> withdrawl(@RequestHeader(AUTHORIZATION) String token, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
+        }
+        return usersService.withdrawl(token);
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@Validated UserRequest.Logout logout, Errors errors) {
         // validation check
@@ -57,11 +67,6 @@ public class UserController {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
         return usersService.logout(logout);
-    }
-
-    @GetMapping("/delete")
-    public ResponseEntity<?> withdrwal(@Validated UserRequest.withdrawl withdrawl) {
-        return usersService.withdrawl(withdrawl);
     }
 
     @GetMapping("/authority")

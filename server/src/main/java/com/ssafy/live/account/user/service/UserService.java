@@ -127,10 +127,15 @@ public class UserService {
         return response.success("로그아웃 되었습니다.");
     }
 
-    public ResponseEntity<?> withdrawl(UserRequest.withdrawl withdrawl) {
-        Optional<Users> users = usersRepository.findById(withdrawl.getNo());
+    public ResponseEntity<?> withdrawl(String token) {
+        if(jwtTokenProvider.validateToken(token)) {
+            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        Optional<Users> users = usersRepository.findById(authentication.getName());
         if(users.isPresent()) {
-            usersRepository.deleteById(withdrawl.getNo());
+            usersRepository.deleteById(users.get().getNo());
             return response.success("회원탈퇴 되었습니다.");
         }
         return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);

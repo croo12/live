@@ -60,9 +60,13 @@ public class RealtorController {
         return realtorService.logout(logout);
     }
 
-    @GetMapping("/delete")
-    public ResponseEntity<?> withdrwal(@Validated RealtorRequest.withdrawl withdrawl) {
-        return realtorService.withdrawl(withdrawl);
+    @DeleteMapping()
+    public ResponseEntity<?> withdrawl(@RequestHeader(AUTHORIZATION) String token, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
+        }
+        return realtorService.withdrawl(token);
     }
 
     @GetMapping("/authority")
