@@ -165,8 +165,8 @@ public class UserService {
 
     public ResponseEntity<?> idDuplicate(IdDuplcate idDuplcate) {
         if(usersRepository.existsById(idDuplcate.getId())) {
-            return response.success("이미 사용 중인 아이디입니다.", HttpStatus.OK);
+            return response.success(false, "이미 사용 중인 아이디입니다.", HttpStatus.OK);
         }
-        return response.success("사용 가능한 아이디입니다.", HttpStatus.OK);
+        return response.success(true, "사용 가능한 아이디입니다.", HttpStatus.OK);
     }
 }
