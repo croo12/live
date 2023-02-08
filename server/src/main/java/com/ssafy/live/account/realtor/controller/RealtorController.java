@@ -61,11 +61,7 @@ public class RealtorController {
     }
 
     @DeleteMapping()
-    public ResponseEntity<?> withdrawl(@RequestHeader(AUTHORIZATION) String token, Errors errors) {
-        // validation check
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
-        }
+    public ResponseEntity<?> withdrawl(@RequestHeader(AUTHORIZATION) String token) {
         return realtorService.withdrawl(token);
     }
 
