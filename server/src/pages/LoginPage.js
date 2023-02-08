@@ -17,12 +17,13 @@ const LoginPage = () => {
 
   const userLoginHandler = (userLoginInfo) => {
     // 일반 회원 로그인 처리
-    console.log(userLoginInfo); // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
+    // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
-    axiosInstance.post("users/login", {
-      id: userLoginInfo.userId,
-      password: userLoginInfo.password,
-    });
+    const frm = new FormData();
+    frm.append("id", userLoginInfo.id);
+    frm.append("password", userLoginInfo.password);
+
+    axiosInstance.post("users/login", frm);
   };
 
   const realtorLoginHandler = (realtorLoginInfo) => {

@@ -7,15 +7,25 @@
   padding: 0;
   box-sizing: border-box;
   list-style: none;
-  
-  font-family:'Roboto', sans-serif;
 
+  
+  
+  
   ::-webkit-scrollbar {
     width:4px;
   }
 }
 
+body {
+  font-family:'Roboto';
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url("./assets/font/Roboto.ttf");
 }

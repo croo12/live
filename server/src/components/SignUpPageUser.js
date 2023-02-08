@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import classes from "./SignUpPageUser.module.scss";
 import ImageInput from "./common/ImageInput";
 import blankImage from "../assets/image/blank_profile.png";
@@ -21,9 +21,11 @@ const SignUpPageUser = () => {
   const [profile, setProfile] = useState("");
   const [previewProfile, setPreviewProfile] = useState("");
 
-  const onChange = (e) => {
-    console.log(e.target.value.user_id);
-  };
+  const formData = useRef();
+
+  // const onChange = (e) => {
+  //   console.log(e.target.value.user_id);
+  // };
 
   const onChangeUserId = (e) => {
     if (e.target.value.length > 16 || e.target.value.length < 3)
@@ -31,6 +33,21 @@ const SignUpPageUser = () => {
     else setUserIdError(false);
 
     setUserId(e.target.value);
+  };
+
+  const checkIdDuplicate = async () => {
+    try {
+      const result = await axiosInstance.post("users/id", { id: userId });
+      console.log(result);
+
+      if (!userId || result.data.massage === "중복된 아이디입니다") {
+        setIdDuplicateError(-1);
+      } else {
+        setIdDuplicateError(1);
+      }
+    } catch (err) {
+      console.error("이거 없음");
+    }
   };
 
   const onChangeUserPass = (e) => {
@@ -85,27 +102,55 @@ const SignUpPageUser = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const idDuplicateChecker = async () => {
-    try {
-      const result = await axiosInstance.get("users/id");
-      console.log(result.message);
-
-      if (result.message === "중복된 아이디입니다") {
-        setIdDuplicateError(-1);
-      } else {
-        setIdDuplicateError(1);
-      }
-    } catch (err) {
-      console.error("이거 없음");
-    }
-  };
-
+  //회원가입
   const joinUser = async (e) => {
     e.preventDefault();
+
+    // if (!previewProfile) {
+    //   alert(`프로필이 등록되지 않았습니다!!`);
+    //   return;
+    // }
+
+    if (!userId || userIdError || idDuplicateError !== 1) {
+      alert(`현재 입력하신 아이디는 사용할 수 없는 아이디입니다`);
+      return;
+    }
+    if (!userPass || userPassCheckError || userPassError) {
+      alert(`현재 입력하신 비밀번호는 사용할 수 없는 비밀번호입니다`);
+      return;
+    }
+    if (!userEmail || userEmailError) {
+      alert(`현재 입력하신 이메일은 사용할 수 없는 이메일입니다`);
+      return;
+    }
+
+    const joinData = {
+      id: userId,
+      password: userPass,
+      email: userEmail,
+      name: formData.current.userName.value,
+      phone: formData.current.userPhone.value,
+      region: "bbb",
+      gender: "male",
+    };
+
+    const frm = new FormData();
+
+    frm.append("file", profile, "test.png");
+    frm.append(
+      "SignUp",
+      new Blob([JSON.stringify(joinData)], { type: "application/json" })
+    );
+
+    axiosInstance.post("users", frm, {
+      // headers: {
+      //   "Content-Type": "multipart/form-data",
+      // },
+    });
   };
 
   return (
-    <form className={classes.signupUser} onSubmit={joinUser}>
+    <form className={classes.signupUser} onSubmit={joinUser} ref={formData}>
       <div className={classes.signupFieldSet}>
         <h1>일반 회원 가입</h1>
         <div className={classes.formInner}>
@@ -145,22 +190,22 @@ const SignUpPageUser = () => {
                 value={userId}
                 onChange={onChangeUserId}
               />
-              <button onClick={idDuplicateChecker} type="button">
+              <button onClick={checkIdDuplicate} type="button">
                 중복확인
               </button>
             </div>
             {userIdError && (
               <div className={classes.errorText}>
-                최소 3자부터 최대 16자까지 입력가능합니다.
+                아이디는 최소 3자부터 최대 16자까지 입력가능합니다.
               </div>
             )}
             {idDuplicateError === -1 && (
               <div className={classes.errorText}>
-                이미 사용하고 있는 아이디입니다.
+                사용 불가능한 아이디입니다.
               </div>
             )}
             {idDuplicateError === 1 && (
-              <div className={classes.errorText}>사용 가능한 아이디입니다.</div>
+              <div className={classes.goodText}>사용 가능한 아이디입니다.</div>
             )}
           </div>
           <div className={classes.inputBox}>
@@ -217,6 +262,7 @@ const SignUpPageUser = () => {
             <label htmlFor="userPhone">전화번호 </label>
             <input id="userPhone" name="userPhone" type="text" />
           </div>
+          {/* 회원성별 선택 + 관심지역 선택 */}
           <div className={classes.signUpBtn}>
             <button type="submit">회원가입</button>
           </div>
