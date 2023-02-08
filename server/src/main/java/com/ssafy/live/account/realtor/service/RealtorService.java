@@ -52,7 +52,6 @@ public class RealtorService {
     private final S3Service s3Service;
     private final RealtorRepository realtorRepository;
     private final UsersRepository usersRepository;
-    private final ItemImageRepository itemImageRepository;
     private final PasswordEncoder passwordEncoder;
     private final Response response;
     private final JwtTokenProvider jwtTokenProvider;
@@ -199,14 +198,19 @@ public class RealtorService {
             return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         }
         String preImg = realtor.getImageSrc();
-        System.out.println("name " + file.getOriginalFilename());
         if(file != null) {
             s3Service.deleteFile(preImg);
         }
         String imgSrc = s3Service.upload(file);
-        realtor.updateRealtor(request, imgSrc);
+        realtor.updateRealtor(request, passwordEncoder.encode(request.getPassword()), imgSrc);
         realtorRepository.save(realtor);
-        return response.success("공인중개사 정보 수정을 완료했습니다.", HttpStatus.OK);
+        RealtorResponse.Update updateRealtor = RealtorResponse.Update.builder()
+            .phone(realtor.getPhone())
+            .email(realtor.getEmail())
+            .description(realtor.getDescription())
+            .imageSrc(realtor.getImageSrc())
+            .build();
+        return response.success(updateRealtor, "공인중개사 정보 수정을 완료했습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> temporaryPassword(RealtorRequest.FindPassword request) {

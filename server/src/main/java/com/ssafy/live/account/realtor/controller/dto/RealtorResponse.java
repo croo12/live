@@ -4,6 +4,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.review.domain.entity.Review;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.persistence.Column;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,17 @@ public class RealtorResponse {
         private String accessToken;
         private String refreshToken;
         private Long refreshTokenExpirationTime;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class Update {
+
+        private String phone;
+        private String description;
+        private String email;
+        private String imageSrc;
     }
 
     @Builder

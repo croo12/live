@@ -49,7 +49,8 @@ public class S3Service {
         if(file.isEmpty()) {
             return null;
         } else {
-            String fileName = file.getOriginalFilename()+ "_" +UUID.randomUUID();
+            String fileName = UUID.randomUUID()+ "_" +file.getOriginalFilename().replaceAll("[~!@#$%^&*()_+ ]", "_");
+            System.out.println("file "+file.getOriginalFilename());
             s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return s3Client.getUrl(bucket, fileName).toString();
@@ -59,15 +60,15 @@ public class S3Service {
     public void deleteFile(String imageSrc) {
         try{
             String key = imageSrc; // 폴더/파일.확장자
-
+            System.out.println("기존 파일명 :"+imageSrc);
             try {
+                if(imageSrc == null) return;
                 s3Client.deleteObject(bucket, (key).substring(54));
+                System.out.println(String.format("[%s] deletion complete", (key).substring(54)));
             } catch (AmazonServiceException e) {
                 System.err.println(e.getErrorMessage());
                 System.exit(1);
             }
-            System.out.println(String.format("[%s] deletion complete", key));
-
         } catch (Exception exception) {
             exception.printStackTrace();
         }

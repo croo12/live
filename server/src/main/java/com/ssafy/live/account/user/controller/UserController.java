@@ -81,6 +81,13 @@ public class UserController {
         return usersService.temporaryPassword(request);
     }
 
+    @PostMapping("/info/{userNo}")
+    public ResponseEntity<?> updateRealtor(@PathVariable("userNo") Long userNo, @RequestPart(value = "Update")  UserRequest.Update request, @RequestPart(value = "file", required = false) MultipartFile file)
+        throws IOException {
+        log.info("사용자 정보수정");
+        return usersService.updateRealtor(userNo, request, file);
+    }
+
     @PostMapping("/id")
     public ResponseEntity<?> idDuplicate(@RequestBody UserRequest.IdDuplcate idDuplcate) {
         log.info("아이디 중복체크");
