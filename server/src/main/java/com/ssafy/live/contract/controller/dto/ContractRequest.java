@@ -1,12 +1,9 @@
 package com.ssafy.live.contract.controller.dto;
 
-import java.time.LocalDate;
+import lombok.*;
+
 import javax.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
 public class ContractRequest {
 

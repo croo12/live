@@ -19,11 +19,11 @@ public class ContractController {
     private final ContractService contractService;
 
     @PostMapping
-    public ResponseEntity<?> regist(@Validated @RequestBody ContractRequest.Regist regist, Errors errors)  {
+    public ResponseEntity<?> regist(@RequestHeader(AUTHORIZATION) String token, @Validated @RequestBody ContractRequest.Regist regist, Errors errors)  {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
-        return contractService.regist(regist);
+        return contractService.regist(token, regist);
     }
 
     @GetMapping

@@ -2,15 +2,10 @@ package com.ssafy.live.account.realtor.controller.dto;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.review.domain.entity.Review;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.persistence.Column;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class RealtorResponse {
 
@@ -67,28 +62,16 @@ public class RealtorResponse {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class FindDetail {
 
-        private Long no;
-        private String name;
         private String email;
         private String phone;
         private String imageSrc;
-        private String businessNumber;
-        private String corp;
-        private String registrationNumber;
         private String description;
-        private String businessAddress;
 
         public static FindDetail toEntity(Realtor realtor) {
             return RealtorResponse.FindDetail.builder()
-                .no(realtor.getNo())
-                .businessNumber(realtor.getBusinessNumber())
-                .name(realtor.getName())
                 .email(realtor.getEmail())
                 .phone(realtor.getPhone())
-                .corp(realtor.getCorp())
-                .registrationNumber(realtor.getRegistrationNumber())
                 .description(realtor.getDescription())
-                .businessAddress(realtor.getBusinessAddress())
                 .imageSrc(realtor.getImageSrc())
                 .build();
         }
