@@ -13,9 +13,9 @@ import com.ssafy.live.contract.controller.dto.ContractResponse;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.contract.domain.repository.ContractRepository;
 import com.ssafy.live.house.domain.entity.Item;
+import com.ssafy.live.house.domain.entity.ItemImage;
+import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +23,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,6 +36,7 @@ public class ContractService {
     private final ContractRepository contractRepository;
     private final UsersRepository usersRepository;
     private final RealtorRepository realtorRepository;
+    private final ItemImageRepository itemImageRepository;
     private final ItemRepository itemRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -103,11 +107,13 @@ public class ContractService {
             return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
         Contract contract = contractRepository.findById(contractNo).get();
+        List<ItemImage> itemImages = itemImageRepository.findByItem(contract.getItem());
+        List<String> images = itemImages.stream().map((i)->i.getImageSrc()).collect(Collectors.toList());
         ContractResponse.ContractDetail contractDetail = ContractResponse.ContractDetail
             .toEntity(
                 ContractResponse.ContractDetail.RealtorInfo.toEntity(contract.getRealtor()),
                 ContractResponse.ContractDetail.UserInfo.toEntity(contract.getUsers()),
-                ContractResponse.ContractDetail.ItemInfo.toEntity(contract.getItem()),
+                ContractResponse.ContractDetail.ItemInfo.toEntity(contract.getItem(), images),
                 ContractResponse.ContractDetail.ContractInfo.toEntity(contract)
             );
 

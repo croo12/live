@@ -7,4 +7,8 @@ public interface RealtorProjectionInterface {
     String getCorp();
     Integer getReview();
     Float getStarScore();
+    int getTotal();
+    String getDescription();
+    String getPhone();
+    String getBusinessAddress();
 }
