@@ -38,11 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/users/sign-up", "/users/login", "/users/authority", "/users/reissue", "/users/logout").permitAll()
-            .antMatchers("/realtors/login", "/realtors/authority", "/realtors/reissue", "/realtors/logout").permitAll()
-
+            .antMatchers("/users/**").hasRole("USER")
+            .antMatchers("/realtors/**").hasRole("REALTOR")
             .antMatchers("/consultings/**").permitAll()
-            .antMatchers("/users/userTest").hasRole("USER")
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
     }
