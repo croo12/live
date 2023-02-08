@@ -18,6 +18,15 @@ const RealtorLoginForm = (props) => {
   const loginHandler = (event) => {
     // 중개사 회원 로그인 처리
     event.preventDefault();
+
+    if (
+      !businessNumberInputRef.current.value ||
+      !passwordInputRef.current.value
+    ) {
+      alert("값없음");
+      return;
+    }
+
     const realtorLoginInfo = {
       businessNumber: businessNumberInputRef.current.value,
       password: passwordInputRef.current.value,
@@ -40,6 +49,21 @@ const RealtorLoginForm = (props) => {
     // 비밀번호 찾기 email 맞는지 검사 and 전송 하는 과정
 
     findPasswordModalHandler(); // 모달창 닫기
+  };
+
+  const onChangeBusinessNumber = (e) => {
+    //낼 물어보지 머
+    // const { value } = e.target;
+    // if (
+    //   (value.length === 3 || value.length === 6) &&
+    //   value[value.length - 1] !== "-"
+    // ) {
+    //   businessNumberInputRef.current.value = `${value}-`;
+    // } else if (value[value.length - 1] === "-") {
+    //   return;
+    // } else {
+    //   businessNumberInputRef.current.value = value;
+    // }
   };
 
   const findPasswordModalHandler = () => {
@@ -68,6 +92,7 @@ const RealtorLoginForm = (props) => {
                 id="businessNumber"
                 type="text"
                 placeholder="사업자등록번호 입력"
+                onChange={onChangeBusinessNumber}
                 ref={businessNumberInputRef}
               ></input>
             </div>

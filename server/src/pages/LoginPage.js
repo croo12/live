@@ -28,7 +28,14 @@ const LoginPage = () => {
 
   const realtorLoginHandler = (realtorLoginInfo) => {
     // 중개사 회원 로그인 처리
-    console.log(realtorLoginInfo); // 중개사회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
+    const frm = new FormData();
+
+    frm.append("businessNumber", realtorLoginInfo.businessNumber);
+    frm.append("password", realtorLoginInfo.password);
+
+    // console.log(realtorLoginInfo); // 중개사회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
+
+    axiosInstance.post("realtors/login", frm);
   };
 
   return (

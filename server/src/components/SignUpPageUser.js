@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import classes from "./SignUpPageUser.module.scss";
 import ImageInput from "./common/ImageInput";
 import blankImage from "../assets/image/blank_profile.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../util/axios";
 
 const SignUpPageUser = () => {
+  const navigation = useNavigate();
+
   const [userId, setUserId] = useState("");
   const [userPass, setUserPass] = useState("");
   const [userPassCheck, setUserPassCheck] = useState("");
@@ -22,10 +24,6 @@ const SignUpPageUser = () => {
   const [previewProfile, setPreviewProfile] = useState("");
 
   const formData = useRef();
-
-  // const onChange = (e) => {
-  //   console.log(e.target.value.user_id);
-  // };
 
   const onChangeUserId = (e) => {
     if (e.target.value.length > 16 || e.target.value.length < 3)
@@ -142,11 +140,16 @@ const SignUpPageUser = () => {
       new Blob([JSON.stringify(joinData)], { type: "application/json" })
     );
 
-    axiosInstance.post("users", frm, {
-      // headers: {
-      //   "Content-Type": "multipart/form-data",
-      // },
-    });
+    try {
+      const result = await axiosInstance.post("users", frm);
+      if (result) {
+        alert(`회원가입 성공`);
+
+        navigation("/");
+      }
+    } catch (error) {
+      console.error(`회원가입 과정에서 에러가 발생`, error);
+    }
   };
 
   return (
