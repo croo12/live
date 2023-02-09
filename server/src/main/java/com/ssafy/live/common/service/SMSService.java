@@ -36,7 +36,7 @@ public class SMSService {
 //    private static String callingNumber;
 
     public static void sendSMS(Long no, SMSContent smsContent, String phone){
-        String content = no + " " + smsContent;
+        String content = no + " " + smsContent.getMessage();
         sendSMS(content, phone);
     }
     public static void sendSMS(String content, String phone) {
