@@ -15,7 +15,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.BadRequestException;
+import com.ssafy.live.common.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -41,7 +41,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.ssafy.live.common.domain.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j

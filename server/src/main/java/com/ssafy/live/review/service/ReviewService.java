@@ -5,7 +5,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.BadRequestException;
+import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
 import com.ssafy.live.review.controller.dto.ReviewRequest;
 import com.ssafy.live.review.controller.dto.ReviewResponse;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.ssafy.live.common.domain.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
 
 @Slf4j
 @Service

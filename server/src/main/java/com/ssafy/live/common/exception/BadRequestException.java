@@ -1,4 +1,4 @@
-package com.ssafy.live.common.domain.exception;
+package com.ssafy.live.common.exception;
 
 public class BadRequestException extends CustomException {
 
