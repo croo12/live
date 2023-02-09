@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
-import axiosInstance from "../util/axios";
-
+import {userLoginApi, userLogout} from "../apis/userApis";
+import {realtorLoginApi} from "../apis/realtorApis";
 import classes from "./LoginPage.module.scss";
 
 const LoginPage = () => {
@@ -25,12 +25,12 @@ const LoginPage = () => {
     frm.append("id", userLoginInfo.id);
     frm.append("password", userLoginInfo.password);
 
-    const result = await axiosInstance.post("users/login", frm);
-
+    //userLoginApi(frm).then((result)=>console.log(result))
+    userLogout().then((result)=>{console.log(result)})
     navigation(-1);
   };
 
-  const realtorLoginHandler = (realtorLoginInfo) => {
+  const realtorLoginHandler = async (realtorLoginInfo) => {
     // 중개사 회원 로그인 처리
     const frm = new FormData();
     frm.append("businessNumber", realtorLoginInfo.businessNumber);
@@ -38,7 +38,7 @@ const LoginPage = () => {
 
     // console.log(realtorLoginInfo); // 중개사회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
-    axiosInstance.post("realtors/login", frm);
+    realtorLoginApi(frm).then((result)=>console.log(result))
   };
 
   return (
