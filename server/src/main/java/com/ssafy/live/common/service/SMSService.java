@@ -23,23 +23,35 @@ import java.util.Base64;
 @Component
 public class SMSService {
 
-    private static final String hostNameUrl = "https://sens.apigw.ntruss.com";            // 호스트 URL
-    private static final String requestUrl = "/sms/v2/services/";                        // 요청 URL
-    private static final String requestUrlType = "/messages";                            // 요청 URL
-    @Value("${naver-access-key}")
-    private static String accessKey;                                                    // 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키			// Access Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
-    @Value("${naver-secret-key}")
-    private static String secretKey;                                                 // 2차 인증을 위해 서비스마다 할당되는 service secret key	    // Secret Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
-    @Value("${naver-service-id}")
-    private static String serviceId;                                                 // 프로젝트에 할당된 SMS 서비스 ID                          // service ID : https://console.ncloud.com/sens/project > Simple & ... > Project > 서비스 ID
-    @Value("${sms-calling-number}")
-    private static String callingNumber;
+//    private static final String hostNameUrl = "https://sens.apigw.ntruss.com";            // 호스트 URL
+//    private static final String requestUrl = "/sms/v2/services/";                        // 요청 URL
+//    private static final String requestUrlType = "/messages";                            // 요청 URL
+//    @Value(value = "${naver-access-key}")
+//    private static String accessKey;                                                    // 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키			// Access Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+//    @Value(value = "${naver-secret-key}")
+//    private static String secretKey;                                                 // 2차 인증을 위해 서비스마다 할당되는 service secret key	    // Secret Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+//    @Value(value = "${naver-service-id}")
+//    private static String serviceId;                                                 // 프로젝트에 할당된 SMS 서비스 ID                          // service ID : https://console.ncloud.com/sens/project > Simple & ... > Project > 서비스 ID
+//    @Value(value = "${sms-calling-number}")
+//    private static String callingNumber;
 
-    public static void sendSMS(Long no, SMSContent smsContent, String phone) {
+    public static void sendSMS(Long no, SMSContent smsContent, String phone){
+        String content = no + " " + smsContent;
+        sendSMS(content, phone);
+    }
+    public static void sendSMS(String content, String phone) {
+        String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
+        String requestUrl= "/sms/v2/services/";                   		// 요청 URL
+        String requestUrlType = "/messages";
+        String accessKey = "SSw1ehSlYG6Bd6kRSD4i";                     	// 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키			// Access Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+        String secretKey = "WDBzU4bDeoVKQGE3UTf0bab1n1JgLfp0I7SQsfTB";  // 2차 인증을 위해 서비스마다 할당되는 service secret key	// Service Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+        String serviceId = "ncp:sms:kr:293401522147:live-live";
+        String callingNumber = "01092352527";
+
         String method = "POST";                                            // 요청 method
         String timestamp = Long.toString(System.currentTimeMillis());    // current timestamp (epoch)
-        String apiUrl = hostNameUrl + requestUrl + serviceId + requestUrlType;
-        String content = no + " " + smsContent.getMessage();
+        requestUrl += serviceId + requestUrlType;
+        String apiUrl = hostNameUrl + requestUrl;
 
         // JSON 을 활용한 body data 생성
         JSONObject bodyJson = new JSONObject();

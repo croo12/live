@@ -70,8 +70,7 @@ public class UserService {
                 .build();
         usersRepository.save(users);
 
-        SMSService.sendSMS(users.getNo(), SMSContent.NEW_USER, users.getPhone());
-
+        SMSService.sendSMS(users.getName()+"님 " + SMSContent.NEW_USER.getMessage(), users.getPhone());
         return response.success("회원가입에 성공했습니다.");
     }
 
