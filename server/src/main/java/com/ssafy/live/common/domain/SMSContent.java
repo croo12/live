@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SMSContent {
+    NEW_USER("가입을 축하드립니다."),
     NEW_CONSULTING("새로운 상담 예약이 접수되었습니다."),
     CONSULTING_CANCEL("상담 예약이 취소되었습니다."),
     CONSULTING_CHANGE("상담 정보가 변경되었습니다. 확인해주세요."),
