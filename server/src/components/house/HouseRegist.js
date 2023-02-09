@@ -5,18 +5,72 @@ import SearchAddress from "../common/SearchAddress";
 import classes from "./HouseRegist.module.scss";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { findHouseByAddress, registHouseData } from "../../store/house-actions";
+import { useLocation } from "react-router-dom";
 
 const HouseRegist = () => {
   const [SearchAddressModal, setSearchAddressModal] = useState(false); // 주소 검색 모달창 상태 관리용
   const [PurposeModal, setPurposeModal] = useState(false); // 건축물 용도 모달창 상태
   const [images, setImages] = useState([]); // 매물 이미지 파일
+  const dispatch = useDispatch();
 
-  const postcodeInputRef = useRef(); // 우편번호
-  const roadAddressInputRef = useRef(); //도로명주소
-  const jibunAddressInputRef = useRef(); //지번주소
-  const detailAddressInputRef = useRef(); //상세주소
-  const extraAddressInputRef = useRef(); //추가사항
+  // const realtorNo = useRef();
+  const deposit = useRef();
+  const rent = useRef();
+  const maintenanceFee = useRef();
+  const description = useRef();
+  const direction = useRef();
+  const entrance = useRef();
+  const heating = useRef();
+  const moveInDate = useRef();
+  const buildingName = useRef();
+
+  const address = useRef();
+  const addressDetail = useRef();
+  const sido = useRef();
+  const gugun = useRef();
+  const dong = useRef();
+  const zipcode = useRef();
+  const regionCode = useRef();
+  const bathroom = useRef();
+  const completionYear = useRef();
+  const exclusivePrivateArea = useRef();
+  const supplyArea = useRef();
+  const floor = useRef();
+  const totalFloor = useRef();
+  const purpose = useRef();
+  const room = useRef();
+
+  const airConditioner = useRef();
+  // const bath = useRef();
+  const bathtub = useRef();
+  const bed = useRef();
+  const bidet = useRef();
+  const cctv = useRef();
+  const closet = useRef();
+  const desk = useRef();
+  const diningTable = useRef();
+  const dishwasher = useRef();
+  const dryingMachine = useRef();
+  const elevator = useRef();
+  const fireAlarm = useRef();
+  const garden = useRef();
+  const gasStove = useRef();
+  const guard = useRef();
+  const inductionCooktop = useRef();
+  const intercom = useRef();
+  const keycard = useRef();
+  const microwave = useRef();
+  const oven = useRef();
+  const parkingLot = useRef();
+  const refrigerator = useRef();
+  const shoeRack = useRef();
+  const sink = useRef();
+  const sofa = useRef();
+  const terrace = useRef();
+  const veranda = useRef();
+  const washingMachine = useRef();
 
   const setImageHandler = (data) => {
     setImages(data);
@@ -24,6 +78,68 @@ const HouseRegist = () => {
 
   const registHouseInfo = (event) => {
     event.preventDefault();
+
+    console.log(airConditioner);
+
+    registHouseData({
+      realtorNo: 1,
+      deposit: deposit.current.value,
+      rent: rent.current.value,
+      maintenanceFee: maintenanceFee.current.value,
+      description: description.current.value,
+      direction: direction.current.value,
+      entrance: entrance.current.value,
+      heating: heating.current.value,
+      moveInDate: moveInDate.current.value,
+      buildingName: buildingName.current.value,
+
+      address: address.current.value,
+      addressDetail: addressDetail.current.value,
+      bathroom: bathroom.current.value,
+      completionYear: completionYear.current.value,
+      exclusivePrivateArea: exclusivePrivateArea.current.value,
+      supplyArea: supplyArea.current.value,
+      floor: floor.current.value,
+      totalFloor: totalFloor.current.value,
+      purpose: purpose.current.value,
+      room: room.current.value,
+      sido: sido.value,
+      dong: dong.value,
+      gugun: gugun.value,
+      zipcode: zipcode.value,
+      regionCode: regionCode.value,
+
+      airConditioner: airConditioner.current.checked,
+      bath: false,
+      bathtub: bathtub.current.checked,
+      bed: bed.current.checked,
+      bidet: bidet.current.checked,
+      cctv: cctv.current.checked,
+      closet: closet.current.checked,
+      desk: desk.current.checked,
+      diningTable: diningTable.current.checked,
+      dishwasher: dishwasher.current.checked,
+      dryingMachine: dryingMachine.current.checked,
+      elevator: elevator.current.checked,
+      fireAlarm: fireAlarm.current.checked,
+      garden: garden.current.checked,
+      gasStove: gasStove.current.checked,
+      guard: guard.current.checked,
+      inductionCooktop: inductionCooktop.current.checked,
+      intercom: intercom.current.checked,
+      keycard: keycard.current.checked,
+      microwave: microwave.current.checked,
+      oven: oven.current.checked,
+      parkingLot: parkingLot.current.checked,
+      refrigerator: refrigerator.current.checked,
+      shoeRack: shoeRack.current.checked,
+      sink: sink.current.checked,
+      sofa: sofa.current.checked,
+      terrace: terrace.current.checked,
+      veranda: veranda.current.checked,
+      washingMachine: washingMachine.current.checked,
+      files: [...images],
+    });
   };
 
   const purposeModalHandler = () => {
@@ -40,10 +156,21 @@ const HouseRegist = () => {
 
   // 주소 검색 결과 값 설정
   const setAddressInfoHandler = (addressInfo) => {
-    postcodeInputRef.current.value = addressInfo.postcode;
-    roadAddressInputRef.current.value = addressInfo.roadAddress;
-    jibunAddressInputRef.current.value = addressInfo.jibunAddress;
-    detailAddressInputRef.current.value = addressInfo.extraAddress;
+    address.current.value = addressInfo.address;
+    addressDetail.current.value = addressInfo.addressDetail;
+    sido.value = addressInfo.sido;
+    gugun.value = addressInfo.gugun;
+    dong.value = addressInfo.dong;
+    zipcode.value = addressInfo.zipcode;
+    regionCode.value = addressInfo.regionCode;
+  };
+
+  const findHouseByAddressHandler = () => {
+    setHouseInfo();
+  };
+
+  const setHouseInfo = (data) => {
+    console.log("hi");
   };
 
   const inputNumBlurHandler = (event) => {
@@ -95,6 +222,11 @@ const HouseRegist = () => {
     let result = "";
     let dotChk = false;
     let dotCnt = 0;
+
+    if (+data[0] === 0) {
+      event.target.value = null;
+      return;
+    }
 
     for (let index = 0; index < data.length; index++) {
       const element = data[index];
@@ -167,27 +299,11 @@ const HouseRegist = () => {
                       <div>
                         <input
                           type="text"
-                          ref={postcodeInputRef}
-                          id="postcode"
-                          placeholder="우편번호"
-                          onClick={searchAddressModalHandler}
-                          readOnly
-                        />
-                        <input
-                          type="text"
-                          ref={roadAddressInputRef}
+                          ref={address}
                           id="roadAddress"
                           placeholder="도로명주소"
                           onClick={searchAddressModalHandler}
                           className={classes.mainAddress}
-                          readOnly
-                        />
-                        <input
-                          type="text"
-                          ref={jibunAddressInputRef}
-                          id="jibunAddress"
-                          placeholder="지번주소"
-                          onClick={searchAddressModalHandler}
                           readOnly
                         />
                         <button
@@ -200,19 +316,25 @@ const HouseRegist = () => {
                       </div>
                       <input
                         type="text"
-                        ref={detailAddressInputRef}
+                        ref={addressDetail}
                         id="detailAddress"
                         className={classes.subAddress}
                         placeholder="나머지주소를 입력해주세요"
                       />
                       <input
                         type="text"
-                        ref={extraAddressInputRef}
-                        id="extraAddress"
-                        placeholder="참고항목"
-                        onClick={searchAddressModalHandler}
-                        readOnly
+                        ref={buildingName}
+                        id="buildingName"
+                        className={classes.purpose}
+                        placeholder="건물명 입력"
                       />
+                      <button
+                        type="button"
+                        onClick={findHouseByAddressHandler}
+                        className={classes.searchBtn}
+                      >
+                        입력 완료
+                      </button>
                     </td>
                   </tr>
                   <tr>
@@ -225,6 +347,7 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="deposit"
+                          ref={deposit}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 1)}
@@ -236,6 +359,7 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="rent"
+                          ref={rent}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 1)}
@@ -247,7 +371,7 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="maintenanceFee"
-                          step={0.1}
+                          ref={maintenanceFee}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 1)}
@@ -266,10 +390,10 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="room"
+                          ref={room}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 0)}
-                          min={0}
                         />
                         <p>개</p>
                       </div>
@@ -278,10 +402,10 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="bathroom"
+                          ref={bathroom}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 0)}
-                          min={0}
                         />
                         <p>개</p>
                       </div>
@@ -297,6 +421,7 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="floor"
+                          ref={floor}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 1)}
@@ -308,6 +433,7 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="totalFloor"
+                          ref={totalFloor}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 1)}
@@ -326,6 +452,7 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="supplyArea"
+                          ref={supplyArea}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 2)}
@@ -337,11 +464,30 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="exclusivePrivateArea"
+                          ref={exclusivePrivateArea}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 2)}
                         />
                         <p>㎡</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className={classes.infoTitle}>
+                      <h3>준공년도</h3>
+                    </td>
+                    <td>
+                      <label htmlFor="completionYear">준공년도</label>
+                      <div className={classes.unitInput}>
+                        <input
+                          type="number"
+                          id="completionYear"
+                          ref={completionYear}
+                          max={+new Date().getFullYear()}
+                          min={1900}
+                        />
+                        <p>년</p>
                       </div>
                     </td>
                   </tr>
@@ -353,6 +499,7 @@ const HouseRegist = () => {
                       <input
                         type="text"
                         id="purpose"
+                        ref={purpose}
                         className={classes.purpose}
                       />
                       <button
@@ -369,7 +516,7 @@ const HouseRegist = () => {
                       <h3>계약 여부</h3>
                     </td>
                     <td className={classes.constract}>
-                      <input type="checkbox" id="contractStatus" />
+                      <input type="checkbox" id="contractStatus" disabled />
                       <label htmlFor="contractStatus">계약 완료</label>
                     </td>
                   </tr>
@@ -389,56 +536,64 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        value="동"
+                        ref={direction}
+                        value="EAST"
                         id="east"
                       />
                       <label htmlFor="east">동</label>
                       <input
                         type="radio"
                         name="direction"
-                        value="서"
+                        ref={direction}
+                        value="WEST"
                         id="west"
                       />
                       <label htmlFor="west">서</label>
                       <input
                         type="radio"
                         name="direction"
-                        value="남"
+                        ref={direction}
+                        value="SOUTH"
                         id="south"
                       />
                       <label htmlFor="south">남</label>
                       <input
                         type="radio"
                         name="direction"
-                        value="북"
+                        ref={direction}
+                        value="NORTH"
                         id="north"
                       />
                       <label htmlFor="north">북</label>
                       <input
                         type="radio"
                         name="direction"
-                        value="남동"
+                        ref={direction}
+                        value="SOUTH_EAST"
                         id="southEast"
                       />
                       <label htmlFor="southEast">남동</label>
                       <input
                         type="radio"
                         name="direction"
-                        value="남서"
+                        ref={direction}
+                        value="SOUTH_WEST"
                         id="southWest"
                       />
                       <label htmlFor="southWest">남서</label>
                       <input
                         type="radio"
                         name="direction"
-                        value="북동"
+                        ref={direction}
+                        value="NORTH_EAST"
                         id="northEast"
                       />
                       <label htmlFor="northEast">북동</label>
                       <input
                         type="radio"
                         name="direction"
-                        value="북서"
+                        ref={direction}
+                        value="NORTH_WEST"
                         id="northWest"
                       />
                       <label htmlFor="northWest">북서</label>
@@ -452,22 +607,25 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="entrance"
+                        ref={entrance}
                         id="stair"
-                        value="계단식"
+                        value="STAIR"
                       />
                       <label htmlFor="stair">계단식</label>
                       <input
                         type="radio"
                         name="entrance"
+                        ref={entrance}
                         id="corridor"
-                        value="복도식"
+                        value="PASSAGE"
                       />
                       <label htmlFor="corridor">복도식</label>
                       <input
                         type="radio"
                         name="entrance"
+                        ref={entrance}
                         id="complex"
-                        value="복합식"
+                        value="COMPLEX"
                       />
                       <label htmlFor="complex">복합식</label>
                     </td>
@@ -480,22 +638,25 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="heating"
+                        ref={heating}
                         id="individual"
-                        value="개별난방"
+                        value="INDIVIDUAl"
                       />
                       <label htmlFor="individual">개별난방</label>
                       <input
                         type="radio"
                         name="heating"
+                        ref={heating}
                         id="center"
-                        value="중앙난방"
+                        value="CENTERAL"
                       />
                       <label htmlFor="center">중앙난방</label>
                       <input
                         type="radio"
                         name="heating"
+                        ref={heating}
                         id="district"
-                        value="지역난방"
+                        value="DISTRICT"
                       />
                       <label htmlFor="district">지역난방</label>
                     </td>
@@ -548,6 +709,7 @@ const HouseRegist = () => {
                         <input
                           type="date"
                           id="moveInDate"
+                          ref={moveInDate}
                           defaultValue={new Date()
                             .toISOString()
                             .substring(0, 10)}
@@ -565,42 +727,66 @@ const HouseRegist = () => {
                       <h3>옵션</h3>
                     </td>
                     <td className={classes.optionBox}>
-                      <input type="checkbox" id="bed" />
+                      <input type="checkbox" id="bed" ref={bed} />
                       <label htmlFor="bed">침대</label>
-                      <input type="checkbox" id="washingMachine" />
+                      <input
+                        type="checkbox"
+                        id="washingMachine"
+                        ref={washingMachine}
+                      />
                       <label htmlFor="washingMachine">세탁기</label>
-                      <input type="checkbox" id="airConditioner" />
+                      <input
+                        type="checkbox"
+                        id="airConditioner"
+                        ref={airConditioner}
+                      />
                       <label htmlFor="airConditioner">에어컨</label>
-                      <input type="checkbox" id="desk" />
+                      <input type="checkbox" id="desk" ref={desk} />
                       <label htmlFor="desk">책상</label>
-                      <input type="checkbox" id="closet" />
+                      <input type="checkbox" id="closet" ref={closet} />
                       <label htmlFor="closet">옷장</label>
-                      <input type="checkbox" id="sink" />
+                      <input type="checkbox" id="sink" ref={sink} />
                       <label htmlFor="sink">싱크대</label>
-                      <input type="checkbox" id="table" />
-                      <label htmlFor="table">식탁</label>
-                      <input type="checkbox" id="sofa" />
+                      <input
+                        type="checkbox"
+                        id="diningTable"
+                        ref={diningTable}
+                      />
+                      <label htmlFor="diningTable">식탁</label>
+                      <input type="checkbox" id="sofa" ref={sofa} />
                       <label htmlFor="sofa">소파</label>
-                      <input type="checkbox" id="shoeRack" />
+                      <input type="checkbox" id="shoeRack" ref={shoeRack} />
                       <label htmlFor="shoeRack">신발장</label>
-                      <input type="checkbox" id="refrigerator" />
+                      <input
+                        type="checkbox"
+                        id="refrigerator"
+                        ref={refrigerator}
+                      />
                       <label htmlFor="refrigerator">냉장고</label>
-                      <input type="checkbox" id="dryingMachine" />
+                      <input
+                        type="checkbox"
+                        id="dryingMachine"
+                        ref={dryingMachine}
+                      />
                       <label htmlFor="dryingMachine">건조기</label>
-                      <input type="checkbox" id="bathtub" />
+                      <input type="checkbox" id="bathtub" ref={bathtub} />
                       <label htmlFor="bathtub">욕조</label>
-                      <input type="checkbox" id="bidet" />
+                      <input type="checkbox" id="bidet" ref={bidet} />
                       <label htmlFor="bidet">비데</label>
-                      <input type="checkbox" id="dishWasher" />
-                      <label htmlFor="dishWasher">식기세척기</label>
-                      <input type="checkbox" id="gasStove" />
+                      <input type="checkbox" id="dishwasher" ref={dishwasher} />
+                      <label htmlFor="dishwasher">식기세척기</label>
+                      <input type="checkbox" id="gasStove" ref={gasStove} />
                       <label htmlFor="gasStove">가스레인지</label>
-                      <input type="checkbox" id="inductionCooktop" />
+                      <input
+                        type="checkbox"
+                        id="inductionCooktop"
+                        ref={inductionCooktop}
+                      />
                       <label htmlFor="inductionCooktop">인덕션</label>
-                      <input type="checkbox" id="microwave" />
+                      <input type="checkbox" id="microwave" ref={microwave} />
                       <label htmlFor="microwave">전자레인지</label>
-                      <input type="checkbox" id="gasOven" />
-                      <label htmlFor="gasOven">오븐</label>
+                      <input type="checkbox" id="oven" ref={oven} />
+                      <label htmlFor="oven">오븐</label>
                     </td>
                   </tr>
                   <tr className={classes.optionRow}>
@@ -608,13 +794,13 @@ const HouseRegist = () => {
                       <h3>보안 시설</h3>
                     </td>
                     <td className={classes.optionBox}>
-                      <input type="checkbox" id="guard" />
+                      <input type="checkbox" id="guard" ref={guard} />
                       <label htmlFor="guard">경비원</label>
-                      <input type="checkbox" id="cctv" />
+                      <input type="checkbox" id="cctv" ref={cctv} />
                       <label htmlFor="cctv">CCTV</label>
-                      <input type="checkbox" id="intercom" />
+                      <input type="checkbox" id="intercom" ref={intercom} />
                       <label htmlFor="intercom">인터폰</label>
-                      <input type="checkbox" id="keycard" />
+                      <input type="checkbox" id="keycard" ref={keycard} />
                       <label htmlFor="keycard">카드키</label>
                     </td>
                   </tr>
@@ -623,17 +809,17 @@ const HouseRegist = () => {
                       <h3>기타 시설</h3>
                     </td>
                     <td className={classes.optionBox}>
-                      <input type="checkbox" id="elevator" />
+                      <input type="checkbox" id="elevator" ref={elevator} />
                       <label htmlFor="elevator">엘리베이터</label>
-                      <input type="checkbox" id="fireAlarm" />
+                      <input type="checkbox" id="fireAlarm" ref={fireAlarm} />
                       <label htmlFor="fireAlarm">화재경보기</label>
-                      <input type="checkbox" id="veranda" />
+                      <input type="checkbox" id="veranda" ref={veranda} />
                       <label htmlFor="veranda">베란다</label>
-                      <input type="checkbox" id="terrace" />
+                      <input type="checkbox" id="terrace" ref={terrace} />
                       <label htmlFor="terrace">테라스</label>
-                      <input type="checkbox" id="garden" />
+                      <input type="checkbox" id="garden" ref={garden} />
                       <label htmlFor="garden">마당</label>
-                      <input type="checkbox" id="parkingLot" />
+                      <input type="checkbox" id="parkingLot" ref={parkingLot} />
                       <label htmlFor="parkingLot">주차장</label>
                     </td>
                   </tr>
@@ -668,6 +854,7 @@ const HouseRegist = () => {
                     <td>
                       <textarea
                         className={classes.detailDescInput}
+                        ref={description}
                         placeholder="방 구조, 교통, 주변 편의시설 등 구체적인 방 정보를 작성해 주세요."
                       ></textarea>
                     </td>

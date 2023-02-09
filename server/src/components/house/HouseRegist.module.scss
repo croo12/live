@@ -155,7 +155,7 @@
 
         .mainAddress {
           box-sizing: border-box;
-          width: 200px;
+          width: 280px;
           height: 40px;
           background: #fafafa;
           border: 1px solid #bbbbbb;
@@ -164,7 +164,7 @@
           margin: 4px;
 
           @media (max-width: 1024px) {
-            width: calc(200 * 0.1vw);
+            width: calc(280 * 0.1vw);
             height: calc(40 * 0.1vw);
             margin: calc(4 * 0.1vw);
             padding: calc(8 * 0.1vw);
