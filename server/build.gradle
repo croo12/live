@@ -4,6 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
+//applicationDefaultJvmArgs = ["-Dkms.url=ws://i8b104.p.ssafy.io:8888/kurento"]
 group = 'com.ssafy'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'

@@ -33,7 +33,7 @@ public class RoomManager {
 
   private final Logger log = LoggerFactory.getLogger(RoomManager.class);
 
-  @Autowired
+//  @Autowired
   private KurentoClient kurento;
 
   private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
