@@ -49,7 +49,7 @@ const HouseCardContent = (props) => {
 
 export default HouseCardContent;
 
-//통화 페이지용 컨텐트
+//통화 페이지용
 export const ConsultingHouseCardContent = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ export const ConsultingHouseCardContent = (props) => {
             <p> 대전 서구 갈마로... </p>
           </div>
           <div className={classes.rightBox}>
-            <img src={sample} alt={"토토로"}></img>
+            <img src={sample} alt={"토토로"} />
           </div>
         </div>
         <div className={classes.downCard}>
@@ -103,7 +103,7 @@ export const ConsultingHouseCardContent = (props) => {
   );
 };
 
-//예약 페이지용 하우스 카드 컨텐트
+//예약 매물 리스트용
 export const ReservationHouseCardContent = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -125,7 +125,7 @@ export const ReservationHouseCardContent = (props) => {
   };
 
   return (
-    <div className={classes.reservationItem}>
+    <div onClick={() => {props.setHighlightEventHandler(props.idx)}} className={`${classes.reservationItem}` `${props.highlightNumber === props.idx ? classes.active : ""}`}>
       <div className={classes.image}>
         <img src={sample} alt="선택한 매물 목록" />
       </div>
@@ -144,20 +144,38 @@ export const ReservationHouseCardContent = (props) => {
   );
 };
 
-export const RealtorHousesCardContent = (props) => {
-  const house = props;
+//중개사 상세에 나오는 매물카드
+export const RealtorHousesCardContent = ({
+  itemNo,
+  imageSrc,
+  deposit,
+  monthlyRent,
+  address,
+}) => {
+  const [isModal, toggleModal] = useState(false);
+
+  const onConfirm = () => {
+    toggleModal(!isModal);
+  };
 
   return (
     <div className={classes.houseItem}>
       <div className={classes.houseImg}>
-        <img src={house.image} alt={house.address} />
+        <img src={imageSrc} alt={address} />
       </div>
       <div className={classes.houseInfo}>
-        <h3>{house.price}</h3>
-        <p>{house.area}</p>
-        <p>{house.address}</p>
-        <button>매물 상세보기 </button>
+        <h3>
+          월세 {deposit}/ {monthlyRent}
+        </h3>
+        <p>{`area`}</p>
+        <p>{address}</p>
+        <button onClick={onConfirm}>매물 상세보기 </button>
       </div>
+      {isModal && (
+        <Modal onConfirm={onConfirm}>
+          <HouseDetailCom houseId={itemNo} />
+        </Modal>
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./Card";
 import classes from "./ListBox.module.scss";
 
-const ListBox = ({ dataArray, children, direction, toStart }) => {
+const ListBox = ({ dataArray, children, direction, toStart, active }) => {
   /**
    * 1. 배열과 컴포넌트(contextBox)를 props로 받는다.
    * 2. contextBox를 <Card>와 <li>로 감싼다.
@@ -25,7 +25,9 @@ const ListBox = ({ dataArray, children, direction, toStart }) => {
             dataArray.map((element, idx) => {
               return (
                 <li key={idx}>
-                  <Card>{React.cloneElement(children, element)}</Card>
+                  <Card>
+                    {React.cloneElement(children, { ...element, idx })}
+                  </Card>
                 </li>
               );
             })}

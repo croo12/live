@@ -1,9 +1,8 @@
 import { useState } from "react";
 import ListBox from "../UI/ListBox";
-import { REALTOR_STATUS, USER_STATUS } from "../pages/ConsultingPage";
+import { REALTOR_STATUS } from "../pages/ConsultingPage";
 import { ConsultingHouseCardContent } from "./HouseCardContent";
 import { ConsultingReservationCardContent } from "./ReservationCardContent";
-import Button from "../UI/Button";
 import { useNavigate } from "react-router-dom";
 import HouseDetailCom from "./HouseDetailCom";
 import classes from "./ConsultingRightBox.module.scss";

@@ -2,7 +2,6 @@ import ReservationRealtorInfo from "./ReservationRealtorInfo";
 import classes from "./ReservationRightDiv.module.scss";
 
 const ReservationRightDiv = ({ realtorDetail }) => {
-  console.log(realtorDetail);
   return (
     <div className={classes.rightContainer}>
       <h2>상세정보</h2>

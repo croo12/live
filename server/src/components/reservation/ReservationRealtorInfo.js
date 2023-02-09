@@ -7,10 +7,7 @@ import { FiMapPin } from "react-icons/fi";
 import { BsTelephone } from "react-icons/bs";
 import { RealtorHousesCardContent } from "../HouseCardContent";
 
-const ReservationRealtorInfo = ({ realtorDetail }) => {
-  // const [items, setItems] = useState(DUMMY_HOUSE_DATA);
-  const [reviews, setReviews] = useState([1, 4, 5]);
-
+const ReservationRealtorInfo = ({ realtorDetail, addItemHandler }) => {
   const realtorInfo = realtorDetail.realtorInfo;
   const reviewsList = realtorDetail.reviewsList;
 
@@ -23,10 +20,10 @@ const ReservationRealtorInfo = ({ realtorDetail }) => {
           </div>
           <div>
             <h3> {realtorInfo.corp} </h3>
-            <p>
+            <p className={classes.name}>
               {realtorInfo.name} <span>공인중개사</span>
             </p>
-            <p>{realtorInfo.description}</p>
+            <p className={classes.description}>{realtorInfo.description}</p>
             <p>
               <FiMapPin /> {realtorInfo.businessAddress}
             </p>
@@ -39,7 +36,7 @@ const ReservationRealtorInfo = ({ realtorDetail }) => {
           <h3>매물 목록</h3>
           {realtorDetail.itemsList?.length ? (
             <ListBox dataArray={realtorDetail.itemsList}>
-              <RealtorHousesCardContent />
+              <RealtorHousesCardContent addItemHandler={addItemHandler} />
             </ListBox>
           ) : (
             <p>이 중개사는 현재 거래 가능한 매물이 없습니다!</p>

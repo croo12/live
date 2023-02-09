@@ -208,23 +208,43 @@
 }
 
 //reservation card content
-
 .realtorReservationCard {
   border: 1px solid rgba(187, 187, 187, 1);
+  border-radius: 12px;
+
+  width: 34vw;
+  height: 14vh;
+
+  cursor: pointer;
+
+  &.isActive {
+    border-width: 2px   ;
+    border-color: #30d08b;
+  }
 
   display: flex;
 
   .leftImg {
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: calc(30%);
+    margin-right: (4%);
+
     > img {
       width: 72px;
       height: 72px;
+
+      border-radius: 70%;
     }
   }
 
   .rightBox {
 
     flex: auto;
+    width: calc(66%);
 
     h4 {
       > span {

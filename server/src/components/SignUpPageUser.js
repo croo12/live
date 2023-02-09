@@ -104,11 +104,6 @@ const SignUpPageUser = () => {
   const joinUser = async (e) => {
     e.preventDefault();
 
-    // if (!previewProfile) {
-    //   alert(`프로필이 등록되지 않았습니다!!`);
-    //   return;
-    // }
-
     if (!userId || userIdError || idDuplicateError !== 1) {
       alert(`현재 입력하신 아이디는 사용할 수 없는 아이디입니다`);
       return;

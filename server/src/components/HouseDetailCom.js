@@ -5,8 +5,15 @@ import tempImage4 from "../assets/image/MainPicture.png";
 import CarouselTemp from "./house/CarouselTemp";
 import Map from "../UI/Map";
 import Icons from "../assets/Icons";
+import { useDispatch } from "react-redux";
+import { reservedItemAction } from "../store/reserved-item-slice";
+import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 
 const HouseDetailCom = (props) => {
+  //예약 아이템 추가하기
+  const dispatch = useDispatch();
+
   // 캐러셀 설정 값
   const carouselSettings = {
     dots: true,
@@ -43,6 +50,9 @@ const HouseDetailCom = (props) => {
     { imgSrc: tempImage2 },
   ];
 
+  //상상속의 하우스 자료
+  const [houseInfo, setHouseInfo] = useState({});
+
   const seeMore = () => {
     document.getElementById("moreInfoBtn").style.display = "none";
     document.getElementById("houseInfo").style.display = "";
@@ -56,7 +66,7 @@ const HouseDetailCom = (props) => {
   // 등록 번호 같은거 필요
   // 유저 입장 -> 매물 검색으로 접근 -> 동일 매물에 여러 중개사가 있는 경우 ->
   return (
-    <div>
+    <div style={{ overflow: "scroll" }}>
       <div>
         <p> 사진보기 컴포넌트 -&gt; 유저가 매물 검색으로 들어갔을 때만 </p>
         <div
@@ -79,7 +89,13 @@ const HouseDetailCom = (props) => {
         <p> 계약버튼, 담기 -&gt; 유저만 </p>
         <div>
           <button>계약</button>
-          <button>담기</button>
+          <button
+            onClick={() => {
+              dispatch(reservedItemAction.addItem(houseInfo));
+            }}
+          >
+            담기
+          </button>
           <button>수정</button>
         </div>
         <hr />

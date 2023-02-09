@@ -114,17 +114,25 @@ export const ReservationRealtorCardContent = ({
   starNum, //별점 평균
   contactCnt,
   clickEventHandler,
+  highlight,
+  setHighlight,
 }) => {
+  console.log(idx);
   return (
     <div
-      className={`${classes.realtorReservationCard}`}
-      onClick={() => clickEventHandler(realtorNo)}
+      className={`${classes.realtorReservationCard} ${
+        highlight === idx ? classes.isActive : ""
+      }`}
+      onClick={() => {
+        clickEventHandler(realtorNo);
+        setHighlight(idx);
+      }}
     >
-      <div className={classes.leftBox}>
-        <div className={classes.leftImg}>
-          <img src={imageSrc} alt="realtor-profile" />
-        </div>
+      {/* <div className={classes.leftBox}> */}
+      <div className={classes.leftImg}>
+        <img src={imageSrc} alt="realtor-profile" />
       </div>
+      {/* </div> */}
       <div className={classes.rightBox}>
         <div className={classes.upCard}>
           <h4>

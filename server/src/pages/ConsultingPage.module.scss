@@ -9,11 +9,22 @@
 
   max-height: 48vw;
 
+  .lists {
+    flex: 3;
+
+    background-color: #022f1c;
+
+    max-width: 480px;
+
+    
+  }
+
   @media (max-width: 768px) {
     //모바일 기준
     flex-direction: column;
     height: 142vw;
     max-height: 142vw;
+    
     
 
     .lists{
@@ -26,12 +37,12 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(255, 255, 255, 0.8);
+      // background-color: rgba(255, 255, 255, 0.8);
       z-index: 3;
 
       width: 100%;
       height: 10vw;
-
+      max-width: 100%;
       
       color: white;
       
@@ -82,13 +93,5 @@
     }
   }
 
-  .lists {
-    flex: 3;
-
-    background-color: #022f1c;
-
-    max-width: 480px;
-
-    
-  }
+  
 }

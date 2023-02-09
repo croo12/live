@@ -1,12 +1,17 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { reservedItemAction } from "../../store/reserved-item-slice";
 import ListBox from "../../UI/ListBox";
-import RealtorCardContent, {
-  DUMMY,
-  ReservationRealtorCardContent,
-} from "../RealtorCardContent";
+import { ReservationRealtorCardContent } from "../RealtorCardContent";
 import classes from "./ReservationLeftDiv.module.scss";
 
 const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
-  console.log(realtors);
+  const [highlight, setHighlight] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(reservedItemAction.clearItem());
+  }, [highlight]);
 
   return (
     <div className={classes.leftContainer}>
@@ -16,6 +21,8 @@ const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
           <ListBox dataArray={realtors}>
             <ReservationRealtorCardContent
               clickEventHandler={clickEventHandler}
+              highlight={highlight}
+              setHighlight={setHighlight}
             />
           </ListBox>
         ) : (

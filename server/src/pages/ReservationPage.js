@@ -5,7 +5,7 @@ import ListBox from "../UI/ListBox";
 import ReservationSearchBox from "../components/reservation/ReservationSearchBox";
 import { useEffect, useRef, useState } from "react";
 
-// import sample from "../assets/image/sample.jpg";
+import { useSelector } from "react-redux";
 
 import classes from "./ReservationPage.module.scss";
 import { FiAlertCircle } from "react-icons/fi";
@@ -31,9 +31,12 @@ const ReservationPage = () => {
   const [realtorList, setRealtorList] = useState([]);
   const [realtorDetail, setRealtorDetail] = useState(null);
 
-  //리덕스로 수정하는 것도 염두에 둘 수 있음
-  const [selectedItems, addItem] = useState([]);
+  //예약 목록
+  const selectedItems = useSelector((state) => {
+    return state.reserve.selectedItems;
+  });
 
+  //중개사 세부 소환
   const clickRealtorEventHandler = (realtorNo) => {
     const params = {};
 
@@ -47,14 +50,12 @@ const ReservationPage = () => {
 
     (async () => {
       const { data } = await searchReservationRealtorDetail(realtorNo, params);
-      console.log(data);
       setRealtorDetail(data.data);
     })();
   };
 
+  //reserveData 변경
   const clickSearchEventHandler = (sido, gugun, dong, date) => {
-    // console.log(sido, gugun, dong, date);
-
     if (!sido) {
       alert(`광역시도는 반드시 입력해야 합니다!`);
     } else if (!date) {
@@ -64,6 +65,7 @@ const ReservationPage = () => {
     }
   };
 
+  //중개사 리스트 검색
   useEffect(() => {
     if (!isMount.current) {
       isMount.current = true;
@@ -97,6 +99,9 @@ const ReservationPage = () => {
     })();
   }, [reserveData]);
 
+  //예약 ㄱㄱ
+  const registReservationHandler = () => {};
+
   return (
     <>
       <div className={classes.reserveHeader}>
@@ -122,8 +127,16 @@ const ReservationPage = () => {
       <div className={classes.listBox}>
         <h2>내가 선택한 매물</h2>
         <div className={classes.list}>
-          <ListBox dataArray={selectedItems} direction={true} toStart={true}>
-            <ReservationHouseCardContent />
+          <ListBox
+            dataArray={selectedItems.length === 0 ? [1] : selectedItems}
+            direction={true}
+            toStart={true}
+          >
+            {selectedItems.length === 0 ? (
+              <NullCard />
+            ) : (
+              <ReservationHouseCardContent />
+            )}
           </ListBox>
         </div>
       </div>
@@ -161,6 +174,10 @@ const ReservationPage = () => {
 };
 
 export default ReservationPage;
+
+const NullCard = () => {
+  return <div className={classes.nullCard}>선택한 매물이 없어요</div>;
+};
 
 export const sidoLoader = async () => {
   try {
