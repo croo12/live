@@ -1,5 +1,7 @@
 package com.ssafy.live.common.service;
 
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.SMSContent;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -35,9 +37,13 @@ public class SMSService {
 //    @Value(value = "${sms-calling-number}")
 //    private static String callingNumber;
 
-    public static void sendSMS(Long no, SMSContent smsContent, String phone){
-        String content = no + " " + smsContent.getMessage();
-        sendSMS(content, phone);
+    public static void sendSMS(Long no, SMSContent smsContent, Realtor realtor){
+        String content = realtor.getName()+"님 "+smsContent.getMessage()+"("+no+")";
+        sendSMS(content, realtor.getPhone());
+    }
+    public static void sendSMS(Long no, SMSContent smsContent, Users user){
+        String content = user.getName()+"님 "+smsContent.getMessage()+"("+no+")";
+        sendSMS(content, user.getPhone());
     }
     public static void sendSMS(String content, String phone) {
         String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
@@ -121,7 +127,6 @@ public class SMSService {
     private static String makeSignature(String url, String timestamp, String method, String accessKey, String secretKey) throws NoSuchAlgorithmException, InvalidKeyException {
         String space = " ";                    // one space
         String newLine = "\n";                 // new line
-
 
         String message = method +
                 space +

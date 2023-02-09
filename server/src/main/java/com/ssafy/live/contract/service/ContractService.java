@@ -69,8 +69,8 @@ public class ContractService {
                 .build();
         contractRepository.save(contract);
 
-        SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers().getPhone());
-        SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor().getPhone());
+        //SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
+        //SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor());
 
         return response.success("계약신청이 완료되었습니다.", HttpStatus.OK);
     }
@@ -128,8 +128,7 @@ public class ContractService {
         itemRepository.save(item);
         contractRepository.save(contract);
 
-        SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers().getPhone());
-
+        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
         return response.success("계약 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
@@ -138,7 +137,7 @@ public class ContractService {
         contract.approve();
         contractRepository.save(contract);
 
-        SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers().getPhone());
+        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
 
         return response.success("계약이 승인되었습니다.", HttpStatus.OK);
     }
@@ -148,8 +147,8 @@ public class ContractService {
         contract.complete();
         contractRepository.save(contract);
 
-        SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getUsers().getPhone());
-        SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getRealtor().getPhone());
+        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getUsers());
+        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getRealtor());
         return response.success("계약 체결이 완료되었습니다.", HttpStatus.OK);
     }
 }

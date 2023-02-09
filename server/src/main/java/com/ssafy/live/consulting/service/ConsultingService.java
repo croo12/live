@@ -85,7 +85,7 @@ public class ConsultingService {
                     consultingItemRepository.save(consultingItem);
                 });
 
-        SMSService.sendSMS(consulting.getNo(), SMSContent.NEW_CONSULTING, consulting.getUsers().getPhone());
+        //SMSService.sendSMS(consulting.getNo(), SMSContent.NEW_CONSULTING, consulting.getUsers());
         return response.success("예약이 완료되었습니다.", HttpStatus.OK);
     }
 
@@ -176,7 +176,7 @@ public class ConsultingService {
                 .build();
         noticeRepository.save(notice);
 
-        SMSService.sendSMS(consulting.getNo(), smsContent, consulting.getUsers().getPhone());
+        //SMSService.sendSMS(consulting.getNo(), smsContent, consulting.getUsers());
 
         return response.success("예약상태가 변경되었습니다.", HttpStatus.OK);
     }
@@ -234,7 +234,7 @@ public class ConsultingService {
                 .build();
         noticeRepository.save(notice);
 
-        SMSService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers().getPhone());
+        //SMSService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers());
 
         return response.success("상담 매물 수정이 완료되었습니다.", HttpStatus.OK);
     }
