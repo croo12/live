@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import classes from "./SignUpPageUser.module.scss";
 import ImageInput from "./common/ImageInput";
 import blankImage from "../assets/image/blank_profile.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../util/axios";
 
 const SignUpPageUser = () => {
+  const navigation = useNavigate();
+
   const [userId, setUserId] = useState("");
   const [userPass, setUserPass] = useState("");
   const [userPassCheck, setUserPassCheck] = useState("");
@@ -23,10 +25,6 @@ const SignUpPageUser = () => {
 
   const formData = useRef();
 
-  // const onChange = (e) => {
-  //   console.log(e.target.value.user_id);
-  // };
-
   const onChangeUserId = (e) => {
     if (e.target.value.length > 16 || e.target.value.length < 3)
       setUserIdError(true);
@@ -40,7 +38,7 @@ const SignUpPageUser = () => {
       const result = await axiosInstance.post("users/id", { id: userId });
       console.log(result);
 
-      if (!userId || result.data.massage === "중복된 아이디입니다") {
+      if (!userId || result.data.massage === "이미 사용 중인 아이디입니다.") {
         setIdDuplicateError(-1);
       } else {
         setIdDuplicateError(1);
@@ -130,23 +128,28 @@ const SignUpPageUser = () => {
       email: userEmail,
       name: formData.current.userName.value,
       phone: formData.current.userPhone.value,
-      region: "bbb",
-      gender: "male",
+      region: "봉명동",
+      gender: "남",
     };
 
     const frm = new FormData();
 
-    frm.append("file", profile, "test.png");
+    frm.append("file", profile);
     frm.append(
       "SignUp",
       new Blob([JSON.stringify(joinData)], { type: "application/json" })
     );
 
-    axiosInstance.post("users", frm, {
-      // headers: {
-      //   "Content-Type": "multipart/form-data",
-      // },
-    });
+    try {
+      const result = await axiosInstance.post("users", frm);
+      if (result) {
+        alert(`회원가입 성공`);
+
+        navigation("/");
+      }
+    } catch (error) {
+      console.error(`회원가입 과정에서 에러가 발생`, error);
+    }
   };
 
   return (

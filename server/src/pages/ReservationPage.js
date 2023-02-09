@@ -11,6 +11,7 @@ import classes from "./ReservationPage.module.scss";
 import { FiAlertCircle } from "react-icons/fi";
 import { useLoaderData } from "react-router-dom";
 import axiosInstance from "../util/axios";
+import { searchRealtorList } from "../apis/reservationApis";
 
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
@@ -23,11 +24,13 @@ const ReservationPage = () => {
   const isMount = useRef(false);
 
   const sidos = useLoaderData().data.data;
-  // const gugun = useState([]);
-  // const dong = useState([]);
+
+  const [realtorList, setRealtorList] = useState([]);
 
   //리덕스로 수정하는 것도 염두에 둘 수 있음
   const [selectedItems, addItem] = useState([]);
+
+  const clickRealtorEventHandler = () => {};
 
   const clickSearchEventHandler = (sido, gugun, dong, date) => {
     console.log(sido, gugun, dong, date);
@@ -54,6 +57,7 @@ const ReservationPage = () => {
       console.log(`sido is nothing...`);
       return;
     }
+
     if (!reserveData.gugun) {
       params[`regionCode`] = reserveData.sido.substring(0, 2);
     } else if (!reserveData.dong) {
@@ -64,11 +68,11 @@ const ReservationPage = () => {
 
     (async () => {
       try {
-        const result = await axiosInstance.get("realtors/region", { params });
-
+        const result = await searchRealtorList(params);
         console.log(result);
+        setRealtorList(result.data.data);
       } catch (err) {
-        throw new Error(err);
+        console.error(err);
       }
     })();
   }, [reserveData]);
@@ -88,7 +92,7 @@ const ReservationPage = () => {
       </div>
 
       <div className={classes.content}>
-        <ReservationLeftDiv />
+        <ReservationLeftDiv realtors={realtorList} />
         <ReservationRightDiv />
       </div>
 
