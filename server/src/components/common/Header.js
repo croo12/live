@@ -61,6 +61,16 @@ const Header = () => {
               회원가입
             </NavLink>
           </li>
+          <li>
+            <NavLink to={"/alert"} onClick={isToggled && isToggledHandler}>
+              알람
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/contract"} onClick={isToggled && isToggledHandler}>
+              계약
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>
