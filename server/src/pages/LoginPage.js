@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
-import {userLoginApi, userLogout} from "../apis/userApis";
-import {realtorLoginApi} from "../apis/realtorApis";
+import {userLogin, logout, realtorLogin} from "../apis/MemberService";
 import classes from "./LoginPage.module.scss";
+
 
 const LoginPage = () => {
   const [loginMode, setLoginMode] = useState("USER"); // 로그인 모드 상태 확인 ( USER , REALTOR )
@@ -25,9 +25,10 @@ const LoginPage = () => {
     frm.append("id", userLoginInfo.id);
     frm.append("password", userLoginInfo.password);
 
-    //userLoginApi(frm).then((result)=>console.log(result))
-    userLogout().then((result)=>{console.log(result)})
-    navigation(-1);
+    const result = userLogin(frm);
+    console.log(result)
+    navigation("/");
+    this.updateForce();
   };
 
   const realtorLoginHandler = async (realtorLoginInfo) => {
@@ -38,7 +39,9 @@ const LoginPage = () => {
 
     // console.log(realtorLoginInfo); // 중개사회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
-    realtorLoginApi(frm).then((result)=>console.log(result))
+    realtorLogin(frm).then((result)=>console.log(result))
+    navigation("/");
+    this.updateForce();
   };
 
   return (
