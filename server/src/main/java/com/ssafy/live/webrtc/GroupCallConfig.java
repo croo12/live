@@ -44,10 +44,10 @@ public class GroupCallConfig implements WebSocketConfigurer {
         return new CallHandler();
     }
 
-//    @Bean
-//    public KurentoClient kurentoClient() {
-//        return KurentoClient.create();
-//    }
+    @Bean
+    public KurentoClient kurentoClient() {
+        return KurentoClient.create();
+    }
     
     @Bean
     public ServletServerContainerFactoryBean createServletServerContainerFactoryBean() {

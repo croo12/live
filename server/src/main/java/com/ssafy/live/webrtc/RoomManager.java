@@ -33,7 +33,7 @@ public class RoomManager {
 
   private final Logger log = LoggerFactory.getLogger(RoomManager.class);
 
-//  @Autowired
+  @Autowired
   private KurentoClient kurento;
 
   private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
@@ -47,7 +47,7 @@ public class RoomManager {
    *         accessed
    */
   public Room getRoom(String roomName) {
-    if(kurento==null) kurento = KurentoClient.create();
+//    if(kurento==null) kurento = KurentoClient.create();
 
     log.debug("Searching for room {}", roomName);
     Room room = rooms.get(roomName);
