@@ -7,7 +7,9 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ContractStatus;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.BadRequestException;
+import com.ssafy.live.common.domain.SMSContent;
+import com.ssafy.live.common.exception.BadRequestException;
+import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.contract.controller.dto.ContractRequest;
 import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import com.ssafy.live.contract.controller.dto.ContractResponse;
@@ -28,7 +30,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.ssafy.live.common.domain.exception.ErrorCode.*;
+import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -66,6 +68,10 @@ public class ContractService {
             .termOfContract(regist.getTermOfContract())
                 .build();
         contractRepository.save(contract);
+
+        SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers().getPhone());
+        SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor().getPhone());
+
         return response.success("계약신청이 완료되었습니다.", HttpStatus.OK);
     }
 
@@ -121,6 +127,9 @@ public class ContractService {
         contract.updateInfo(update.getMoveOnDate(), update.getTermOfContract(), update.getSpecialContract(), update.getCommission(), item.getDeposit());
         itemRepository.save(item);
         contractRepository.save(contract);
+
+        SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers().getPhone());
+
         return response.success("계약 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
@@ -128,6 +137,9 @@ public class ContractService {
         Contract contract = contractRepository.findById(contractNo).get();
         contract.approve();
         contractRepository.save(contract);
+
+        SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers().getPhone());
+
         return response.success("계약이 승인되었습니다.", HttpStatus.OK);
     }
 
@@ -135,6 +147,9 @@ public class ContractService {
         Contract contract = contractRepository.findById(contractNo).get();
         contract.complete();
         contractRepository.save(contract);
+
+        SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getUsers().getPhone());
+        SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getRealtor().getPhone());
         return response.success("계약 체결이 완료되었습니다.", HttpStatus.OK);
     }
 }

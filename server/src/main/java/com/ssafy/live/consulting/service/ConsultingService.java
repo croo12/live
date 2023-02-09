@@ -7,7 +7,9 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ConsultingStatus;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.BadRequestException;
+import com.ssafy.live.common.domain.SMSContent;
+import com.ssafy.live.common.exception.BadRequestException;
+import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
@@ -34,7 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static com.ssafy.live.common.domain.exception.ErrorCode.*;
+import static com.ssafy.live.common.domain.SMSContent.CONSULTING_CONFIRMED;
+import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -76,6 +79,7 @@ public class ConsultingService {
                     consultingItemRepository.save(consultingItem);
                 });
 
+        SMSService.sendSMS(consulting.getNo(), SMSContent.NEW_CONSULTING, consulting.getUsers().getPhone());
         return response.success("예약이 완료되었습니다.", HttpStatus.OK);
     }
 
@@ -145,6 +149,7 @@ public class ConsultingService {
         consultingRepository.save(consulting);
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         String writer, info;
+        SMSContent smsContent;
         if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             writer = consulting.getRealtor().getName();
         } else {
@@ -152,8 +157,10 @@ public class ConsultingService {
         }
         if(request.getStatus()==ConsultingStatus.CONSULTING_CONFIRMED.getValue()) {
             info = "예약이 확정되었습니다.";
+            smsContent = SMSContent.CONSULTING_CONFIRMED;
         } else {
             info = "예약이 취소되었습니다.";
+            smsContent = SMSContent.CONSULTING_CANCEL;
         }
         Notice notice = Notice.builder()
                 .users(consulting.getUsers())
@@ -162,6 +169,9 @@ public class ConsultingService {
                 .noticeWriter(writer)
                 .build();
         noticeRepository.save(notice);
+
+        SMSService.sendSMS(consulting.getNo(), smsContent, consulting.getUsers().getPhone());
+
         return response.success("예약상태가 변경되었습니다.", HttpStatus.OK);
     }
 
@@ -217,6 +227,9 @@ public class ConsultingService {
                 .noticeWriter(consulting.getRealtor().getName())
                 .build();
         noticeRepository.save(notice);
+
+        SMSService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers().getPhone());
+
         return response.success("상담 매물 수정이 완료되었습니다.", HttpStatus.OK);
     }
 }

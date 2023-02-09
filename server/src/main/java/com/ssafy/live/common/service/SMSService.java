@@ -1,5 +1,6 @@
 package com.ssafy.live.common.service;
 
+import com.ssafy.live.common.domain.SMSContent;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,10 +35,11 @@ public class SMSService {
     @Value("${sms-calling-number}")
     private static String callingNumber;
 
-    public static void sendSMS(String content, String phone) {
+    public static void sendSMS(Long no, SMSContent smsContent, String phone) {
         String method = "POST";                                            // 요청 method
         String timestamp = Long.toString(System.currentTimeMillis());    // current timestamp (epoch)
         String apiUrl = hostNameUrl + requestUrl + serviceId + requestUrlType;
+        String content = no + " " + smsContent.getMessage();
 
         // JSON 을 활용한 body data 생성
         JSONObject bodyJson = new JSONObject();
@@ -103,7 +105,6 @@ public class SMSService {
             log.debug(String.valueOf(e));
         }
     }
-
 
     private static String makeSignature(String url, String timestamp, String method, String accessKey, String secretKey) throws NoSuchAlgorithmException, InvalidKeyException {
         String space = " ";                    // one space

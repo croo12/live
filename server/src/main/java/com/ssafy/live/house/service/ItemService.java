@@ -5,7 +5,7 @@ import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.BadRequestException;
+import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.house.controller.dto.ItemRequest;
 import com.ssafy.live.house.controller.dto.ItemResponse;
 import com.ssafy.live.house.domain.entity.House;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static com.ssafy.live.common.domain.exception.ErrorCode.*;
+import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service
