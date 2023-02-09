@@ -37,12 +37,12 @@ public class ConsultingController {
     }
 
     @GetMapping("/{consultingNo}")
-    public ResponseEntity<?> detailReservation(@RequestHeader(AUTHORIZATION) String token, @PathVariable Long consultingNo) {
-        return consultingService.detailReservation(token, consultingNo);
+    public ResponseEntity<?> detailReservation(@PathVariable Long consultingNo) {
+        return consultingService.detailReservation(consultingNo);
     }
 
     @PostMapping("/{consultingNo}/items")
-    public ResponseEntity<?> addConsultingItems(@RequestHeader(AUTHORIZATION) String token, @PathVariable Long consultingNo, @RequestBody ConsultingRequest.AddItem addItem)  {
-        return consultingService.addConsultingItems(token, consultingNo, addItem);
+    public ResponseEntity<?> addConsultingItems(@PathVariable Long consultingNo, @RequestBody ConsultingRequest.AddItem addItem)  {
+        return consultingService.addConsultingItems(consultingNo, addItem);
     }
 }

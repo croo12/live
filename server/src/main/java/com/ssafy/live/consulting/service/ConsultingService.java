@@ -51,9 +51,6 @@ public class ConsultingService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public ResponseEntity<?> reserve(String token, ConsultingRequest.Reserve reserve) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         Users users = usersRepository.findById(authentication.getName())
             .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
@@ -83,9 +80,6 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?>  reservationListByRealtor(String token, int status) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
@@ -144,9 +138,6 @@ public class ConsultingService {
    }
 
     public ResponseEntity<?> changeStatus(String token, ConsultingRequest.ChangeStatus request) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Consulting consulting = consultingRepository.findById(request.getCounsultingNo())
             .orElseThrow(() -> new NotFoundException(CONSULTING_NOT_FOUND));
 
@@ -178,10 +169,7 @@ public class ConsultingService {
         return response.success("목록이 존재하지 않습니다.", HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<?> detailReservation(String token, Long consultingNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> detailReservation(Long consultingNo) {
         Consulting consulting = consultingRepository.findById(consultingNo).get();
         if(consulting == null) {
             return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
@@ -198,10 +186,7 @@ public class ConsultingService {
         return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> addConsultingItems(String token, Long consultingNo, AddItem addItem) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> addConsultingItems(Long consultingNo, AddItem addItem) {
         Set<Long> noList = addItem.getItemList();
         Consulting consulting = consultingRepository.findById(consultingNo).get();
 

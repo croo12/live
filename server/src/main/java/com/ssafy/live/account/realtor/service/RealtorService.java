@@ -127,10 +127,6 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> logout(RealtorRequest.Logout logout) {
-        if (!jwtTokenProvider.validateToken(logout.getAccessToken())) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
-
         Authentication authentication = jwtTokenProvider.getAuthentication(logout.getAccessToken());
 
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
@@ -145,10 +141,6 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> withdrawl(String token) {
-        if(!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
-
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         Optional<Realtor> realtor = realtorRepository.findByBusinessNumber(authentication.getName());
         if(realtor.isPresent()) {
@@ -229,9 +221,6 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> findRealtorList(@RequestHeader(AUTHORIZATION) String token, String orderBy) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         String region = "";
         if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {

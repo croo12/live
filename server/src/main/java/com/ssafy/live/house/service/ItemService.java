@@ -117,9 +117,6 @@ public class ItemService {
     }
 
     public ResponseEntity<?> itemsByBuildingName(String token, ItemRequest.ItemsByBuildingName request) {
-        if(!jwtTokenProvider.validateToken(token)) {
-            throw new UnauthorizedException(ACCESS_TOKEN_EXPIRED);
-        }
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
 
         List<ItemResponse.ItemsByBuildingName> list = new ArrayList<>();

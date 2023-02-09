@@ -16,8 +16,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<?> regist(@RequestHeader(AUTHORIZATION) String token, @RequestBody ReviewRequest.Regist regist) {
-        return reviewService.regist(token, regist);
+    public ResponseEntity<?> regist(@RequestBody ReviewRequest.Regist regist) {
+        return reviewService.regist(regist);
     }
 
     @GetMapping

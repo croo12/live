@@ -36,10 +36,7 @@ public class ReviewService {
     private final JwtTokenProvider jwtTokenProvider;
     private final Response response;
 
-    public ResponseEntity<?> regist(String token, ReviewRequest.Regist regist) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> regist(ReviewRequest.Regist regist) {
         Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
                         .orElseThrow(() -> new NotFoundException(REALTOR_NOT_FOUND));
         reviewRepository.save(Review.builder()
@@ -56,9 +53,6 @@ public class ReviewService {
     }
 
     public ResponseEntity<?> allReview(String token) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         List<ReviewResponse.Reviews> list;
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         List<Review> reviews;

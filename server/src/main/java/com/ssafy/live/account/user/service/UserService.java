@@ -112,10 +112,6 @@ public class UserService {
     }
 
     public ResponseEntity<?> logout(UserRequest.Logout logout) {
-        if (!jwtTokenProvider.validateToken(logout.getAccessToken())) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
-
         Authentication authentication = jwtTokenProvider.getAuthentication(logout.getAccessToken());
 
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
@@ -130,10 +126,6 @@ public class UserService {
     }
 
     public ResponseEntity<?> withdrawl(String token) {
-        if(!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
-
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         Optional<Users> users = usersRepository.findById(authentication.getName());
         if(users.isPresent()) {

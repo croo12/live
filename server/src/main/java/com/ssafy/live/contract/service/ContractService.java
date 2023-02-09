@@ -45,9 +45,6 @@ public class ContractService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public ResponseEntity<?> regist(String token, ContractRequest.Regist regist) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Users users = usersRepository.findById(regist.getUserNo())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
@@ -75,9 +72,6 @@ public class ContractService {
 
     public ResponseEntity<?> contractList(String token, int status) {
         ContractStatus contractStatus = ContractStatus.ofValue(status);
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         List<ContractResponse.ContractList> list = null;
         if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
@@ -107,9 +101,6 @@ public class ContractService {
     }
 
     public ResponseEntity<?> contractDetail(String token, Long contractNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Contract contract = contractRepository.findById(contractNo).get();
         List<ItemImage> itemImages = itemImageRepository.findByItem(contract.getItem());
         List<String> images = itemImages.stream().map((i)->i.getImageSrc()).collect(Collectors.toList());
@@ -125,9 +116,6 @@ public class ContractService {
     }
 
     public ResponseEntity<?> contractUpdate(String token, Update update, Long contractNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Contract contract = contractRepository.findById(contractNo).get();
         Item item = itemRepository.findById(contract.getItem().getNo()).get();
         item.updatePayment(update.getDeposit(), update.getRent(), update.getMaintenanceFee());
@@ -138,9 +126,6 @@ public class ContractService {
     }
 
     public ResponseEntity<?> contractApprove(String token, Long contractNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Contract contract = contractRepository.findById(contractNo).get();
         contract.approve();
         contractRepository.save(contract);
@@ -148,9 +133,6 @@ public class ContractService {
     }
 
     public ResponseEntity<?> contractComplete(String token, Long contractNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Contract contract = contractRepository.findById(contractNo).get();
         contract.complete();
         contractRepository.save(contract);
