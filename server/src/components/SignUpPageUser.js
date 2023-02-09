@@ -38,7 +38,7 @@ const SignUpPageUser = () => {
       const result = await axiosInstance.post("users/id", { id: userId });
       console.log(result);
 
-      if (!userId || result.data.massage === "중복된 아이디입니다") {
+      if (!userId || result.data.massage === "이미 사용 중인 아이디입니다.") {
         setIdDuplicateError(-1);
       } else {
         setIdDuplicateError(1);
@@ -128,13 +128,13 @@ const SignUpPageUser = () => {
       email: userEmail,
       name: formData.current.userName.value,
       phone: formData.current.userPhone.value,
-      region: "bbb",
-      gender: "male",
+      region: "봉명동",
+      gender: "남",
     };
 
     const frm = new FormData();
 
-    frm.append("file", profile, "test.png");
+    frm.append("file", profile);
     frm.append(
       "SignUp",
       new Blob([JSON.stringify(joinData)], { type: "application/json" })
