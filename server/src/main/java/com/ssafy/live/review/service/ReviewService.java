@@ -5,7 +5,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.NotFoundException;
+import com.ssafy.live.common.domain.exception.BadRequestException;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
 import com.ssafy.live.review.controller.dto.ReviewRequest;
 import com.ssafy.live.review.controller.dto.ReviewResponse;
@@ -38,7 +38,7 @@ public class ReviewService {
 
     public ResponseEntity<?> regist(ReviewRequest.Regist regist) {
         Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
-                        .orElseThrow(() -> new NotFoundException(REALTOR_NOT_FOUND));
+                        .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         reviewRepository.save(Review.builder()
                 .realtor(realtor)
                         .users(usersRepository.findById(regist.getUserNo()).get())

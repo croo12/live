@@ -7,7 +7,7 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ConsultingStatus;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.NotFoundException;
+import com.ssafy.live.common.domain.exception.BadRequestException;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
@@ -53,9 +53,9 @@ public class ConsultingService {
     public ResponseEntity<?> reserve(String token, ConsultingRequest.Reserve reserve) {
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         Users users = usersRepository.findById(authentication.getName())
-            .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+            .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         Realtor realtor = realtorRepository.findById(reserve.getRealtorNo())
-            .orElseThrow(() -> new NotFoundException(REALTOR_NOT_FOUND));
+            .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         Consulting consulting = Consulting.builder()
                 .realtor(realtor)
                 .users(users)
@@ -139,7 +139,7 @@ public class ConsultingService {
 
     public ResponseEntity<?> changeStatus(String token, ConsultingRequest.ChangeStatus request) {
         Consulting consulting = consultingRepository.findById(request.getCounsultingNo())
-            .orElseThrow(() -> new NotFoundException(CONSULTING_NOT_FOUND));
+            .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
             consulting.updateStatus(request.getStatus());
         consultingRepository.save(consulting);

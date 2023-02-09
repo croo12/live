@@ -5,8 +5,7 @@ import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.NotFoundException;
-import com.ssafy.live.common.domain.exception.UnauthorizedException;
+import com.ssafy.live.common.domain.exception.BadRequestException;
 import com.ssafy.live.house.controller.dto.ItemRequest;
 import com.ssafy.live.house.controller.dto.ItemResponse;
 import com.ssafy.live.house.domain.entity.House;
@@ -48,7 +47,7 @@ public class ItemService {
     public ResponseEntity<?> registItem(ItemRequest.ItemRegistRequest itemRegistRequest, List<MultipartFile> files) throws IOException {
 
         Realtor realtor = realtorRepository.findById(itemRegistRequest.getRealtorNo())
-                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
 
         Long houseNo = 0L;
         House house = null;
@@ -82,7 +81,7 @@ public class ItemService {
 
     public ResponseEntity<?> findItemDetail(Long itemNo) {
         Item item = itemRepository.findById(itemNo)
-                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
 
         ItemResponse.ItemDetailResponse itemDetailResponse = ItemResponse.ItemDetailResponse.toDto(item);
         return response.success(itemDetailResponse, "매물 상세 정보가 조회되었습니다.", HttpStatus.OK);
@@ -90,7 +89,7 @@ public class ItemService {
 
     public ResponseEntity<?> updateItemDetail(ItemRequest.ItemUpdateRequest itemUpdateRequest, List<MultipartFile> files) throws IOException {
         Item item = itemRepository.findById(itemUpdateRequest.getItemNo())
-                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
         Item updatedItem = itemUpdateRequest.toEntity();
 
         List<ItemImage> itemImages = itemImageRepository.findAllByItemNo(item.getNo());
@@ -121,7 +120,7 @@ public class ItemService {
 
         List<ItemResponse.ItemsByBuildingName> list = new ArrayList<>();
         Realtor realtor = realtorRepository.findByBusinessNumber(authentication.getName())
-                .orElseThrow(() -> new NotFoundException(REALTOR_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
 
         List<Item> items = itemRepository.findByRealtorLikeBuildingName(request.getWord(), realtor.getNo(), request.getRegionCode());
         items.stream()

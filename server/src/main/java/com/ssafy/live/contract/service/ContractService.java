@@ -8,7 +8,6 @@ import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ContractStatus;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.exception.BadRequestException;
-import com.ssafy.live.common.domain.exception.NotFoundException;
 import com.ssafy.live.contract.controller.dto.ContractRequest;
 import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import com.ssafy.live.contract.controller.dto.ContractResponse;
@@ -46,11 +45,11 @@ public class ContractService {
 
     public ResponseEntity<?> regist(String token, ContractRequest.Regist regist) {
         Users users = usersRepository.findById(regist.getUserNo())
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
-                .orElseThrow(() -> new NotFoundException(REALTOR_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         Item item = itemRepository.findById(regist.getItemNo())
-                .orElseThrow(() -> new NotFoundException(ITEM_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
         Contract contract = Contract.builder()
             .users(users)
             .realtor(realtor)

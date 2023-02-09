@@ -15,8 +15,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.exception.NotFoundException;
-import com.ssafy.live.common.domain.exception.UnauthorizedException;
+import com.ssafy.live.common.domain.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -42,7 +41,6 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.ssafy.live.common.domain.exception.ErrorCode.ACCESS_TOKEN_EXPIRED;
 import static com.ssafy.live.common.domain.exception.ErrorCode.REALTOR_NOT_FOUND;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -165,12 +163,12 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> findRealtorDetail(Long realtorNo) {
-        Realtor realtor = realtorRepository.findById(realtorNo).orElseThrow(()->new NotFoundException(REALTOR_NOT_FOUND));
+        Realtor realtor = realtorRepository.findById(realtorNo).orElseThrow(()->new BadRequestException(REALTOR_NOT_FOUND));
         return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> findRealtorDetailByRegion(Long realtorNo, String regionCode) {
-        Realtor realtor = realtorRepository.findById(realtorNo).orElseThrow(()->new NotFoundException(REALTOR_NOT_FOUND));
+        Realtor realtor = realtorRepository.findById(realtorNo).orElseThrow(()->new BadRequestException(REALTOR_NOT_FOUND));
         List<RealtorByRegionProjectionInterface> result = realtorRepository.findRealtorDetailByRegion(realtorNo, regionCode);
         List< Items > items= result.stream().map(item ->
                 RealtorResponse.FindAllDetail.Items.toEntity(item))
@@ -183,7 +181,7 @@ public class RealtorService {
 
     @Transactional
     public ResponseEntity<?> updateRealtor(Long realtorNo, RealtorRequest.Update request, MultipartFile file) throws IOException {
-        Realtor realtor = realtorRepository.findById(realtorNo).orElseThrow(()->new NotFoundException(REALTOR_NOT_FOUND));
+        Realtor realtor = realtorRepository.findById(realtorNo).orElseThrow(()->new BadRequestException(REALTOR_NOT_FOUND));
         String preImg = realtor.getImageSrc();
         if(file != null) {
             s3Service.deleteFile(preImg);
@@ -203,7 +201,7 @@ public class RealtorService {
     public ResponseEntity<?> temporaryPassword(RealtorRequest.FindPassword request) {
         Realtor realtor = realtorRepository.findByEmailAndBusinessNumber(request.getEmail(), request.getBusinessNumber());
         if(realtor == null) {
-            throw new NotFoundException(REALTOR_NOT_FOUND);
+            throw new BadRequestException(REALTOR_NOT_FOUND);
         }
         String temporaryPwd = realtor.generateRandomPassword();
         realtor.updatePassword(passwordEncoder.encode(temporaryPwd));
