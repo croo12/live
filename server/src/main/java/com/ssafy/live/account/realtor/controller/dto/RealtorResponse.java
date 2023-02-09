@@ -37,6 +37,7 @@ public class RealtorResponse {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class FindByRegion {
 
+        private Long realtorNo;
         private String name;
         private String phone;
         private String corp;
@@ -45,7 +46,8 @@ public class RealtorResponse {
         private String imageSrc;
 
         public static RealtorResponse.FindByRegion toEntity(Realtor r) {
-            return RealtorResponse.FindByRegion.builder()
+            return FindByRegion.builder()
+                .realtorNo(r.getNo())
                 .name(r.getName())
                 .phone(r.getPhone())
                 .corp(r.getCorp())
