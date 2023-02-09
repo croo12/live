@@ -38,7 +38,7 @@ const SignUpPageUser = () => {
       const result = await axiosInstance.post("users/id", { id: userId });
       console.log(result);
 
-      if (!userId || result.data.massage === "이미 사용 중인 아이디입니다.") {
+      if (!userId || !result.data.data) {
         setIdDuplicateError(-1);
       } else {
         setIdDuplicateError(1);

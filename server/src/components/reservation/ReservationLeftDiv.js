@@ -1,10 +1,12 @@
 import ListBox from "../../UI/ListBox";
-import RealtorCardContent, { DUMMY } from "../RealtorCardContent";
+import RealtorCardContent, {
+  DUMMY,
+  ReservationRealtorCardContent,
+} from "../RealtorCardContent";
 import classes from "./ReservationLeftDiv.module.scss";
 
-const ReservationLeftDiv = ({ realtors }) => {
-  //검색결과에 따라서 중개사 리스트가 나옴
-  // const [realtorList] = useState(DUMMY);
+const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
+  console.log(realtors);
 
   return (
     <div className={classes.leftContainer}>
@@ -12,7 +14,9 @@ const ReservationLeftDiv = ({ realtors }) => {
       <div>
         {realtors?.length ? (
           <ListBox dataArray={realtors}>
-            <RealtorCardContent />
+            <ReservationRealtorCardContent
+              clickEventHandler={clickEventHandler}
+            />
           </ListBox>
         ) : (
           <ul>

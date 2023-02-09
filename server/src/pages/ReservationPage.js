@@ -11,7 +11,10 @@ import classes from "./ReservationPage.module.scss";
 import { FiAlertCircle } from "react-icons/fi";
 import { useLoaderData } from "react-router-dom";
 import axiosInstance from "../util/axios";
-import { searchRealtorList } from "../apis/reservationApis";
+import {
+  searchRealtorList,
+  searchReservationRealtorDetail,
+} from "../apis/reservationApis";
 
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
@@ -26,14 +29,31 @@ const ReservationPage = () => {
   const sidos = useLoaderData().data.data;
 
   const [realtorList, setRealtorList] = useState([]);
+  const [realtorDetail, setRealtorDetail] = useState(null);
 
   //리덕스로 수정하는 것도 염두에 둘 수 있음
   const [selectedItems, addItem] = useState([]);
 
-  const clickRealtorEventHandler = () => {};
+  const clickRealtorEventHandler = (realtorNo) => {
+    const params = {};
+
+    if (!reserveData.gugun) {
+      params[`regionCode`] = reserveData.sido.substring(0, 2);
+    } else if (!reserveData.dong) {
+      params[`regionCode`] = reserveData.gugun.substring(0, 5);
+    } else {
+      params[`regionCode`] = reserveData.dong;
+    }
+
+    (async () => {
+      const { data } = await searchReservationRealtorDetail(realtorNo, params);
+      console.log(data);
+      setRealtorDetail(data.data);
+    })();
+  };
 
   const clickSearchEventHandler = (sido, gugun, dong, date) => {
-    console.log(sido, gugun, dong, date);
+    // console.log(sido, gugun, dong, date);
 
     if (!sido) {
       alert(`광역시도는 반드시 입력해야 합니다!`);
@@ -69,7 +89,7 @@ const ReservationPage = () => {
     (async () => {
       try {
         const result = await searchRealtorList(params);
-        console.log(result);
+
         setRealtorList(result.data.data);
       } catch (err) {
         console.error(err);
@@ -92,15 +112,20 @@ const ReservationPage = () => {
       </div>
 
       <div className={classes.content}>
-        <ReservationLeftDiv realtors={realtorList} />
-        <ReservationRightDiv />
+        <ReservationLeftDiv
+          realtors={realtorList}
+          clickEventHandler={clickRealtorEventHandler}
+        />
+        <ReservationRightDiv realtorDetail={realtorDetail} />
       </div>
 
       <div className={classes.listBox}>
         <h2>내가 선택한 매물</h2>
-        <ListBox dataArray={[0, 1]} direction={true} toStart={true}>
-          <ReservationHouseCardContent />
-        </ListBox>
+        <div className={classes.list}>
+          <ListBox dataArray={selectedItems} direction={true} toStart={true}>
+            <ReservationHouseCardContent />
+          </ListBox>
+        </div>
       </div>
 
       <div>

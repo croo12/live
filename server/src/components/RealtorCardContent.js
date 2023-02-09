@@ -104,3 +104,41 @@ export const RealtorContractCardContent = (props) => {
     </div>
   );
 };
+
+export const ReservationRealtorCardContent = ({
+  idx,
+  realtorNo,
+  imageSrc, //프로필사진
+  corp, //사무소 이름
+  name, //중개사 이름
+  starNum, //별점 평균
+  contactCnt,
+  clickEventHandler,
+}) => {
+  return (
+    <div
+      className={`${classes.realtorReservationCard}`}
+      onClick={() => clickEventHandler(realtorNo)}
+    >
+      <div className={classes.leftBox}>
+        <div className={classes.leftImg}>
+          <img src={imageSrc} alt="realtor-profile" />
+        </div>
+      </div>
+      <div className={classes.rightBox}>
+        <div className={classes.upCard}>
+          <h4>
+            {corp}
+            <span className={classes.starNum}>★{starNum}</span>
+          </h4>
+          <p>
+            <span> {name} </span> 공인중개사
+          </p>
+        </div>
+        <div className={classes.downCard}>
+          <p>체결 계약 {contactCnt}건 | 경력 10년</p>
+        </div>
+      </div>
+    </div>
+  );
+};

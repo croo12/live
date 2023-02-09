@@ -1,28 +1,18 @@
 import ReservationRealtorInfo from "./ReservationRealtorInfo";
 import classes from "./ReservationRightDiv.module.scss";
 
-import { useState } from "react";
-import Button from "../../UI/Button";
-
-const ReservationRightDiv = () => {
-  const [status, setStatus] = useState("none");
-
-  const changeStataus = (status) => {
-    setStatus(status);
-  };
-
+const ReservationRightDiv = ({ realtorDetail }) => {
+  console.log(realtorDetail);
   return (
     <div className={classes.rightContainer}>
       <h2>상세정보</h2>
-      {status === "none" && (
-        <>
-          <p>내가 누구냐고? 알필요 없다.</p>
-          <Button clickEvent={() => changeStataus("realtor")}>
-            중개사를 클릭했다 버튼
-          </Button>
-        </>
-      )}
-      {status === "realtor" && <ReservationRealtorInfo />}
+      <div>
+        {!realtorDetail?.realtorInfo.name ? (
+          <span>중개사를 선택해주세요</span>
+        ) : (
+          <ReservationRealtorInfo realtorDetail={realtorDetail} />
+        )}
+      </div>
     </div>
   );
 };

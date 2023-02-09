@@ -14,20 +14,24 @@ const ListBox = ({ dataArray, children, direction, toStart }) => {
 
   //가로세로 props로 받기 그래서 플렉스 박스 방향 바꾸기
   return (
-    <ul
-      className={`${classes.list_box} ${direction ? classes.row : ""} ${
-        toStart ? classes.toStart : ""
-      }`}
-    >
-      {dataArray.length &&
-        dataArray.map((element, idx) => {
-          return (
-            <li key={idx}>
-              <Card>{React.cloneElement(children, element)}</Card>
-            </li>
-          );
-        })}
-    </ul>
+    <>
+      {dataArray?.length !== 0 && (
+        <ul
+          className={`${classes.list_box} ${direction ? classes.row : ""} ${
+            toStart ? classes.toStart : ""
+          }`}
+        >
+          {dataArray.length &&
+            dataArray.map((element, idx) => {
+              return (
+                <li key={idx}>
+                  <Card>{React.cloneElement(children, element)}</Card>
+                </li>
+              );
+            })}
+        </ul>
+      )}
+    </>
   );
 };
 
