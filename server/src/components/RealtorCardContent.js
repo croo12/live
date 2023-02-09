@@ -1,14 +1,17 @@
 import classes from "./RealtorCardContent.module.scss";
 import sample from "../assets/image/sample.jpg";
+import { CiLocationOn } from "react-icons/ci";
+import { BsTelephone } from "react-icons/bs";
 /* 사진, 사무소 이름, 중개사 이름 리뷰 별점평균? */
 
+// 중개사 여러 명
 const RealtorCardContent = ({
   idx,
   image, //프로필사진
   corpName, //사무소 이름
   name, //중개사 이름
   starNum, //별점 평균
-  contactCnt, //계약 건수
+  contactCnt,
 }) => {
   return (
     <div
@@ -70,3 +73,34 @@ export const DUMMY = [
     contactCnt: 105,
   },
 ];
+
+export const RealtorContractCardContent = (props) => {
+  const data = props.data;
+  return (
+    <div className={classes.realtorContractContent}>
+      <div className={classes.leftImg}>
+        <img src={data.image}></img>
+      </div>
+      <div className={classes.rightDesc}>
+        <div className={classes.realtorOfficeInfo}>
+          <div>
+            <strong>{data.realtoroffice}</strong>
+          </div>
+          <div className={classes.realtorName}>
+            <strong>{data.name}</strong> <span>공인중개사</span>
+          </div>
+          <div className={classes.realtorInfo}>{data.realtorInfo}</div>
+          <div className={classes.realtorAddress}>
+            <CiLocationOn /> {data.realtorAddress}
+          </div>
+          <div className={classes.realtorPhone}>
+            <BsTelephone /> {data.realtorPhone}
+          </div>
+        </div>
+        <div className={classes.realtorNum}>
+          <strong>★ {data.starNum}</strong>
+        </div>
+      </div>
+    </div>
+  );
+};

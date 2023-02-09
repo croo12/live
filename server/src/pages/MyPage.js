@@ -5,7 +5,7 @@ import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { TfiWrite } from "react-icons/tfi";
 import MyInfoDetail from "../components/mypage/MyInfoDetail";
 import MyIntro from "../components/mypage/MyIntro";
-import MyAlert from "../components/mypage/MyAlert";
+// import MyAlert from "../components/mypage/MyAlert";
 import MyReview from "../components/mypage/MyReview";
 import MyReservation from "../components/mypage/MyReservation";
 import MyInfoModify from "../components/mypage/MyInfoModify";
@@ -106,7 +106,7 @@ const MyPage = () => {
         </div>
       </div>
       {/* {btnActive === 1 && <MyInfoDetailUser />} */}
-      {btnActive === 2 && <MyAlert />}
+      {/* {btnActive === 2 && <MyAlert />} */}
       {btnActive === 3 && <MyReview />}
       {btnActive === 4 && <MyReservation />}
     </>

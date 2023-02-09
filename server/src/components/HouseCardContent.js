@@ -161,3 +161,62 @@ export const RealtorHousesCardContent = (props) => {
     </div>
   );
 };
+
+// 계약 매물 정보
+
+export const ContractHouseCardContent = (props) => {
+  const forSale = props.ContractInfo;
+  return (
+    <div className={classes.contractForSale}>
+      <div className={classes.inner}>
+        <h2>매물 정보</h2>
+        <br />
+        <div className={classes.contractContent}>
+          <div className={classes.leftDesc}>
+            <p>매물번호 {forSale.houseNumber}</p>
+
+            <h4>{forSale.houseAddress}</h4>
+            <p>{forSale.houseArea}</p>
+            <p>
+              {" "}
+              방 {forSale.houseRoomCnt}/{forSale.houseSupplyArea}㎡(전용
+              {forSale.houseExclusivePrivateArea}
+              평)
+            </p>
+            <div className={classes.infoBoxList}>
+              <div className={classes.forSale}>
+                <strong>매물가격</strong>{" "}
+                <input
+                  type="text"
+                  value={
+                    "월세" +
+                    forSale.houseDeposit +
+                    "/" +
+                    forSale.houseMonthlyFee
+                  }
+                  readOnly
+                />
+              </div>
+              <div className={classes.extraFee}>
+                <strong>추가 비용</strong>{" "}
+                <input value={"관리비" + forSale.houseExtraFee}></input>
+              </div>
+              <div className={classes.term}>
+                <strong>계약 기간</strong>{" "}
+                <input value={forSale.houseMonth + "개월"}></input>
+              </div>
+              <div className={classes.moveDate}>
+                <strong>입주 희망일</strong>{" "}
+                <input value={forSale.houseMoveIn}></input>
+              </div>
+            </div>
+          </div>
+          <div className={classes.rightImg}>
+            <img src={sample}></img>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </div>
+  );
+};

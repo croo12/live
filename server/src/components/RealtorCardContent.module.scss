@@ -112,3 +112,61 @@
   
 }
 
+.realtorContractContent{
+   padding:5% 0;
+   display: flex;
+   border: 1px solid #42D395;
+   border-radius: 8px;
+
+   .leftImg{
+    flex: 2;
+    padding: 1% 5%;
+
+    img{
+      width: 100%; 
+      border-radius: 70%;
+    }
+
+   }
+
+   .rightDesc{
+    flex: 4;
+    display: flex;
+    margin-top: 3%;
+    font-size: 1.1rem;
+
+    .realtorOfficeInfo{
+      flex: 2.5;
+
+      .realtorName{
+        span{
+          font-size: 0.8rem;
+          color:rgba(112, 112, 112, 1);
+        }
+      }
+
+      .realtorInfo{
+        padding: 2% 0 0 0;
+        font-size: 0.9rem;
+        color: rgba(112, 112, 112, 1);
+      }
+
+      .realtorAddress{
+        padding: 2% 0 0 0;
+        font-size:1rem;
+      }
+
+      .realtorPhone{
+        padding: 2% 0 0 0;
+        font-size: 1rem;
+      }
+    }
+
+    .realtorNum{
+      flex: 1;
+      color: #FFCD1D;
+    }
+   }
+  
+}
+

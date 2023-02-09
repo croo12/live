@@ -1,0 +1,52 @@
+.requireInfo{
+    padding:0 3% 3% 3%;
+    .inner{
+        width: 67.7%;
+        margin-left:15%;
+
+        .requireInfoContent{
+            text-align: left;
+            padding:0 0 3% 0;
+            h2{
+                margin-bottom:3%;
+            }
+
+            .resident{
+                display: flex;
+                strong{
+                    flex:1;
+                    padding: 1% 0 0 0;
+                }
+                input{
+                    flex:2;
+                    background: #FAFAFA;
+                    border: 1px solid #BBBBBB;
+                    border-radius: 4px;
+                    width:100%;
+                    padding:1% 2% 1% 2%;
+                    margin-right:27%;
+                    margin-bottom: 1.5%;
+                }
+            }
+            .requirement{
+                display: flex;
+                
+                    strong {
+                        flex: 1;
+                        padding: 1% 0 0 0;
+                    }
+                
+                    textarea {
+                        flex: 3;
+                        background: #FAFAFA;
+                        border: 1px solid #BBBBBB;
+                        border-radius: 4px;
+                        width: 50%;
+                        padding: 0.65% 1% 0.65% 1%;
+                        margin-right: 6%;
+                        height:20vh;
+                    }
+            }
+        }
+    }
+}

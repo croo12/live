@@ -9,7 +9,7 @@ import HouseDetail from "../components/HouseDetail";
 import HouseRegist from "../components/house/HouseRegist";
 import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
-import MyAlert from "../components/mypage/MyAlert";
+// import MyAlert from "../components/mypage/MyAlert";
 import MyReservation from "../components/mypage/MyReservation";
 // import MyContractUser from "../components/mypage/MyContractUser";
 // import MyContractDetailUser from "../components/mypage/MyContractDetailUser";
@@ -34,6 +34,8 @@ import SignUpPageUser from "../components/SignUpPageUser";
 import MyReservationDetailUser from "../components/mypage/MyReservationDetailUser";
 import MyReservationDetailRealtor from "../components/mypage/MyReservationDetailRealtor";
 import SignUpPage from "../pages/SignUpPage";
+import AlertPage from "../pages/AlertPage";
+import ContractPage from "../pages/ContractPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -101,9 +103,11 @@ const router = createBrowserRouter(
             element={<MyContractModifyRealtor />}
           ></Route>
         </Route> */}
-        <Route path="alert" element={<MyAlert />}></Route>
+        {/* <Route path="alert" element={<MyAlert />}></Route> */}
         {/* 부동산 아저씨 일정관리 */}
       </Route>
+      <Route path="alert" element={<AlertPage />}></Route>
+      <Route path="contract" element={<ContractPage />}></Route>
     </Route>
   )
 );

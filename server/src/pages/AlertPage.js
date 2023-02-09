@@ -1,7 +1,7 @@
-import { DUMMY3 } from "../AlarmCardContent";
-import classes from "./MyAlert.module.scss";
+import classes from "./AlertPage.module.scss";
+import { DUMMY3 } from "../components/AlarmCardContent";
 
-const MyAlert = () => {
+const AlertPage = () => {
   return (
     <>
       <div className={classes.alarm}>
@@ -42,4 +42,4 @@ const MyAlert = () => {
   );
 };
 
-export default MyAlert;
+export default AlertPage;
