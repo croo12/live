@@ -45,4 +45,9 @@ public class ConsultingController {
     public ResponseEntity<?> addConsultingItems(@PathVariable Long consultingNo, @RequestBody ConsultingRequest.AddItem addItem)  {
         return consultingService.addConsultingItems(consultingNo, addItem);
     }
+
+    @GetMapping("/contracts/{itemNo}")
+    public ResponseEntity<?> infoForContact(@RequestHeader(AUTHORIZATION) String token, @PathVariable Long itemNo)  {
+        return consultingService.infoForContact(token, itemNo);
+    }
 }
