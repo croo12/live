@@ -89,8 +89,8 @@ const HouseModify = () => {
     const data = event.target.value;
     const valid = /^[0-9]$/;
 
-    if (data.length > 9) {
-      event.target.value = data.substring(0, 9);
+    if (data.length > 7) {
+      event.target.value = data.substring(0, 7);
       return;
     }
 
@@ -382,8 +382,6 @@ const HouseModify = () => {
               </table>
             </div>
 
-            {/* ---------------- 추가정보 ------------- */}
-
             <div className={classes.additionalInfo}>
               <h2>추가정보</h2>
               <table>
@@ -648,7 +646,6 @@ const HouseModify = () => {
               </table>
             </div>
 
-            {/* -----------상세정보------------- */}
             <div className={classes.detailInfo}>
               <h2>상세정보</h2>
               <table>
@@ -716,9 +713,7 @@ const HouseModify = () => {
                         isPreview={true}
                         addButton={
                           <div className={classes.addButton}>
-                            <div>
-                              <p>+</p>
-                            </div>
+                            <p className={classes.plus}>+</p>
                             <p>사진 추가</p>
                           </div>
                         }
