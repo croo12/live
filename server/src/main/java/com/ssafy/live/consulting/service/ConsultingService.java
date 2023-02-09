@@ -13,17 +13,22 @@ import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
+import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ItemForContract;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationRealtor;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationUser;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.consulting.domain.entity.ConsultingItem;
 import com.ssafy.live.consulting.domain.repository.ConsultingItemRepository;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
+import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
+import com.ssafy.live.house.domain.entity.ItemImage;
+import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -49,6 +54,7 @@ public class ConsultingService {
     private final UsersRepository usersRepository;
     private final RealtorRepository realtorRepository;
     private final ItemRepository itemRepository;
+    private final ItemImageRepository itemImageRepository;
     private final NoticeRepository noticeRepository;
     private final ConsultingItemRepository consultingItemRepository;
     private final JwtTokenProvider jwtTokenProvider;
@@ -231,5 +237,22 @@ public class ConsultingService {
         SMSService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers().getPhone());
 
         return response.success("상담 매물 수정이 완료되었습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> infoForContact(String token, Long itemNo) {
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        Item item = itemRepository.findById(itemNo).get();
+        ConsultingResponse.ItemForContract.RealtorInfo realtor = ConsultingResponse.ItemForContract.RealtorInfo
+            .toEntity(item.getRealtor());
+        ConsultingResponse.ItemForContract.UserInfo users = ConsultingResponse.ItemForContract.UserInfo
+            .toEntity(usersRepository.findById(authentication.getName()).get());
+
+        List<ItemImage> itemImages = itemImageRepository.findByItem(item);
+        List<String> images = itemImages.stream().map((i)->i.getImageSrc()).collect(Collectors.toList());
+
+        ConsultingResponse.ItemForContract.ItemInfo itemInfo = ConsultingResponse.ItemForContract.ItemInfo
+            .toEntity(item, images);
+        ConsultingResponse.ItemForContract contractInfo = ConsultingResponse.ItemForContract.toEntity(realtor, users, itemInfo);
+        return response.success(contractInfo, "계약 할 매물 정보를 조회하였습니다.", HttpStatus.OK);
     }
 }

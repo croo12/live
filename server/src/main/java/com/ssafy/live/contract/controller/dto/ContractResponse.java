@@ -137,7 +137,7 @@ public class ContractResponse {
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
                     .mainteneceFee(item.getMaintenanceFee())
-                        .images(images)
+                    .images(images)
                     .build();
             }
         }

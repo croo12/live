@@ -128,7 +128,7 @@ public class RealtorResponse {
             private String buildingName;
             public static Items toEntity(RealtorByRegionProjectionInterface item) {
                 return Items.builder()
-                    .itemNo(item.getNo())
+                    .itemNo(item.getItemNo())
                     .imageSrc(item.getImageSrc())
                     .deposit(item.getDeposit())
                     .monthlyRent(item.getRent())
