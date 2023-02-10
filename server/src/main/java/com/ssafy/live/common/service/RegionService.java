@@ -1,6 +1,6 @@
 package com.ssafy.live.common.service;
 
-import com.ssafy.live.common.controller.RegionResponse;
+import com.ssafy.live.common.controller.dto.RegionResponse;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.repository.RegionRepository;
 import lombok.RequiredArgsConstructor;

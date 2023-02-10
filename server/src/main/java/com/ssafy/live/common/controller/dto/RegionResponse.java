@@ -1,4 +1,4 @@
-package com.ssafy.live.common.controller;
+package com.ssafy.live.common.controller.dto;
 
 import com.ssafy.live.common.domain.Entity.Region;
 import lombok.AllArgsConstructor;
