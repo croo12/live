@@ -159,67 +159,71 @@ const HouseRegist = () => {
     }
     //--------------------------------------------------------------------------
     const response = await registHouseData({
-      realtorNo: 1, //수정해주세용~~
-      deposit: deposit.current.value.replaceAll(",", ""),
-      rent: rent.current.value.replaceAll(",", ""),
-      maintenanceFee: maintenanceFee.current.value.replaceAll(",", ""),
-      description: description.current.value,
-      direction: direction,
-      entrance: entrance,
-      heating: heating,
-      moveInDate: moveInDate.current.value,
-      buildingName: buildingName.current.value,
-
-      houseNo: houseNo.value,
-      isActive: isActive.current.checked,
-      address: address.current.value,
-      addressDetail: addressDetail.current.value,
-      bathroom: bathroom.current.value.replaceAll(",", ""),
-      completionYear: completionYear.current.value,
-      exclusivePrivateArea: exclusivePrivateArea.current.value.replaceAll(
-        ",",
-        ""
-      ),
-      supplyArea: supplyArea.current.value.replaceAll(",", ""),
-      floor: floor.current.value.replaceAll(",", ""),
-      totalFloor: totalFloor.current.value.replaceAll(",", ""),
-      purpose: purpose.current.value,
-      room: room.current.value.replaceAll(",", ""),
-      sido: sido.value,
-      dong: dong.value,
-      gugun: gugun.value,
-      zipcode: zipcode.value,
-      regionCode: regionCode.value,
-
-      airConditioner: airConditioner.current.checked,
-      bath: false,
-      bathtub: bathtub.current.checked,
-      bed: bed.current.checked,
-      bidet: bidet.current.checked,
-      cctv: cctv.current.checked,
-      closet: closet.current.checked,
-      desk: desk.current.checked,
-      diningTable: diningTable.current.checked,
-      dishwasher: dishwasher.current.checked,
-      dryingMachine: dryingMachine.current.checked,
-      elevator: elevator.current.checked,
-      fireAlarm: fireAlarm.current.checked,
-      garden: garden.current.checked,
-      gasStove: gasStove.current.checked,
-      guard: guard.current.checked,
-      inductionCooktop: inductionCooktop.current.checked,
-      intercom: intercom.current.checked,
-      keycard: keycard.current.checked,
-      microwave: microwave.current.checked,
-      oven: oven.current.checked,
-      parkingLot: parkingLot.current.checked,
-      refrigerator: refrigerator.current.checked,
-      shoeRack: shoeRack.current.checked,
-      sink: sink.current.checked,
-      sofa: sofa.current.checked,
-      terrace: terrace.current.checked,
-      veranda: veranda.current.checked,
-      washingMachine: washingMachine.current.checked,
+      jsonData: {
+        realtorNo: 1, //수정해주세용~~
+        deposit: deposit.current.value.replaceAll(",", ""),
+        rent: rent.current.value.replaceAll(",", ""),
+        maintenanceFee: maintenanceFee.current.value.replaceAll(",", ""),
+        description: description.current.value,
+        direction: direction,
+        entrance: entrance,
+        heating: heating,
+        moveInDate: moveInDate.current.value,
+        house: {
+          houseNo: houseNo.value,
+          isActive: isActive.current.checked,
+          address: address.current.value,
+          addressDetail: addressDetail.current.value,
+          bathroom: bathroom.current.value.replaceAll(",", ""),
+          buildingName: buildingName.current.value,
+          completionYear: completionYear.current.value,
+          exclusivePrivateArea: exclusivePrivateArea.current.value.replaceAll(
+            ",",
+            ""
+          ),
+          supplyArea: supplyArea.current.value.replaceAll(",", ""),
+          floor: floor.current.value.replaceAll(",", ""),
+          totalFloor: totalFloor.current.value.replaceAll(",", ""),
+          purpose: purpose.current.value,
+          room: room.current.value.replaceAll(",", ""),
+          sido: sido.value,
+          dong: dong.value,
+          gugun: gugun.value,
+          zipcode: zipcode.value,
+          regionCode: regionCode.value,
+        },
+        itemOption: {
+          airConditioner: airConditioner.current.checked,
+          bath: false,
+          bathtub: bathtub.current.checked,
+          bed: bed.current.checked,
+          bidet: bidet.current.checked,
+          cctv: cctv.current.checked,
+          closet: closet.current.checked,
+          desk: desk.current.checked,
+          diningTable: diningTable.current.checked,
+          dishwasher: dishwasher.current.checked,
+          dryingMachine: dryingMachine.current.checked,
+          elevator: elevator.current.checked,
+          fireAlarm: fireAlarm.current.checked,
+          garden: garden.current.checked,
+          gasStove: gasStove.current.checked,
+          guard: guard.current.checked,
+          inductionCooktop: inductionCooktop.current.checked,
+          intercom: intercom.current.checked,
+          keycard: keycard.current.checked,
+          microwave: microwave.current.checked,
+          oven: oven.current.checked,
+          parkingLot: parkingLot.current.checked,
+          refrigerator: refrigerator.current.checked,
+          shoeRack: shoeRack.current.checked,
+          sink: sink.current.checked,
+          sofa: sofa.current.checked,
+          terrace: terrace.current.checked,
+          veranda: veranda.current.checked,
+          washingMachine: washingMachine.current.checked,
+        },
+      },
       files: [...images],
     });
 
@@ -285,8 +289,8 @@ const HouseRegist = () => {
     sido.value = data.sido;
     supplyArea.current.value = data.supplyArea;
     totalFloor.current.value = data.totalFloor;
+    buildingName.current.value = data.buildingName;
 
-    // address.current.readOnly = true;
     addressDetail.current.disabled = true;
     bathroom.current.disabled = true;
     completionYear.current.disabled = true;
@@ -297,6 +301,7 @@ const HouseRegist = () => {
     room.current.disabled = true;
     supplyArea.current.disabled = true;
     totalFloor.current.disabled = true;
+    buildingName.current.disabled = true;
   };
 
   const searchAddressHandler = () => {
@@ -328,6 +333,7 @@ const HouseRegist = () => {
     room.current.disabled = false;
     supplyArea.current.disabled = false;
     totalFloor.current.disabled = false;
+    buildingName.current.disabled = false;
 
     searchAddressModalHandler();
   };
