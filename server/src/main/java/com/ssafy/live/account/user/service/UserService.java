@@ -14,11 +14,8 @@ import com.ssafy.live.account.user.controller.dto.UserResponse;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.SMSContent;
 import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.common.service.SMSService;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,13 +27,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
 
 @Slf4j

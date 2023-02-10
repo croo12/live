@@ -16,7 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisRepositoryConfig {
 
     private final RedisProperties redisProperties;
-    private String redisPassword;
 
     // lettuce
     @Bean

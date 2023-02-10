@@ -87,7 +87,7 @@ public class ConsultingService {
 
     public ResponseEntity<?>  reservationListByRealtor(UserDetails user, int status) {
         ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
-        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
             return listByUser(usersRepository.findById(user.getUsername()).get().getNo(), statuses);
         } else {
             return listByRealtor(realtorRepository.findByBusinessNumber(user.getUsername()).get().getNo(), statuses);
@@ -150,7 +150,7 @@ public class ConsultingService {
         consultingRepository.save(consulting);
         String writer, info;
         SMSContent smsContent;
-        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
             writer = consulting.getRealtor().getName();
         } else {
             writer = consulting.getUsers().getName();

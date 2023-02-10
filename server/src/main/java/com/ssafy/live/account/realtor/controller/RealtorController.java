@@ -3,7 +3,6 @@ package com.ssafy.live.account.realtor.controller;
 import com.ssafy.live.account.common.error.ErrorHandler;
 import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.account.realtor.service.RealtorService;
-import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -102,7 +99,7 @@ public class RealtorController {
     }
 
     @GetMapping("/region")
-    public ResponseEntity<?> findRealtorByRegion(@RequestParam String regionCode) {
+    public ResponseEntity<?> findRealtorByRegion(@RequestParam("regionCode") String regionCode) {
         log.info("특정 지역 공인중개사 목록 조회");
         return realtorService.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
     }
