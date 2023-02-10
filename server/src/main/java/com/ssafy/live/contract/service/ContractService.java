@@ -7,6 +7,9 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ContractStatus;
 import com.ssafy.live.common.domain.Response;
+import com.ssafy.live.common.domain.SMSContent;
+import com.ssafy.live.common.exception.BadRequestException;
+import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.contract.controller.dto.ContractRequest;
 import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import com.ssafy.live.contract.controller.dto.ContractResponse;
@@ -27,6 +30,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ssafy.live.common.exception.ErrorCode.*;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -40,16 +45,13 @@ public class ContractService {
     private final ItemRepository itemRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public ResponseEntity<?> regist(ContractRequest.Regist regist) {
-        Users users = usersRepository.findById(regist.getUserNo()).get();
-        if(users == null) {
-            return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
-        Realtor realtor = realtorRepository.findById(regist.getRealtorNo()).get();
-        if (realtor == null) {
-            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
-        Item item = itemRepository.findById(regist.getItemNo()).get();
+    public ResponseEntity<?> regist(String token, ContractRequest.Regist regist) {
+        Users users = usersRepository.findById(regist.getUserNo())
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
+        Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
+                .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
+        Item item = itemRepository.findById(regist.getItemNo())
+                .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
         Contract contract = Contract.builder()
             .users(users)
             .realtor(realtor)
@@ -66,14 +68,15 @@ public class ContractService {
             .termOfContract(regist.getTermOfContract())
                 .build();
         contractRepository.save(contract);
+
+        //SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
+        //SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor());
+
         return response.success("계약신청이 완료되었습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> contractList(String token, int status) {
         ContractStatus contractStatus = ContractStatus.ofValue(status);
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         List<ContractResponse.ContractList> list = null;
         if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
@@ -97,15 +100,12 @@ public class ContractService {
                 )
                 .collect(Collectors.toList());
         } else {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+            throw new BadRequestException(WRONG_AUTHENTICATION_TYPE);
         }
         return response.success(list, "계약 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> contractDetail(String token, Long contractNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Contract contract = contractRepository.findById(contractNo).get();
         List<ItemImage> itemImages = itemImageRepository.findByItem(contract.getItem());
         List<String> images = itemImages.stream().map((i)->i.getImageSrc()).collect(Collectors.toList());
@@ -121,35 +121,34 @@ public class ContractService {
     }
 
     public ResponseEntity<?> contractUpdate(String token, Update update, Long contractNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Contract contract = contractRepository.findById(contractNo).get();
         Item item = itemRepository.findById(contract.getItem().getNo()).get();
         item.updatePayment(update.getDeposit(), update.getRent(), update.getMaintenanceFee());
         contract.updateInfo(update.getMoveOnDate(), update.getTermOfContract(), update.getSpecialContract(), update.getCommission(), item.getDeposit());
         itemRepository.save(item);
         contractRepository.save(contract);
+
+        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
         return response.success("계약 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> contractApprove(String token, Long contractNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Contract contract = contractRepository.findById(contractNo).get();
         contract.approve();
         contractRepository.save(contract);
+
+        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
+
         return response.success("계약이 승인되었습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> contractComplete(String token, Long contractNo) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         Contract contract = contractRepository.findById(contractNo).get();
         contract.complete();
         contractRepository.save(contract);
+
+        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getUsers());
+        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getRealtor());
         return response.success("계약 체결이 완료되었습니다.", HttpStatus.OK);
     }
 }

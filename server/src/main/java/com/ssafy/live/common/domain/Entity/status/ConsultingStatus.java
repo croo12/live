@@ -1,9 +1,8 @@
 package com.ssafy.live.common.domain.Entity.status;
 
 import com.amazonaws.services.kms.model.NotFoundException;
-import lombok.Getter;
-
 import java.util.Arrays;
+import lombok.Getter;
 
 @Getter
 public enum ConsultingStatus {

@@ -27,6 +27,8 @@ public class RegionService {
             case 2: end = "00000"; break;
         }
 
+        log.debug(regionCode);
+
         List<RegionResponse> regionList = regionRepository.findAllByRegionCodeStartingWithAndRegionCodeEndingWith(regionCode, end)
                 .stream()
                 .map(RegionResponse::toDto)

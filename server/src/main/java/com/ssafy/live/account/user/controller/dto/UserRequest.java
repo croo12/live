@@ -1,5 +1,8 @@
 package com.ssafy.live.account.user.controller.dto;
 
+import lombok.*;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 

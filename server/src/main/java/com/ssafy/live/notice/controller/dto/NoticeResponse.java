@@ -1,13 +1,8 @@
 package com.ssafy.live.notice.controller.dto;
 
-import com.ssafy.live.account.realtor.domain.entity.Realtor;
-import com.ssafy.live.account.user.domain.entity.Users;
-import com.ssafy.live.contract.domain.entity.Contract;
-import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.notice.domain.entity.Notice;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class NoticeResponse {

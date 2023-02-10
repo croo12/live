@@ -19,22 +19,16 @@ public class ConsultingController {
     private final ConsultingService consultingService;
 
     @PostMapping
-    public ResponseEntity<?> reserve(@Validated @RequestBody ConsultingRequest.Reserve reserve, Errors errors)  {
-        // validation check
+    public ResponseEntity<?> reserve(@RequestHeader(AUTHORIZATION) String token, @Validated @RequestBody ConsultingRequest.Reserve reserve, Errors errors)  {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
-        return consultingService.reserve(reserve);
+        return consultingService.reserve(token, reserve);
     }
 
-    @GetMapping("/realtors")
-    public ResponseEntity<?> reservationListByRealtor(@RequestParam Long realtorNo, @RequestParam int situation) {
-        return consultingService.reservationListByRealtor(realtorNo, situation);
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<?> reservationListByUser(@RequestParam Long userNo, @RequestParam int situation) {
-        return consultingService.reservationListByUser(userNo, situation);
+    @GetMapping
+    public ResponseEntity<?> reservationList(@RequestHeader(AUTHORIZATION) String token, @RequestParam int situation) {
+        return consultingService.reservationListByRealtor(token, situation);
     }
 
     @PatchMapping
@@ -50,5 +44,10 @@ public class ConsultingController {
     @PostMapping("/{consultingNo}/items")
     public ResponseEntity<?> addConsultingItems(@PathVariable Long consultingNo, @RequestBody ConsultingRequest.AddItem addItem)  {
         return consultingService.addConsultingItems(consultingNo, addItem);
+    }
+
+    @GetMapping("/contracts/{itemNo}")
+    public ResponseEntity<?> infoForContact(@RequestHeader(AUTHORIZATION) String token, @PathVariable Long itemNo)  {
+        return consultingService.infoForContact(token, itemNo);
     }
 }

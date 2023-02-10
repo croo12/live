@@ -30,9 +30,6 @@ public class NoticeService {
     private final Response response;
 
     public ResponseEntity<?> allNotice(String token) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         List<NoticeResponse.Notices> list;
         List<Notice> notices;
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
