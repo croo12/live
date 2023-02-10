@@ -42,6 +42,7 @@ public class ContractService {
     private final RealtorRepository realtorRepository;
     private final ItemImageRepository itemImageRepository;
     private final ItemRepository itemRepository;
+    private final SMSService smsService;
 
     public ResponseEntity<?> regist(ContractRequest.Regist regist) {
         Users users = usersRepository.findById(regist.getUserNo())
@@ -67,8 +68,8 @@ public class ContractService {
                 .build();
         contractRepository.save(contract);
 
-        //SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
-        //SMSService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor());
+        //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
+        //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor());
 
         return response.success("계약신청이 완료되었습니다.", HttpStatus.OK);
     }
@@ -125,7 +126,7 @@ public class ContractService {
         itemRepository.save(item);
         contractRepository.save(contract);
 
-        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
+        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
         return response.success("계약 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
@@ -134,7 +135,7 @@ public class ContractService {
         contract.approve();
         contractRepository.save(contract);
 
-        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
+        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
 
         return response.success("계약이 승인되었습니다.", HttpStatus.OK);
     }
@@ -144,8 +145,8 @@ public class ContractService {
         contract.complete();
         contractRepository.save(contract);
 
-        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getUsers());
-        //SMSService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getRealtor());
+        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getUsers());
+        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getRealtor());
         return response.success("계약 체결이 완료되었습니다.", HttpStatus.OK);
     }
 }

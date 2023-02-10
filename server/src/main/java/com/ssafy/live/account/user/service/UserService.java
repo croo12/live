@@ -45,6 +45,7 @@ public class UserService {
     private final EmailService emailService;
     private final S3Service s3Service;
     private final AuthenticationManager authenticationManager;
+    private final SMSService smsService;
 
     public ResponseEntity<?> signUp(UserRequest.SignUp signUp, MultipartFile file)
             throws IOException {
@@ -54,7 +55,7 @@ public class UserService {
         String imgSrc = s3Service.upload(file);
         usersRepository.save(UserRequest.SignUp.toEntity(signUp, passwordEncoder.encode(signUp.getPassword()),  imgSrc));
 
-        //SMSService.sendSMS(users.getName()+"님 " + SMSContent.NEW_USER.getMessage(), users.getPhone());
+        smsService.sendSMS(signUp.getName()+"님 " + SMSContent.NEW_USER.getMessage(), signUp.getPhone());
         return response.success("회원가입에 성공했습니다.");
     }
 
