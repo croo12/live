@@ -35,12 +35,6 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     defer-datasource-initialization: true
-naver:
-  accessKey: ${NAVER_ACCESSKEY}
-  seceretKey: ${NAVER_SECRETKEY}
-  serviceId: ${NAVER_SERVICEID}
-  callingNumber: ${NAVER_CALLING_NUMBER}
-
   mail:
     properties:
       mail:
@@ -63,6 +57,12 @@ naver:
   jackson:
     serialization:
       fail-on-empty-beans: 'false'
+
+naver:
+  accessKey: ${NAVER_ACCESSKEY}
+  seceretKey: ${NAVER_SECRETKEY}
+  serviceId: ${NAVER_SERVICEID}
+  callingNumber: ${NAVER_CALLING_NUMBER}
 
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXByb2plY3QtYjEwNC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtUzA4UDEyQjEwNC9wcm9qZWN0L2NvbS5zc2FmeS5saXZlX1NFQ1JFVF9LRVlfQ09ERQo=
