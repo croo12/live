@@ -13,6 +13,8 @@ const houseSlice = createSlice({
     heating: null,
     moveInDate: new Date().toISOString().substring(0, 10),
 
+    houseNo: null,
+    isActive: false,
     address: null,
     addressDetail: null,
     bathroom: null,
