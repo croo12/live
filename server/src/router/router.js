@@ -10,7 +10,7 @@ import HouseRegist from "../components/house/HouseRegist";
 import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
 // import MyAlert from "../components/mypage/MyAlert";
-import MyReservation from "../components/mypage/MyReservation";
+// import MyReservation from "../components/mypage/MyReservation";
 // import MyContractUser from "../components/mypage/MyContractUser";
 // import MyContractDetailUser from "../components/mypage/MyContractDetailUser";
 // import MyContractRegistUser from "../components/mypage/MyContractRegistUser";
@@ -20,8 +20,14 @@ import MyReservation from "../components/mypage/MyReservation";
 // import MyContractModifyRealtor from "../components/mypage/MyContractModifyRealtor";
 // import MyContractDetailRealtor from "../components/mypage/MyContractDetailRealtor";
 // import MyInfoDetailRealtor from "../components/mypage/MyInfoDetailRealtor";
-import MyInfoDetail from "../components/mypage/MyInfoDetail";
-import MyInfoModify from "../components/mypage/MyInfoModify";
+import MyPageUser from "../components/mypage/MyPageUser";
+import MyPageUserDetail from "../components/mypage/MyPageUserDetail";
+import MyPageUserModify from "../components/mypage/MyPageUserModify";
+import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
+import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
+import MyPageUserReview from "../components/mypage/MyPageUserReview";
+// import MyInfoDetail from "../components/mypage/MyInfoDetail";
+// import MyInfoModify from "../components/mypage/MyInfoModify";
 import ConsultingPage from "../pages/ConsultingPage";
 import ErrorCommonPage from "../pages/ErrorCommonPage";
 import HousePage from "../pages/HousePage";
@@ -31,7 +37,7 @@ import MyPage from "../pages/MyPage";
 import ReservationPage, { sidoLoader } from "../pages/ReservationPage";
 import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
-import MyReservationDetailUser from "../components/mypage/MyReservationDetailUser";
+// import MyReservationDetailUser from "../components/mypage/MyReservationDetailUser";
 import MyReservationDetailRealtor from "../components/mypage/MyReservationDetailRealtor";
 import SignUpPage from "../pages/SignUpPage";
 import AlertPage from "../pages/AlertPage";
@@ -61,8 +67,25 @@ const router = createBrowserRouter(
         <Route path="modify/:itemNo" element={<HouseModify />}></Route>
       </Route>
       <Route path="mypage" element={<MyPage />}>
-        <Route path="info-detail" element={<MyInfoDetail />}></Route>
-        <Route path="info-modify" element={<MyInfoModify />}></Route>
+        <Route path="" element={<Navigate replace to="user" />} />
+        <Route path="user" element={<MyPageUser />}></Route>
+        <Route path="user-detail-info" element={<MyPageUserDetail />}></Route>
+        <Route path="user-modify-info" element={<MyPageUserModify />}></Route>
+        <Route
+          path="user-reservation"
+          element={<MyPageUserReservation />}
+        ></Route>
+        <Route
+          path="user-reservation-detail"
+          element={<MyPageUserReservationDetail />}
+        ></Route>
+        <Route path="user-review" element={<MyPageUserReview />}></Route>
+        {/* <Route path="user-review"></Route>
+        <Route path="user-reservation"></Route> */}
+
+        {/* <Route path="realtor" element={<MyPageRealtor />}></Route> */}
+        {/* <Route path="info-detail" element={<MyInfoDetail />}></Route>
+        <Route path="info-modify" element={<MyInfoModify />}></Route> */}
         {/* <Route
           path="info-detail-realtor"
           element={<MyInfoDetailRealtor />}
@@ -71,11 +94,11 @@ const router = createBrowserRouter(
           path="info-modify-realtor"
           element={<MyInfoModifyRealtor />}
         ></Route> */}
-        <Route path="reservation" element={<MyReservation />}></Route>
-        <Route
+        {/* <Route path="reservation" element={<MyReservation />}></Route> */}
+        {/* <Route
           path="reservation-detail-user"
           element={<MyReservationDetailUser />}
-        ></Route>
+        ></Route> */}
         <Route
           path="reservation-detail-realtor"
           element={<MyReservationDetailRealtor />}
