@@ -59,7 +59,7 @@ public class ConsultingService {
     public ResponseEntity<?> reserve(UserDetails user, ConsultingRequest.Reserve reserve) {
         Users users = usersRepository.findById(user.getUsername())
             .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
-        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
+        Realtor realtor = realtorRepository.findById(reserve.getRealtorNo())
             .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         Consulting consulting = Consulting.builder()
                 .realtor(realtor)
