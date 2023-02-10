@@ -20,6 +20,7 @@ public class House extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "house")
+    @Builder.Default
     private List<Item> items = new ArrayList<>();
 
     private int isActive;
