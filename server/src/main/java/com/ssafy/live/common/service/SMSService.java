@@ -22,7 +22,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -46,11 +48,25 @@ public class SMSService {
         sendSMS(content, user.getPhone());
     }
 
+    public void sendSMS(String content, String phone) {
+        String callingNumber = "01092352527";
 
-//    @Scheduled(cron="0 0 8 * * ?")
-//    public void reserveSMSScheduler() {
-//        List<Consulting> consultingList = consultingRepository.
-//    }
+        JSONObject bodyJson = makeBodyJson(content, phone, callingNumber);
+        String body = bodyJson.toString();
+
+        trySMS(body);
+    }
+
+    @Scheduled(cron="0 0 8 * * ?")
+    public void reserveSMSScheduler() {
+        LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0,0)); //오늘 00:00:00
+        LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.of(23,59,59)); //오늘 23:59:59
+        List<Consulting> consultingList = consultingRepository.findByConsultingDateBetween(start, end);
+
+        for(Consulting consulting : consultingList){
+            sendSMS(consulting.getNo(), SMSContent.TODAY_CONSULTING, consulting.getUsers());
+        }
+    }
 
 
     private void reserveSMS(String content, String phone, LocalDateTime consultingDate) {
@@ -70,14 +86,6 @@ public class SMSService {
         trySMS(body);
     }
 
-    public void sendSMS(String content, String phone) {
-        String callingNumber = "01092352527";
-
-        JSONObject bodyJson = makeBodyJson(content, phone, callingNumber);
-        String body = bodyJson.toString();
-
-        trySMS(body);
-    }
 
     private void trySMS(String body){
         String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
