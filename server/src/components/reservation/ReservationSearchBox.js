@@ -17,7 +17,6 @@ const ReservationSearchBox = (props) => {
   const [regionsDongList, setDongList] = useState([]);
 
   const changeEventHandler = (e, setter) => {
-    // console.log(e);
     if (e.target) {
       if (e.target.id === "sidoSelector") {
         setGugun("");

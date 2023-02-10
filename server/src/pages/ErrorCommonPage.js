@@ -1,13 +1,20 @@
 import { useNavigate, useRouteError } from "react-router-dom";
 
-const ErrorCommonPage = (props) => {
+const ErrorCommonPage = ({ navigate, errorMsg }) => {
   const error = useRouteError();
-  const navigate = useNavigate();
+  const navigation = useNavigate();
+
+  // if (navigate) {
+  //   navigation(navigate);
+  // }
+
+  // console.log(error);
+
   return (
     <>
       <h1> Error Page ! </h1>
-      {props.errorMsg ? (
-        <p>{props.errorMsg}</p>
+      {errorMsg ? (
+        <p>{errorMsg}</p>
       ) : (
         <p> {error.error?.message ? error.error.message : error.message} </p>
       )}

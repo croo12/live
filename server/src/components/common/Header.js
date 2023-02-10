@@ -6,6 +6,7 @@ import { useState } from "react";
 import { logout } from "../../apis/MemberService";
 
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [isToggled, setIsToggled] = useState(false);
@@ -14,8 +15,8 @@ const Header = () => {
     setIsToggled(!isToggled);
   };
 
-  const loginInfo = localStorage.getItem("user");
-  const loginState = localStorage.getItem("state");
+  const userInfo = useSelector((state) => state.user.userInfo);
+  // const loginState = localStorage.getItem("state");
 
   return (
     <div className={classes.header}>
@@ -29,12 +30,15 @@ const Header = () => {
           </button>
         </div>
         <ul className={`${classes["menu"]} ${isToggled && classes.active}`}>
-          { 
-          loginState === "REALTOR" ? ( <li>
-            <NavLink to={"/house"} onClick={isToggled && isToggledHandler}>
-              매물
-            </NavLink> </li> ) : ("")
-          }
+          {userInfo.isRealtor ? (
+            <li>
+              <NavLink to={"/house"} onClick={isToggled && isToggledHandler}>
+                매물
+              </NavLink>{" "}
+            </li>
+          ) : (
+            ""
+          )}
           <li>
             <NavLink
               to={"/reservation"}
@@ -56,33 +60,33 @@ const Header = () => {
               마이페이지
             </NavLink>
           </li>
-          {
-            loginInfo ? <li>
-            <NavLink to={"/"} onClick={isToggled && isToggledHandler}>
-              로그아웃
-            </NavLink>
-          </li> : (
-              ""
-            )
-          }       {
-            loginInfo ? 
-            ("") : (
-              <li>
-            <NavLink to={"/login"} onClick={isToggled && isToggledHandler}>
-              로그인
-            </NavLink>
-          </li>
-            )
-          }          
-          {
-            loginInfo ? ("") : (
-          <li>
-            <NavLink to={"/signup"} onClick={isToggled && isToggledHandler}>
-              회원가입
-            </NavLink>
-          </li>
-            )
-          }
+          {userInfo.id ? (
+            <li>
+              <NavLink to={"/"} onClick={isToggled && isToggledHandler}>
+                로그아웃
+              </NavLink>
+            </li>
+          ) : (
+            ""
+          )}{" "}
+          {userInfo.id ? (
+            ""
+          ) : (
+            <li>
+              <NavLink to={"/login"} onClick={isToggled && isToggledHandler}>
+                로그인
+              </NavLink>
+            </li>
+          )}
+          {userInfo.id ? (
+            ""
+          ) : (
+            <li>
+              <NavLink to={"/signup"} onClick={isToggled && isToggledHandler}>
+                회원가입
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink to={"/alert"} onClick={isToggled && isToggledHandler}>
               알람

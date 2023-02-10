@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../UI/Modal";
-import FindBrokerOfficeModalOverlay from "./FindBrokerOfficeModalOverly";
+import FindBrokerOfficeModalOverlay from "./FindBrokerOfficeModalOverlay";
 import { Link } from "react-router-dom";
 import AuthenticityModalOverlay from "./AuthenticityModalOverlay";
 import classes from "./SignUpPageRealtor.module.scss";

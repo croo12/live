@@ -2,9 +2,12 @@ import axiosInstance from "../util/axios";
 
 export const userLogin = (data) => {
   return axiosInstance.post(`users/login`, data).then((response)=>{
+    console.log("안녕 칭구", response);
+
     if (response.data.data.accessToken) {
-      console.log(response.data.data.accessToken);
-      console.log(response.data.data.refreshToken);
+      // console.log(response.data.data.accessToken);
+      // console.log(response.data.data.refreshToken);
+      console.log(response.data.data);
       localStorage.setItem("user", JSON.stringify(response.data.data));
       localStorage.setItem("state", "USER");
     }

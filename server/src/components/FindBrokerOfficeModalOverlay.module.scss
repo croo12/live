@@ -1,0 +1,20 @@
+.searchModal {
+  h2 {
+    text-align: center;
+    margin: 16px;
+  }
+  
+}
+
+.brokerList {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+
+  max-width: 300px;
+
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+}

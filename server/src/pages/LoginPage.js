@@ -4,13 +4,14 @@ import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
 import {userLogin, logout, realtorLogin} from "../apis/MemberService";
 import classes from "./LoginPage.module.scss";
-
+import { useAuth } from "../components/common/AuthProtector";
 
 const LoginPage = () => {
   const [loginMode, setLoginMode] = useState("USER"); // 로그인 모드 상태 확인 ( USER , REALTOR )
+  const user = useAuth();
   const navigation = useNavigate();
 
-  // console.log(loginMode);
+  console.log(user);
 
   const loginModeHandler = (event) => {
     // 로그인 모드 변경 함수
@@ -21,27 +22,17 @@ const LoginPage = () => {
     // 일반 회원 로그인 처리
     // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
-    const frm = new FormData();
-    frm.append("id", userLoginInfo.id);
-    frm.append("password", userLoginInfo.password);
+    const result = userLogin(userLoginInfo);
+    console.log(result);
 
-    const result = userLogin(frm);
-    console.log(result)
-    navigation("/");
-    this.updateForce();
+    user.doLogin(result.data);
   };
 
   const realtorLoginHandler = async (realtorLoginInfo) => {
     // 중개사 회원 로그인 처리
-    const frm = new FormData();
-    frm.append("businessNumber", realtorLoginInfo.businessNumber);
-    frm.append("password", realtorLoginInfo.password);
 
-    // console.log(realtorLoginInfo); // 중개사회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
-
-    realtorLogin(frm).then((result)=>console.log(result))
+    realtorLogin(realtorLoginInfo).then((result) => console.log(result));
     navigation("/");
-    this.updateForce();
   };
 
   return (

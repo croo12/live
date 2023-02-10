@@ -44,7 +44,7 @@ const SignUpPageUser = () => {
         setIdDuplicateError(1);
       }
     } catch (err) {
-      console.error("이거 없음");
+      console.error(err);
     }
   };
 
