@@ -31,19 +31,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @Service
@@ -173,7 +170,7 @@ public class RealtorService {
 
     public ResponseEntity<?> findRealtorList(UserDetails user, String orderBy) {
         String region = "";
-        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
             region = usersRepository.findById(user.getUsername()).get().getRegion();
         }
         List<RealtorProjectionInterface> findRealtors = null;

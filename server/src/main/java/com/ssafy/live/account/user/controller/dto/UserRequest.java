@@ -1,21 +1,11 @@
 package com.ssafy.live.account.user.controller.dto;
 
+import com.ssafy.live.account.common.domain.Authority;
+import com.ssafy.live.account.user.domain.entity.Users;
 import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
-
-import com.ssafy.live.account.common.domain.Authority;
-import com.ssafy.live.account.user.domain.entity.Users;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
 import java.util.Collections;
 
 public class UserRequest {

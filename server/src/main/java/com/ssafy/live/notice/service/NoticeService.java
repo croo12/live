@@ -29,7 +29,7 @@ public class NoticeService {
     public ResponseEntity<?> allNotice(UserDetails user) {
         List<NoticeResponse.Notices> list;
         List<Notice> notices;
-        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
             notices = noticeRepository.findByUsers(usersRepository.findById(user.getUsername()).get());
         } else {
             notices = noticeRepository.findByRealtor(realtorRepository.findByBusinessNumber(user.getUsername()).get());
