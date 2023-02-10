@@ -60,7 +60,7 @@ public class UserService {
         String imgSrc = s3Service.upload(file);
         usersRepository.save(UserRequest.SignUp.toEntity(signUp, passwordEncoder.encode(signUp.getPassword()),  imgSrc));
 
-        smsService.sendSMS(users.getName()+"님 " + SMSContent.NEW_USER.getMessage(), users.getPhone());
+        smsService.sendSMS(signUp.getName()+"님 " + SMSContent.NEW_USER.getMessage(), signUp.getPhone());
         return response.success("회원가입에 성공했습니다.");
     }
 
