@@ -72,20 +72,6 @@ public class ItemResponse {
         private String address;
         private String addressDetail;
 
-        public static ItemSimpleResponse toDto(Item item, String image) {
-            return ItemSimpleResponse.builder()
-                    .itemNo(item.getNo())
-                    .deposit(item.getDeposit())
-                    .rent(item.getRent())
-                    .maintenanceFee(item.getMaintenanceFee())
-                    .description(item.getDescription())
-                    .buildingName(item.getBuildingName())
-                    .image(image)
-                    .address(item.getHouse().getAddress())
-                    .addressDetail(item.getHouse().getAddressDetail())
-                    .build();
-        }
-
         public static ItemSimpleResponse toDto(Item item) {
             return ItemSimpleResponse.builder()
                     .itemNo(item.getNo())

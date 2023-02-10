@@ -4,7 +4,6 @@ import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
-import com.ssafy.live.common.controller.RegionResponse;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.house.controller.dto.ItemRequest;
@@ -119,24 +118,20 @@ public class ItemService {
 
     public ResponseEntity<?> itemsByBuildingName(String token, ItemRequest.ItemsByBuildingName request) {
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
-
-        List<ItemResponse.ItemSimpleResponse> list = new ArrayList<>();
         Realtor realtor = realtorRepository.findByBusinessNumber(authentication.getName())
                 .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
 
-        List<Item> items = itemRepository.findByRealtorLikeBuildingName(request.getWord(), realtor.getNo(), request.getRegionCode());
-        items.stream()
-                .forEach(item -> {
-                    String image = itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc();
-                    list.add(ItemResponse.ItemSimpleResponse.toDto(item, image));
-                });
-        return response.success(list, "매물 목록이 조회되었습니다.", HttpStatus.OK);
+        List<ItemResponse.ItemSimpleResponse> itemList = itemRepository.findByRealtorLikeBuildingName(request.getWord(), realtor.getNo(), request.getRegionCode())
+                .stream()
+                .map(ItemResponse.ItemSimpleResponse::toDto)
+                .collect(Collectors.toList());
+        return response.success(itemList, "매물 목록이 조회되었습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> findItemsByRealtor(Long realtorNo, String regionCode) {
 
         realtorRepository.findById(realtorNo).orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
-        List<ItemResponse.ItemSimpleResponse> itemList = itemRepository.findByRealtorNoAndRegionCode(realtorNo, regionCode)
+        List<ItemResponse.ItemSimpleResponse> itemList = itemRepository.findByRealtorAndRegionCode(realtorNo, regionCode)
                 .stream()
                 .map(ItemResponse.ItemSimpleResponse::toDto)
                 .collect(Collectors.toList());

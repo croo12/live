@@ -1,7 +1,6 @@
 package com.ssafy.live.house.domain.repository;
 
 import com.ssafy.live.house.domain.entity.Item;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,5 +23,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "WHERE i.realtor_no = :realtorNo " +
             "AND h.region_code LIKE :regionCode% " +
             "ORDER BY i.created_date DESC", nativeQuery = true)
-    List<Item> findByRealtorNoAndRegionCode(Long realtorNo, String regionCode);
+    List<Item> findByRealtorAndRegionCode(Long realtorNo, String regionCode);
 }
