@@ -1,12 +1,11 @@
+import classes from "./MyPageUserReservationDetail.module.scss";
 import ListBox from "../../UI/ListBox";
-import classes from "./MyReservationDetailUser.module.scss";
 import HouseCardContent2 from "../HouseCardContent2";
 
-const MyReservationDetailUser = (props) => {
+const MyPageUserReservationDetail = (props) => {
   const onReservationChangeHandler = () => {
     props.onDetailReservationHandler(true);
   };
-
   return (
     <div className={classes.reservationdetailuser}>
       <h3>예약 내역</h3>
@@ -23,4 +22,4 @@ const MyReservationDetailUser = (props) => {
   );
 };
 
-export default MyReservationDetailUser;
+export default MyPageUserReservationDetail;
