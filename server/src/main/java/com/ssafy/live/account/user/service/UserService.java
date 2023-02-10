@@ -56,6 +56,7 @@ public class UserService {
 
     public ResponseEntity<?> signUp(UserRequest.SignUp signUp, MultipartFile file)
             throws IOException {
+        log.info(file.getName());
         if (usersRepository.existsById(signUp.getId())) {
             return response.fail("이미 회원가입된 아이디입니다.", HttpStatus.BAD_REQUEST);
         }
