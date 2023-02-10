@@ -8,6 +8,8 @@
  *  - isPreview, 이미지 미리보기 여부 ( true 일 때 미리보기 )
  *  - addButton : 사진 등록 버튼 ( 기본 : 사진 업로드하기 (텍스트) )
  *  - delButton : 사진 삭제 버튼 ( isPreview 설정안했을 때 삭제하기 위해 생성 )
+ *  - loadedImages : 백엔드에서 이미지 불러와서 사용할 용도
+ *  - setLoadedImages : 부모 컴포넌트에 loadedImage 데이터 설정 함수
  */
 
 import { useEffect, useState } from "react";
@@ -16,6 +18,7 @@ import classes from "./ImageInput.module.scss";
 const ImageInput = (props) => {
   const [imagePreviewState, setImagePreviewState] = useState([]); // 매물 이미지 미리보기
   const [imageState, setImageState] = useState([]); // 매물 이미지 파일
+  const [loadedImages, setLoadedImages] = useState(props.loadedImages); // 이미지 배열[{itemImageNo,imageSrc},{...}]
 
   // 매물 이미지 변경 이벤트 함수
   const ImageChangeEventHandler = async (data) => {
@@ -67,7 +70,10 @@ const ImageInput = (props) => {
     });
 
     // 이미지 파일 개수 유효성 검사 ( 기존 등록된 이미지 수도 고려하여 중복제거 후 검사 )
-    if (nonDuplImages.length > props.maxFileNum) {
+    if (
+      nonDuplImages.length + (!loadedImages ? 0 : loadedImages.length) >
+      props.maxFileNum
+    ) {
       alert(`이미지 등록은 최대 ${props.maxFileNum}개까지만 가능합니다.`);
       return;
     }
@@ -98,7 +104,7 @@ const ImageInput = (props) => {
 
     if (imageSizeValid) {
       alert(
-        `등록이 가능한 사진의 최대 크기는 ${
+        `등록이 가능한 사진의 최대 크기는 1장당 ${
           !props.maxFileSize ? 5 : props.maxFileSize
         }MB입니다.\n업로드 파일의 크기를 확인바랍니다.`
       );
@@ -120,9 +126,26 @@ const ImageInput = (props) => {
     setImageData([...resultSet]);
   };
 
+  // 로드된 이미지 제거용 함수
+  const loadedImageRemoveHandler = (event) => {
+    const targetNo = event.target.value;
+
+    const resultSet = loadedImages.filter((image) => {
+      console.log(targetNo, image.itemImageNo);
+      return image.itemImageNo !== +targetNo;
+    });
+
+    setLoadedData([...resultSet]);
+  };
+
   const setImageData = (data) => {
     setImageState(data);
     props.setImage(data);
+  };
+
+  const setLoadedData = (data) => {
+    setLoadedImages(data);
+    props.setLoadedImages(data);
   };
 
   // 매물 이미지 미리보기 처리 ( imageState 변경 시 실행 )
@@ -191,6 +214,23 @@ const ImageInput = (props) => {
               </div>
             );
           })}
+          {loadedImages &&
+            loadedImages.map((data) => {
+              const imageNo = data.itemImageNo;
+              const imageURL = data.imageSrc;
+              return (
+                <div className={classes.previewImage} key={imageNo}>
+                  <img src={imageURL} alt={imageNo} id={imageNo} />
+                  <button
+                    type="button"
+                    onClick={loadedImageRemoveHandler}
+                    value={imageNo}
+                  >
+                    ✖
+                  </button>
+                </div>
+              );
+            })}
         </>
       )}
     </>
