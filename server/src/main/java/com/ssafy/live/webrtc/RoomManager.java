@@ -17,6 +17,8 @@
 
 package com.ssafy.live.webrtc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -24,6 +26,7 @@ import org.kurento.client.KurentoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * @author Ivan Gracia (izanmail@gmail.com)
@@ -33,19 +36,20 @@ public class RoomManager {
 
   private final Logger log = LoggerFactory.getLogger(RoomManager.class);
 
-  @Autowired
+//  @Autowired
   private KurentoClient kurento;
 
   private final ConcurrentMap<String, Room> rooms = new ConcurrentHashMap<>();
 
-  /**
-   * Looks for a room in the active room list.
-   *
-   * @param roomName
-   *          the name of the room
-   * @return the room if it was already created, or a new one if it is the first time this room is
-   *         accessed
-   */
+
+  @Scheduled(cron="0 0 0 * * ?")
+  public void removeRoomScheduler() {
+    List<Room> roomList = new ArrayList<>(rooms.values());
+    for(Room r : roomList){
+      removeRoom(r);
+    }
+  }
+
   public Room getRoom(String roomName) {
 //    if(kurento==null) kurento = KurentoClient.create();
 
@@ -61,12 +65,7 @@ public class RoomManager {
     return room;
   }
 
-  /**
-   * Removes a room from the list of available rooms.
-   *
-   * @param room
-   *          the room to be removed
-   */
+
   public void removeRoom(Room room) {
     this.rooms.remove(room.getName());
     room.close();
