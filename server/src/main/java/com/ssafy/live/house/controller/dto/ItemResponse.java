@@ -61,7 +61,7 @@ public class ItemResponse {
     @Builder
     @Getter
     @AllArgsConstructor
-    public static class ItemsByBuildingName {
+    public static class ItemSimpleResponse {
         private Long itemNo;
         private int deposit;
         private int rent;
@@ -72,8 +72,8 @@ public class ItemResponse {
         private String address;
         private String addressDetail;
 
-        public static ItemsByBuildingName toEntity(Item item, House house, String image) {
-            return ItemResponse.ItemsByBuildingName.builder()
+        public static ItemSimpleResponse toDto(Item item, String image) {
+            return ItemSimpleResponse.builder()
                     .itemNo(item.getNo())
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
@@ -81,8 +81,22 @@ public class ItemResponse {
                     .description(item.getDescription())
                     .buildingName(item.getBuildingName())
                     .image(image)
-                    .address(house.getAddress())
-                    .addressDetail(house.getAddressDetail())
+                    .address(item.getHouse().getAddress())
+                    .addressDetail(item.getHouse().getAddressDetail())
+                    .build();
+        }
+
+        public static ItemSimpleResponse toDto(Item item) {
+            return ItemSimpleResponse.builder()
+                    .itemNo(item.getNo())
+                    .deposit(item.getDeposit())
+                    .rent(item.getRent())
+                    .maintenanceFee(item.getMaintenanceFee())
+                    .description(item.getDescription())
+                    .buildingName(item.getBuildingName())
+                    .image(item.getItemImages().get(0).getImageSrc())
+                    .address(item.getHouse().getAddress())
+                    .addressDetail(item.getHouse().getAddressDetail())
                     .build();
         }
     }

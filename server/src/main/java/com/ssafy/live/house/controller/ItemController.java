@@ -20,18 +20,20 @@ public class ItemController {
     private final ItemService itemService;
     @PostMapping
     private ResponseEntity<?> registItem(
+            @RequestHeader(AUTHORIZATION) String token,
             @RequestPart ItemRequest.ItemRegistRequest itemRegistRequest,
             @RequestPart List<MultipartFile> files) throws IOException {
         return itemService.registItem(itemRegistRequest, files);
     }
 
     @GetMapping("/{itemNo}")
-    private ResponseEntity<?> inquiryItemDetail(@PathVariable Long itemNo){
+    private ResponseEntity<?> findItemDetail(@PathVariable Long itemNo){
         return itemService.findItemDetail(itemNo);
     }
 
     @PutMapping("/{itemNo}")
     private ResponseEntity<?> updateItemDetail(
+            @RequestHeader(AUTHORIZATION) String token,
             @RequestPart ItemRequest.ItemUpdateRequest itemUpdateRequest,
             @RequestPart List<MultipartFile> files) throws IOException {
         return itemService.updateItemDetail(itemUpdateRequest, files);
@@ -41,4 +43,13 @@ public class ItemController {
     public ResponseEntity<?> itemsByBuildingName(@RequestHeader(AUTHORIZATION) String token, @RequestBody ItemRequest.ItemsByBuildingName request)  {
         return itemService.itemsByBuildingName(token, request);
     }
+
+    @GetMapping("/realtors/{realtorNo}")
+    public ResponseEntity<?> findItemsByRealtor(
+            @RequestParam Long realtorNo,
+            @RequestParam String regionCode
+            ){
+        return itemService.findItemsByRealtor(realtorNo, regionCode);
+    }
+
 }

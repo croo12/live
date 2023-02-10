@@ -4,6 +4,7 @@ import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
 import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
+import com.ssafy.live.common.controller.RegionResponse;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.house.controller.dto.ItemRequest;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.ssafy.live.common.exception.ErrorCode.*;
 
@@ -52,8 +54,8 @@ public class ItemService {
         Long houseNo = 0L;
         House house = null;
         houseNo = itemRegistRequest.getHouse().getHouseNo();
-        if(houseNo!=null) house = houseRepository.findById(houseNo).orElse(null);
-        if(house==null) {
+        if (houseNo != null) house = houseRepository.findById(houseNo).orElse(null);
+        if (house == null) {
             house = itemRegistRequest.getHouse().toEntity();
             houseRepository.save(house);
         }
@@ -64,7 +66,7 @@ public class ItemService {
         item.setOption(itemOption);
 
         List<ItemImage> itemImages = new ArrayList<>();
-        for(MultipartFile file : files){
+        for (MultipartFile file : files) {
             String imageSrc = s3Service.upload(file);
             ItemImage itemImage = ItemImage.builder()
                     .item(item)
@@ -94,14 +96,14 @@ public class ItemService {
 
         List<ItemImage> itemImages = itemImageRepository.findAllByItemNo(item.getNo());
         Set<Long> newImageNoSet = itemUpdateRequest.getItemImages();
-        for(ItemImage img : itemImages){
-            if(!newImageNoSet.contains(img.getNo())){
+        for (ItemImage img : itemImages) {
+            if (!newImageNoSet.contains(img.getNo())) {
                 s3Service.deleteFile(img.getImageSrc());
                 itemImageRepository.deleteById(img.getNo());
             }
         }
 
-        for(MultipartFile file : files){
+        for (MultipartFile file : files) {
             String imageSrc = s3Service.upload(file);
             ItemImage itemImage = ItemImage.builder()
                     .item(item)
@@ -118,17 +120,27 @@ public class ItemService {
     public ResponseEntity<?> itemsByBuildingName(String token, ItemRequest.ItemsByBuildingName request) {
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
 
-        List<ItemResponse.ItemsByBuildingName> list = new ArrayList<>();
+        List<ItemResponse.ItemSimpleResponse> list = new ArrayList<>();
         Realtor realtor = realtorRepository.findByBusinessNumber(authentication.getName())
                 .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
 
         List<Item> items = itemRepository.findByRealtorLikeBuildingName(request.getWord(), realtor.getNo(), request.getRegionCode());
         items.stream()
                 .forEach(item -> {
-                    House house = item.getHouse();
                     String image = itemImageRepository.findTop1ByItemNo(item.getNo()).getImageSrc();
-                    list.add(ItemResponse.ItemsByBuildingName.toEntity(item, house, image));
+                    list.add(ItemResponse.ItemSimpleResponse.toDto(item, image));
                 });
         return response.success(list, "매물 목록이 조회되었습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> findItemsByRealtor(Long realtorNo, String regionCode) {
+
+        realtorRepository.findById(realtorNo).orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
+        List<ItemResponse.ItemSimpleResponse> itemList = itemRepository.findByRealtorNoAndRegionCode(realtorNo, regionCode)
+                .stream()
+                .map(ItemResponse.ItemSimpleResponse::toDto)
+                .collect(Collectors.toList());
+
+        return response.success(itemList, "매물 목록이 조회되었습니다.", HttpStatus.OK);
     }
 }
