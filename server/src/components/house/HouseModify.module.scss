@@ -99,6 +99,10 @@
         border-collapse: collapse;
         margin-top: 12px;
 
+        @media (max-width: 1024px) {
+          width: 20%;
+        }
+
         tr {
           border-width: 0 0 1px 0;
           border-color: #bababa;
@@ -168,6 +172,19 @@
           }
         }
 
+        .addressDesc {
+          font-size: 12px;
+
+          span {
+            color: red;
+            font-weight: 700;
+          }
+
+          @media (max-width: 1024px) {
+            font-size: calc(12 * 0.1vw);
+          }
+        }
+
         .searchBtn {
           box-sizing: border-box;
           width: 113px;
@@ -190,6 +207,25 @@
 
         .searchBtn:hover {
           opacity: 0.7;
+        }
+
+        .buildingName {
+          box-sizing: border-box;
+          width: 140px;
+          height: 40px;
+          background: #fafafa;
+          border: 1px solid #bbbbbb;
+          border-radius: 4px;
+          padding: 8px;
+          margin: 4px;
+
+          @media (max-width: 1024px) {
+            width: calc(140 * 0.1vw);
+            height: calc(40 * 0.1vw);
+            margin: calc(4 * 0.1vw);
+            padding: calc(8 * 0.1vw);
+            font-size: calc(16 * 0.1vw);
+          }
         }
 
         .subAddress {
@@ -590,7 +626,6 @@
           flex-direction: column;
           justify-content: space-evenly;
           align-items: center;
-
           cursor: pointer;
 
           .plus {
@@ -647,5 +682,15 @@
     button:hover {
       opacity: 0.7;
     }
+  }
+
+  * input:disabled {
+    background: repeating-linear-gradient(
+      -45deg,
+      #ebebeb,
+      #ebebeb 2px,
+      #fafafa 0,
+      #fafafa 12px
+    ) !important;
   }
 }
