@@ -4,6 +4,8 @@ import com.ssafy.live.review.controller.dto.ReviewRequest;
 import com.ssafy.live.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -21,7 +23,8 @@ public class ReviewController {
     }
 
     @GetMapping
-    public ResponseEntity<?> allReview(@RequestHeader(AUTHORIZATION) String token) {
-        return reviewService.allReview(token);
+    public ResponseEntity<?> allReview(Authentication authentication) {
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return reviewService.allReview(principal);
     }
 }

@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin().disable()
             .authorizeRequests()
-                .antMatchers("/users", "/users/login", "/realtors", "/realtors/login").permitAll()
+                .antMatchers("/users", "/users/login", "/users/id", "/realtors", "/realtors/login", "/realtors/id").permitAll()
             .antMatchers("/users/id", "/users/info", "/users/passcheck").hasAuthority("USER")
             .antMatchers("realtors/region", "/realtors/{realtorNo}", "/realtors/info", "/realtors/passcheck", "/realtors/{realtorNo}/consultings").hasAuthority("REALTOR")
             .antMatchers("/consultings/**").permitAll()

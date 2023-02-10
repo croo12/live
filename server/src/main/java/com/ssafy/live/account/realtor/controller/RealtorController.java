@@ -64,9 +64,10 @@ public class RealtorController {
     }
 
     @DeleteMapping()
-    public ResponseEntity<?> withdrawl(@RequestHeader(AUTHORIZATION) String token) {
+    public ResponseEntity<?> withdrawl(Authentication authentication) {
         log.info("회원 탈퇴");
-        return realtorService.withdrawl(token);
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return realtorService.withdrawl(principal);
     }
 
     @GetMapping("/authority")
@@ -107,8 +108,9 @@ public class RealtorController {
     }
 
     @GetMapping
-    public ResponseEntity<?> findRealtorList(@RequestHeader(AUTHORIZATION) String token, @RequestParam String orderBy) {
+    public ResponseEntity<?> findRealtorList(Authentication authentication, @RequestParam String orderBy) {
         log.info("메인페이지 공인중개사 목록 조회");
-        return realtorService.findRealtorList(token, orderBy);
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return realtorService.findRealtorList(principal, orderBy);
     }
 }
