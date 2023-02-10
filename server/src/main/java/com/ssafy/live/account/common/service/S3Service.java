@@ -9,8 +9,10 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +21,7 @@ import java.util.UUID;
 
 @Service
 @NoArgsConstructor
+@Slf4j
 public class S3Service {
 
     private AmazonS3 s3Client;
@@ -46,14 +49,14 @@ public class S3Service {
     }
 
     public String upload(MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            return null;
-        } else {
+        if (file != null && !file.isEmpty()) {
             String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename().replaceAll("[~!@#$%^&*()_+ ]", "_");
             System.out.println("file " + file.getOriginalFilename());
             s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return s3Client.getUrl(bucket, fileName).toString();
+        } else {
+            return null;
         }
     }
 

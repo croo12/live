@@ -59,6 +59,7 @@ public class UserService {
         if (usersRepository.existsById(signUp.getId())) {
             return response.fail("이미 회원가입된 아이디입니다.", HttpStatus.BAD_REQUEST);
         }
+
         String imgSrc = s3Service.upload(file);
         usersRepository.save(UserRequest.SignUp.toEntity(signUp, passwordEncoder.encode(signUp.getPassword()),  imgSrc));
 
