@@ -57,6 +57,12 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: 'false'
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      enabled: 'true'
+      max-request-size: 30MB
+      location: /Live/Images/profile/
 
 naver:
   accessKey: ${NAVER_ACCESSKEY}
@@ -83,12 +89,6 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      enabled: 'true'
-      max-request-size: 30MB
-      location: /Live/Images/profile/
   profiles:
     include: aws
 
