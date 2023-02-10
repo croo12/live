@@ -15,6 +15,7 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.SMSContent;
+import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.common.service.SMSService;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +35,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -63,10 +67,9 @@ public class UserService {
     }
 
     public ResponseEntity<?> login(UserRequest.Login login) {
-        Users users = usersRepository.findById(login.getId()).get();
-        if (users == null) {
-            return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
-        }
+        Users users = usersRepository.findById(login.getId())
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
+
         log.info("로그인 DTO ",login.getPassword());
         log.info("유저 DTO ",users.getPassword());
         if(!passwordEncoder.matches(login.getPassword(), users.getPassword())) {
@@ -94,26 +97,22 @@ public class UserService {
     }
 
     public ResponseEntity<?> findUserDetail(UserDetails user) {
-        Users users = usersRepository.findById(user.getUsername()).get();
-//                .orElseThrow(()-> new BadRequestException(USER_NOT_FOUND));
+        Users users = usersRepository.findById(user.getUsername())
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         UserResponse.FindDetail detail = UserResponse.FindDetail.toDto(users);
         return response.success(detail, "회원 정보를 조회하였습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> withdrawal(UserDetails user) {
-        Users users = usersRepository.findById(user.getUsername()).get();
-        if(users == null) {
-            return response.fail("해당하는 회원을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
+        Users users = usersRepository.findById(user.getUsername())
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         usersRepository.deleteById(users.getNo());
         return response.success("회원탈퇴 되었습니다.");
     }
 
     public ResponseEntity<?> temporaryPassword(FindPassword request) {
-        Users users = usersRepository.findByEmailAndId(request.getEmail(), request.getId());
-        if(users == null) {
-            return response.fail("해당하는 사용자 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
+        Users users = usersRepository.findByEmailAndId(request.getEmail(), request.getId())
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         String temporaryPwd = users.generateRandomPassword();
         users.updatePassword(passwordEncoder.encode(temporaryPwd));
         usersRepository.save(users);
@@ -129,10 +128,8 @@ public class UserService {
     }
 
     public ResponseEntity<?> updateUser(UserDetails user, Update request, MultipartFile file) throws IOException {
-        Users users = usersRepository.findById(user.getUsername()).get();
-        if(users == null) {
-            return response.fail("해당하는 사용자를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
+        Users users = usersRepository.findById(user.getUsername())
+                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         String preImg = users.getImageSrc();
         if(file != null) {
             s3Service.deleteFile(preImg);
