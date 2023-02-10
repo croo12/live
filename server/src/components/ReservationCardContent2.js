@@ -11,9 +11,11 @@ const ReservationCardContent2 = ({
   tabActive,
   userInfo,
 }) => {
+  const navigation = useNavigate();
   const onDetailHandler = () => {
-    onDetailReservationHandler(null);
+    navigation("../user-reservation-detail");
   };
+
   return (
     <div className={classes.content}>
       <div className={classes.leftContent}>
