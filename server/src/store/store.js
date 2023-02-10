@@ -18,12 +18,13 @@ import userSlice from "./user-slice";
 const reducers = combineReducers({
   house: houseSlice.reducer,
   reserve: reservedItemSlice.reducer,
+  user: userSlice.reducer,
 });
 
 const persistConfig = {
   key: "root",
   storage: session,
-  whitelist: [], // 세션으로 관리하고 싶은 리듀서 이름(문자) 입력(선택)
+  whitelist: [`user`], // 세션으로 관리하고 싶은 리듀서 이름(문자) 입력(선택)
   // blacklist: [],
 };
 

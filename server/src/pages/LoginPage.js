@@ -11,8 +11,6 @@ const LoginPage = () => {
   const user = useAuth();
   const navigation = useNavigate();
 
-  console.log(user);
-
   const loginModeHandler = (event) => {
     // 로그인 모드 변경 함수
     setLoginMode(event.target.value);

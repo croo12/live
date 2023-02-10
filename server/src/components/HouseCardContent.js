@@ -205,6 +205,9 @@ export const ContractHouseCardContent = (props) => {
               <div className={classes.forSale}>
                 <strong>매물가격</strong>{" "}
                 <input
+                  onChange={() => {
+                    console.log(`갸마다마`);
+                  }}
                   type="text"
                   value={
                     "월세" +
@@ -217,15 +220,30 @@ export const ContractHouseCardContent = (props) => {
               </div>
               <div className={classes.extraFee}>
                 <strong>추가 비용</strong>{" "}
-                <input value={"관리비" + forSale.houseExtraFee}></input>
+                <input
+                  onChange={() => {
+                    console.log(`갸마다마`);
+                  }}
+                  value={"관리비" + forSale.houseExtraFee}
+                ></input>
               </div>
               <div className={classes.term}>
                 <strong>계약 기간</strong>{" "}
-                <input value={forSale.houseMonth + "개월"}></input>
+                <input
+                  onChange={() => {
+                    console.log(`갸마다마`);
+                  }}
+                  value={forSale.houseMonth + "개월"}
+                ></input>
               </div>
               <div className={classes.moveDate}>
                 <strong>입주 희망일</strong>{" "}
-                <input value={forSale.houseMoveIn}></input>
+                <input
+                  onChange={() => {
+                    console.log(`갸마다마`);
+                  }}
+                  value={forSale.houseMoveIn}
+                ></input>
               </div>
             </div>
           </div>

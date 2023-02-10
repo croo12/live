@@ -13,15 +13,33 @@ const ContractExpectedCost = () => {
           <div className={classes.costBox}>
             <div className={classes.downPayment}>
               <p>계약금</p>
-              <input type="text" value={downPayment + "원"} />
+              <input
+                onChange={() => {
+                  console.log("하위");
+                }}
+                type="text"
+                value={downPayment + "원"}
+              />
             </div>
             <div className={classes.balance}>
               <p>잔금</p>
-              <input type="text" value={balance + "원"} />
+              <input
+                onChange={() => {
+                  console.log("하위");
+                }}
+                type="text"
+                value={balance + "원"}
+              />
             </div>
             <div className={classes.brokerageFee}>
               <p>중개보수</p>
-              <input type="text" value={brokerageFee + "원"} />
+              <input
+                onChange={() => {
+                  console.log("하위");
+                }}
+                type="text"
+                value={brokerageFee + "원"}
+              />
             </div>
           </div>
           <hr />
