@@ -1,6 +1,7 @@
 package com.ssafy.live.house.service;
 
 import com.ssafy.live.common.domain.Response;
+import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.house.controller.dto.HouseResponse;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.repository.HouseRepository;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import static com.ssafy.live.common.exception.ErrorCode.HOUSE_NOT_FOUND;
 
 @Slf4j
 @Service
@@ -20,10 +23,10 @@ public class HouseService {
 
     public ResponseEntity<?> findHouseByAddress(String address, String addressDetail){
         House house = houseRepository.findTop1ByAddressAndAddressDetail(address,addressDetail);
-
         if(house==null){
-            return response.fail("주택 정보가 없습니다.", HttpStatus.NO_CONTENT);
+             throw new BadRequestException(HOUSE_NOT_FOUND);
         }
+
         HouseResponse.HouseDetailResponse houseDetailResponse = HouseResponse.HouseDetailResponse.toDto(house);
         return response.success(houseDetailResponse,"주택 정보가 조회되었습니다.", HttpStatus.OK);
     }
