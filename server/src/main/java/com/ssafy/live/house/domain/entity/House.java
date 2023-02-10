@@ -39,6 +39,8 @@ public class House extends BaseEntity {
     private int totalFloor;
 
     private String purpose;
+    @Column(name = "building_name")
+    private String buildingName;
 
     private String sido;
 

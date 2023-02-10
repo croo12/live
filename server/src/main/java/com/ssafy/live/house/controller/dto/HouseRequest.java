@@ -57,6 +57,7 @@ public class HouseRequest {
                     .dong(dong)
                     .zipCode(zipcode)
                     .regionCode(regionCode)
+                    .buildingName(buildingName)
                     .build();
         }
     }

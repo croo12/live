@@ -24,7 +24,6 @@ public class ItemResponse {
         private int deposit;
         private int rent;
         private int maintenanceFee;
-        private String buildingName;
         private String description;
         private LocalDate moveInDate;
         private Heating heating;
@@ -44,7 +43,6 @@ public class ItemResponse {
                     .house(HouseResponse.HouseDetailResponse.toDto(item.getHouse()))
                     .itemOption(ItemOptionResponse.ItemOptionDetailResponse.toDto(item.getItemOption()))
                     .itemNo(item.getNo())
-                    .buildingName(item.getBuildingName())
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
                     .maintenanceFee(item.getMaintenanceFee())
@@ -79,7 +77,6 @@ public class ItemResponse {
                     .rent(item.getRent())
                     .maintenanceFee(item.getMaintenanceFee())
                     .description(item.getDescription())
-                    .buildingName(item.getBuildingName())
                     .image(item.getItemImages().get(0).getImageSrc())
                     .address(item.getHouse().getAddress())
                     .addressDetail(item.getHouse().getAddressDetail())

@@ -31,8 +31,6 @@ public class Item extends BaseEntity {
     private int maintenanceFee;
 
     private String description;
-    @Column(name = "building_name")
-    private String buildingName;
 
     @Column(name = "move_in_date")
     private LocalDate moveInDate;

@@ -58,7 +58,7 @@ public class ContractResponse {
             private int maintenanceFee;
             public static ItemInfo toEntity(Item item) {
                 return ItemInfo.builder()
-                        .buildingName(item.getBuildingName())
+                        .buildingName(item.getHouse().getBuildingName())
                         .address(item.getHouse().getAddress())
                         .rent(item.getRent())
                         .deposit(item.getDeposit())
@@ -133,7 +133,7 @@ public class ContractResponse {
             public static ItemInfo toEntity(Item item, List<String> images) {
                 return ItemInfo.builder()
                     .address(item.getHouse().getAddress())
-                    .buildingName(item.getBuildingName())
+                    .buildingName(item.getHouse().getBuildingName())
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
                     .mainteneceFee(item.getMaintenanceFee())

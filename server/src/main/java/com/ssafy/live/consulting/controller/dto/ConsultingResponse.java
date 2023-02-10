@@ -110,7 +110,7 @@ public class ConsultingResponse {
                         .rent(item.getRent())
                         .maintenanceFee(item.getMaintenanceFee())
                         .description(item.getDescription())
-                        .buildingName(item.getBuildingName())
+                        .buildingName(item.getHouse().getBuildingName())
                         .address(house.getAddress())
                         .addressDetail(house.getAddressDetail())
                         .build();
@@ -195,7 +195,7 @@ public class ConsultingResponse {
             public static ItemForContract.ItemInfo toEntity(Item item, List<String> images) {
                 return ItemForContract.ItemInfo.builder()
                     .itemNo(item.getNo())
-                    .buildingName(item.getBuildingName())
+                    .buildingName(item.getHouse().getBuildingName())
                     .address(item.getHouse().getAddress())
                     .rent(item.getRent())
                     .deposit(item.getDeposit())

@@ -108,7 +108,7 @@ public class ConsultingService {
                 String buildingName = "";
                 if (consultingItems.size()>0) {
                     count = consultingItems.size() - 1;
-                    buildingName = consultingItems.get(0).getItem().getBuildingName();
+                    buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
                 }
                 list.add(ReservationRealtor.toResponse(consulting, user, buildingName, count));
             });
@@ -132,7 +132,7 @@ public class ConsultingService {
                     String buildingName = "";
                     if (consultingItems.size()>0) {
                         count = consultingItems.size() - 1;
-                        buildingName = consultingItems.get(0).getItem().getBuildingName();
+                        buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
                     }
                     list.add(ReservationUser.toEntity(consulting, realtor, buildingName, count));
                 });
