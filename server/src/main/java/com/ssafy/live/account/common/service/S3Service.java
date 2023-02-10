@@ -11,6 +11,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
@@ -46,7 +47,7 @@ public class S3Service {
     }
 
     public String upload(MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
+        if (file.isEmpty() || StringUtils.hasText(file.getName())) {
             return null;
         } else {
             String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename().replaceAll("[~!@#$%^&*()_+ ]", "_");
