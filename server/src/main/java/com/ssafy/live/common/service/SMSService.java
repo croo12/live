@@ -46,14 +46,6 @@ public class SMSService {
         sendSMS(content, user.getPhone());
     }
 
-    public void sendSMS(String content, String phone) {
-        String callingNumber = "01092352527";
-
-        JSONObject bodyJson = makeBodyJson(content, phone, callingNumber);
-        String body = bodyJson.toString();
-
-        trySMS(body);
-    }
 
 //    @Scheduled(cron="0 0 8 * * ?")
 //    public void reserveSMSScheduler() {
@@ -73,6 +65,15 @@ public class SMSService {
         String reserveTimeFormat = reserveTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         JSONObject bodyJson = makeBodyJson(content, phone, callingNumber);
         bodyJson.put("reserveTime", reserveTimeFormat);
+        String body = bodyJson.toString();
+
+        trySMS(body);
+    }
+
+    public void sendSMS(String content, String phone) {
+        String callingNumber = "01092352527";
+
+        JSONObject bodyJson = makeBodyJson(content, phone, callingNumber);
         String body = bodyJson.toString();
 
         trySMS(body);
