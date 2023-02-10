@@ -1,16 +1,21 @@
 package com.ssafy.live.account.realtor.controller.dto;
 
+import com.ssafy.live.account.common.domain.Authority;
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.Collections;
 
 public class RealtorRequest {
 
     @Getter
     @Setter
+    @Builder
     public static class SignUp {
 
         @NotEmpty(message = "사업자 번호는 필수 입력값입니다.")
@@ -26,8 +31,23 @@ public class RealtorRequest {
         private String description;
         private String businessAddress;
         private LocalDate startDate;
-        @Column(columnDefinition = "TEXT")
-        private String filePath;
+
+        public static Realtor toEntity(SignUp realtor, String imgSrc, String password) {
+            return Realtor.builder()
+                    .password(password)
+                    .name(realtor.getName())
+                    .email(realtor.getEmail())
+                    .phone(realtor.getPhone())
+                    .corp(realtor.getCorp())
+                    .description(realtor.getDescription())
+                    .businessNumber(realtor.getBusinessNumber())
+                    .businessAddress(realtor.getBusinessAddress())
+                    .startDate(realtor.getStartDate())
+                    .registrationNumber(realtor.getRegistrationNumber())
+                    .roles(Collections.singletonList(Authority.REALTOR.name()))
+                    .imageSrc(imgSrc)
+                    .build();
+        }
     }
 
     @Getter
@@ -73,7 +93,6 @@ public class RealtorRequest {
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Update {
-
         private String phone;
         private String password;
         private String description;

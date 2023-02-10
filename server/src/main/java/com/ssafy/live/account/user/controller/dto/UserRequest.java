@@ -2,6 +2,9 @@ package com.ssafy.live.account.user.controller.dto;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
+
+import com.ssafy.live.account.common.domain.Authority;
+import com.ssafy.live.account.user.domain.entity.Users;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import java.util.Collections;
 
 public class UserRequest {
 
@@ -29,8 +34,20 @@ public class UserRequest {
         private String region;
         private String gender;
         private String imageSrc;
-        @Column(columnDefinition = "TEXT")
-        private String filePath;
+
+        public static Users toEntity(UserRequest.SignUp signUp, String password, String imageSrc) {
+            return Users.builder()
+                    .id(signUp.getId())
+                    .password(password)
+                    .name(signUp.getName())
+                    .email(signUp.getEmail())
+                    .phone(signUp.getPhone())
+                    .region(signUp.getRegion())
+                    .gender(signUp.getGender())
+                    .imageSrc(imageSrc)
+                    .roles(Collections.singletonList(Authority.USER.name()))
+                    .build();
+        }
     }
 
     @Getter

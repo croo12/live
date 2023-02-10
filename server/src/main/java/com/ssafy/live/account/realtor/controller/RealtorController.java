@@ -3,10 +3,13 @@ package com.ssafy.live.account.realtor.controller;
 import com.ssafy.live.account.common.error.ErrorHandler;
 import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.account.realtor.service.RealtorService;
+import io.swagger.annotations.Authorization;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -71,10 +74,11 @@ public class RealtorController {
         return realtorService.authority();
     }
 
-    @PostMapping("/info/{realtorNo}")
-    public ResponseEntity<?> updateRealtor(@PathVariable("realtorNo") Long realtorNo, @RequestPart(value = "Update") RealtorRequest.Update request, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+    @PostMapping("/info")
+    public ResponseEntity<?> updateRealtor(Authentication authentication, @RequestPart(value = "Update") RealtorRequest.Update request, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
         log.info("공인중개사 정보수정");
-        return realtorService.updateRealtor(realtorNo, request, file);
+        return realtorService.updateRealtor(principal, request, file);
     }
 
     @PostMapping("/passcheck")

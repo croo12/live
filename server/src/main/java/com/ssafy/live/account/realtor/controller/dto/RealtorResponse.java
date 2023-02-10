@@ -28,12 +28,24 @@ public class RealtorResponse {
     @Getter
     @Builder
     @AllArgsConstructor
-    public static class Update {
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class UpdateRealtor {
 
+        private String name;
+        private String email;
         private String phone;
         private String description;
-        private String email;
         private String imageSrc;
+
+        public static RealtorResponse.UpdateRealtor toEntity(Realtor realtor) {
+            return UpdateRealtor.builder()
+                    .name(realtor.getName())
+                    .email(realtor.getEmail())
+                    .phone(realtor.getPhone())
+                    .description(realtor.getDescription())
+                    .imageSrc(realtor.getImageSrc())
+                    .build();
+        }
     }
 
     @Builder
@@ -49,14 +61,14 @@ public class RealtorResponse {
         private String businessAddress;
         private String imageSrc;
 
-        public static RealtorResponse.FindByRegion toEntity(Realtor r) {
+        public static RealtorResponse.FindByRegion toEntity(Realtor realtor) {
             return RealtorResponse.FindByRegion.builder()
-                .name(r.getName())
-                .phone(r.getPhone())
-                .corp(r.getCorp())
-                .description(r.getDescription())
-                .businessAddress(r.getBusinessAddress())
-                .imageSrc(r.getImageSrc())
+                .name(realtor.getName())
+                .phone(realtor.getPhone())
+                .corp(realtor.getCorp())
+                .description(realtor.getDescription())
+                .businessAddress(realtor.getBusinessAddress())
+                .imageSrc(realtor.getImageSrc())
                 .build();
         }
     }
@@ -67,30 +79,24 @@ public class RealtorResponse {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class FindDetail {
 
-        private Long no;
         private String name;
         private String email;
         private String phone;
-        private String imageSrc;
-        private String businessNumber;
-        private String corp;
-        private String registrationNumber;
         private String description;
+        private float ratingScore;
         private String businessAddress;
+        private String imageSrc;
 
-        public static FindDetail toEntity(Realtor realtor) {
-            return RealtorResponse.FindDetail.builder()
-                .no(realtor.getNo())
-                .businessNumber(realtor.getBusinessNumber())
-                .name(realtor.getName())
-                .email(realtor.getEmail())
-                .phone(realtor.getPhone())
-                .corp(realtor.getCorp())
-                .registrationNumber(realtor.getRegistrationNumber())
-                .description(realtor.getDescription())
-                .businessAddress(realtor.getBusinessAddress())
-                .imageSrc(realtor.getImageSrc())
-                .build();
+        public static RealtorResponse.FindDetail toEntity(Realtor realtor) {
+            return FindDetail.builder()
+                    .name(realtor.getName())
+                    .email(realtor.getEmail())
+                    .phone(realtor.getPhone())
+                    .description(realtor.getDescription())
+                    .imageSrc(realtor.getImageSrc())
+                    .businessAddress(realtor.getBusinessAddress())
+                    .ratingScore(realtor.getRatingScore())
+                    .build();
         }
     }
 
@@ -180,15 +186,4 @@ public class RealtorResponse {
         }
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class FindRealtorList {
-
-        private String name;
-        private String imageSrc;
-        private String corp;
-        private int review;
-        private float starScore;
-    }
 }
