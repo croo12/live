@@ -12,6 +12,7 @@ import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ContractStatus;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.exception.BadRequestException;
+import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.contract.controller.dto.ContractRequest;
 import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import com.ssafy.live.contract.controller.dto.ContractResponse;
