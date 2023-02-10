@@ -22,6 +22,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(value = "SELECT i.* FROM Item i " +
             "INNER JOIN house h ON h.house_no=i.house_no " +
             "WHERE i.realtor_no = :realtorNo " +
-            "AND h.region_code LIKE :regionCode%", nativeQuery = true)
+            "AND h.region_code LIKE :regionCode% " +
+            "ORDER BY i.created_date DESC", nativeQuery = true)
     List<Item> findByRealtorNoAndRegionCode(Long realtorNo, String regionCode);
 }
