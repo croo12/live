@@ -1,16 +1,19 @@
 import { useNavigate, useRouteError } from "react-router-dom";
 
-const ErrorCommonPage = () => {
+const ErrorCommonPage = (props) => {
   const error = useRouteError();
-  const navi = useNavigate();
-  console.log(error);
+  const navigate = useNavigate();
   return (
     <>
-      <h1> 너의 에러 </h1>
-      <p> {error.error?.message ? error.error.message : error.message} </p>
+      <h1> Error Page ! </h1>
+      {props.errorMsg ? (
+        <p>{props.errorMsg}</p>
+      ) : (
+        <p> {error.error?.message ? error.error.message : error.message} </p>
+      )}
       <button
         onClick={() => {
-          navi("/");
+          navigate("/");
         }}
       >
         고 홈

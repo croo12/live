@@ -22,6 +22,8 @@ export const registHouseData = async (data) => {
           heating: data.heating,
           moveInDate: data.moveInDate,
           house: {
+            houseNo: data.houseNo,
+            isActive: data.isActive,
             address: data.address,
             addressDetail: data.addressDetail,
             bathroom: data.bathroom,
@@ -82,33 +84,49 @@ export const registHouseData = async (data) => {
       },
     });
 
-    if (response.data.result === "fail") {
-      throw new Error(response.data.massage);
-    }
-
-    alert(response.data.massage);
+    return response.data.result;
   };
 
   try {
-    await sendRequest();
+    const response = await sendRequest();
+    return response;
   } catch (error) {
-    alert(error);
+    alert("등록에 실패했습니다.");
   }
 };
 
 export const findHouseByAddress = async (data) => {
   const getData = async () => {
-    const response = axiosInstance.get("/houses", {
+    const response = await axiosInstance.get("/houses", {
       params: {
         address: data.address,
         addressDetail: data.addressDetail,
       },
     });
 
-    console.log(response);
+    return response.data;
   };
 
   try {
-    getData();
+    const response = await getData();
+    return response;
+  } catch {
+    alert("조회에 실패했습니다.");
+  }
+};
+
+export const getHouseByItemNo = async (data) => {
+  const getData = async () => {
+    console.log(data);
+    const response = await axiosInstance.get(`/items/${data}`);
+
+    console.log(response);
+
+    return response.data;
+  };
+
+  try {
+    const response = await getData();
+    console.log(response);
   } catch {}
 };

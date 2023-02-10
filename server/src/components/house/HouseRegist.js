@@ -5,27 +5,31 @@ import SearchAddress from "../common/SearchAddress";
 import classes from "./HouseRegist.module.scss";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { findHouseByAddress, registHouseData } from "../../store/house-actions";
-import { useLocation } from "react-router-dom";
+import { findHouseByAddress, registHouseData } from "../../apis/houseApis";
+import { useNavigate } from "react-router-dom";
 
 const HouseRegist = () => {
   const [SearchAddressModal, setSearchAddressModal] = useState(false); // 주소 검색 모달창 상태 관리용
   const [PurposeModal, setPurposeModal] = useState(false); // 건축물 용도 모달창 상태
   const [images, setImages] = useState([]); // 매물 이미지 파일
-  const dispatch = useDispatch();
+  const [findAddress, setFindAddress] = useState(null);
+
+  const [direction, setDirection] = useState("");
+  const [entrance, setEntrance] = useState("");
+  const [heating, setHeating] = useState("");
+
+  const navigate = useNavigate();
 
   // const realtorNo = useRef();
   const deposit = useRef();
   const rent = useRef();
   const maintenanceFee = useRef();
   const description = useRef();
-  const direction = useRef();
-  const entrance = useRef();
-  const heating = useRef();
   const moveInDate = useRef();
   const buildingName = useRef();
 
+  const houseNo = useRef();
+  const isActive = useRef();
   const address = useRef();
   const addressDetail = useRef();
   const sido = useRef();
@@ -43,7 +47,6 @@ const HouseRegist = () => {
   const room = useRef();
 
   const airConditioner = useRef();
-  // const bath = useRef();
   const bathtub = useRef();
   const bed = useRef();
   const bidet = useRef();
@@ -76,33 +79,112 @@ const HouseRegist = () => {
     setImages(data);
   };
 
-  const registHouseInfo = (event) => {
+  const registHouseInfo = async (event) => {
     event.preventDefault();
 
-    console.log(airConditioner);
+    const validText = "기본 정보, 추가 정보(옵션 제외) 입력은 필수입니다.";
 
-    registHouseData({
-      realtorNo: 1,
-      deposit: deposit.current.value,
-      rent: rent.current.value,
-      maintenanceFee: maintenanceFee.current.value,
+    if (address.current.value.trim() === "") {
+      address.current.focus();
+      alert(validText);
+      return;
+    } else if (addressDetail.current.value.trim() === "") {
+      addressDetail.current.focus();
+      alert(validText);
+      return;
+    } else if (buildingName.current.value.trim() === "") {
+      buildingName.current.focus();
+      alert(validText);
+      return;
+    } else if (deposit.current.value.trim() === "") {
+      deposit.current.focus();
+      alert(validText);
+      return;
+    } else if (rent.current.value.trim() === "") {
+      rent.current.focus();
+      alert(validText);
+      return;
+    } else if (maintenanceFee.current.value.trim() === "") {
+      maintenanceFee.current.focus();
+      alert(validText);
+      return;
+    } else if (room.current.value.trim() === "") {
+      room.current.focus();
+      alert(validText);
+      return;
+    } else if (bathroom.current.value.trim() === "") {
+      bathroom.current.focus();
+      alert(validText);
+      return;
+    } else if (floor.current.value.trim() === "") {
+      floor.current.focus();
+      alert(validText);
+      return;
+    } else if (totalFloor.current.value.trim() === "") {
+      totalFloor.current.focus();
+      alert(validText);
+      return;
+    } else if (supplyArea.current.value.trim() === "") {
+      supplyArea.current.focus();
+      alert(validText);
+      return;
+    } else if (exclusivePrivateArea.current.value.trim() === "") {
+      exclusivePrivateArea.current.focus();
+      alert(validText);
+      return;
+    } else if (purpose.current.value.trim() === "") {
+      purpose.current.focus();
+      alert(validText);
+      return;
+    } else if (completionYear.current.value.trim() === "") {
+      completionYear.current.focus();
+      alert(validText);
+      return;
+    } else if (moveInDate.current.value.trim() === "") {
+      moveInDate.current.focus();
+      alert(validText);
+      return;
+    } else if (direction.trim() === "") {
+      alert("추가정보[방향] 선택은 필수입니다.");
+      return;
+    } else if (entrance.trim() === "") {
+      alert("추가정보[현관구조] 선택은 필수입니다.");
+      return;
+    } else if (heating.trim() === "") {
+      alert("추가정보[난방방식] 선택은 필수입니다.");
+      return;
+    } else if (images.length < 5) {
+      alert("최소 5장 이상의 사진을 등록해야 합니다.");
+      return;
+    }
+    //--------------------------------------------------------------------------
+    const response = await registHouseData({
+      realtorNo: 1, //수정해주세용~~
+      deposit: deposit.current.value.replaceAll(",", ""),
+      rent: rent.current.value.replaceAll(",", ""),
+      maintenanceFee: maintenanceFee.current.value.replaceAll(",", ""),
       description: description.current.value,
-      direction: direction.current.value,
-      entrance: entrance.current.value,
-      heating: heating.current.value,
+      direction: direction,
+      entrance: entrance,
+      heating: heating,
       moveInDate: moveInDate.current.value,
       buildingName: buildingName.current.value,
 
+      houseNo: houseNo.value,
+      isActive: isActive.current.checked,
       address: address.current.value,
       addressDetail: addressDetail.current.value,
-      bathroom: bathroom.current.value,
+      bathroom: bathroom.current.value.replaceAll(",", ""),
       completionYear: completionYear.current.value,
-      exclusivePrivateArea: exclusivePrivateArea.current.value,
-      supplyArea: supplyArea.current.value,
-      floor: floor.current.value,
-      totalFloor: totalFloor.current.value,
+      exclusivePrivateArea: exclusivePrivateArea.current.value.replaceAll(
+        ",",
+        ""
+      ),
+      supplyArea: supplyArea.current.value.replaceAll(",", ""),
+      floor: floor.current.value.replaceAll(",", ""),
+      totalFloor: totalFloor.current.value.replaceAll(",", ""),
       purpose: purpose.current.value,
-      room: room.current.value,
+      room: room.current.value.replaceAll(",", ""),
       sido: sido.value,
       dong: dong.value,
       gugun: gugun.value,
@@ -140,6 +222,11 @@ const HouseRegist = () => {
       washingMachine: washingMachine.current.checked,
       files: [...images],
     });
+
+    if (response === "success") {
+      alert("등록이 완료되었습니다.");
+      navigate("/house");
+    }
   };
 
   const purposeModalHandler = () => {
@@ -165,14 +252,84 @@ const HouseRegist = () => {
     regionCode.value = addressInfo.regionCode;
   };
 
-  const findHouseByAddressHandler = () => {
-    setHouseInfo();
+  const findHouseByAddressHandler = async () => {
+    const response = await findHouseByAddress({
+      address: address.current.value,
+      addressDetail: addressDetail.current.value,
+    });
+
+    if (response.result === "fail") {
+      setFindAddress(response.message);
+
+      deposit.current.focus();
+      return;
+    }
+    setFindAddress(
+      response.message + " (주소를 재검색하여 다시 작성할 수 있습니다)"
+    );
+    const data = response.data;
+
+    address.current.value = data.address;
+    addressDetail.current.value = data.addressDetail;
+    bathroom.current.value = data.bathroom;
+    completionYear.current.value = data.completionYear;
+    dong.value = data.dong;
+    exclusivePrivateArea.current.value = data.exclusivePrivateArea;
+    floor.current.value = data.floor;
+    gugun.value = data.gugun;
+    houseNo.value = data.houseNo;
+    isActive.current.checked = data.isActive;
+    purpose.current.value = data.purpose;
+    regionCode.value = data.regionCode;
+    room.current.value = data.room;
+    sido.value = data.sido;
+    supplyArea.current.value = data.supplyArea;
+    totalFloor.current.value = data.totalFloor;
+
+    // address.current.readOnly = true;
+    addressDetail.current.disabled = true;
+    bathroom.current.disabled = true;
+    completionYear.current.disabled = true;
+    exclusivePrivateArea.current.disabled = true;
+    floor.current.disabled = true;
+    isActive.current.disabled = true;
+    purpose.current.disabled = true;
+    room.current.disabled = true;
+    supplyArea.current.disabled = true;
+    totalFloor.current.disabled = true;
   };
 
-  const setHouseInfo = (data) => {
-    console.log("hi");
-  };
+  const searchAddressHandler = () => {
+    address.current.value = null;
+    addressDetail.current.value = null;
+    bathroom.current.value = null;
+    completionYear.current.value = null;
+    dong.value = null;
+    exclusivePrivateArea.current.value = null;
+    floor.current.value = null;
+    gugun.value = null;
+    houseNo.value = null;
+    isActive.current.checked = null;
+    purpose.current.value = null;
+    regionCode.value = null;
+    room.current.value = null;
+    sido.value = null;
+    supplyArea.current.value = null;
+    totalFloor.current.value = null;
 
+    addressDetail.current.disabled = false;
+    bathroom.current.disabled = false;
+    completionYear.current.disabled = false;
+    exclusivePrivateArea.current.disabled = false;
+    floor.current.disabled = false;
+    isActive.current.disabled = false;
+    purpose.current.disabled = false;
+    room.current.disabled = false;
+    supplyArea.current.disabled = false;
+    totalFloor.current.disabled = false;
+
+    searchAddressModalHandler();
+  };
   const inputNumBlurHandler = (event) => {
     event.target.value = event.target.value
       .toString()
@@ -223,7 +380,7 @@ const HouseRegist = () => {
     let dotChk = false;
     let dotCnt = 0;
 
-    if (+data[0] === 0) {
+    if (+data[0] === 0 || data[0] === ".") {
       event.target.value = null;
       return;
     }
@@ -268,7 +425,15 @@ const HouseRegist = () => {
         </Modal>
       )}
 
-      <form className={classes.houseRegist} onSubmit={registHouseInfo}>
+      <form
+        className={classes.houseRegist}
+        onSubmit={registHouseInfo}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+          }
+        }}
+      >
         <div className={classes.registFieldSet}>
           <h1>매물 정보 등록</h1>
           <div className={classes.registDescription}>
@@ -302,13 +467,13 @@ const HouseRegist = () => {
                           ref={address}
                           id="roadAddress"
                           placeholder="도로명주소"
-                          onClick={searchAddressModalHandler}
+                          onClick={searchAddressHandler}
                           className={classes.mainAddress}
                           readOnly
                         />
                         <button
                           type="button"
-                          onClick={searchAddressModalHandler}
+                          onClick={searchAddressHandler}
                           className={classes.searchBtn}
                         >
                           주소 검색
@@ -325,7 +490,7 @@ const HouseRegist = () => {
                         type="text"
                         ref={buildingName}
                         id="buildingName"
-                        className={classes.purpose}
+                        className={classes.buildingName}
                         placeholder="건물명 입력"
                       />
                       <button
@@ -335,6 +500,18 @@ const HouseRegist = () => {
                       >
                         입력 완료
                       </button>
+                      <p className={classes.addressDesc}>
+                        <span>* </span>
+                        {findAddress ? (
+                          findAddress
+                        ) : (
+                          <>
+                            주소를 입력하고 <span>입력 완료</span> 버튼을
+                            누르면, 기존 동일 매물이 존재할 시 기본정보가 자동
+                            입력됩니다.
+                          </>
+                        )}
+                      </p>
                     </td>
                   </tr>
                   <tr>
@@ -347,10 +524,11 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="deposit"
+                          placeholder="(예시)  300"
                           ref={deposit}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 1)}
+                          onChange={(event) => inputNumVaild(event, 0)}
                         />
                         <p>만원</p>
                       </div>
@@ -359,10 +537,11 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="rent"
+                          placeholder="(예시)  50"
                           ref={rent}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 1)}
+                          onChange={(event) => inputNumVaild(event, 0)}
                         />
                         <p>만원</p>
                       </div>
@@ -371,10 +550,11 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="maintenanceFee"
+                          placeholder="(예시)  5"
                           ref={maintenanceFee}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 1)}
+                          onChange={(event) => inputNumVaild(event, 0)}
                         />
                         <p>만원</p>
                       </div>
@@ -390,6 +570,7 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="room"
+                          placeholder="(예시)  2"
                           ref={room}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
@@ -403,6 +584,7 @@ const HouseRegist = () => {
                           type="text"
                           id="bathroom"
                           ref={bathroom}
+                          placeholder="(예시)  1"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 0)}
@@ -421,10 +603,11 @@ const HouseRegist = () => {
                         <input
                           type="text"
                           id="floor"
+                          placeholder="(예시)  7"
                           ref={floor}
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 1)}
+                          onChange={(event) => inputNumVaild(event, 0)}
                         />
                         <p>층</p>
                       </div>
@@ -434,9 +617,10 @@ const HouseRegist = () => {
                           type="text"
                           id="totalFloor"
                           ref={totalFloor}
+                          placeholder="(예시)  13"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 1)}
+                          onChange={(event) => inputNumVaild(event, 0)}
                         />
                         <p>층</p>
                       </div>
@@ -453,6 +637,7 @@ const HouseRegist = () => {
                           type="text"
                           id="supplyArea"
                           ref={supplyArea}
+                          placeholder="(예시)  33.33"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 2)}
@@ -465,6 +650,7 @@ const HouseRegist = () => {
                           type="text"
                           id="exclusivePrivateArea"
                           ref={exclusivePrivateArea}
+                          placeholder="(예시)  33.33"
                           onBlur={inputNumBlurHandler}
                           onFocus={inputNumFocusHandler}
                           onChange={(event) => inputNumVaild(event, 2)}
@@ -484,6 +670,7 @@ const HouseRegist = () => {
                           type="number"
                           id="completionYear"
                           ref={completionYear}
+                          placeholder="(예시)  2023"
                           max={+new Date().getFullYear()}
                           min={1900}
                         />
@@ -499,6 +686,7 @@ const HouseRegist = () => {
                       <input
                         type="text"
                         id="purpose"
+                        placeholder="(예시)  공동주택"
                         ref={purpose}
                         className={classes.purpose}
                       />
@@ -516,7 +704,11 @@ const HouseRegist = () => {
                       <h3>계약 여부</h3>
                     </td>
                     <td className={classes.constract}>
-                      <input type="checkbox" id="contractStatus" disabled />
+                      <input
+                        type="checkbox"
+                        id="contractStatus"
+                        ref={isActive}
+                      />
                       <label htmlFor="contractStatus">계약 완료</label>
                     </td>
                   </tr>
@@ -525,7 +717,7 @@ const HouseRegist = () => {
             </div>
 
             <div className={classes.additionalInfo}>
-              <h2>추가정보</h2>
+              <h2>추가 정보</h2>
               <table>
                 <tbody>
                   <tr>
@@ -536,7 +728,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        ref={direction}
+                        onChange={(event) => {
+                          setDirection(event.target.value);
+                        }}
                         value="EAST"
                         id="east"
                       />
@@ -544,7 +738,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        ref={direction}
+                        onChange={(event) => {
+                          setDirection(event.target.value);
+                        }}
                         value="WEST"
                         id="west"
                       />
@@ -552,7 +748,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        ref={direction}
+                        onChange={(event) => {
+                          setDirection(event.target.value);
+                        }}
                         value="SOUTH"
                         id="south"
                       />
@@ -560,7 +758,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        ref={direction}
+                        onChange={(event) => {
+                          setDirection(event.target.value);
+                        }}
                         value="NORTH"
                         id="north"
                       />
@@ -568,7 +768,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        ref={direction}
+                        onChange={(event) => {
+                          setDirection(event.target.value);
+                        }}
                         value="SOUTH_EAST"
                         id="southEast"
                       />
@@ -576,7 +778,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        ref={direction}
+                        onChange={(event) => {
+                          setDirection(event.target.value);
+                        }}
                         value="SOUTH_WEST"
                         id="southWest"
                       />
@@ -584,7 +788,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        ref={direction}
+                        onChange={(event) => {
+                          setDirection(event.target.value);
+                        }}
                         value="NORTH_EAST"
                         id="northEast"
                       />
@@ -592,7 +798,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="direction"
-                        ref={direction}
+                        onChange={(event) => {
+                          setDirection(event.target.value);
+                        }}
                         value="NORTH_WEST"
                         id="northWest"
                       />
@@ -607,7 +815,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="entrance"
-                        ref={entrance}
+                        onChange={(event) => {
+                          setEntrance(event.target.value);
+                        }}
                         id="stair"
                         value="STAIR"
                       />
@@ -615,7 +825,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="entrance"
-                        ref={entrance}
+                        onChange={(event) => {
+                          setEntrance(event.target.value);
+                        }}
                         id="corridor"
                         value="PASSAGE"
                       />
@@ -623,7 +835,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="entrance"
-                        ref={entrance}
+                        onChange={(event) => {
+                          setEntrance(event.target.value);
+                        }}
                         id="complex"
                         value="COMPLEX"
                       />
@@ -638,7 +852,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="heating"
-                        ref={heating}
+                        onChange={(event) => {
+                          setHeating(event.target.value);
+                        }}
                         id="individual"
                         value="INDIVIDUAl"
                       />
@@ -646,7 +862,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="heating"
-                        ref={heating}
+                        onChange={(event) => {
+                          setHeating(event.target.value);
+                        }}
                         id="center"
                         value="CENTERAL"
                       />
@@ -654,7 +872,9 @@ const HouseRegist = () => {
                       <input
                         type="radio"
                         name="heating"
-                        ref={heating}
+                        onChange={(event) => {
+                          setHeating(event.target.value);
+                        }}
                         id="district"
                         value="DISTRICT"
                       />
@@ -828,7 +1048,7 @@ const HouseRegist = () => {
             </div>
 
             <div className={classes.detailInfo}>
-              <h2>상세정보</h2>
+              <h2>상세 정보</h2>
               <table>
                 <tbody>
                   <tr>
@@ -864,7 +1084,7 @@ const HouseRegist = () => {
             </div>
 
             <div className={classes.houseImage}>
-              <h2>사진등록</h2>
+              <h2>사진 등록</h2>
               <table>
                 <tbody>
                   <tr>
