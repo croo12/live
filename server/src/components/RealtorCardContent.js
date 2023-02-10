@@ -2,6 +2,7 @@ import classes from "./RealtorCardContent.module.scss";
 import sample from "../assets/image/sample.jpg";
 import { CiLocationOn } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
+import { FiMapPin } from "react-icons/fi";
 /* 사진, 사무소 이름, 중개사 이름 리뷰 별점평균? */
 
 // 중개사 여러 명
@@ -91,7 +92,7 @@ export const RealtorContractCardContent = (props) => {
           </div>
           <div className={classes.realtorInfo}>{data.realtorInfo}</div>
           <div className={classes.realtorAddress}>
-            <CiLocationOn /> {data.realtorAddress}
+            <FiMapPin /> {data.realtorAddress}
           </div>
           <div className={classes.realtorPhone}>
             <BsTelephone /> {data.realtorPhone}

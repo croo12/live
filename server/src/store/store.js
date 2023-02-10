@@ -19,6 +19,7 @@ const reducers = combineReducers({
   house: houseSlice.reducer,
   user: userSlice.reducer,
   reserve: reservedItemSlice.reducer,
+  user: userSlice.reducer,
 });
 
 const persistConfig = {

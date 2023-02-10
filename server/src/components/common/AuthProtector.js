@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   const doLogin = async (data) => {
     dispatch(userAction.login(data));
+    navigate("/mypage");
   };
 
   const doLogout = async () => {
@@ -32,8 +33,6 @@ export const AuthProvider = ({ children }) => {
     }),
     [userInfo]
   );
-
-  // console.log(value);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
