@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import houseSlice from "./house-slice";
+import reservedItemSlice from "./reserved-item-slice";
 
 const store = configureStore({
-  reducer: null,
+  reducer: { house: houseSlice.reducer, reserve: reservedItemSlice.reducer },
 });
 
 export default store;

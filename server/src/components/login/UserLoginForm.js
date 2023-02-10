@@ -4,13 +4,18 @@
 
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import Alert from "../../UI/Alert";
 import Modal from "../../UI/Modal";
+import axiosInstance from "../../util/axios";
 import FindPassModalOverlay from "./FindPassModalOverlay";
 
 import classes from "./UserLoginForm.module.scss";
 
 const UserLoginForm = (props) => {
   const [isFindPassword, setIsFindPassword] = useState(false); // 비밀번호 찾기 state ( True => 모달 활성화)
+  const [viewAlert, setViewAlert] = useState(false);
+
+  const [loginError, setLoginError] = useState(0);
 
   const userIdInputRef = useRef();
   const passwordInputRef = useRef();
@@ -18,25 +23,69 @@ const UserLoginForm = (props) => {
   const loginHandler = (event) => {
     // 일반 회원 로그인 처리
     event.preventDefault();
+
+    const id = userIdInputRef.current.value;
+    const password = passwordInputRef.current.value;
+
+    if (!id) {
+      setLoginError(3);
+      return;
+    }
+
+    if (!password) {
+      setLoginError(4);
+      return;
+    }
+
     const userLoginInfo = {
-      userId: userIdInputRef.current.value,
-      password: passwordInputRef.current.value,
+      id,
+      password,
     };
 
     props.onUserLogin(userLoginInfo);
   };
 
-  const findPasswordHandler = (userFindPasswordInfo) => {
+  const findPasswordHandler = async (userFindPasswordInfo) => {
     // 비밀번호 찾기
 
     // 비밀번호 찾기 email 맞는지 검사 and 전송 하는 과정
+    // console.log("비밀번호 찾기 아직 없음", userFindPasswordInfo);
 
+    try {
+      const result = await axiosInstance.post(
+        "users/passcheck",
+        userFindPasswordInfo
+      );
+
+      console.log("비밀번호 찾기", result);
+    } catch (err) {
+      console.error(err);
+    }
+
+    setViewAlert(true);
     findPasswordModalHandler(); // 모달창 닫기
   };
 
   const findPasswordModalHandler = () => {
     // 모달 창 상태 값 통해 열고 닫기
     setIsFindPassword(!isFindPassword);
+  };
+
+  const showErrorMessage = (loginError) => {
+    switch (loginError) {
+      case 0:
+        return ``;
+      case 1:
+        return `존재하지 않는 아이디입니다.`;
+      case 2:
+        return `회원 정보가 틀렸습니다.`;
+      case 3:
+        return `아이디가 입력되지 않았습니다`;
+      case 4:
+        return `비밀번호가 입력되지 않았습니다`;
+      default:
+        return ``;
+    }
   };
 
   return (
@@ -73,6 +122,7 @@ const UserLoginForm = (props) => {
               ></input>
             </div>
           </div>
+          {loginError !== 0 && <div> {showErrorMessage(loginError)} </div>}
           <div className={classes.formUtil}>
             <div className={classes.keepLogin}>
               <input type="checkbox" id="keepLogin" />
@@ -88,6 +138,13 @@ const UserLoginForm = (props) => {
           </div>
         </div>
       </form>
+
+      <Alert
+        title={"임시 비밀번호 전송"}
+        content={`고객님의 이메일주소로 임시 비밀번호를 전송하였습니다`}
+        visible={viewAlert}
+        setVisible={setViewAlert}
+      />
     </>
   );
 };

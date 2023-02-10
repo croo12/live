@@ -76,9 +76,8 @@
 
 .consulting_inner {
   position: relative;
-  .upperCard {
 
-    
+  .upperCard {
     .leftBox {
       h3 {
         font-size: 1.7vw;
@@ -92,6 +91,8 @@
         width: 11vw;
         height: 11vw;
         border-radius: 4vw;
+
+        object-fit: contain;
       }
     }
     @media (max-width: 768px) { 
@@ -104,10 +105,13 @@
       
       .rightBox {
         img  {
+          padding: 0;
           
-          width: 40vw;
-          height: 40vw;
+          width: 26vw;
+          height: 18vh;
           border-radius: 10vw;
+
+          object-fit: contain;
         }
       }
     }
@@ -289,5 +293,125 @@
     text-align: left;
 
     cursor: pointer;
+  }
+}
+
+.contractForSale {
+  margin: 3% 0;
+
+  .inner {
+    width: 67.7%;
+    margin-left: 15%;
+    text-align: left;
+
+    .contractContent {
+      display: flex;
+
+      h3 {
+        margin-left: 2%;
+        margin-bottom: 2%;
+      }
+
+      .leftDesc {
+        flex: 3;
+
+        p{
+          color:rgba(112, 112, 112, 1);
+          font-weight:400;
+          font-family: Roboto;
+        }
+
+        .infoBoxList {
+          width: 50%;
+          margin-top: 2%;
+
+          .forSale {
+            display: flex;
+
+            strong {
+              flex: 2;
+              padding:1% 0 0 0;
+            }
+
+            input{
+                background: #FAFAFA;
+                border: 1px solid #BBBBBB;
+                border-radius: 4px;
+                color:#050505;
+                padding:2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+          }
+
+          .extraFee {
+            display: flex;
+
+             strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+            }
+              
+             input {
+                background: #FAFAFA;
+                border: 1px solid #BBBBBB;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+          }
+
+          .term {
+            display: flex;
+
+            strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+            
+              input {
+                background: #FAFAFA;
+                border: 1px solid #BBBBBB;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+          }
+
+          .moveDate {
+            display: flex;
+
+          strong {
+              flex: 2;
+              padding: 1% 0 0 0;
+            }
+          
+            input {
+              background: #FAFAFA;
+              border: 1px solid #BBBBBB;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+        }
+      }
+
+      .rightImg {
+        flex: 1;
+        width: 5vw;
+        margin-bottom: 5%;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
   }
 }

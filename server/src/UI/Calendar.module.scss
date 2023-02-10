@@ -2,17 +2,10 @@ $primary: $main-dark;
 $radius: 12px;
 
 .calendar {
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // margin-top: -225px;
-  // margin-left: -195px;
   width: 100%;
   padding: 15px;
   box-shadow: 1px 1px 20px 0 rgba(0, 0, 0, 0.4);
   border-radius: $radius;
-  // overflow: hidden;  
-  // z-index: 999;
 
   &__nav {
     margin: -15px -15px 15px;

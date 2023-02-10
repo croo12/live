@@ -1,7 +1,18 @@
-.rightContainer{
+.rightContainer {
   flex: 2;
 
-    h2 {
-      text-align: left;
+  h2 {
+    text-align: left;
+    padding-inline-start: 16px;
+
+    margin-bottom: 8px;
+  }
+
+  > div {
+    > span {
+      display: block;
+      margin: auto;
     }
+    min-height: 400px;
+  }
 }

@@ -1,114 +1,282 @@
-.realtorCard{
+.realtorCard {
   flex-direction: row;
-  padding:15px 15px;
+  padding: 15px 15px;
 
-  &.isActive0{
-    background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30D08B;
-      box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
-      border-radius: 8px;
+  &.isActive0 {
+    background: linear-gradient(
+        115.11deg,
+        rgba(255, 255, 255, 0.5) -3.35%,
+        rgba(255, 255, 255, 0) 107.02%
+      ),
+      #30d08b;
+    box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
+    border-radius: 8px;
   }
 
-  &.isActive1{
-    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%), linear-gradient(293.17deg, #2896E6 -4.52%, #31D5F9 104.14%);
-      box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
-      border-radius: 8px;
+  &.isActive1 {
+    background: linear-gradient(
+        113.73deg,
+        rgba(255, 255, 255, 0.5) -4.61%,
+        rgba(255, 255, 255, 0) 107.01%
+      ),
+      linear-gradient(293.17deg, #2896e6 -4.52%, #31d5f9 104.14%);
+    box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
+    border-radius: 8px;
   }
 
-   &.isActive2{
-    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%), linear-gradient(293.17deg, #F9B32A -4.52%, #F52EA6 104.14%);
-      box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
-      border-radius: 8px;
+  &.isActive2 {
+    background: linear-gradient(
+        113.73deg,
+        rgba(255, 255, 255, 0.5) -4.61%,
+        rgba(255, 255, 255, 0) 107.01%
+      ),
+      linear-gradient(293.17deg, #f9b32a -4.52%, #f52ea6 104.14%);
+    box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
+    border-radius: 8px;
   }
 
-   &.isActive3{
-    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%), linear-gradient(293.17deg, #7E18FF -4.52%, #D885FF 104.14%);
-      box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
-      border-radius: 8px;
+  &.isActive3 {
+    background: linear-gradient(
+        113.73deg,
+        rgba(255, 255, 255, 0.5) -4.61%,
+        rgba(255, 255, 255, 0) 107.01%
+      ),
+      linear-gradient(293.17deg, #7e18ff -4.52%, #d885ff 104.14%);
+    box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
+    border-radius: 8px;
   }
 
   .upCard {
+    display: flex;
+
+    .leftImg {
+      // width: 80%;
+      height: 80px;
+      flex: 1;
+      padding: 0 0 0 2%;
+
+      img {
+        width: 100%;
+        height: 80px;
+        border-radius: 70%;
+      }
+    }
+
+    .rightDesc {
+      flex: 2;
+      padding: 6% 5% 0 0;
+    }
+  }
+
+  .downCard {
+    text-align: center;
+    padding: 8% 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .realtorCard {
+    flex-direction: row;
+    padding: 15px 0;
+
+    &.isActive0 {
+      background: linear-gradient(
+          115.11deg,
+          rgba(255, 255, 255, 0.5) -3.35%,
+          rgba(255, 255, 255, 0) 107.02%
+        ),
+        #30d08b;
+      box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+    }
+
+    &.isActive1 {
+      background: linear-gradient(
+          113.73deg,
+          rgba(255, 255, 255, 0.5) -4.61%,
+          rgba(255, 255, 255, 0) 107.01%
+        ),
+        linear-gradient(293.17deg, #2896e6 -4.52%, #31d5f9 104.14%);
+      box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+    }
+
+    &.isActive2 {
+      background: linear-gradient(
+          113.73deg,
+          rgba(255, 255, 255, 0.5) -4.61%,
+          rgba(255, 255, 255, 0) 107.01%
+        ),
+        linear-gradient(293.17deg, #f9b32a -4.52%, #f52ea6 104.14%);
+      box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+    }
+
+    &.isActive3 {
+      background: linear-gradient(
+          113.73deg,
+          rgba(255, 255, 255, 0.5) -4.61%,
+          rgba(255, 255, 255, 0) 107.01%
+        ),
+        linear-gradient(293.17deg, #7e18ff -4.52%, #d885ff 104.14%);
+      box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+    }
+
+    .upCard {
       display: flex;
-  
+
       .leftImg {
         // width: 80%;
         height: 80px;
         flex: 1;
         padding: 0 0 0 2%;
-  
+
         img {
           width: 100%;
           height: 80px;
           border-radius: 70%;
         }
       }
-  
+
       .rightDesc {
         flex: 2;
         padding: 6% 5% 0 0;
       }
     }
-  
+
     .downCard {
-      text-align: center;
-      padding: 8% 0;
+      display: none;
     }
+  }
 }
 
-@media(max-width:768px){
-  .realtorCard {
-      flex-direction: row;
-      padding: 15px 0;
-  
-      &.isActive0 {
-        background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30D08B;
-        box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
-        border-radius: 8px;
-      }
-  
-      &.isActive1 {
-        background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%), linear-gradient(293.17deg, #2896E6 -4.52%, #31D5F9 104.14%);
-        box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
-        border-radius: 8px;
-      }
-  
-      &.isActive2 {
-        background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%), linear-gradient(293.17deg, #F9B32A -4.52%, #F52EA6 104.14%);
-        box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
-        border-radius: 8px;
-      }
-  
-      &.isActive3 {
-        background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%), linear-gradient(293.17deg, #7E18FF -4.52%, #D885FF 104.14%);
-        box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
-        border-radius: 8px;
-      }
-  
-      .upCard {
-        display: flex;
-  
-        .leftImg {
-          // width: 80%;
-          height: 80px;
-          flex: 1;
-          padding: 0 0 0 2%;
-  
-          img {
-            width: 100%;
-            height: 80px;
-            border-radius: 70%;
-          }
-        }
-  
-        .rightDesc {
-          flex: 2;
-          padding: 6% 5% 0 0;
+.realtorContractContent {
+  padding: 5% 0;
+  display: flex;
+  border: 1px solid #42d395;
+  border-radius: 8px;
+
+  .leftImg {
+    flex: 2;
+    padding: 1% 5%;
+
+    img {
+      width: 100%;
+      border-radius: 70%;
+    }
+  }
+
+  .rightDesc {
+    flex: 4;
+    display: flex;
+    margin-top: 3%;
+    font-size: 1.1rem;
+
+    .realtorOfficeInfo {
+      flex: 2.5;
+
+      .realtorName {
+        span {
+          font-size: 0.8rem;
+          color: rgba(112, 112, 112, 1);
         }
       }
-  
-      .downCard {
-       display: none;
+
+      .realtorInfo {
+        padding: 2% 0 0 0;
+        font-size: 0.9rem;
+        color: rgba(112, 112, 112, 1);
+      }
+
+      .realtorAddress {
+        padding: 2% 0 0 0;
+        font-size: 1rem;
+      }
+
+      .realtorPhone {
+        padding: 2% 0 0 0;
+        font-size: 1rem;
       }
     }
-  
+
+    .realtorNum {
+      flex: 1;
+      color: #ffcd1d;
+    }
+  }
 }
 
+//reservation card content
+.realtorReservationCard {
+  border: 1px solid rgba(187, 187, 187, 1);
+  border-radius: 12px;
+
+  width: 34vw;
+  height: 14vh;
+
+  cursor: pointer;
+
+  &.isActive {
+    border-width: 2px   ;
+    border-color: #30d08b;
+  }
+
+  display: flex;
+
+  .leftImg {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: calc(30%);
+    margin-right: (4%);
+
+    > img {
+      width: 72px;
+      height: 72px;
+
+      border-radius: 70%;
+    }
+  }
+
+  .rightBox {
+
+    flex: auto;
+    width: calc(66%);
+
+    h4 {
+      > span {
+        color: #ffcd1d;
+
+      }
+    }
+
+    .upCard{
+
+      p {
+        font-size: 1vw;
+        color: rgba(112, 112, 112, 1);
+        
+        > span {
+          font-size: 1.4vw;
+          font-weight: 700;
+
+          color: black;
+        }
+      }
+
+      margin-bottom: 16px;
+    }
+
+    .downCard {
+      p {
+        font-size: 1vw;
+        color: rgba(112, 112, 112, 1);
+      }
+    }
+  }
+
+
+}

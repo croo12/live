@@ -5,12 +5,16 @@ import ListBox from "../UI/ListBox";
 import ReservationSearchBox from "../components/reservation/ReservationSearchBox";
 import { useEffect, useRef, useState } from "react";
 
-// import sample from "../assets/image/sample.jpg";
+import { useSelector } from "react-redux";
 
 import classes from "./ReservationPage.module.scss";
 import { FiAlertCircle } from "react-icons/fi";
 import { useLoaderData } from "react-router-dom";
 import axiosInstance from "../util/axios";
+import {
+  searchRealtorList,
+  searchReservationRealtorDetail,
+} from "../apis/reservationApis";
 
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
@@ -23,15 +27,35 @@ const ReservationPage = () => {
   const isMount = useRef(false);
 
   const sidos = useLoaderData().data.data;
-  // const gugun = useState([]);
-  // const dong = useState([]);
 
-  //리덕스로 수정하는 것도 염두에 둘 수 있음
-  const [selectedItems, addItem] = useState([]);
+  const [realtorList, setRealtorList] = useState([]);
+  const [realtorDetail, setRealtorDetail] = useState(null);
 
+  //예약 목록
+  const selectedItems = useSelector((state) => {
+    return state.reserve.selectedItems;
+  });
+
+  //중개사 세부 소환
+  const clickRealtorEventHandler = (realtorNo) => {
+    const params = {};
+
+    if (!reserveData.gugun) {
+      params[`regionCode`] = reserveData.sido.substring(0, 2);
+    } else if (!reserveData.dong) {
+      params[`regionCode`] = reserveData.gugun.substring(0, 5);
+    } else {
+      params[`regionCode`] = reserveData.dong;
+    }
+
+    (async () => {
+      const { data } = await searchReservationRealtorDetail(realtorNo, params);
+      setRealtorDetail(data.data);
+    })();
+  };
+
+  //reserveData 변경
   const clickSearchEventHandler = (sido, gugun, dong, date) => {
-    console.log(sido, gugun, dong, date);
-
     if (!sido) {
       alert(`광역시도는 반드시 입력해야 합니다!`);
     } else if (!date) {
@@ -41,6 +65,7 @@ const ReservationPage = () => {
     }
   };
 
+  //중개사 리스트 검색
   useEffect(() => {
     if (!isMount.current) {
       isMount.current = true;
@@ -54,6 +79,7 @@ const ReservationPage = () => {
       console.log(`sido is nothing...`);
       return;
     }
+
     if (!reserveData.gugun) {
       params[`regionCode`] = reserveData.sido.substring(0, 2);
     } else if (!reserveData.dong) {
@@ -64,14 +90,17 @@ const ReservationPage = () => {
 
     (async () => {
       try {
-        const result = await axiosInstance.get("realtors/region", { params });
+        const result = await searchRealtorList(params);
 
-        console.log(result);
+        setRealtorList(result.data.data);
       } catch (err) {
-        throw new Error(err);
+        console.error(err);
       }
     })();
   }, [reserveData]);
+
+  //예약 ㄱㄱ
+  const registReservationHandler = () => {};
 
   return (
     <>
@@ -88,15 +117,28 @@ const ReservationPage = () => {
       </div>
 
       <div className={classes.content}>
-        <ReservationLeftDiv />
-        <ReservationRightDiv />
+        <ReservationLeftDiv
+          realtors={realtorList}
+          clickEventHandler={clickRealtorEventHandler}
+        />
+        <ReservationRightDiv realtorDetail={realtorDetail} />
       </div>
 
       <div className={classes.listBox}>
         <h2>내가 선택한 매물</h2>
-        <ListBox dataArray={[0, 1]} direction={true} toStart={true}>
-          <ReservationHouseCardContent />
-        </ListBox>
+        <div className={classes.list}>
+          <ListBox
+            dataArray={selectedItems.length === 0 ? [1] : selectedItems}
+            direction={true}
+            toStart={true}
+          >
+            {selectedItems.length === 0 ? (
+              <NullCard />
+            ) : (
+              <ReservationHouseCardContent />
+            )}
+          </ListBox>
+        </div>
       </div>
 
       <div>
@@ -132,6 +174,10 @@ const ReservationPage = () => {
 };
 
 export default ReservationPage;
+
+const NullCard = () => {
+  return <div className={classes.nullCard}>선택한 매물이 없어요</div>;
+};
 
 export const sidoLoader = async () => {
   try {

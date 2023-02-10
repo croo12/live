@@ -1,5 +1,5 @@
 .realtorInfoContainer{
-  border: 1px solid rgba(66, 211, 149, 1);
+  border: 2px solid rgba(66, 211, 149, 1);
 
   padding: 24px;
 
@@ -12,20 +12,48 @@
     justify-content: center;
     
     div:first-child {
-      flex: 2;
+      width: calc(38%);
 
       img {
         width: 100%;
         height: 100%;
       }
 
-      margin-right: 16px;
+      margin-right: calc(2%);
     }
 
     div:last-child {
-      flex: 3;
-
+      width: calc(60%);
       text-align: left;
+      // padding-inline-start: 30px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: first baseline;
+      justify-content: space-evenly;
+
+      h3{
+        margin-bottom: 36px;
+        font-size: 2rem;
+      }
+
+      p.name {
+        font-size: 1.2rem;
+        font-weight: 480;
+
+        padding-left: 20px;
+        > span {
+          font-size: 0.6rem;
+          color : rgba(112, 112, 112, 1);
+        }
+      }
+
+      .description {
+
+        padding-left: 20px;
+        margin-top:8px;
+        margin-bottom: 24px;
+      }
     }
 
     margin-bottom: 24px;
@@ -35,5 +63,10 @@
     h3 {
       text-align: left;
     }
+
+    max-height: 300px;
+
+    overflow-y: auto;
+    padding: 16px;
   }
 }

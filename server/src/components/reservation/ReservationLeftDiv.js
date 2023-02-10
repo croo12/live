@@ -1,18 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { reservedItemAction } from "../../store/reserved-item-slice";
 import ListBox from "../../UI/ListBox";
-import RealtorCardContent, { DUMMY } from "../RealtorCardContent";
+import { ReservationRealtorCardContent } from "../RealtorCardContent";
 import classes from "./ReservationLeftDiv.module.scss";
 
-const ReservationLeftDiv = () => {
-  //검색결과에 따라서 중개사 리스트가 나옴
-  const [realtorList] = useState(DUMMY);
+const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
+  const [highlight, setHighlight] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(reservedItemAction.clearItem());
+  }, [highlight]);
 
   return (
     <div className={classes.leftContainer}>
       <h2>공인 중개사 목록</h2>
-      <ListBox dataArray={realtorList}>
-        <RealtorCardContent />
-      </ListBox>
+      <div>
+        {realtors?.length ? (
+          <ListBox dataArray={realtors}>
+            <ReservationRealtorCardContent
+              clickEventHandler={clickEventHandler}
+              highlight={highlight}
+              setHighlight={setHighlight}
+            />
+          </ListBox>
+        ) : (
+          <ul>
+            <li>현재 조회된 공인중개사가 없습니다</li>
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

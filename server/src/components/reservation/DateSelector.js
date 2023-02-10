@@ -37,7 +37,9 @@ const DateSelector = (props) => {
         <Modal onConfirm={clickEvent}>
           <Calendar startDateChangeEvent={startDateChangeEvent} />
           <div>
-            <Button clickEvent={clickEvent}>확인</Button>
+            <button className={classes.longBtn} onClick={clickEvent}>
+              확인
+            </button>
           </div>
         </Modal>
       )}

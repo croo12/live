@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
 import axiosInstance from "../util/axios";
@@ -7,6 +8,7 @@ import classes from "./LoginPage.module.scss";
 
 const LoginPage = () => {
   const [loginMode, setLoginMode] = useState("USER"); // 로그인 모드 상태 확인 ( USER , REALTOR )
+  const navigation = useNavigate();
 
   console.log(loginMode);
 
@@ -15,19 +17,28 @@ const LoginPage = () => {
     setLoginMode(event.target.value);
   };
 
-  const userLoginHandler = (userLoginInfo) => {
+  const userLoginHandler = async (userLoginInfo) => {
     // 일반 회원 로그인 처리
-    console.log(userLoginInfo); // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
+    // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
-    axiosInstance.post("users/login", {
-      id: userLoginInfo.userId,
-      password: userLoginInfo.password,
-    });
+    const frm = new FormData();
+    frm.append("id", userLoginInfo.id);
+    frm.append("password", userLoginInfo.password);
+
+    const result = await axiosInstance.post("users/login", frm);
+
+    // navigation(-1);
   };
 
   const realtorLoginHandler = (realtorLoginInfo) => {
     // 중개사 회원 로그인 처리
-    console.log(realtorLoginInfo); // 중개사회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
+    const frm = new FormData();
+    frm.append("businessNumber", realtorLoginInfo.businessNumber);
+    frm.append("password", realtorLoginInfo.password);
+
+    // console.log(realtorLoginInfo); // 중개사회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
+
+    axiosInstance.post("realtors/login", frm);
   };
 
   return (

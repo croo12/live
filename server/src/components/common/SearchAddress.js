@@ -7,18 +7,17 @@
  */
 
 import DaumPostcode from "react-daum-postcode";
-
+import classes from "./SearchAddress.module.scss";
 import Logo from "../../assets/image/liveLogo.png";
 
 const SearchAddress = (props) => {
   // 주소 선택 시 주소 정보를 반환하는 함수
   const PostHandler = (data) => {
-    let roadAddr = data.roadAddress; // 도로명 주소 변수
+    let roadAddr = data.roadAddress; // 도로명
     let extraRoadAddr = ""; // 참고 항목 변수
-    let postcode = "";
     let roadAddress = "";
-    let jibunAddress = "";
     let extraAddress = "";
+    // let jibunAddress = "";
 
     // 법정동명이 있을 경우 추가한다. (법정리는 제외)
     // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
@@ -38,9 +37,8 @@ const SearchAddress = (props) => {
     }
 
     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-    postcode = data.zonecode;
     roadAddress = data.roadAddress;
-    jibunAddress = data.jibunAddress;
+    // jibunAddress = data.jibunAddress;
 
     // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
     if (roadAddr !== "") {
@@ -53,16 +51,20 @@ const SearchAddress = (props) => {
     if (data.autoRoadAddress) {
       let expRoadAddr = data.autoRoadAddress + extraRoadAddr;
       roadAddress = expRoadAddr;
-    } else if (data.autoJibunAddress) {
-      let expJibunAddr = data.autoJibunAddress;
-      jibunAddress = expJibunAddr;
     }
+    // else if (data.autoJibunAddress) {
+    //   let expJibunAddr = data.autoJibunAddress;
+    //   jibunAddress = expJibunAddr;
+    // }
 
     const addressInfo = {
-      postcode,
-      roadAddress,
-      jibunAddress,
-      extraAddress,
+      address: roadAddress, //도로명주소
+      addressDetail: extraAddress, // 상세주소 ( 동 정보 )
+      sido: data.sido, // 광역시/도
+      gugun: data.sigungu, // 시군구
+      dong: data.bname, // 동면읍
+      zipcode: data.zonecode, // 우편번호
+      regionCode: data.bcode, //지역코드 10자리
     };
 
     props.onChange(addressInfo); //주소 정보 반환
@@ -71,15 +73,16 @@ const SearchAddress = (props) => {
   };
 
   return (
-    <div>
-      <header style={{ margin: "20px" }}>
-        <img src={Logo} />
-        <button style={{ float: "right" }}>
-          <strong onClick={props.onClose}>X</strong>
+    <div className={classes.addressContent}>
+      <header>
+        <img src={Logo} alt="Live Logo" />
+        <button>
+          <strong onClick={props.onClose}>✖</strong>
         </button>
       </header>
-      <hr />
-      <DaumPostcode onComplete={PostHandler} />;
+      <div>
+        <DaumPostcode onComplete={PostHandler} classNam />
+      </div>
     </div>
   );
 };

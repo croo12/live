@@ -160,13 +160,6 @@ const ConsultingMeetPage = ({
       <video autoPlay={true} width={0} height={0} ref={remoteVideo}></video>
       <div className={classes.msgBox}>
         <h1>{info}</h1>
-        {/* <Button
-          clickEvent={() => {
-            toggleTest();
-          }}
-        >
-          {!isRealtor ? "중개사" : "고객"} 해보기
-        </Button> */}
       </div>
 
       <div className={classes.controllerBox}>
