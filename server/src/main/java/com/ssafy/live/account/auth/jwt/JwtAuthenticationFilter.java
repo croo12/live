@@ -28,10 +28,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
         // 1. Request Header 에서 JWT 토큰 추출
         String token = resolveToken((HttpServletRequest) request);
-
         // 2. validateToken 으로 토큰 유효성 검사
         if (token != null && jwtTokenProvider.validateToken(token)) {
             // (추가) Redis 에 해당 accessToken logout 여부 확인
@@ -53,4 +51,5 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
         return null;
     }
+
 }
