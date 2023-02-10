@@ -46,17 +46,19 @@ export const realtorLogin = async (data) => {
 };
 
 export const logout = async () => {
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem("user"));
   const state = localStorage.getItem("state");
   localStorage.removeItem("user");
   localStorage.removeItem("state");
-  if(state === "USER") {
-    return await axiosInstance.post("users/logout", { accessToken: user.accessToken, refreshToken: user.refreshToken});
-  } else{
-    return await axiosInstance.post("realtors/logout", { accessToken: user.accessToken, refreshToken: user.refreshToken});
+  if (state === "USER") {
+    return await axiosInstance.post("users/logout", {
+      accessToken: user.accessToken,
+      refreshToken: user.refreshToken,
+    });
+  } else {
+    return await axiosInstance.post("realtors/logout", {
+      accessToken: user.accessToken,
+      refreshToken: user.refreshToken,
+    });
   }
 };
-
-// export const getCurrentUser = () => {
-//   return JSON.parse(localStorage.getItem('user'));
-// }
