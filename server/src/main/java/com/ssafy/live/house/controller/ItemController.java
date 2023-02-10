@@ -46,7 +46,7 @@ public class ItemController {
 
     @GetMapping("/realtors/{realtorNo}")
     public ResponseEntity<?> findItemsByRealtor(
-            @RequestParam Long realtorNo,
+            @PathVariable Long realtorNo,
             @RequestParam String regionCode
             ){
         return itemService.findItemsByRealtor(realtorNo, regionCode);
