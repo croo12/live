@@ -40,13 +40,13 @@ public class SMSService {
     private String requestUrl= "/sms/v2/services/";                   		// 요청 URL
     private String requestUrlType = "/messages";
 
-    @Value("${naver-access-key}")
+    @Value("${naver.accessKey}")
     private String accessKey;                     	// 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키			// Access Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
-    @Value("${naver-secret-key}")
+    @Value("${naver.secretKey}")
     private String secretKey;  // 2차 인증을 위해 서비스마다 할당되는 service secret key	// Service Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
-    @Value("${naver-service-id}")
+    @Value("${naver.serviceId}")
     private String serviceId;
-    @Value("${sms-calling-number}")
+    @Value("${naver.callingNumber}")
     private String callingNumber;
 
 

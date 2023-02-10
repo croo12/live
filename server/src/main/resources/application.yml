@@ -11,8 +11,6 @@ server:
     key-store-password: ${KEY_STORE_PASSWORD}
 
 spring:
-  profiles:
-    include: API-KEY
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://live-live.store:3306/live?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
@@ -37,6 +35,12 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     defer-datasource-initialization: true
+naver:
+  accessKey: ${NAVER_ACCESSKEY}
+  seceretKey: ${NAVER_SECRETKEY}
+  serviceId: ${NAVER_SERVICEID}
+  callingNumber: ${NAVER_CALLING_NUMBER}
+
   mail:
     properties:
       mail:
