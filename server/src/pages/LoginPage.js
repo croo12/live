@@ -27,7 +27,7 @@ const LoginPage = () => {
 
     const result = await axiosInstance.post("users/login", frm);
 
-    navigation(-1);
+    // navigation(-1);
   };
 
   const realtorLoginHandler = (realtorLoginInfo) => {

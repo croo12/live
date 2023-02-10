@@ -1,7 +1,11 @@
 import classes from "./AlertPage.module.scss";
 import { DUMMY3 } from "../components/AlarmCardContent";
+import { getAlertList } from "../apis/noticeApis";
+import { redirect, useLoaderData } from "react-router-dom";
 
 const AlertPage = () => {
+  const alertList = useLoaderData();
+
   return (
     <>
       <div className={classes.alarm}>
@@ -43,3 +47,18 @@ const AlertPage = () => {
 };
 
 export default AlertPage;
+
+export const alertLoader = async () => {
+  try {
+    const alertList = await getAlertList();
+    console.log(alertList);
+
+    if (alertList.data) {
+      return alertList;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+  redirect("/login");
+  return null;
+};
