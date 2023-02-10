@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -27,8 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -59,6 +59,11 @@ public class SMSService {
         sendSMS(content, user.getPhone());
     }
 
+    private void sendSMS(SMSContent smsContent, Users user) {
+        String content = user.getName()+"님 "+smsContent.getMessage();
+        sendSMS(content, user.getPhone());
+    }
+
     public void sendSMS(String content, String phone) {
         JSONObject bodyJson = makeBodyJson(content, phone, callingNumber);
         String body = bodyJson.toString();
@@ -66,14 +71,21 @@ public class SMSService {
         trySMS(body);
     }
 
-    @Scheduled(cron="0 50 14 * * ?")
+//    @Scheduled(cron="0 0 8 * * ?")
+    @Transactional
     public void reserveSMSScheduler() {
         LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0,0)); //오늘 00:00:00
         LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.of(23,59,59)); //오늘 23:59:59
         List<Consulting> consultingList = consultingRepository.findByConsultingDateBetween(start, end);
 
-        for(Consulting consulting : consultingList){
-            sendSMS(consulting.getNo(), SMSContent.TODAY_CONSULTING, consulting.getUsers());
+        if(consultingList!=null && !consultingList.isEmpty()){
+            Set<Users> set = new HashSet<>();
+            for(Consulting consulting : consultingList){
+                set.add(consulting.getUsers());
+            }
+            for(Users user : set){
+                sendSMS(SMSContent.TODAY_CONSULTING, user);
+            }
         }
     }
 
@@ -103,7 +115,7 @@ public class SMSService {
         String apiUrl = hostNameUrl + smsRequestUrl;
 
         try {
-            log.info(body);
+            log.debug(body);
 
             URL url = new URL(apiUrl);
 
