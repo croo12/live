@@ -12,6 +12,7 @@ import session from "redux-persist/lib/storage/session";
 import persistReducer from "redux-persist/es/persistReducer";
 import houseSlice from "./house-slice";
 import reservedItemSlice from "./reserved-item-slice";
+import userSlice from "./user-slice";
 
 // 리덕스로 상태 관리할 리듀서 입력(필수)
 const reducers = combineReducers({

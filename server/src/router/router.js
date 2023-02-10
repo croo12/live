@@ -43,6 +43,7 @@ import SignUpPage from "../pages/SignUpPage";
 import AlertPage, { alertLoader } from "../pages/AlertPage";
 import ContractPage from "../pages/ContractPage";
 import { loader as houseModifyLoader } from "../components/house/HouseModify";
+import { ProtectedRouter } from "../components/common/AuthProtector";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -137,7 +138,15 @@ const router = createBrowserRouter(
         {/* <Route path="alert" element={<MyAlert />}></Route> */}
         {/* 부동산 아저씨 일정관리 */}
       </Route>
-      <Route path="alert" element={<AlertPage />} loader={alertLoader}></Route>
+      <Route
+        path="alert"
+        element={
+          <ProtectedRouter>
+            <AlertPage />
+          </ProtectedRouter>
+        }
+        loader={alertLoader}
+      ></Route>
       <Route path="contract" element={<ContractPage />}></Route>
     </Route>
   )
