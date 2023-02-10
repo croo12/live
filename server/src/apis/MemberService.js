@@ -22,7 +22,13 @@ export const userLogout = async () => {
 //내 정보 줘
 export const getUserInfo = (accessToken) => {
   try {
-    return axiosInstance.get("users", {headers:{Authorization: `Bearer ${accessToken}`}});
+    if (accessToken) {
+      return axiosInstance.get("users", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+    } else {
+      return axiosInstance.get("users");
+    }
   }catch(err) {
     console.error(`뭐가 잘 안됐다야.`);
   }
