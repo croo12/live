@@ -42,7 +42,7 @@ public class Realtor extends Member implements UserDetails {
     private LocalDate startDate;
     @Column(name = "rating_score")
     @Builder.Default
-    private float ratingScore = (float) 36.5;
+    private float ratingScore= (float) 0;
 
     @JsonIgnore
     @Column
