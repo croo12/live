@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
-import {userLogin, logout, realtorLogin} from "../apis/MemberService";
+import { userLogin, logout, realtorLogin } from "../apis/MemberService";
 import classes from "./LoginPage.module.scss";
 import { useAuth } from "../components/common/AuthProtector";
 
 const LoginPage = () => {
   const [loginMode, setLoginMode] = useState("USER"); // 로그인 모드 상태 확인 ( USER , REALTOR )
-  const user = useAuth();
+  const { userInfo, doLogin, doLogout } = useAuth();
   const navigation = useNavigate();
 
   const loginModeHandler = (event) => {
@@ -20,10 +20,26 @@ const LoginPage = () => {
     // 일반 회원 로그인 처리
     // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
-    const result = userLogin(userLoginInfo);
-    console.log(result);
+    try {
+      const result = await userLogin(userLoginInfo);
+      const data = result?.data.data;
 
-    user.doLogin(result.data);
+      if (data) {
+        const tmp = {
+          id: data.id,
+          name: data.name,
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+          isRealtor: false,
+        };
+
+        doLogin(tmp);
+      } else {
+        console.log(result);
+      }
+    } catch (err) {
+      console.log(`hi`);
+    }
   };
 
   const realtorLoginHandler = async (realtorLoginInfo) => {

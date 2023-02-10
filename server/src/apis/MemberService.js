@@ -1,18 +1,15 @@
 import axiosInstance from "../util/axios";
 
-export const userLogin = (data) => {
-  return axiosInstance.post(`users/login`, data).then((response)=>{
-    console.log("안녕 칭구", response);
+export const userLogin = async (data) => {
+  const result = await axiosInstance.post(`users/login`, data)
 
-    if (response.data.data.accessToken) {
-      // console.log(response.data.data.accessToken);
-      // console.log(response.data.data.refreshToken);
-      console.log(response.data.data);
-      localStorage.setItem("user", JSON.stringify(response.data.data));
-      localStorage.setItem("state", "USER");
-    }
-    return response.data.data.accessToken;
-  })
+  const accessToken = result?.data.data.accessToken;
+  console.log(accessToken);
+  if( accessToken ){
+    return getUserInfo(accessToken);
+  }else {
+    throw new Error(`로그인 실패`);
+  }
 };
 
 export const userLogout = async () => {
@@ -21,6 +18,15 @@ export const userLogout = async () => {
   localStorage.removeItem("state");
   return await axiosInstance.post("users/logout", { accessToken: user.accessToken, refreshToken: user.refreshToken});
 };
+
+//내 정보 줘
+export const getUserInfo = (accessToken) => {
+  try {
+    return axiosInstance.get("users", {headers:{Authorization: `Bearer ${accessToken}`}});
+  }catch(err) {
+    console.error(`뭐가 잘 안됐다야.`);
+  }
+}
 
 export const realtorLogin = async (data) => {
   return await axiosInstance.post(`realtors/login`, data).then((response)=>{
@@ -45,6 +51,6 @@ export const logout = async () => {
   }
 };
 
-export const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem('user'));
-}
+// export const getCurrentUser = () => {
+//   return JSON.parse(localStorage.getItem('user'));
+// }

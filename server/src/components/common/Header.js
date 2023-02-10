@@ -2,11 +2,12 @@ import { NavLink } from "react-router-dom";
 import classes from "./Header.module.scss";
 import logo from "../../assets/image/liveLogo.png";
 import { makeUUID } from "../../util/UUID";
-import { useState } from "react";
-import { logout } from "../../apis/MemberService";
+import { useEffect, useState } from "react";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useAuth } from "./AuthProtector";
+import { userAction } from "../../store/user-slice";
 
 const Header = () => {
   const [isToggled, setIsToggled] = useState(false);
@@ -15,8 +16,17 @@ const Header = () => {
     setIsToggled(!isToggled);
   };
 
-  const userInfo = useSelector((state) => state.user.userInfo);
-  // const loginState = localStorage.getItem("state");
+  const { userInfo, doLogin, doLogout } = useAuth();
+  const dispatch = useDispatch();
+
+  const logoutEventHandler = (e) => {
+    e.preventDefault();
+    console.log("ㄱㄱ");
+
+    if (isToggled) isToggledHandler();
+
+    doLogout();
+  };
 
   return (
     <div className={classes.header}>
@@ -62,9 +72,7 @@ const Header = () => {
           </li>
           {userInfo.id ? (
             <li>
-              <NavLink to={"/"} onClick={isToggled && isToggledHandler}>
-                로그아웃
-              </NavLink>
+              <NavLink onClick={logoutEventHandler}>로그아웃</NavLink>
             </li>
           ) : (
             ""
