@@ -6,10 +6,7 @@ import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.Entity.item.Direction;
 import com.ssafy.live.common.domain.Entity.item.Entrance;
 import com.ssafy.live.common.domain.Entity.item.Heating;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -64,6 +61,7 @@ public class Item extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<ItemImage> itemImages = new ArrayList<>();
 
     public void setOption(ItemOption option) {
