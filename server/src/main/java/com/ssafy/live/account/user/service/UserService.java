@@ -66,7 +66,7 @@ public class UserService {
         if (users == null) {
             return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
-        if(!login.getPassword().equals(users.getPassword())) {
+        if(!passwordEncoder.matches(users.getPassword(), login.getPassword())) {
             return response.fail("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
 

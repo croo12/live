@@ -39,14 +39,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
             .httpBasic().disable()
-                .cors(cors -> cors.disable())
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .formLogin().disable()
             .authorizeRequests()
                 .antMatchers("/users", "/users/login", "/users/id", "/realtors", "/realtors/login", "/realtors/id").permitAll()
-            .antMatchers("/users/id", "/users/info", "/users/passcheck").hasAuthority("USER")
+            .antMatchers("/users/info", "/users/passcheck", "/users/").hasAuthority("USER")
             .antMatchers("realtors/region", "/realtors/{realtorNo}", "/realtors/info", "/realtors/passcheck", "/realtors/{realtorNo}/consultings").hasAuthority("REALTOR")
             .antMatchers("/consultings/**").permitAll()
             .and()
@@ -71,13 +70,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://live-live.store"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT","FETCH"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 }
