@@ -36,6 +36,7 @@ import MyReservationDetailRealtor from "../components/mypage/MyReservationDetail
 import SignUpPage from "../pages/SignUpPage";
 import AlertPage, { alertLoader } from "../pages/AlertPage";
 import ContractPage from "../pages/ContractPage";
+import { loader as houseModifyLoader } from "../components/house/HouseModify";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,7 +59,14 @@ const router = createBrowserRouter(
         <Route index element={<HouseList />}></Route>
         <Route path="regist" element={<HouseRegist />}></Route>
         <Route path="detail/:itemNo" element={<HouseDetail />}></Route>
-        <Route path="modify/:itemNo" element={<HouseModify />}></Route>
+        <Route
+          path="modify/:itemNo"
+          element={<HouseModify />}
+          loader={houseModifyLoader}
+          errorElement={
+            <ErrorCommonPage errorMsg="매물 정보를 읽어오는데 실패했습니다." />
+          }
+        ></Route>
       </Route>
       <Route path="mypage" element={<MyPage />}>
         <Route path="info-detail" element={<MyInfoDetail />}></Route>
