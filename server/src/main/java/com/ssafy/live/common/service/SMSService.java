@@ -5,10 +5,11 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.SMSContent;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
-import com.ssafy.live.webrtc.Room;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -26,18 +27,28 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class SMSService {
     private final ConsultingRepository consultingRepository;
 
-    public SMSService(ConsultingRepository consultingRepository) {
-        this.consultingRepository = consultingRepository;
-    }
+    private String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
+    private String requestUrl= "/sms/v2/services/";                   		// 요청 URL
+    private String requestUrlType = "/messages";
+
+    @Value("${naver-access-key}")
+    private String accessKey;                     	// 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키			// Access Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+    @Value("${naver-secret-key}")
+    private String secretKey;  // 2차 인증을 위해 서비스마다 할당되는 service secret key	// Service Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+    @Value("${naver-service-id}")
+    private String serviceId;
+    @Value("${sms-calling-number}")
+    private String callingNumber;
+
 
     public void sendSMS(Long no, SMSContent smsContent, Realtor realtor){
         String content = realtor.getName()+"님 "+smsContent.getMessage()+"("+no+")";
@@ -49,15 +60,13 @@ public class SMSService {
     }
 
     public void sendSMS(String content, String phone) {
-        String callingNumber = "01092352527";
-
         JSONObject bodyJson = makeBodyJson(content, phone, callingNumber);
         String body = bodyJson.toString();
 
         trySMS(body);
     }
 
-    @Scheduled(cron="0 0 8 * * ?")
+    @Scheduled(cron="0 50 14 * * ?")
     public void reserveSMSScheduler() {
         LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0,0)); //오늘 00:00:00
         LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.of(23,59,59)); //오늘 23:59:59
@@ -70,7 +79,6 @@ public class SMSService {
 
 
     private void reserveSMS(String content, String phone, LocalDateTime consultingDate) {
-        String callingNumber = "01092352527";
         LocalDateTime reserveTime = LocalDateTime.of(
                 consultingDate.getYear(),
                 consultingDate.getMonth(),
@@ -88,17 +96,11 @@ public class SMSService {
 
 
     private void trySMS(String body){
-        String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
-        String requestUrl= "/sms/v2/services/";                   		// 요청 URL
-        String requestUrlType = "/messages";
-        String accessKey = "SSw1ehSlYG6Bd6kRSD4i";                     	// 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키			// Access Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
-        String secretKey = "WDBzU4bDeoVKQGE3UTf0bab1n1JgLfp0I7SQsfTB";  // 2차 인증을 위해 서비스마다 할당되는 service secret key	// Service Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
-        String serviceId = "ncp:sms:kr:293401522147:live-live";
 
         String method = "POST";                                            // 요청 method
         String timestamp = Long.toString(System.currentTimeMillis());    // current timestamp (epoch)
-        requestUrl += serviceId + requestUrlType;
-        String apiUrl = hostNameUrl + requestUrl;
+        String smsRequestUrl = requestUrl + serviceId + requestUrlType;
+        String apiUrl = hostNameUrl + smsRequestUrl;
 
         try {
             log.info(body);
@@ -112,7 +114,7 @@ public class SMSService {
             con.setRequestProperty("content-type", "application/json");
             con.setRequestProperty("x-ncp-apigw-timestamp", timestamp);
             con.setRequestProperty("x-ncp-iam-access-key", accessKey);
-            con.setRequestProperty("x-ncp-apigw-signature-v2", makeSignature(requestUrl, timestamp, method, accessKey, secretKey));
+            con.setRequestProperty("x-ncp-apigw-signature-v2", makeSignature(smsRequestUrl, timestamp, method, accessKey, secretKey));
             con.setRequestMethod(method);
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
