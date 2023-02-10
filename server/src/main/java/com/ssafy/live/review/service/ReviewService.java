@@ -5,6 +5,7 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
+import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
 import com.ssafy.live.review.controller.dto.ReviewRequest;
 import com.ssafy.live.review.controller.dto.ReviewResponse;
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -33,8 +36,9 @@ public class ReviewService {
     private final JwtTokenProvider jwtTokenProvider;
     private final Response response;
 
-    public ResponseEntity<?> regist(String token, ReviewRequest.Regist regist) {
-        Realtor realtor = realtorRepository.findById(regist.getRealtorNo()).get();
+    public ResponseEntity<?> regist(ReviewRequest.Regist regist) {
+        Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
+                        .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         reviewRepository.save(Review.builder()
                 .realtor(realtor)
                         .users(usersRepository.findById(regist.getUserNo()).get())
@@ -49,9 +53,6 @@ public class ReviewService {
     }
 
     public ResponseEntity<?> allReview(String token) {
-        if (!jwtTokenProvider.validateToken(token)) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
-        }
         List<ReviewResponse.Reviews> list;
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         List<Review> reviews;

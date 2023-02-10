@@ -38,6 +38,7 @@ public class HouseRequest {
         private String gugun;
         private String dong;
         private int zipcode;
+        private String regionCode;
 
         public House toEntity(){
             return House.builder()
@@ -55,6 +56,7 @@ public class HouseRequest {
                     .gugun(gugun)
                     .dong(dong)
                     .zipCode(zipcode)
+                    .regionCode(regionCode)
                     .build();
         }
     }

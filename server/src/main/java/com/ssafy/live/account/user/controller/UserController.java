@@ -38,7 +38,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Validated UserRequest.Login login, Errors errors) {
+    public ResponseEntity<?> login(@Validated @RequestBody UserRequest.Login login, Errors errors) {
+        // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(Authentication authentication, Errors errors) {
+    public ResponseEntity<?> logout(@Validated @RequestBody  UserRequest.Logout logout, Errors errors) {
         // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));

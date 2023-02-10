@@ -65,6 +65,10 @@ public class Room implements Closeable {
   }
 
   public UserSession join(String userName, WebSocketSession session) throws IOException {
+    if(this.participants.containsKey(userName)){
+      log.info("ROOM {}: remove duplicate user {}", this.name, userName);
+      leave(this.participants.get(userName));
+    }
     log.info("ROOM {}: adding participant {}", this.name, userName);
     final UserSession participant = new UserSession(userName, this.name, session, this.pipeline);
     joinRoom(participant);

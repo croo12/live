@@ -17,8 +17,6 @@ public class ConsultingRequest {
 
         @NotNull(message = "공인중개사 번호는 필수 입력값입니다.")
         private Long realtorNo;
-        @NotNull(message = "고객 번호는 필수 입력값입니다.")
-        private Long userNo;
         private LocalDateTime consultingDate;
         private String requirement;
         private List<Long> itemList;

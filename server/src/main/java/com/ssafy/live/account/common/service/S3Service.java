@@ -8,14 +8,14 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import java.io.IOException;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @NoArgsConstructor
@@ -46,11 +46,11 @@ public class S3Service {
     }
 
     public String upload(MultipartFile file) throws IOException {
-        if(file.isEmpty()) {
+        if (file.isEmpty()) {
             return null;
         } else {
-            String fileName = UUID.randomUUID()+ "_" +file.getOriginalFilename().replaceAll("[~!@#$%^&*()_+ ]", "_");
-            System.out.println("file "+file.getOriginalFilename());
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename().replaceAll("[~!@#$%^&*()_+ ]", "_");
+            System.out.println("file " + file.getOriginalFilename());
             s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return s3Client.getUrl(bucket, fileName).toString();
@@ -58,13 +58,13 @@ public class S3Service {
     }
 
     public void deleteFile(String imageSrc) {
-        try{
+        try {
             String key = imageSrc; // 폴더/파일.확장자
-            System.out.println("기존 파일명 :"+imageSrc);
+            System.out.println("기존 파일명 :" + imageSrc);
             try {
-                if(imageSrc == null) return;
+                if (imageSrc == null) return;
                 s3Client.deleteObject(bucket, (key).substring(54));
-                System.out.println(String.format("[%s] deletion complete", (key).substring(54)));
+                System.out.printf("[%s] deletion complete%n", (key).substring(54));
             } catch (AmazonServiceException e) {
                 System.err.println(e.getErrorMessage());
                 System.exit(1);

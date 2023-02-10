@@ -14,6 +14,8 @@ import com.ssafy.live.account.user.controller.dto.UserResponse;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
+import com.ssafy.live.common.domain.SMSContent;
+import com.ssafy.live.common.service.SMSService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
