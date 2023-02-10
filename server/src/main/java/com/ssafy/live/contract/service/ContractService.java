@@ -78,7 +78,7 @@ public class ContractService {
     public ResponseEntity<?> contractList(UserDetails user, int status) {
         ContractStatus contractStatus = ContractStatus.ofValue(status);
         List<ContractResponse.ContractList> list = null;
-        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
             list = contractRepository.findByContractStateAndUsers(contractStatus, usersRepository.findById(user.getUsername()).get()).stream()
                 .map((contract)->
                      ContractResponse.ContractList.toEntity(
@@ -88,7 +88,7 @@ public class ContractService {
                      )
                 )
                 .collect(Collectors.toList());
-        } else if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_REALTOR"))) {
+        } else if(user.getAuthorities().contains(new SimpleGrantedAuthority("REALTOR"))) {
             list = contractRepository.findByContractStateAndRealtor(contractStatus, realtorRepository.findByBusinessNumber(user.getUsername()).get()).stream()
                 .map((contract)->
                         ContractResponse.ContractList.toEntity(
