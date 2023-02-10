@@ -5,6 +5,8 @@ import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.service.ConsultingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,21 +21,24 @@ public class ConsultingController {
     private final ConsultingService consultingService;
 
     @PostMapping
-    public ResponseEntity<?> reserve(@RequestHeader(AUTHORIZATION) String token, @Validated @RequestBody ConsultingRequest.Reserve reserve, Errors errors)  {
+    public ResponseEntity<?> reserve(Authentication authentication, @Validated @RequestBody ConsultingRequest.Reserve reserve, Errors errors)  {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
-        return consultingService.reserve(token, reserve);
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return consultingService.reserve(principal, reserve);
     }
 
     @GetMapping
-    public ResponseEntity<?> reservationList(@RequestHeader(AUTHORIZATION) String token, @RequestParam int situation) {
-        return consultingService.reservationListByRealtor(token, situation);
+    public ResponseEntity<?> reservationList(Authentication authentication, @RequestParam int situation) {
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return consultingService.reservationListByRealtor(principal, situation);
     }
 
     @PatchMapping
-    public ResponseEntity<?> changeStatus(@RequestHeader(AUTHORIZATION) String token, @RequestBody ConsultingRequest.ChangeStatus request) {
-        return consultingService.changeStatus(token, request);
+    public ResponseEntity<?> changeStatus(Authentication authentication, @RequestBody ConsultingRequest.ChangeStatus request) {
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return consultingService.changeStatus(principal, request);
     }
 
     @GetMapping("/{consultingNo}")
@@ -47,7 +52,8 @@ public class ConsultingController {
     }
 
     @GetMapping("/contracts/{itemNo}")
-    public ResponseEntity<?> infoForContact(@RequestHeader(AUTHORIZATION) String token, @PathVariable Long itemNo)  {
-        return consultingService.infoForContact(token, itemNo);
+    public ResponseEntity<?> infoForContact(Authentication authentication, @PathVariable Long itemNo)  {
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return consultingService.infoForContact(principal, itemNo);
     }
 }

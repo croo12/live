@@ -1,15 +1,17 @@
 package com.ssafy.live.contract.service;
 
-import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
+import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.WRONG_AUTHENTICATION_TYPE;
+
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Entity.status.ContractStatus;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.domain.SMSContent;
 import com.ssafy.live.common.exception.BadRequestException;
-import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.contract.controller.dto.ContractRequest;
 import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import com.ssafy.live.contract.controller.dto.ContractResponse;
@@ -19,18 +21,15 @@ import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -43,10 +42,9 @@ public class ContractService {
     private final RealtorRepository realtorRepository;
     private final ItemImageRepository itemImageRepository;
     private final ItemRepository itemRepository;
-    private final JwtTokenProvider jwtTokenProvider;
     private final SMSService smsService;
 
-    public ResponseEntity<?> regist(String token, ContractRequest.Regist regist) {
+    public ResponseEntity<?> regist(ContractRequest.Regist regist) {
         Users users = usersRepository.findById(regist.getUserNo())
                 .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
@@ -76,12 +74,11 @@ public class ContractService {
         return response.success("계약신청이 완료되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> contractList(String token, int status) {
+    public ResponseEntity<?> contractList(UserDetails user, int status) {
         ContractStatus contractStatus = ContractStatus.ofValue(status);
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
         List<ContractResponse.ContractList> list = null;
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            list = contractRepository.findByContractStateAndUsers(contractStatus, usersRepository.findById(authentication.getName()).get()).stream()
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            list = contractRepository.findByContractStateAndUsers(contractStatus, usersRepository.findById(user.getUsername()).get()).stream()
                 .map((contract)->
                      ContractResponse.ContractList.toEntity(
                          contract.getRealtor().getNo(),
@@ -90,8 +87,8 @@ public class ContractService {
                      )
                 )
                 .collect(Collectors.toList());
-        } else if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_REALTOR"))) {
-            list = contractRepository.findByContractStateAndRealtor(contractStatus, realtorRepository.findByBusinessNumber(authentication.getName()).get()).stream()
+        } else if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_REALTOR"))) {
+            list = contractRepository.findByContractStateAndRealtor(contractStatus, realtorRepository.findByBusinessNumber(user.getUsername()).get()).stream()
                 .map((contract)->
                         ContractResponse.ContractList.toEntity(
                             contract.getUsers().getNo(),
@@ -106,7 +103,7 @@ public class ContractService {
         return response.success(list, "계약 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> contractDetail(String token, Long contractNo) {
+    public ResponseEntity<?> contractDetail(Long contractNo) {
         Contract contract = contractRepository.findById(contractNo).get();
         List<ItemImage> itemImages = itemImageRepository.findByItem(contract.getItem());
         List<String> images = itemImages.stream().map((i)->i.getImageSrc()).collect(Collectors.toList());
@@ -121,7 +118,7 @@ public class ContractService {
         return response.success(contractDetail, "계약 상세를 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> contractUpdate(String token, Update update, Long contractNo) {
+    public ResponseEntity<?> contractUpdate(Update update, Long contractNo) {
         Contract contract = contractRepository.findById(contractNo).get();
         Item item = itemRepository.findById(contract.getItem().getNo()).get();
         item.updatePayment(update.getDeposit(), update.getRent(), update.getMaintenanceFee());
@@ -133,7 +130,7 @@ public class ContractService {
         return response.success("계약 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> contractApprove(String token, Long contractNo) {
+    public ResponseEntity<?> contractApprove(Long contractNo) {
         Contract contract = contractRepository.findById(contractNo).get();
         contract.approve();
         contractRepository.save(contract);
@@ -143,7 +140,7 @@ public class ContractService {
         return response.success("계약이 승인되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> contractComplete(String token, Long contractNo) {
+    public ResponseEntity<?> contractComplete(Long contractNo) {
         Contract contract = contractRepository.findById(contractNo).get();
         contract.complete();
         contractRepository.save(contract);

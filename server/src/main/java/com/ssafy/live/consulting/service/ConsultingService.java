@@ -1,6 +1,9 @@
 package com.ssafy.live.consulting.service;
 
-import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
+import static com.ssafy.live.common.exception.ErrorCode.CONSULTING_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
+
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.entity.Users;
@@ -9,18 +12,15 @@ import com.ssafy.live.common.domain.Entity.status.ConsultingStatus;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.SMSContent;
 import com.ssafy.live.common.exception.BadRequestException;
-import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
-import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ItemForContract;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationRealtor;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationUser;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.consulting.domain.entity.ConsultingItem;
 import com.ssafy.live.consulting.domain.repository.ConsultingItemRepository;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
-import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.entity.ItemImage;
@@ -28,21 +28,17 @@ import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static com.ssafy.live.common.domain.SMSContent.CONSULTING_CONFIRMED;
-import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -57,14 +53,12 @@ public class ConsultingService {
     private final ItemImageRepository itemImageRepository;
     private final NoticeRepository noticeRepository;
     private final ConsultingItemRepository consultingItemRepository;
-    private final JwtTokenProvider jwtTokenProvider;
     private final SMSService smsService;
 
-    public ResponseEntity<?> reserve(String token, ConsultingRequest.Reserve reserve) {
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-        Users users = usersRepository.findById(authentication.getName())
+    public ResponseEntity<?> reserve(UserDetails user, ConsultingRequest.Reserve reserve) {
+        Users users = usersRepository.findById(user.getUsername())
             .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
-        Realtor realtor = realtorRepository.findById(reserve.getRealtorNo())
+        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
             .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         Consulting consulting = Consulting.builder()
                 .realtor(realtor)
@@ -90,13 +84,12 @@ public class ConsultingService {
         return response.success("예약이 완료되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?>  reservationListByRealtor(String token, int status) {
+    public ResponseEntity<?>  reservationListByRealtor(UserDetails user, int status) {
         ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            return listByUser(usersRepository.findById(authentication.getName()).get().getNo(), statuses);
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            return listByUser(usersRepository.findById(user.getUsername()).get().getNo(), statuses);
         } else {
-            return listByRealtor(realtorRepository.findByBusinessNumber(authentication.getName()).get().getNo(), statuses);
+            return listByRealtor(realtorRepository.findByBusinessNumber(user.getUsername()).get().getNo(), statuses);
         }
     }
 
@@ -148,16 +141,15 @@ public class ConsultingService {
          return response.success(list, "상담 목록을 조회하였습니다.", HttpStatus.OK);
    }
 
-    public ResponseEntity<?> changeStatus(String token, ConsultingRequest.ChangeStatus request) {
+    public ResponseEntity<?> changeStatus(UserDetails user, ConsultingRequest.ChangeStatus request) {
         Consulting consulting = consultingRepository.findById(request.getCounsultingNo())
             .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
             consulting.updateStatus(request.getStatus());
         consultingRepository.save(consulting);
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
         String writer, info;
         SMSContent smsContent;
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             writer = consulting.getRealtor().getName();
         } else {
             writer = consulting.getUsers().getName();
@@ -240,13 +232,12 @@ public class ConsultingService {
         return response.success("상담 매물 수정이 완료되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> infoForContact(String token, Long itemNo) {
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+    public ResponseEntity<?> infoForContact(UserDetails user, Long itemNo) {
         Item item = itemRepository.findById(itemNo).get();
         ConsultingResponse.ItemForContract.RealtorInfo realtor = ConsultingResponse.ItemForContract.RealtorInfo
             .toEntity(item.getRealtor());
         ConsultingResponse.ItemForContract.UserInfo users = ConsultingResponse.ItemForContract.UserInfo
-            .toEntity(usersRepository.findById(authentication.getName()).get());
+            .toEntity(usersRepository.findById(user.getUsername()).get());
 
         List<ItemImage> itemImages = itemImageRepository.findByItem(item);
         List<String> images = itemImages.stream().map((i)->i.getImageSrc()).collect(Collectors.toList());

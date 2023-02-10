@@ -1,6 +1,7 @@
 package com.ssafy.live.review.service;
 
-import com.ssafy.live.account.auth.jwt.JwtTokenProvider;
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
+
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
@@ -11,18 +12,15 @@ import com.ssafy.live.review.controller.dto.ReviewRequest;
 import com.ssafy.live.review.controller.dto.ReviewResponse;
 import com.ssafy.live.review.domain.entity.Review;
 import com.ssafy.live.review.domain.repository.ReviewRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
 
 @Slf4j
 @Service
@@ -33,7 +31,6 @@ public class ReviewService {
     private final UsersRepository usersRepository;
     private final RealtorRepository realtorRepository;
     private final ConsultingRepository consultingRepository;
-    private final JwtTokenProvider jwtTokenProvider;
     private final Response response;
 
     public ResponseEntity<?> regist(ReviewRequest.Regist regist) {
@@ -52,16 +49,15 @@ public class ReviewService {
         return response.success("리뷰를 등록하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> allReview(String token) {
+    public ResponseEntity<?> allReview(UserDetails user) {
         List<ReviewResponse.Reviews> list;
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
         List<Review> reviews;
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            reviews = reviewRepository.findByUsers(usersRepository.findById(authentication.getName()).get());
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            reviews = reviewRepository.findByUsers(usersRepository.findById(user.getUsername()).get());
             list = reviews.stream().map((review)-> ReviewResponse.Reviews.toEntity(review.getRealtor(), review))
                 .collect(Collectors.toList());
         } else {
-            reviews = reviewRepository.findByRealtor(realtorRepository.findByBusinessNumber(authentication.getName()).get());
+            reviews = reviewRepository.findByRealtor(realtorRepository.findByBusinessNumber(user.getUsername()).get());
             list = reviews.stream().map((review)-> ReviewResponse.Reviews.toEntity(review.getUsers(), review))
                     .collect(Collectors.toList());
         }

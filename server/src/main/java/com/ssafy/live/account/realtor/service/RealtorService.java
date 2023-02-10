@@ -74,14 +74,18 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> login(RealtorRequest.Login login) {
-        if (realtorRepository.findByBusinessNumber(login.getBusinessNumber()).orElse(null) == null) {
-            return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+        Realtor realtor = realtorRepository.findByBusinessNumber(login.getBusinessNumber()).get();
+        if (realtor == null) {
+            return response.fail("해당하는 공인중개사가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
+        if(!login.getPassword().equals(realtor.getPassword())) {
+            return response.fail("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
-
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         CommonResponse.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
         redisTemplate.opsForValue()
             .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
@@ -103,9 +107,8 @@ public class RealtorService {
         return response.success("로그아웃 되었습니다.");
     }
 
-    public ResponseEntity<?> withdrawl(String token) {
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-        Optional<Realtor> realtor = realtorRepository.findByBusinessNumber(authentication.getName());
+    public ResponseEntity<?> withdrawl(UserDetails user) {
+        Optional<Realtor> realtor = realtorRepository.findByBusinessNumber(user.getUsername());
         if(realtor.isPresent()) {
             realtorRepository.deleteById(realtor.get().getNo());
             return response.success("회원탈퇴 되었습니다.");
@@ -168,11 +171,10 @@ public class RealtorService {
         return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findRealtorList(@RequestHeader(AUTHORIZATION) String token, String orderBy) {
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+    public ResponseEntity<?> findRealtorList(UserDetails user, String orderBy) {
         String region = "";
-        if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            region = usersRepository.findById(authentication.getName()).get().getRegion();
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            region = usersRepository.findById(user.getUsername()).get().getRegion();
         }
         List<RealtorProjectionInterface> findRealtors = null;
         if(orderBy.equals("review")) {
