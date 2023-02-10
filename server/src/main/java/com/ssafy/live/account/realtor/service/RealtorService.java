@@ -78,7 +78,7 @@ public class RealtorService {
         if (realtor == null) {
             return response.fail("해당하는 공인중개사가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
-        if(!passwordEncoder.matches(realtor.getPassword(), login.getPassword())) {
+        if(!passwordEncoder.matches(login.getPassword(), realtor.getPassword())) {
             return response.fail("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();

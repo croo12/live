@@ -29,6 +29,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -66,7 +67,9 @@ public class UserService {
         if (users == null) {
             return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
-        if(!passwordEncoder.matches(users.getPassword(), login.getPassword())) {
+        log.info("로그인 DTO ",login.getPassword());
+        log.info("유저 DTO ",users.getPassword());
+        if(!passwordEncoder.matches(login.getPassword(), users.getPassword())) {
             return response.fail("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
 
