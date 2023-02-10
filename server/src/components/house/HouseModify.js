@@ -83,10 +83,6 @@ const HouseModify = () => {
     setImages(data);
   };
 
-  useEffect(() => {
-    getHouseByItemNo();
-  });
-
   const modifyHouseInfo = async (event) => {
     event.preventDefault();
 
@@ -375,6 +371,24 @@ const HouseModify = () => {
     }
   };
 
+  const completionYearValidHandler = (event) => {
+    const value = event.target.value;
+    const maxYear = new Date().getFullYear();
+    const minYear = 1940;
+
+    console.log(123);
+
+    if (value === "") {
+      return;
+    } else if (value > maxYear || value < minYear) {
+      alert(
+        `입력 가능한 준공년도는 ${minYear}년부터 ${maxYear}년 이내입니다.\n다시 입력해주세요.`
+      );
+      event.target.value = "";
+      event.target.focus();
+    }
+  };
+
   const inputNumVaild = (event, dotValid) => {
     const data = event.target.value;
     const valid = /^[0-9]$/;
@@ -433,24 +447,16 @@ const HouseModify = () => {
         </Modal>
       )}
 
-      <form
-        className={classes.houseModify}
-        onSubmit={modifyHouseInfo}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
-            event.preventDefault();
-          }
-        }}
-      >
+      <form className={classes.houseModify}>
         <div className={classes.modifyFieldSet}>
-          <h1>매물 정보 등록</h1>
+          <h1>매물 정보 수정</h1>
           <div className={classes.modifyDescription}>
             <div className={classes.descIcon}>
               <BsFillExclamationCircleFill className={classes.icon} />
             </div>
             <div className={classes.descText}>
               <p>
-                ㆍ 등록하신 방은 방 정보와 계정 정보&#40;가입된 아이디, 이름,
+                ㆍ 수정하신 방은 방 정보와 계정 정보&#40;가입된 아이디, 이름,
                 연락처 정보 등&#41;가 함께 노출됩니다.
               </p>
               <p>
@@ -685,12 +691,13 @@ const HouseModify = () => {
                       <label htmlFor="completionYear">준공년도</label>
                       <div className={classes.unitInput}>
                         <input
-                          type="number"
+                          type="text"
                           id="completionYear"
                           ref={completionYear}
                           placeholder="(예시)  2023"
-                          max={+new Date().getFullYear()}
-                          min={1900}
+                          onBlur={completionYearValidHandler}
+                          onChange={(event) => inputNumVaild(event, 0)}
+                          maxLength={4}
                           disabled
                         />
                         <p>년</p>
@@ -1148,7 +1155,9 @@ const HouseModify = () => {
             </div>
           </div>
           <div className={classes.modifyBtn}>
-            <button type="submit">등록</button>
+            <button type="button" onClick={modifyHouseInfo}>
+              수정
+            </button>
           </div>
         </div>
       </form>
@@ -1160,5 +1169,10 @@ export default HouseModify;
 
 export const loader = async ({ params }) => {
   const itemNo = params.itemNo;
-  return await getHouseByItemNo(itemNo);
+
+  const result = await getHouseByItemNo(itemNo);
+
+  console.log(result);
+
+  return result;
 };

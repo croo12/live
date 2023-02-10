@@ -65,8 +65,6 @@ const houseSlice = createSlice({
   reducers: {
     setHouseDate(state, action) {
       state = action.payload;
-
-      console.log(state);
     },
   },
 });
