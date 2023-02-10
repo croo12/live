@@ -117,16 +117,20 @@ export const findHouseByAddress = async (data) => {
 
 export const getHouseByItemNo = async (data) => {
   const getData = async () => {
-    console.log(data);
     const response = await axiosInstance.get(`/items/${data}`);
 
-    console.log(response);
+    if (response.data.result === "fail") {
+      throw new Error(404);
+    }
 
     return response.data;
   };
 
   try {
     const response = await getData();
-    console.log(response);
-  } catch {}
+
+    return response;
+  } catch {
+    // 따로처리안할래~~
+  }
 };

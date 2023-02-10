@@ -316,6 +316,7 @@ const HouseRegist = () => {
     sido.value = null;
     supplyArea.current.value = null;
     totalFloor.current.value = null;
+    buildingName.current.value = null;
 
     addressDetail.current.disabled = false;
     bathroom.current.disabled = false;
@@ -743,9 +744,9 @@ const HouseRegist = () => {
                           setDirection(event.target.value);
                         }}
                         value="EAST"
-                        id="east"
+                        id="EAST"
                       />
-                      <label htmlFor="east">동</label>
+                      <label htmlFor="EAST">동</label>
                       <input
                         type="radio"
                         name="direction"
@@ -753,9 +754,9 @@ const HouseRegist = () => {
                           setDirection(event.target.value);
                         }}
                         value="WEST"
-                        id="west"
+                        id="WEST"
                       />
-                      <label htmlFor="west">서</label>
+                      <label htmlFor="WEST">서</label>
                       <input
                         type="radio"
                         name="direction"
@@ -763,9 +764,9 @@ const HouseRegist = () => {
                           setDirection(event.target.value);
                         }}
                         value="SOUTH"
-                        id="south"
+                        id="SOUTH"
                       />
-                      <label htmlFor="south">남</label>
+                      <label htmlFor="SOUTH">남</label>
                       <input
                         type="radio"
                         name="direction"
@@ -773,9 +774,9 @@ const HouseRegist = () => {
                           setDirection(event.target.value);
                         }}
                         value="NORTH"
-                        id="north"
+                        id="NORTH"
                       />
-                      <label htmlFor="north">북</label>
+                      <label htmlFor="NORTH">북</label>
                       <input
                         type="radio"
                         name="direction"
@@ -783,9 +784,9 @@ const HouseRegist = () => {
                           setDirection(event.target.value);
                         }}
                         value="SOUTH_EAST"
-                        id="southEast"
+                        id="SOUTH_EAST"
                       />
-                      <label htmlFor="southEast">남동</label>
+                      <label htmlFor="SOUTH_EAST">남동</label>
                       <input
                         type="radio"
                         name="direction"
@@ -793,9 +794,9 @@ const HouseRegist = () => {
                           setDirection(event.target.value);
                         }}
                         value="SOUTH_WEST"
-                        id="southWest"
+                        id="SOUTH_WEST"
                       />
-                      <label htmlFor="southWest">남서</label>
+                      <label htmlFor="SOUTH_WEST">남서</label>
                       <input
                         type="radio"
                         name="direction"
@@ -803,9 +804,9 @@ const HouseRegist = () => {
                           setDirection(event.target.value);
                         }}
                         value="NORTH_EAST"
-                        id="northEast"
+                        id="NORTH_EAST"
                       />
-                      <label htmlFor="northEast">북동</label>
+                      <label htmlFor="NORTH_EAST">북동</label>
                       <input
                         type="radio"
                         name="direction"
@@ -813,9 +814,9 @@ const HouseRegist = () => {
                           setDirection(event.target.value);
                         }}
                         value="NORTH_WEST"
-                        id="northWest"
+                        id="NORTH_WEST"
                       />
-                      <label htmlFor="northWest">북서</label>
+                      <label htmlFor="NORTH_WEST">북서</label>
                     </td>
                   </tr>
                   <tr>
@@ -829,30 +830,30 @@ const HouseRegist = () => {
                         onChange={(event) => {
                           setEntrance(event.target.value);
                         }}
-                        id="stair"
+                        id="STAIR"
                         value="STAIR"
                       />
-                      <label htmlFor="stair">계단식</label>
+                      <label htmlFor="STAIR">계단식</label>
                       <input
                         type="radio"
                         name="entrance"
                         onChange={(event) => {
                           setEntrance(event.target.value);
                         }}
-                        id="corridor"
+                        id="PASSAGE"
                         value="PASSAGE"
                       />
-                      <label htmlFor="corridor">복도식</label>
+                      <label htmlFor="PASSAGE">복도식</label>
                       <input
                         type="radio"
                         name="entrance"
                         onChange={(event) => {
                           setEntrance(event.target.value);
                         }}
-                        id="complex"
+                        id="COMPLEX"
                         value="COMPLEX"
                       />
-                      <label htmlFor="complex">복합식</label>
+                      <label htmlFor="COMPLEX">복합식</label>
                     </td>
                   </tr>
                   <tr>
@@ -866,30 +867,30 @@ const HouseRegist = () => {
                         onChange={(event) => {
                           setHeating(event.target.value);
                         }}
-                        id="individual"
+                        id="INDIVIDUAl"
                         value="INDIVIDUAl"
                       />
-                      <label htmlFor="individual">개별난방</label>
+                      <label htmlFor="INDIVIDUAl">개별난방</label>
                       <input
                         type="radio"
                         name="heating"
                         onChange={(event) => {
                           setHeating(event.target.value);
                         }}
-                        id="center"
+                        id="CENTERAL"
                         value="CENTERAL"
                       />
-                      <label htmlFor="center">중앙난방</label>
+                      <label htmlFor="CENTERAL">중앙난방</label>
                       <input
                         type="radio"
                         name="heating"
                         onChange={(event) => {
                           setHeating(event.target.value);
                         }}
-                        id="district"
+                        id="DISTRICT"
                         value="DISTRICT"
                       />
-                      <label htmlFor="district">지역난방</label>
+                      <label htmlFor="DISTRICT">지역난방</label>
                     </td>
                   </tr>
                   <tr>
