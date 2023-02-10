@@ -51,8 +51,9 @@ const FindBrokerOfficeModalOverlay = (props) => {
           <Card key={idx}>
             <div className={classes.brokerList}>
               <h4>{item.bsnmCmpnm}</h4>
-              <p>{item.brkrNm}</p>
-              <p>{item.ldCodeNm}</p>
+              <p>
+                {item.brkrNm} | {item.ldCodeNm}
+              </p>
             </div>
           </Card>
         );
