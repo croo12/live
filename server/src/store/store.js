@@ -17,13 +17,14 @@ import userSlice from "./user-slice";
 // 리덕스로 상태 관리할 리듀서 입력(필수)
 const reducers = combineReducers({
   house: houseSlice.reducer,
+  user: userSlice.reducer,
   reserve: reservedItemSlice.reducer,
 });
 
 const persistConfig = {
   key: "root",
   storage: session,
-  whitelist: [], // 세션으로 관리하고 싶은 리듀서 이름(문자) 입력(선택)
+  whitelist: ["user"], // 세션으로 관리하고 싶은 리듀서 이름(문자) 입력(선택)
   // blacklist: [],
 };
 

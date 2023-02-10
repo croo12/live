@@ -9,46 +9,40 @@ import { findHouseByAddress, getHouseByItemNo } from "../../apis/houseApis";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 const HouseModify = () => {
-  const [SearchAddressModal, setSearchAddressModal] = useState(false); // 주소 검색 모달창 상태 관리용
-  const [PurposeModal, setPurposeModal] = useState(false); // 건축물 용도 모달창 상태
-  const [images, setImages] = useState([]); // 매물 이미지 파일
-  const [findAddress, setFindAddress] = useState(null);
-
-  const [direction, setDirection] = useState("");
-  const [entrance, setEntrance] = useState("");
-  const [heating, setHeating] = useState("");
-
   const navigate = useNavigate();
+  const getLoaderData = useLoaderData().data;
 
-  const getLoaderData = useLoaderData();
-
-  console.log(getLoaderData);
+  const [images, setImages] = useState([]); // 매물 이미지 파일
+  const [direction, setDirection] = useState(getLoaderData.direction);
+  const [entrance, setEntrance] = useState(getLoaderData.entrance);
+  const [heating, setHeating] = useState(getLoaderData.heating);
 
   // const realtorNo = useRef();
-  const deposit = useRef();
-  const rent = useRef();
-  const maintenanceFee = useRef();
-  const description = useRef();
-  const moveInDate = useRef();
   const buildingName = useRef();
+  const deposit = useRef();
+  const description = useRef();
+  const itemNo = useRef();
+  const maintenanceFee = useRef();
+  const moveInDate = useRef();
+  const rent = useRef();
 
-  const houseNo = useRef();
-  const isActive = useRef();
   const address = useRef();
   const addressDetail = useRef();
+  const bathroom = useRef();
+  const completionYear = useRef();
+  const exclusivePrivateArea = useRef();
+  const floor = useRef();
+  const houseNo = useRef();
+  const isActive = useRef();
+  const purpose = useRef();
+  const room = useRef();
   const sido = useRef();
+  const supplyArea = useRef();
   const gugun = useRef();
   const dong = useRef();
   const zipcode = useRef();
   const regionCode = useRef();
-  const bathroom = useRef();
-  const completionYear = useRef();
-  const exclusivePrivateArea = useRef();
-  const supplyArea = useRef();
-  const floor = useRef();
   const totalFloor = useRef();
-  const purpose = useRef();
-  const room = useRef();
 
   const airConditioner = useRef();
   const bathtub = useRef();
@@ -196,7 +190,6 @@ const HouseModify = () => {
     //   regionCode: regionCode.value,
 
     //   airConditioner: airConditioner.current.checked,
-    //   bath: false,
     //   bathtub: bathtub.current.checked,
     //   bed: bed.current.checked,
     //   bidet: bidet.current.checked,
@@ -233,107 +226,6 @@ const HouseModify = () => {
     // }
   };
 
-  const purposeModalHandler = () => {
-    PurposeModal ? setPurposeModal(false) : setPurposeModal(true);
-  };
-
-  const searchAddressModalHandler = () => {
-    if (SearchAddressModal === false) {
-      setSearchAddressModal(true);
-      return;
-    }
-    setSearchAddressModal(false);
-  };
-
-  // 주소 검색 결과 값 설정
-  const setAddressInfoHandler = (addressInfo) => {
-    address.current.value = addressInfo.address;
-    addressDetail.current.value = addressInfo.addressDetail;
-    sido.value = addressInfo.sido;
-    gugun.value = addressInfo.gugun;
-    dong.value = addressInfo.dong;
-    zipcode.value = addressInfo.zipcode;
-    regionCode.value = addressInfo.regionCode;
-  };
-
-  const findHouseByAddressHandler = async () => {
-    const response = await findHouseByAddress({
-      address: address.current.value,
-      addressDetail: addressDetail.current.value,
-    });
-
-    if (response.result === "fail") {
-      setFindAddress(response.message);
-
-      deposit.current.focus();
-      return;
-    }
-    setFindAddress(
-      response.message + " (주소를 재검색하여 다시 작성할 수 있습니다)"
-    );
-    const data = response.data;
-
-    address.current.value = data.address;
-    addressDetail.current.value = data.addressDetail;
-    bathroom.current.value = data.bathroom;
-    completionYear.current.value = data.completionYear;
-    dong.value = data.dong;
-    exclusivePrivateArea.current.value = data.exclusivePrivateArea;
-    floor.current.value = data.floor;
-    gugun.value = data.gugun;
-    houseNo.value = data.houseNo;
-    isActive.current.checked = data.isActive;
-    purpose.current.value = data.purpose;
-    regionCode.value = data.regionCode;
-    room.current.value = data.room;
-    sido.value = data.sido;
-    supplyArea.current.value = data.supplyArea;
-    totalFloor.current.value = data.totalFloor;
-
-    // address.current.readOnly = true;
-    addressDetail.current.disabled = true;
-    bathroom.current.disabled = true;
-    completionYear.current.disabled = true;
-    exclusivePrivateArea.current.disabled = true;
-    floor.current.disabled = true;
-    isActive.current.disabled = true;
-    purpose.current.disabled = true;
-    room.current.disabled = true;
-    supplyArea.current.disabled = true;
-    totalFloor.current.disabled = true;
-  };
-
-  const searchAddressHandler = () => {
-    address.current.value = null;
-    addressDetail.current.value = null;
-    bathroom.current.value = null;
-    completionYear.current.value = null;
-    dong.value = null;
-    exclusivePrivateArea.current.value = null;
-    floor.current.value = null;
-    gugun.value = null;
-    houseNo.value = null;
-    isActive.current.checked = null;
-    purpose.current.value = null;
-    regionCode.value = null;
-    room.current.value = null;
-    sido.value = null;
-    supplyArea.current.value = null;
-    totalFloor.current.value = null;
-
-    addressDetail.current.disabled = false;
-    bathroom.current.disabled = false;
-    completionYear.current.disabled = false;
-    exclusivePrivateArea.current.disabled = false;
-    floor.current.disabled = false;
-    isActive.current.disabled = false;
-    purpose.current.disabled = false;
-    room.current.disabled = false;
-    supplyArea.current.disabled = false;
-    totalFloor.current.disabled = false;
-
-    searchAddressModalHandler();
-  };
   const inputNumBlurHandler = (event) => {
     event.target.value = event.target.value
       .toString()
@@ -367,24 +259,6 @@ const HouseModify = () => {
         "입주가능일은 등록일 기준 1년 이내여야 합니다.\n다시 입력해주세요."
       );
       event.target.value = new Date().toISOString().substring(0, 10);
-      event.target.focus();
-    }
-  };
-
-  const completionYearValidHandler = (event) => {
-    const value = event.target.value;
-    const maxYear = new Date().getFullYear();
-    const minYear = 1940;
-
-    console.log(123);
-
-    if (value === "") {
-      return;
-    } else if (value > maxYear || value < minYear) {
-      alert(
-        `입력 가능한 준공년도는 ${minYear}년부터 ${maxYear}년 이내입니다.\n다시 입력해주세요.`
-      );
-      event.target.value = "";
       event.target.focus();
     }
   };
@@ -430,23 +304,71 @@ const HouseModify = () => {
     event.target.value = result;
   };
 
+  useEffect(() => {
+    buildingName.current.value = getLoaderData.buildingName;
+    deposit.current.value = getLoaderData.deposit;
+    description.current.value = getLoaderData.description;
+    itemNo.value = getLoaderData.itemNo;
+    maintenanceFee.current.value = getLoaderData.maintenanceFee;
+    moveInDate.current.value = getLoaderData.moveInDate;
+    rent.current.value = getLoaderData.rent;
+
+    address.current.value = getLoaderData.house.address;
+    addressDetail.current.value = getLoaderData.house.addressDetail;
+    bathroom.current.value = getLoaderData.house.bathroom;
+    completionYear.current.value = getLoaderData.house.completionYear;
+    exclusivePrivateArea.current.value =
+      getLoaderData.house.exclusivePrivateArea;
+    floor.current.value = getLoaderData.house.floor;
+    isActive.current.value = getLoaderData.house.isActive;
+    purpose.current.value = getLoaderData.house.purpose;
+    room.current.value = getLoaderData.house.room;
+    supplyArea.current.value = getLoaderData.house.supplyArea;
+    totalFloor.current.value = getLoaderData.house.totalFloor;
+    dong.value = getLoaderData.house.dong;
+    gugun.value = getLoaderData.house.gugun;
+    houseNo.value = getLoaderData.house.houseNo;
+    regionCode.value = getLoaderData.house.regionCode;
+    sido.value = getLoaderData.house.sido;
+    // zipcode 우편번호 백에서 안넘어옴
+
+    airConditioner.current.checked = getLoaderData.itemOption.airConditioner;
+    bathtub.current.checked = getLoaderData.itemOption.bathtub;
+    bed.current.checked = getLoaderData.itemOption.bed;
+    bidet.current.checked = getLoaderData.itemOption.bidet;
+    cctv.current.checked = getLoaderData.itemOption.cctv;
+    closet.current.checked = getLoaderData.itemOption.closet;
+    desk.current.checked = getLoaderData.itemOption.desk;
+    diningTable.current.checked = getLoaderData.itemOption.diningTable;
+    dishwasher.current.checked = getLoaderData.itemOption.dishwasher;
+    dryingMachine.current.checked = getLoaderData.itemOption.dryingMachine;
+    elevator.current.checked = getLoaderData.itemOption.elevator;
+    fireAlarm.current.checked = getLoaderData.itemOption.fireAlarm;
+    garden.current.checked = getLoaderData.itemOption.garden;
+    gasStove.current.checked = getLoaderData.itemOption.gasStove;
+    guard.current.checked = getLoaderData.itemOption.guard;
+    inductionCooktop.current.checked =
+      getLoaderData.itemOption.inductionCooktop;
+    intercom.current.checked = getLoaderData.itemOption.intercom;
+    keycard.current.checked = getLoaderData.itemOption.keycard;
+    microwave.current.checked = getLoaderData.itemOption.microwave;
+    oven.current.checked = getLoaderData.itemOption.oven;
+    parkingLot.current.checked = getLoaderData.itemOption.parkingLot;
+    refrigerator.current.checked = getLoaderData.itemOption.refrigerator;
+    shoeRack.current.checked = getLoaderData.itemOption.shoeRack;
+    sink.current.checked = getLoaderData.itemOption.sink;
+    sofa.current.checked = getLoaderData.itemOption.sofa;
+    terrace.current.checked = getLoaderData.itemOption.terrace;
+    veranda.current.checked = getLoaderData.itemOption.veranda;
+    washingMachine.current.checked = getLoaderData.itemOption.washingMachine;
+
+    document.getElementById(direction).checked = true;
+    document.getElementById(entrance).checked = true;
+    document.getElementById(heating).checked = true;
+  }, []);
+
   return (
     <>
-      {SearchAddressModal && (
-        <Modal onConfirm={searchAddressModalHandler}>
-          <SearchAddress
-            onChange={setAddressInfoHandler}
-            onClose={searchAddressModalHandler}
-          />
-        </Modal>
-      )}
-
-      {PurposeModal && (
-        <Modal onConfirm={purposeModalHandler} className={classes.purposeModal}>
-          <HousePurpose onClose={purposeModalHandler} />
-        </Modal>
-      )}
-
       <form className={classes.houseModify}>
         <div className={classes.modifyFieldSet}>
           <h1>매물 정보 수정</h1>
@@ -480,26 +402,15 @@ const HouseModify = () => {
                           type="text"
                           ref={address}
                           id="roadAddress"
-                          placeholder="도로명주소"
-                          onClick={searchAddressHandler}
                           className={classes.mainAddress}
                           disabled
                         />
-                        <button
-                          type="button"
-                          onClick={searchAddressHandler}
-                          className={classes.searchBtn}
-                          disabled
-                        >
-                          주소 검색
-                        </button>
                       </div>
                       <input
                         type="text"
                         ref={addressDetail}
                         id="detailAddress"
                         className={classes.subAddress}
-                        placeholder="나머지주소를 입력해주세요"
                         disabled
                       />
                       <input
@@ -507,29 +418,8 @@ const HouseModify = () => {
                         ref={buildingName}
                         id="buildingName"
                         className={classes.buildingName}
-                        placeholder="건물명 입력"
                         disabled
                       />
-                      <button
-                        type="button"
-                        onClick={findHouseByAddressHandler}
-                        className={classes.searchBtn}
-                        disabled
-                      >
-                        입력 완료
-                      </button>
-                      {/* <p className={classes.addressDesc}>
-                        <span>* </span>
-                        {findAddress ? (
-                          findAddress
-                        ) : (
-                          <>
-                            주소를 입력하고 <span>입력 완료</span> 버튼을
-                            누르면, 기존 동일 매물이 존재할 시 기본정보가 자동
-                            입력됩니다.
-                          </>
-                        )}
-                      </p> */}
                     </td>
                   </tr>
                   <tr>
@@ -585,16 +475,7 @@ const HouseModify = () => {
                     <td>
                       <label>방</label>
                       <div className={classes.unitInput}>
-                        <input
-                          type="text"
-                          id="room"
-                          placeholder="(예시)  2"
-                          ref={room}
-                          onBlur={inputNumBlurHandler}
-                          onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 0)}
-                          disabled
-                        />
+                        <input type="text" id="room" ref={room} disabled />
                         <p>개</p>
                       </div>
                       <label>욕실</label>
@@ -603,10 +484,6 @@ const HouseModify = () => {
                           type="text"
                           id="bathroom"
                           ref={bathroom}
-                          placeholder="(예시)  1"
-                          onBlur={inputNumBlurHandler}
-                          onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 0)}
                           disabled
                         />
                         <p>개</p>
@@ -620,16 +497,7 @@ const HouseModify = () => {
                     <td>
                       <label htmlFor="floor">해당층</label>
                       <div className={classes.unitInput}>
-                        <input
-                          type="text"
-                          id="floor"
-                          placeholder="(예시)  7"
-                          ref={floor}
-                          onBlur={inputNumBlurHandler}
-                          onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 0)}
-                          disabled
-                        />
+                        <input type="text" id="floor" ref={floor} disabled />
                         <p>층</p>
                       </div>
                       <label htmlFor="totalFloor">전체층</label>
@@ -638,10 +506,6 @@ const HouseModify = () => {
                           type="text"
                           id="totalFloor"
                           ref={totalFloor}
-                          placeholder="(예시)  13"
-                          onBlur={inputNumBlurHandler}
-                          onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 0)}
                           disabled
                         />
                         <p>층</p>
@@ -659,10 +523,6 @@ const HouseModify = () => {
                           type="text"
                           id="supplyArea"
                           ref={supplyArea}
-                          placeholder="(예시)  33.33"
-                          onBlur={inputNumBlurHandler}
-                          onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 2)}
                           disabled
                         />
                         <p>㎡</p>
@@ -673,10 +533,6 @@ const HouseModify = () => {
                           type="text"
                           id="exclusivePrivateArea"
                           ref={exclusivePrivateArea}
-                          placeholder="(예시)  33.33"
-                          onBlur={inputNumBlurHandler}
-                          onFocus={inputNumFocusHandler}
-                          onChange={(event) => inputNumVaild(event, 2)}
                           disabled
                         />
                         <p>㎡</p>
@@ -694,9 +550,6 @@ const HouseModify = () => {
                           type="text"
                           id="completionYear"
                           ref={completionYear}
-                          placeholder="(예시)  2023"
-                          onBlur={completionYearValidHandler}
-                          onChange={(event) => inputNumVaild(event, 0)}
                           maxLength={4}
                           disabled
                         />
@@ -717,14 +570,6 @@ const HouseModify = () => {
                         className={classes.purpose}
                         disabled
                       />
-                      <button
-                        type="button"
-                        className={classes.purposeBtn}
-                        onClick={purposeModalHandler}
-                        disabled
-                      >
-                        작성법보기
-                      </button>
                     </td>
                   </tr>
                   <tr>
@@ -760,9 +605,9 @@ const HouseModify = () => {
                           setDirection(event.target.value);
                         }}
                         value="EAST"
-                        id="east"
+                        id="EAST"
                       />
-                      <label htmlFor="east">동</label>
+                      <label htmlFor="EAST">동</label>
                       <input
                         type="radio"
                         name="direction"
@@ -770,9 +615,9 @@ const HouseModify = () => {
                           setDirection(event.target.value);
                         }}
                         value="WEST"
-                        id="west"
+                        id="WEST"
                       />
-                      <label htmlFor="west">서</label>
+                      <label htmlFor="WEST">서</label>
                       <input
                         type="radio"
                         name="direction"
@@ -780,9 +625,9 @@ const HouseModify = () => {
                           setDirection(event.target.value);
                         }}
                         value="SOUTH"
-                        id="south"
+                        id="SOUTH"
                       />
-                      <label htmlFor="south">남</label>
+                      <label htmlFor="SOUTH">남</label>
                       <input
                         type="radio"
                         name="direction"
@@ -790,9 +635,9 @@ const HouseModify = () => {
                           setDirection(event.target.value);
                         }}
                         value="NORTH"
-                        id="north"
+                        id="NORTH"
                       />
-                      <label htmlFor="north">북</label>
+                      <label htmlFor="NORTH">북</label>
                       <input
                         type="radio"
                         name="direction"
@@ -800,9 +645,9 @@ const HouseModify = () => {
                           setDirection(event.target.value);
                         }}
                         value="SOUTH_EAST"
-                        id="southEast"
+                        id="SOUTH_EAST"
                       />
-                      <label htmlFor="southEast">남동</label>
+                      <label htmlFor="SOUTH_EAST">남동</label>
                       <input
                         type="radio"
                         name="direction"
@@ -810,9 +655,9 @@ const HouseModify = () => {
                           setDirection(event.target.value);
                         }}
                         value="SOUTH_WEST"
-                        id="southWest"
+                        id="SOUTH_WEST"
                       />
-                      <label htmlFor="southWest">남서</label>
+                      <label htmlFor="SOUTH_WEST">남서</label>
                       <input
                         type="radio"
                         name="direction"
@@ -820,9 +665,9 @@ const HouseModify = () => {
                           setDirection(event.target.value);
                         }}
                         value="NORTH_EAST"
-                        id="northEast"
+                        id="NORTH_EAST"
                       />
-                      <label htmlFor="northEast">북동</label>
+                      <label htmlFor="NORTH_EAST">북동</label>
                       <input
                         type="radio"
                         name="direction"
@@ -830,9 +675,9 @@ const HouseModify = () => {
                           setDirection(event.target.value);
                         }}
                         value="NORTH_WEST"
-                        id="northWest"
+                        id="NORTH_WEST"
                       />
-                      <label htmlFor="northWest">북서</label>
+                      <label htmlFor="NORTH_WEST">북서</label>
                     </td>
                   </tr>
                   <tr>
@@ -846,30 +691,30 @@ const HouseModify = () => {
                         onChange={(event) => {
                           setEntrance(event.target.value);
                         }}
-                        id="stair"
+                        id="STAIR"
                         value="STAIR"
                       />
-                      <label htmlFor="stair">계단식</label>
+                      <label htmlFor="STAIR">계단식</label>
                       <input
                         type="radio"
                         name="entrance"
                         onChange={(event) => {
                           setEntrance(event.target.value);
                         }}
-                        id="corridor"
+                        id="PASSAGE"
                         value="PASSAGE"
                       />
-                      <label htmlFor="corridor">복도식</label>
+                      <label htmlFor="PASSAGE">복도식</label>
                       <input
                         type="radio"
                         name="entrance"
                         onChange={(event) => {
                           setEntrance(event.target.value);
                         }}
-                        id="complex"
+                        id="COMPLEX"
                         value="COMPLEX"
                       />
-                      <label htmlFor="complex">복합식</label>
+                      <label htmlFor="COMPLEX">복합식</label>
                     </td>
                   </tr>
                   <tr>
@@ -883,30 +728,30 @@ const HouseModify = () => {
                         onChange={(event) => {
                           setHeating(event.target.value);
                         }}
-                        id="individual"
+                        id="INDIVIDUAl"
                         value="INDIVIDUAl"
                       />
-                      <label htmlFor="individual">개별난방</label>
+                      <label htmlFor="INDIVIDUAl">개별난방</label>
                       <input
                         type="radio"
                         name="heating"
                         onChange={(event) => {
                           setHeating(event.target.value);
                         }}
-                        id="center"
+                        id="CENTERAL"
                         value="CENTERAL"
                       />
-                      <label htmlFor="center">중앙난방</label>
+                      <label htmlFor="CENTERAL">중앙난방</label>
                       <input
                         type="radio"
                         name="heating"
                         onChange={(event) => {
                           setHeating(event.target.value);
                         }}
-                        id="district"
+                        id="DISTRICT"
                         value="DISTRICT"
                       />
-                      <label htmlFor="district">지역난방</label>
+                      <label htmlFor="DISTRICT">지역난방</label>
                     </td>
                   </tr>
                   <tr>
