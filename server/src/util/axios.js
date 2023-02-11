@@ -5,7 +5,7 @@ export const getAuthHeader = () => {
   const { userInfo } = JSON.parse(user);
   if (userInfo && userInfo.accessToken) {
     return {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: "Bearer " + userInfo.accessToken,
     };
   } else {
