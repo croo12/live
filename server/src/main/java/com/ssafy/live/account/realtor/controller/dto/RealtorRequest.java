@@ -74,16 +74,6 @@ public class RealtorRequest {
 
     @Getter
     @Setter
-    public static class Logout {
-        @NotEmpty(message = "잘못된 요청입니다.")
-        private String accessToken;
-
-        @NotEmpty(message = "잘못된 요청입니다.")
-        private String refreshToken;
-    }
-
-    @Getter
-    @Setter
     public static class withdrawl {
         @NotEmpty(message = "해당하는 realtor_no가 없습니다.")
         private Long no;

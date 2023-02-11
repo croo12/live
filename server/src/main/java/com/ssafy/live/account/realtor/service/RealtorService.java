@@ -90,16 +90,10 @@ public class RealtorService {
     }
 
 
-    public ResponseEntity<?> logout(RealtorRequest.Logout logout) {
-        Authentication authentication = jwtTokenProvider.getAuthentication(logout.getAccessToken());
-
+    public ResponseEntity<?> logout(Authentication authentication) {
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
             redisTemplate.delete("RT:" + authentication.getName());
         }
-
-        Long expiration = jwtTokenProvider.getExpiration(logout.getAccessToken());
-        redisTemplate.opsForValue()
-            .set(logout.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
 
         return response.success("로그아웃 되었습니다.");
     }
