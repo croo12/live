@@ -7,6 +7,7 @@ import { TfiWrite } from "react-icons/tfi";
 import classes from "./MyPageUser.module.scss";
 import sample from "../../assets/image/sample.jpg";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../common/AuthProtector";
 
 const MyPageUser = () => {
   const navigate = useNavigate();
@@ -14,6 +15,10 @@ const MyPageUser = () => {
   const onClickHandler = () => {
     navigate("/mypage/user-detail-info");
   };
+
+  const { userInfo, doLogout } = useAuth();
+
+  console.log(userInfo);
 
   const [btnActive, setBtnActive] = useState(0);
 
@@ -42,7 +47,7 @@ const MyPageUser = () => {
               </div>
               <div className={classes.rightDesc}>
                 <p>
-                  안녕하세요, <strong>박세준</strong>님<br />
+                  안녕하세요, <strong>{userInfo.name}</strong>님<br />
                   <span>일반 회원</span>
                   <button onClick={onClickHandler}>개인정보 조회</button>
                 </p>

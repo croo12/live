@@ -1,12 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import classes from "./MyPageUserDetail.module.scss";
 import MyPageUser from "./MyPageUser";
+import { getUserInfo } from "../../apis/MemberService";
 
 const MyPageUserDetail = () => {
   const navigate = useNavigate();
   const onQuitHandler = () => {
     alert("정말로 탈퇴하시겠습니까?");
   };
+
+  const userDetail = useLoaderData();
+  console.log(userDetail);
 
   const onClickHandler = () => {
     navigate("/mypage/user-modify-info");
@@ -20,36 +24,36 @@ const MyPageUserDetail = () => {
             <div className={classes.privacyContent}>
               <div className={classes.privacyInfo}>
                 <div className={classes.privacyImg}>
-                  <img alt="이미지"></img>
+                  <img alt="이미지" src={userDetail.imageSrc}></img>
                 </div>
                 <div className={classes.privacyDetail}>
                   <div>
                     <strong>아이디</strong>
-                    <span>parksj0230</span>
+                    <span>{userDetail.id}</span>
                   </div>
                   <div>
                     <strong>이름</strong>
-                    <span>박세준</span>
+                    <span>{userDetail.name}</span>
                   </div>
                   <div>
                     <strong>이메일</strong>
-                    <span>qkr0000@gmail.com</span>
+                    <span>{userDetail.email}</span>
                   </div>
                   <div>
                     <strong>휴대폰 번호</strong>
-                    <span>010-1111-2222</span>
+                    <span>{userDetail.phone}</span>
                   </div>
                   <div>
                     <strong>지역</strong>
-                    <span>장대동</span>
+                    <span>{userDetail.region}</span>
                   </div>
                   <div>
                     <strong>성별</strong>
-                    <span>남</span>
+                    <span>{userDetail.gender}</span>
                   </div>
                   <div>
                     <strong>평가점수</strong>
-                    <span>3</span>
+                    <span>대충 7점</span>
                   </div>
                 </div>
               </div>
@@ -64,6 +68,13 @@ const MyPageUserDetail = () => {
       </div>
     </>
   );
+};
+
+export const userInfoLoader = async () => {
+  const response = await getUserInfo();
+
+  if (response?.data) return response.data.data;
+  else return null;
 };
 
 export default MyPageUserDetail;

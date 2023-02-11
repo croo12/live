@@ -1,15 +1,7 @@
 import axiosInstance from "../util/axios";
 
-export const userLogin = async (data) => {
-  const result = await axiosInstance.post(`users/login`, data)
-
-  const accessToken = result?.data.data.accessToken;
-  console.log(accessToken);
-  if( accessToken ){
-    return getUserInfo(accessToken);
-  }else {
-    throw new Error(`로그인 실패`);
-  }
+export const userLogin = (data) => {
+  return axiosInstance.post(`users/login`, data);
 };
 
 export const userLogout = async () => {

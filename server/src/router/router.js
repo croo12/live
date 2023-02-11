@@ -21,7 +21,9 @@ import HouseModify from "../components/house/HouseModify";
 // import MyContractDetailRealtor from "../components/mypage/MyContractDetailRealtor";
 // import MyInfoDetailRealtor from "../components/mypage/MyInfoDetailRealtor";
 import MyPageUser from "../components/mypage/MyPageUser";
-import MyPageUserDetail from "../components/mypage/MyPageUserDetail";
+import MyPageUserDetail, {
+  userInfoLoader,
+} from "../components/mypage/MyPageUserDetail";
 import MyPageUserModify from "../components/mypage/MyPageUserModify";
 import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
 import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
@@ -78,7 +80,11 @@ const router = createBrowserRouter(
       <Route path="mypage" element={<MyPage />}>
         <Route path="" element={<Navigate replace to="user" />} />
         <Route path="user" element={<MyPageUser />}></Route>
-        <Route path="user-detail-info" element={<MyPageUserDetail />}></Route>
+        <Route
+          path="user-detail-info"
+          element={<MyPageUserDetail />}
+          loader={userInfoLoader}
+        ></Route>
         <Route path="user-modify-info" element={<MyPageUserModify />}></Route>
         <Route
           path="user-reservation"
