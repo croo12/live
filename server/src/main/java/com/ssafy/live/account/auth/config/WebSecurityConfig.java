@@ -43,16 +43,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+            .cors()
+            .and()
             .formLogin().disable()
             .authorizeRequests()
-                .antMatchers("/users", "/users/login", "/users/id", "/realtors", "/realtors/login", "/realtors/id").permitAll()
+            .antMatchers("/users", "/users/login", "/users/id", "/realtors", "/realtors/login", "/realtors/id").permitAll()
 //            .antMatchers("/users/info", "/users/passcheck", "/users/").hasAuthority("USER")
-                .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()
+            .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()
             .antMatchers("/realtors/region", "/realtors/{realtorNo}", "/realtors/info", "/realtors/passcheck", "/realtors/{realtorNo}/consultings").hasAuthority("REALTOR")
             .antMatchers("/consultings/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "https://live-live.store").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "https://live-live.store:8080").permitAll()
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Override
