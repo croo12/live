@@ -1,5 +1,4 @@
 import { useState } from "react";
-import React, { useRef } from "react";
 
 import { useParams } from "react-router-dom";
 import ConsultingMeetPage from "../components/ConsultingMeetPage";
@@ -8,6 +7,7 @@ import { usePrompt } from "../util/usePrompt";
 
 import classes from "./ConsultingPage.module.scss";
 import useRecording from "../util/useRecording";
+import { useAuth } from "../components/common/AuthProtector";
 
 export const REALTOR_STATUS = {
   BEFORE_START: 0,
@@ -24,7 +24,10 @@ export const USER_STATUS = {
 //화상통화
 const ConsultingPage = (props) => {
   const { sessionId } = useParams();
-  const [isRealtor, toggleRealtor] = useState(true);
+
+  const { userInfo } = useAuth();
+  const [isRealtor, toggleRealtor] = useState(userInfo.isRealtor);
+
   const [status, setStatus] = useState(
     isRealtor ? REALTOR_STATUS.BEFORE_START : USER_STATUS.ENTER_SESSION
   );
@@ -107,10 +110,9 @@ const ConsultingPage = (props) => {
 
   return (
     <>
-      {/* <h1> 안녕 나는 통화 페이지</h1> */}
       {/*중단
         왼쪽 박스는 통화 화면임
-        오른쪽 박스는 예약 목록, 매물 목록 혹은 매물 세부 (어쩌면 채팅창 추가도 가능성)
+        오른쪽 박스는 예약 목록, 매물 목록 혹은 매물 세부
       */}
       <h1>{isRealtor ? `너 중개사` : `너 유저`} </h1>
       <div className={classes.consulting_page}>

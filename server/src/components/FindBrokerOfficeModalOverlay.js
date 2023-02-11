@@ -13,6 +13,8 @@ const FindBrokerOfficeModalOverlay = (props) => {
     props.onModalStateChange();
   };
 
+
+
   const onClickHandler = () => {
     const bsnmCmpnm = modalBusinessCorpRef.current.value;
     const brkrNm = modalRealtorName.current.value;
@@ -23,8 +25,6 @@ const FindBrokerOfficeModalOverlay = (props) => {
       .then((result) => result.json())
       .then((json) => {
         const realtorList = json.EBOffices.field;
-
-        console.log(realtorList);
 
         setRealtorList(realtorList);
       });
@@ -49,7 +49,13 @@ const FindBrokerOfficeModalOverlay = (props) => {
       {realtorList.map((item, idx) => {
         return (
           <Card key={idx}>
-            <div className={classes.brokerList}>
+            <div
+              className={classes.brokerList}
+              onClick={() => {
+                modalStateChangeHandler();
+                props.addRealtorInformationHandler(realtorList[idx]);
+              }}
+            >
               <h4>{item.bsnmCmpnm}</h4>
               <p>
                 {item.brkrNm} | {item.ldCodeNm}
