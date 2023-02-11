@@ -18,6 +18,7 @@ import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import com.ssafy.live.contract.controller.dto.ContractResponse;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.contract.domain.repository.ContractRepository;
+import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
@@ -144,6 +145,8 @@ public class ContractService {
     public ResponseEntity<?> contractComplete(Long contractNo) {
         Contract contract = contractRepository.findById(contractNo).get();
         contract.complete();
+        House house = contract.getItem().getHouse();
+        house.setContracted(true);
         contractRepository.save(contract);
 
         //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getUsers());
