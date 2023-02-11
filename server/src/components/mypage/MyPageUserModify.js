@@ -45,7 +45,7 @@ const MyPageUserModify = () => {
 
     const frm = new FormData();
 
-    frm.append(frm, "file");
+    frm.append("file", frm);
     frm.append(
       "Update",
       new Blob([JSON.stringify(changeData)], { type: "application/json" })
