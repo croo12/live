@@ -9,7 +9,6 @@ import com.ssafy.live.account.user.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,15 +39,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+            .cors().and()
             .httpBasic().disable()
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-                .cors()
-                .and()
             .formLogin().disable()
             .authorizeRequests()
-//            .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
             .antMatchers("/users", "/users/login", "/users/id", "/realtors", "/realtors/login", "/realtors/id").permitAll()
 //            .antMatchers("/users/info", "/users/passcheck", "/users/").hasAuthority("USER")
             .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()
@@ -81,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://live-live.store"));
+        configuration.setAllowedOrigins(Arrays.asList("https://live-live.store", "https://live-live.store:8080"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT","FETCH","OPTIONS"));
         // you can configure many allowed CORS headers
 
