@@ -54,11 +54,8 @@ public class RealtorController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@Validated @RequestBody RealtorRequest.Logout logout, Errors errors) {
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
-        }
-        return realtorService.logout(logout);
+    public ResponseEntity<?> logout(Authentication authentication) {
+        return realtorService.logout(authentication);
     }
 
     @DeleteMapping
