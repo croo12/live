@@ -19,9 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 import java.util.Arrays;
 
@@ -39,14 +37,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-            .cors().and()
             .httpBasic().disable()
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+                .cors()
+                .and()
             .formLogin().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
+//            .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
             .antMatchers("/users", "/users/login", "/users/id", "/realtors", "/realtors/login", "/realtors/id").permitAll()
 //            .antMatchers("/users/info", "/users/passcheck", "/users/").hasAuthority("USER")
             .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()
