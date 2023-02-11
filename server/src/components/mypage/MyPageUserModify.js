@@ -52,12 +52,16 @@ const MyPageUserModify = () => {
     );
 
     try {
-      const result = await axiosInstance.post("users/info", frm, {
-        headers: getAuthHeader(),
-      });
+      console.log("file", ":", frm.get("file"));
+      console.log("Update", ":", frm.get("Update"));
+      console.log(getAuthHeader().Authorization);
 
-      console.log(getAuthHeader());
-      console.log(frm);
+      const result = await axiosInstance.post("users/info", frm, {
+        headers: {
+          Authorization : getAuthHeader().Authorization,
+          "Content-Type": "multipart/form-data"
+        }
+      });
 
       if (result) {
         alert("회원 정보 수정");
