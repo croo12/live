@@ -1,0 +1,152 @@
+.houseDetailCom {
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+
+  .imageBox {
+    width: 100%;
+    display: flex;
+    .mainImage {
+      display: inline-flex;
+      width: 50%;
+      img {
+        box-sizing: border-box;
+        width: 43.25em;
+        height: 31.5em;
+        margin: 0.25em;
+        border: 1px solid rgb(218, 218, 218);
+        // border-radius: 6px;
+      }
+    }
+    .subImage {
+      display: inline-flex;
+      flex-wrap: wrap;
+      width: 50%;
+      img {
+        box-sizing: border-box;
+        width: 21.375em;
+        height: 15.5em;
+        margin: 0.25em;
+        border: 1px solid rgb(218, 218, 218);
+        // border-radius: 6px;
+      }
+    }
+  }
+
+  .contentBox {
+    display: flex;
+    text-align: left;
+
+    .leftBox {
+      width: calc(50% - 0.5em);
+      margin: 0.25em;
+
+      .itemDesc {
+        margin: 0.75em 0;
+
+        p {
+          font-size: 1.25em;
+          margin: 0.25em 0;
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+          margin: 0.25em 0;
+
+          span {
+            display: inline-block;
+            width: 7.5em;
+            font-size: 1.25em !important;
+            font-weight: 700;
+          }
+
+          p {
+            font-size: 1em;
+          }
+        }
+
+        .description {
+          margin: 2.5em 0;
+          font-size: 0.875em;
+        }
+      }
+
+      .itemInfo {
+        h3 {
+          font-size: 1.25em;
+        }
+
+        div {
+          margin: 1em 0;
+          display: flex;
+
+          svg {
+            width: 1.375em;
+            height: 1.375em;
+            margin-right: 2.5em;
+          }
+        }
+
+        button {
+          border: none;
+          background: transparent;
+          font-size: 0.875em;
+          color: #bbbbbb;
+          cursor: pointer;
+        }
+      }
+
+      hr {
+        margin: 2.5em 4%;
+        width: 92%;
+      }
+
+      .optionInfo {
+        h3 {
+          font-size: 1.25em;
+        }
+
+        div {
+          margin: 1.25em;
+          display: flex;
+          flex-wrap: wrap;
+
+          .optionBox {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            margin: 0.25em;
+            box-sizing: border-box;
+            width: 150px;
+            height: 150px;
+            border: 1px solid #bbbbbb;
+            border-radius: 4px;
+
+            svg {
+              width: 3em;
+              height: 3em;
+            }
+
+            p {
+              font-size: 1.125em;
+            }
+          }
+        }
+
+        button {
+          border: none;
+          background: transparent;
+          font-size: 0.875em;
+          color: #bbbbbb;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .rightBox {
+      width: 50%;
+    }
+  }
+}
