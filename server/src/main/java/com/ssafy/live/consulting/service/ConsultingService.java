@@ -1,9 +1,5 @@
 package com.ssafy.live.consulting.service;
 
-import static com.ssafy.live.common.exception.ErrorCode.CONSULTING_NOT_FOUND;
-import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
-import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
-
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.entity.Users;
@@ -29,10 +25,6 @@ import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,6 +32,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service

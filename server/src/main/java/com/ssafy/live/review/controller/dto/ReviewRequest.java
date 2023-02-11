@@ -1,5 +1,9 @@
 package com.ssafy.live.review.controller.dto;
 
+import com.ssafy.live.account.realtor.domain.entity.Realtor;
+import com.ssafy.live.account.user.domain.entity.Users;
+import com.ssafy.live.consulting.domain.entity.Consulting;
+import com.ssafy.live.review.domain.entity.Review;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -21,5 +25,15 @@ public class ReviewRequest {
         private String reviewInfo;
         private int ratingScore;
         private int iscontract;
+
+        public static Review toEntity(Realtor realtor, Users users, Consulting consulting, String reviewInfo, int ratingScore) {
+            return Review.builder()
+                    .realtor(realtor)
+                    .users(users)
+                    .consulting(consulting)
+                    .reviewInfo(reviewInfo)
+                    .ratingScore(ratingScore)
+                    .build();
+        }
     }
 }

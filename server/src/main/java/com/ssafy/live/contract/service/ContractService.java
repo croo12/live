@@ -1,10 +1,5 @@
 package com.ssafy.live.contract.service;
 
-import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
-import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
-import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
-import static com.ssafy.live.common.exception.ErrorCode.WRONG_AUTHENTICATION_TYPE;
-
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.entity.Users;
@@ -23,8 +18,6 @@ import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,6 +25,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service
