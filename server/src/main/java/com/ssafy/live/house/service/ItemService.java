@@ -43,9 +43,8 @@ public class ItemService {
     private final HouseRepository houseRepository;
     private final RealtorRepository realtorRepository;
 
-    public ResponseEntity<?> registItem(ItemRequest.ItemRegistRequest itemRegistRequest, List<MultipartFile> files) throws IOException {
-
-        Realtor realtor = realtorRepository.findById(itemRegistRequest.getRealtorNo())
+    public ResponseEntity<?> registItem(UserDetails user, ItemRequest.ItemRegistRequest itemRegistRequest, List<MultipartFile> files) throws IOException {
+        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
                 .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
 
         Long houseNo = 0L;
@@ -86,10 +85,16 @@ public class ItemService {
         return response.success(itemDetailResponse, "매물 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> updateItemDetail(ItemRequest.ItemUpdateRequest itemUpdateRequest, List<MultipartFile> files) throws IOException {
+    public ResponseEntity<?> updateItemDetail(UserDetails user, ItemRequest.ItemUpdateRequest itemUpdateRequest, List<MultipartFile> files) throws IOException {
+        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
+                .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
+
         Item item = itemRepository.findById(itemUpdateRequest.getItemNo())
                 .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
         Item updatedItem = itemUpdateRequest.toEntity();
+
+        updatedItem.setHouse(item.getHouse());
+        updatedItem.getHouse().setIsContracted(itemUpdateRequest.isContracted());
 
         List<ItemImage> itemImages = itemImageRepository.findAllByItemNo(item.getNo());
         Set<Long> newImageNoSet = itemUpdateRequest.getItemImages();

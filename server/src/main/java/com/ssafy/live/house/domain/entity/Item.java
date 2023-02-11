@@ -65,6 +65,9 @@ public class Item extends BaseEntity {
     public void setOption(ItemOption option) {
         this.itemOption = option;
     }
+    public void setHouse(House house) {
+        this.house = house;
+    }
     public void setItemImages(List<ItemImage> itemImages) {
         this.itemImages = itemImages;
     }

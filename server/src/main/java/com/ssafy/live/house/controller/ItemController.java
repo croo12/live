@@ -22,9 +22,11 @@ public class ItemController {
     private final ItemService itemService;
     @PostMapping
     private ResponseEntity<?> registItem(
+            Authentication authentication,
             @RequestPart ItemRequest.ItemRegistRequest itemRegistRequest,
             @RequestPart List<MultipartFile> files) throws IOException {
-        return itemService.registItem(itemRegistRequest, files);
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return itemService.registItem(principal, itemRegistRequest, files);
     }
 
     @GetMapping("/{itemNo}")
@@ -34,9 +36,11 @@ public class ItemController {
 
     @PutMapping("/{itemNo}")
     private ResponseEntity<?> updateItemDetail(
+            Authentication authentication,
             @RequestPart ItemRequest.ItemUpdateRequest itemUpdateRequest,
             @RequestPart List<MultipartFile> files) throws IOException {
-        return itemService.updateItemDetail(itemUpdateRequest, files);
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return itemService.updateItemDetail(principal, itemUpdateRequest, files);
     }
 
     @GetMapping("/regions")

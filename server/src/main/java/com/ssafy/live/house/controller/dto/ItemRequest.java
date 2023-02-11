@@ -76,8 +76,8 @@ public class ItemRequest {
         private Heating heating;
         private Direction direction;
         private Entrance entrance;
-
         private Set<Long> itemImages;
+        private boolean isContracted;
         @NotNull(message = "주택 정보가 없습니다.")
         private ItemOptionRequest.ItemOptionRegistRequest itemOption;
 

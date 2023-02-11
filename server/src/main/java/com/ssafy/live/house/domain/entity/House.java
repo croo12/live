@@ -23,7 +23,7 @@ public class House extends BaseEntity {
     @Builder.Default
     private List<Item> items = new ArrayList<>();
 
-    private int isActive;
+    private boolean isContracted;
 
     private String address;
 
@@ -62,4 +62,8 @@ public class House extends BaseEntity {
     private String regionCode;
 
     private int completionYear;
+
+    public void setIsContracted(boolean isContracted) {
+        this.isContracted = isContracted;
+    }
 }
