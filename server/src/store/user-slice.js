@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  accessToken: null,
+  refreshToken: null,
   userInfo: {
     id: null,
     name: "",
-    accessToken: null,
-    refreshToken: null,
     isRealtor: null,
+    profile: null,
   },
 };
 
@@ -14,19 +15,27 @@ const userSlice = createSlice({
   name: `user`,
   initialState,
   reducers: {
-    login(state, action) {
-      const newUserInfo = { ...state.userInfo, ...action.payload };
-      console.log(newUserInfo);
-      state.userInfo = newUserInfo;
+    login(state, { payload }) {
+      const { accessToken, refreshToken } = payload;
+
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
     },
     logout(state) {
       state.userInfo = {
         id: null,
-        accessToken: null,
         name: "",
-        refreshToken: null,
         isRealtor: null,
+        profile: null,
       };
+      state.accessToken = null;
+      state.refreshToken = null;
+    },
+    setInfo(state, { payload }) {
+      state.userInfo = { ...state.userInfo, ...payload };
+    },
+    setIsRealtor(state, { payload }) {
+      state.userInfo = { ...state.userInfo, isRealtor: payload };
     },
   },
 });

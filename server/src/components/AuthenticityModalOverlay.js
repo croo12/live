@@ -1,6 +1,10 @@
 import { useRef } from "react";
+import classes from "./AuthenticityModalOverlay.module.scss";
 
-const AuthenticityModalOverlay = () => {
+const AuthenticityModalOverlay = ({
+  setBusinessNumber,
+  onModalStateChange,
+}) => {
   const modalBNInputRef = useRef();
   const modalRNInputRef = useRef();
   const modalSDInputRef = useRef();
@@ -24,29 +28,32 @@ const AuthenticityModalOverlay = () => {
         // const data = json.data[0].valid;
         // if (data === "02") alert("등록되지 않은 사업자 번호입니다!");
         const data = json.data[0].b_stt_cd;
-        if (data === "01") alert("등록된 사업자 번호입니다!");
-        else alert("등록되지 않은 사업자 번호입니다!");
-        console.log(json);
+        if (data === "01") {
+          setBusinessNumber(bNo);
+          onModalStateChange();
+          // alert("등록된 사업자 번호입니다!");
+        } else alert("등록되지 않은 사업자 번호입니다!");
       });
   };
 
   return (
     <>
-      <button>X</button>
-      <h2>중복확인</h2>
-      <div>
-        <label htmlFor="businessnumber">사업자 등록번호(필수) </label>
-        <input type="text" id="businessnumber" ref={modalBNInputRef} />
-      </div>
-      {/* <div>
+      <div className={classes.searchModal}>
+        <h2>중복확인</h2>
+        <div>
+          <label htmlFor="businessnumber">사업자 등록번호(필수) </label>
+          <input type="text" id="businessnumber" ref={modalBNInputRef} />
+        </div>
+        {/* <div>
         <label htmlFor="realtorname">대표자 성명(필수) </label>
         <input type="text" id="realtorname" ref={modalRNInputRef} />
-      </div>
-      <div>
+        </div>
+        <div>
         <label htmlFor="startdate">개업일자(필수) </label>
         <input type="text" id="startdate" ref={modalSDInputRef} />
       </div> */}
-      <button onClick={onClickHandler}>진위확인</button>
+        <button onClick={onClickHandler}>진위확인</button>
+      </div>
     </>
   );
 };

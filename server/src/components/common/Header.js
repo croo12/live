@@ -2,12 +2,12 @@ import { NavLink } from "react-router-dom";
 import classes from "./Header.module.scss";
 import logo from "../../assets/image/liveLogo.png";
 import { makeUUID } from "../../util/UUID";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useAuth } from "./AuthProtector";
-import { userAction } from "../../store/user-slice";
+import { realtorLogout, userLogout } from "../../apis/MemberService";
 
 const Header = () => {
   const [isToggled, setIsToggled] = useState(false);
@@ -16,7 +16,7 @@ const Header = () => {
     setIsToggled(!isToggled);
   };
 
-  const { userInfo, doLogin, doLogout } = useAuth();
+  const { userInfo, accessToken } = useAuth();
   const dispatch = useDispatch();
 
   const logoutEventHandler = (e) => {
@@ -25,7 +25,11 @@ const Header = () => {
 
     if (isToggled) isToggledHandler();
 
-    doLogout();
+    if (userInfo.isRealtor) {
+      realtorLogout(dispatch);
+    } else {
+      userLogout(dispatch);
+    }
   };
 
   return (
@@ -65,19 +69,21 @@ const Header = () => {
               상담
             </NavLink>
           </li>
-          <li>
-            <NavLink to={"/mypage"} onClick={isToggled && isToggledHandler}>
-              마이페이지
-            </NavLink>
-          </li>
-          {userInfo.id ? (
+          {accessToken && (
+            <li>
+              <NavLink to={"/mypage"} onClick={isToggled && isToggledHandler}>
+                마이페이지
+              </NavLink>
+            </li>
+          )}
+          {accessToken ? (
             <li>
               <NavLink onClick={logoutEventHandler}>로그아웃</NavLink>
             </li>
           ) : (
             ""
           )}{" "}
-          {userInfo.id ? (
+          {accessToken ? (
             ""
           ) : (
             <li>
@@ -86,7 +92,7 @@ const Header = () => {
               </NavLink>
             </li>
           )}
-          {userInfo.id ? (
+          {accessToken ? (
             ""
           ) : (
             <li>
