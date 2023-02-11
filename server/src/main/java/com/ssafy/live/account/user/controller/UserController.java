@@ -53,11 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(Authentication authentication, Errors errors) {
-        // validation check
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
-        }
+    public ResponseEntity<?> logout(Authentication authentication) {
         return usersService.logout(authentication);
     }
 
