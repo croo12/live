@@ -1,11 +1,12 @@
 import { useState } from "react";
-import classes from "./MyReservation.module.scss";
+import classes from "./MyPageUserContract.module.scss";
 import ListBox from "../../UI/ListBox";
-import ReservationCardContent2 from "../ReservationCardContent2";
 import { DUMMY5 } from "../ReservationCardContent2";
+import ReservationCardContent2 from "../ReservationCardContent2";
 
-const data = ["신청된 상담", "확정된 상담", "종료된 상담"];
-const MyPageUserReservation = () => {
+const data = ["전체 계약", "대기중 계약", "진행중 계약", "완료된 계약"];
+
+const MyPageUserContract = () => {
   const [reservationUser, setreservationUser] = useState(DUMMY5);
   const [tabActive, setTabActive] = useState(0);
 
@@ -24,7 +25,7 @@ const MyPageUserReservation = () => {
           <div className={classes.consultingContent}>
             <div className={classes.inner}>
               <div>
-                <h3>예약 목록</h3>
+                <h3>계약 관리</h3>
                 <span>
                   {data.map((item, idx) => {
                     return (
@@ -44,7 +45,7 @@ const MyPageUserReservation = () => {
                 <div className={classes.consultingList}>
                   {tabActive === 0 && (
                     <div>
-                      <p>신청된 상담</p>
+                      <p>전체 계약</p>
                       <ListBox dataArray={reservationUser} direction={false}>
                         <ReservationCardContent2 tabActive={tabActive} />
                       </ListBox>
@@ -52,7 +53,7 @@ const MyPageUserReservation = () => {
                   )}
                   {tabActive === 1 && (
                     <div>
-                      <p>확정된 상담</p>
+                      <p>대기중 계약</p>
                       <ListBox dataArray={reservationUser} direction={false}>
                         <ReservationCardContent2 tabActive={tabActive} />
                       </ListBox>
@@ -60,7 +61,15 @@ const MyPageUserReservation = () => {
                   )}
                   {tabActive === 2 && (
                     <div>
-                      <p>종료된 상담</p>
+                      <p>진행중 계약</p>
+                      <ListBox dataArray={reservationUser} direction={false}>
+                        <ReservationCardContent2 tabActive={tabActive} />
+                      </ListBox>
+                    </div>
+                  )}
+                  {tabActive === 3 && (
+                    <div>
+                      <p>완료된 계약</p>
                       <ListBox dataArray={reservationUser} direction={false}>
                         <ReservationCardContent2 tabActive={tabActive} />
                       </ListBox>
@@ -76,4 +85,4 @@ const MyPageUserReservation = () => {
   );
 };
 
-export default MyPageUserReservation;
+export default MyPageUserContract;

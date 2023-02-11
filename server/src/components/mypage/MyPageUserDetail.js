@@ -2,11 +2,25 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import classes from "./MyPageUserDetail.module.scss";
 import MyPageUser from "./MyPageUser";
 import { getUserInfo } from "../../apis/MemberService";
+import axiosInstance, { getAuthHeader } from "../../util/axios";
+import { useAuth } from "../common/AuthProtector";
 
 const MyPageUserDetail = () => {
   const navigate = useNavigate();
-  const onQuitHandler = () => {
+  const { doLogout } = useAuth();
+  const onQuitHandler = async () => {
     alert("정말로 탈퇴하시겠습니까?");
+    try {
+      const result = await axiosInstance.delete("users", {
+        headers: getAuthHeader(),
+      });
+      if (result) {
+        alert("탈퇴되었습니다!");
+        doLogout();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const userDetail = useLoaderData();
@@ -15,6 +29,7 @@ const MyPageUserDetail = () => {
   const onClickHandler = () => {
     navigate("/mypage/user-modify-info");
   };
+
   return (
     <>
       {/* <MyPageUser /> */}
@@ -53,7 +68,7 @@ const MyPageUserDetail = () => {
                   </div>
                   <div>
                     <strong>평가점수</strong>
-                    <span>대충 7점</span>
+                    <span>{userDetail.score}</span>
                   </div>
                 </div>
               </div>
