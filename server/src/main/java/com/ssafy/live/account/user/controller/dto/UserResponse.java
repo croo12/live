@@ -35,6 +35,7 @@ public class UserResponse {
         private String phone;
         private String region;
         private String gender;
+        private float score;
         private String imageSrc;
 
         public static UserResponse.FindDetail toDto(Users user) {
@@ -43,8 +44,9 @@ public class UserResponse {
                     .name(user.getName())
                     .email(user.getEmail())
                     .phone(user.getPhone())
-                    .gender(user.getRegion())
+                    .region(user.getRegion())
                     .gender(user.getGender())
+                    .score(user.getScore())
                     .imageSrc(user.getImageSrc())
                     .build();
         }
