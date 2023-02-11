@@ -9,7 +9,7 @@ import {
   BiBed,
   BiCctv,
 } from "react-icons/bi";
-import { BsWind, BsFlower1 } from "react-icons/bs";
+import { BsWind, BsFlower1, BsHouseDoor } from "react-icons/bs";
 import { CgSmartHomeWashMachine } from "react-icons/cg";
 import { FaSink } from "react-icons/fa";
 import {
@@ -49,7 +49,7 @@ const Icons = {
   elevator: <GrElevator />, // 엘베 아이콘
   purpose: <BiBuildingHouse />, // 건축물용도 아이콘
   marker: <HiOutlineLocationMarker />, // 위치(상세주소) 아이콘
-
+  completionYear: <BsHouseDoor />,
   // 매물 상세 - 매물 옵션
   bed: <BiBed />, //침대
   washingMachine: <MdOutlineLocalLaundryService />, //세탁기
