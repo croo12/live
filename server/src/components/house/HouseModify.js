@@ -31,7 +31,7 @@ const HouseModify = () => {
   const exclusivePrivateArea = useRef();
   const floor = useRef();
   const houseNo = useRef();
-  const isActive = useRef();
+  const contracted = useRef();
   const purpose = useRef();
   const room = useRef();
   const sido = useRef();
@@ -118,7 +118,6 @@ const HouseModify = () => {
     const response = await modifyHouseData({
       jsonData: {
         itemNo: itemNo.value,
-        realtorNo: realtorNo.value, // 지울수도있음
         deposit: deposit.current.value.replaceAll(",", ""),
         description: description.current.value,
         direction: direction,
@@ -131,7 +130,7 @@ const HouseModify = () => {
         itemImages: loadedImages.map((image) => {
           return image.itemImageNo;
         }),
-        // isActive: isActive.current.checked, 계약여부 쓰이려나..
+        contracted: contracted.current.checked,
         itemOption: {
           airConditioner: airConditioner.current.checked,
           bathtub: bathtub.current.checked,
@@ -269,7 +268,7 @@ const HouseModify = () => {
     exclusivePrivateArea.current.value =
       getLoaderData.house.exclusivePrivateArea;
     floor.current.value = getLoaderData.house.floor;
-    isActive.current.value = getLoaderData.house.isActive;
+    contracted.current.value = getLoaderData.house.contracted;
     purpose.current.value = getLoaderData.house.purpose;
     room.current.value = getLoaderData.house.room;
     supplyArea.current.value = getLoaderData.house.supplyArea;
@@ -529,7 +528,7 @@ const HouseModify = () => {
                       <input
                         type="checkbox"
                         id="contractStatus"
-                        ref={isActive}
+                        ref={contracted}
                       />
                       <label htmlFor="contractStatus">계약 완료</label>
                     </td>
@@ -969,9 +968,6 @@ export const loader = async ({ params }) => {
   const result = await getHouseByItemNo(itemNo);
 
   console.log(result);
-
-  // result의 realtorNo 와 접근하는 realtorNo 가 같은지 확인해서 여기에서 터트려야 함
-  // 다른놈이 주소로 접근하거나 하면 접근못하게..
 
   return result;
 };

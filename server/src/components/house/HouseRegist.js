@@ -29,7 +29,7 @@ const HouseRegist = () => {
   const buildingName = useRef();
 
   const houseNo = useRef();
-  const isActive = useRef();
+  const contracted = useRef();
   const address = useRef();
   const addressDetail = useRef();
   const sido = useRef();
@@ -171,7 +171,7 @@ const HouseRegist = () => {
         moveInDate: moveInDate.current.value,
         house: {
           houseNo: houseNo.value,
-          isActive: isActive.current.checked,
+          contracted: contracted.current.checked,
           address: address.current.value,
           addressDetail: addressDetail.current.value,
           bathroom: bathroom.current.value.replaceAll(",", ""),
@@ -282,7 +282,7 @@ const HouseRegist = () => {
     floor.current.value = data.floor;
     gugun.value = data.gugun;
     houseNo.value = data.houseNo;
-    isActive.current.checked = data.isActive;
+    contracted.current.checked = data.contracted;
     purpose.current.value = data.purpose;
     regionCode.value = data.regionCode;
     room.current.value = data.room;
@@ -296,7 +296,7 @@ const HouseRegist = () => {
     completionYear.current.disabled = true;
     exclusivePrivateArea.current.disabled = true;
     floor.current.disabled = true;
-    isActive.current.disabled = true;
+    contracted.current.disabled = true;
     purpose.current.disabled = true;
     room.current.disabled = true;
     supplyArea.current.disabled = true;
@@ -314,7 +314,7 @@ const HouseRegist = () => {
     floor.current.value = null;
     gugun.value = null;
     houseNo.value = null;
-    isActive.current.checked = null;
+    contracted.current.checked = null;
     purpose.current.value = null;
     regionCode.value = null;
     room.current.value = null;
@@ -328,7 +328,7 @@ const HouseRegist = () => {
     completionYear.current.disabled = false;
     exclusivePrivateArea.current.disabled = false;
     floor.current.disabled = false;
-    isActive.current.disabled = false;
+    contracted.current.disabled = false;
     purpose.current.disabled = false;
     room.current.disabled = false;
     supplyArea.current.disabled = false;
@@ -725,7 +725,7 @@ const HouseRegist = () => {
                       <input
                         type="checkbox"
                         id="contractStatus"
-                        ref={isActive}
+                        ref={contracted}
                       />
                       <label htmlFor="contractStatus">계약 완료</label>
                     </td>
