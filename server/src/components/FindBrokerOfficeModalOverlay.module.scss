@@ -31,7 +31,7 @@
 
     margin-bottom: 32px;
   }
-  
+
   > div {
     padding: 16px;
 
@@ -45,7 +45,7 @@
 
       border: 0;
 
-      color: #FAFAFA;
+      color: #fafafa;
 
       border-radius: 12px;
 
@@ -54,17 +54,22 @@
   }
 }
 
-.brokerList {
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
+.listBox {
+  max-height: 200px;
+  .brokerList {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
 
-  // max-width: 300px;
+    // max-width: 300px;
 
-  -ms-user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
 
-  cursor: pointer;
+    overflow-y: scroll;
+
+    cursor: pointer;
+  }
 }

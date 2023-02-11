@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { createContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
+import { userLogout } from "../../apis/MemberService";
 import { userAction } from "../../store/user-slice";
 
 const AuthContext = createContext(null);
@@ -10,6 +11,10 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const userInfo = useSelector((state) => {
     return state.user.userInfo;
+  });
+
+  const accessToken = useSelector((state) => {
+    return state.user.accessToken;
   });
 
   const dispatch = useDispatch();
@@ -21,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const doLogout = async () => {
-    dispatch(userAction.logout());
+    await userLogout(dispatch);
     navigate("/", { replace: true });
   };
 
@@ -30,8 +35,9 @@ export const AuthProvider = ({ children }) => {
       userInfo,
       doLogin,
       doLogout,
+      accessToken,
     }),
-    [userInfo]
+    [userInfo, accessToken]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

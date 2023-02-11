@@ -7,6 +7,7 @@ import classes from "./SignUpPageRealtor.module.scss";
 import ImageInput from "./common/ImageInput";
 import blankImage from "../assets/image/blank_profile.png";
 import Card from "../UI/Card";
+import axiosInstance from "../util/axios";
 
 const SignUpPageRealtor = () => {
   const [realtorEmail, setRealtorEmail] = useState("");
@@ -27,6 +28,10 @@ const SignUpPageRealtor = () => {
   const jurirnoRef = useRef();
   const ldCodeNmRef = useRef();
   const registDeRef = useRef();
+
+  const [businessNumber, setBusinessNumber] = useState("");
+
+  const realtorForm = useRef();
 
   const addRealtorInformationHandler = (data) => {
     console.log(data);
@@ -104,9 +109,7 @@ const SignUpPageRealtor = () => {
     };
   }, [profile]);
 
-  const AuthenticityChangeHandler = (e) => {
-    e.preventDefault();
-
+  const AuthenticityChangeHandler = () => {
     if (authenticity === null) {
       setAuthenticity(true);
       return;
@@ -119,6 +122,73 @@ const SignUpPageRealtor = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const joinRealtor = async (e) => {
+    e.preventDefault();
+
+    const form = realtorForm.current;
+
+    const tmp = {};
+
+    if (bsnmCmpnmRef.current.value) {
+      tmp["corp"] = bsnmCmpnmRef.current.value;
+      tmp["name"] = brkrNmRef.current.value;
+      tmp["resistrationNumber"] = jurirnoRef.current.value;
+      tmp["businessAddress"] = ldCodeNmRef.current.value;
+      tmp["startData"] = registDeRef.current.value;
+    } else {
+      alert("상호명은 필수 입력 값입니다!");
+      return;
+    }
+
+    if (businessNumber) {
+      tmp["businessNumber"] = businessNumber;
+    } else {
+      alert("사업자 번호는 필수 입력 값입니다!");
+      return;
+    }
+
+    if (realtorEmail) {
+      tmp["email"] = realtorEmail;
+    } else {
+      alert("이메일은 필수 입력 값입니다!");
+      return;
+    }
+
+    if (form.realtorPhone.value) {
+      tmp["phone"] = form.realtorPhone.value;
+    } else {
+      alert("휴대폰 번호는 필수 입력 값입니다!");
+      return;
+    }
+
+    if (realtorPass) {
+      tmp["password"] = realtorPass;
+    } else {
+      alert("비밀번호는 필수 입력 값입니다!");
+      return;
+    }
+
+    tmp["description"] = form.realtorDescription.value;
+    console.log(tmp);
+
+    const frm = new FormData();
+    frm.append("file", profile);
+    frm.append("SignUp", new Blob([JSON.stringify(tmp)], {
+      type: `application/json`,
+    }), );
+
+    try {
+      const response = await axiosInstance.post("realtors", frm, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <>
@@ -126,6 +196,7 @@ const SignUpPageRealtor = () => {
           <Modal onConfirm={AuthenticityChangeHandler}>
             <AuthenticityModalOverlay
               onModalStateChange={AuthenticityChangeHandler}
+              setBusinessNumber={setBusinessNumber}
             />
           </Modal>
         )}
@@ -140,7 +211,11 @@ const SignUpPageRealtor = () => {
           </Modal>
         )}
       </>
-      <form className={classes.signupRealtor}>
+      <form
+        className={classes.signupRealtor}
+        onSubmit={joinRealtor}
+        ref={realtorForm}
+      >
         <div className={classes.signupFieldSet}>
           <div className={classes.formInner}>
             <h1>중개사 회원 가입</h1>
@@ -260,7 +335,13 @@ const SignUpPageRealtor = () => {
             <div className={classes.inputBox}>
               <label htmlFor="businessNumber">사업자 등록번호</label>
               <div className={classes.inputButton}>
-                <input id="businessNumber" name="businessNumber" type="text" />
+                <input
+                  id="businessNumber"
+                  name="businessNumber"
+                  type="text"
+                  value={businessNumber}
+                  readOnly
+                />
                 <button type="button" onClick={AuthenticityChangeHandler}>
                   중복확인
                 </button>
@@ -271,7 +352,7 @@ const SignUpPageRealtor = () => {
               <input
                 id="realtorPass"
                 name="realtorPass"
-                type="text"
+                type="password"
                 value={realtorPass}
                 onChange={onChangeRealtorPass}
               />
@@ -287,7 +368,7 @@ const SignUpPageRealtor = () => {
               <input
                 id="realtorPassCheck"
                 name="realtorPassCheck"
-                type="text"
+                type="password"
                 value={realtorPassCheck}
                 onChange={onChangeRealtorPassCheck}
               />
@@ -295,6 +376,10 @@ const SignUpPageRealtor = () => {
             {realtorPassCheckError && (
               <div style={{ color: "red" }}>비밀번호 입력값이 다릅니다!</div>
             )}
+            <div className={classes.inputBox}>
+              <label htmlFor="realtorDescription">중개사 소개</label>
+              <textarea id="realtorDescription" name="realtorDescription" />
+            </div>
             <div className={classes.signUpBtn}>
               <button type="submit">중개사 가입</button>
             </div>
