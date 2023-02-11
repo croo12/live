@@ -9,6 +9,7 @@ import com.ssafy.live.account.user.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()
             .antMatchers("/realtors/region", "/realtors/{realtorNo}", "/realtors/info", "/realtors/passcheck", "/realtors/{realtorNo}/consultings").hasAuthority("REALTOR")
             .antMatchers("/consultings/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "*").permitAll()
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
     }
