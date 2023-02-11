@@ -1,11 +1,8 @@
-import HousePurpose from "./HousePurpose";
 import ImageInput from "../common/ImageInput";
-import Modal from "../../UI/Modal";
-import SearchAddress from "../common/SearchAddress";
 import classes from "./HouseModify.module.scss";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
-import { findHouseByAddress, getHouseByItemNo } from "../../apis/houseApis";
+import { getHouseByItemNo, modifyHouseData } from "../../apis/houseApis";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 const HouseModify = () => {
@@ -13,11 +10,12 @@ const HouseModify = () => {
   const getLoaderData = useLoaderData().data;
 
   const [images, setImages] = useState([]); // 매물 이미지 파일
+  const [loadedImages, setLoadedImages] = useState(getLoaderData.itemImages);
   const [direction, setDirection] = useState(getLoaderData.direction);
   const [entrance, setEntrance] = useState(getLoaderData.entrance);
   const [heating, setHeating] = useState(getLoaderData.heating);
 
-  // const realtorNo = useRef();
+  const realtorNo = useRef();
   const buildingName = useRef();
   const deposit = useRef();
   const description = useRef();
@@ -33,7 +31,7 @@ const HouseModify = () => {
   const exclusivePrivateArea = useRef();
   const floor = useRef();
   const houseNo = useRef();
-  const isActive = useRef();
+  const contracted = useRef();
   const purpose = useRef();
   const room = useRef();
   const sido = useRef();
@@ -77,153 +75,100 @@ const HouseModify = () => {
     setImages(data);
   };
 
+  const setLoadedImageHandler = (data) => {
+    setLoadedImages(data);
+  };
+
   const modifyHouseInfo = async (event) => {
     event.preventDefault();
 
-    // const validText = "기본 정보, 추가 정보(옵션 제외) 입력은 필수입니다.";
+    const validText = "기본 정보, 추가 정보(옵션 제외) 입력은 필수입니다.";
 
-    // if (address.current.value.trim() === "") {
-    //   address.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (addressDetail.current.value.trim() === "") {
-    //   addressDetail.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (buildingName.current.value.trim() === "") {
-    //   buildingName.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (deposit.current.value.trim() === "") {
-    //   deposit.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (rent.current.value.trim() === "") {
-    //   rent.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (maintenanceFee.current.value.trim() === "") {
-    //   maintenanceFee.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (room.current.value.trim() === "") {
-    //   room.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (bathroom.current.value.trim() === "") {
-    //   bathroom.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (floor.current.value.trim() === "") {
-    //   floor.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (totalFloor.current.value.trim() === "") {
-    //   totalFloor.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (supplyArea.current.value.trim() === "") {
-    //   supplyArea.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (exclusivePrivateArea.current.value.trim() === "") {
-    //   exclusivePrivateArea.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (purpose.current.value.trim() === "") {
-    //   purpose.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (completionYear.current.value.trim() === "") {
-    //   completionYear.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (moveInDate.current.value.trim() === "") {
-    //   moveInDate.current.focus();
-    //   alert(validText);
-    //   return;
-    // } else if (direction.trim() === "") {
-    //   alert("추가정보[방향] 선택은 필수입니다.");
-    //   return;
-    // } else if (entrance.trim() === "") {
-    //   alert("추가정보[현관구조] 선택은 필수입니다.");
-    //   return;
-    // } else if (heating.trim() === "") {
-    //   alert("추가정보[난방방식] 선택은 필수입니다.");
-    //   return;
-    // } else if (images.length < 5) {
-    //   alert("최소 5장 이상의 사진을 등록해야 합니다.");
-    //   return;
-    // }
-    // //--------------------------------------------------------------------------
-    // const response = await registHouseData({
-    //   realtorNo: 1, //수정해주세용~~
-    //   deposit: deposit.current.value.replaceAll(",", ""),
-    //   rent: rent.current.value.replaceAll(",", ""),
-    //   maintenanceFee: maintenanceFee.current.value.replaceAll(",", ""),
-    //   description: description.current.value,
-    //   direction: direction,
-    //   entrance: entrance,
-    //   heating: heating,
-    //   moveInDate: moveInDate.current.value,
-    //   buildingName: buildingName.current.value,
+    if (deposit.current.value.trim() === "") {
+      deposit.current.focus();
+      alert(validText);
+      return;
+    } else if (rent.current.value.trim() === "") {
+      rent.current.focus();
+      alert(validText);
+      return;
+    } else if (maintenanceFee.current.value.trim() === "") {
+      maintenanceFee.current.focus();
+      alert(validText);
+      return;
+    } else if (moveInDate.current.value.trim() === "") {
+      moveInDate.current.focus();
+      alert(validText);
+      return;
+    } else if (direction.trim() === "") {
+      alert("추가정보[방향] 선택은 필수입니다.");
+      return;
+    } else if (entrance.trim() === "") {
+      alert("추가정보[현관구조] 선택은 필수입니다.");
+      return;
+    } else if (heating.trim() === "") {
+      alert("추가정보[난방방식] 선택은 필수입니다.");
+      return;
+    } else if (images.length + loadedImages.length < 5) {
+      alert("최소 5장 이상의 사진을 등록해야 합니다.");
+      return;
+    }
+    //--------------------------------------------------------------------------
 
-    //   houseNo: houseNo.value,
-    //   isActive: isActive.current.checked,
-    //   address: address.current.value,
-    //   addressDetail: addressDetail.current.value,
-    //   bathroom: bathroom.current.value.replaceAll(",", ""),
-    //   completionYear: completionYear.current.value,
-    //   exclusivePrivateArea: exclusivePrivateArea.current.value.replaceAll(
-    //     ",",
-    //     ""
-    //   ),
-    //   supplyArea: supplyArea.current.value.replaceAll(",", ""),
-    //   floor: floor.current.value.replaceAll(",", ""),
-    //   totalFloor: totalFloor.current.value.replaceAll(",", ""),
-    //   purpose: purpose.current.value,
-    //   room: room.current.value.replaceAll(",", ""),
-    //   sido: sido.value,
-    //   dong: dong.value,
-    //   gugun: gugun.value,
-    //   zipcode: zipcode.value,
-    //   regionCode: regionCode.value,
+    const response = await modifyHouseData({
+      jsonData: {
+        itemNo: itemNo.value,
+        deposit: deposit.current.value.replaceAll(",", ""),
+        description: description.current.value,
+        direction: direction,
+        entrance: entrance,
+        heating: heating,
+        maintenanceFee: maintenanceFee.current.value.replaceAll(",", ""),
+        moveInDate: moveInDate.current.value,
+        rent: rent.current.value.replaceAll(",", ""),
+        // 이미 등록되어 있던 사진 중 남은 사진 목록
+        itemImages: loadedImages.map((image) => {
+          return image.itemImageNo;
+        }),
+        contracted: contracted.current.checked,
+        itemOption: {
+          airConditioner: airConditioner.current.checked,
+          bathtub: bathtub.current.checked,
+          bed: bed.current.checked,
+          bidet: bidet.current.checked,
+          cctv: cctv.current.checked,
+          closet: closet.current.checked,
+          desk: desk.current.checked,
+          diningTable: diningTable.current.checked,
+          dishwasher: dishwasher.current.checked,
+          dryingMachine: dryingMachine.current.checked,
+          elevator: elevator.current.checked,
+          fireAlarm: fireAlarm.current.checked,
+          garden: garden.current.checked,
+          gasStove: gasStove.current.checked,
+          guard: guard.current.checked,
+          inductionCooktop: inductionCooktop.current.checked,
+          intercom: intercom.current.checked,
+          keycard: keycard.current.checked,
+          microwave: microwave.current.checked,
+          oven: oven.current.checked,
+          parkingLot: parkingLot.current.checked,
+          refrigerator: refrigerator.current.checked,
+          shoeRack: shoeRack.current.checked,
+          sink: sink.current.checked,
+          sofa: sofa.current.checked,
+          terrace: terrace.current.checked,
+          veranda: veranda.current.checked,
+          washingMachine: washingMachine.current.checked,
+        },
+      },
+      files: [...images], // 새로 추가되는 사진 목록
+    });
 
-    //   airConditioner: airConditioner.current.checked,
-    //   bathtub: bathtub.current.checked,
-    //   bed: bed.current.checked,
-    //   bidet: bidet.current.checked,
-    //   cctv: cctv.current.checked,
-    //   closet: closet.current.checked,
-    //   desk: desk.current.checked,
-    //   diningTable: diningTable.current.checked,
-    //   dishwasher: dishwasher.current.checked,
-    //   dryingMachine: dryingMachine.current.checked,
-    //   elevator: elevator.current.checked,
-    //   fireAlarm: fireAlarm.current.checked,
-    //   garden: garden.current.checked,
-    //   gasStove: gasStove.current.checked,
-    //   guard: guard.current.checked,
-    //   inductionCooktop: inductionCooktop.current.checked,
-    //   intercom: intercom.current.checked,
-    //   keycard: keycard.current.checked,
-    //   microwave: microwave.current.checked,
-    //   oven: oven.current.checked,
-    //   parkingLot: parkingLot.current.checked,
-    //   refrigerator: refrigerator.current.checked,
-    //   shoeRack: shoeRack.current.checked,
-    //   sink: sink.current.checked,
-    //   sofa: sofa.current.checked,
-    //   terrace: terrace.current.checked,
-    //   veranda: veranda.current.checked,
-    //   washingMachine: washingMachine.current.checked,
-    //   files: [...images],
-    // });
-
-    // if (response === "success") {
-    //   alert("등록이 완료되었습니다.");
-    //   navigate("/house");
-    // }
+    if (response === "success") {
+      alert("등록이 완료되었습니다.");
+      navigate("/house");
+    }
   };
 
   const inputNumBlurHandler = (event) => {
@@ -304,8 +249,11 @@ const HouseModify = () => {
     event.target.value = result;
   };
 
+  console.log(getLoaderData);
+
   useEffect(() => {
-    buildingName.current.value = getLoaderData.buildingName;
+    realtorNo.value = getLoaderData.realtorNo;
+    buildingName.current.value = getLoaderData.house.buildingName;
     deposit.current.value = getLoaderData.deposit;
     description.current.value = getLoaderData.description;
     itemNo.value = getLoaderData.itemNo;
@@ -320,7 +268,7 @@ const HouseModify = () => {
     exclusivePrivateArea.current.value =
       getLoaderData.house.exclusivePrivateArea;
     floor.current.value = getLoaderData.house.floor;
-    isActive.current.value = getLoaderData.house.isActive;
+    contracted.current.value = getLoaderData.house.contracted;
     purpose.current.value = getLoaderData.house.purpose;
     room.current.value = getLoaderData.house.room;
     supplyArea.current.value = getLoaderData.house.supplyArea;
@@ -580,7 +528,7 @@ const HouseModify = () => {
                       <input
                         type="checkbox"
                         id="contractStatus"
-                        ref={isActive}
+                        ref={contracted}
                       />
                       <label htmlFor="contractStatus">계약 완료</label>
                     </td>
@@ -986,6 +934,8 @@ const HouseModify = () => {
                         maxFileNum={10}
                         maxFileSize={10}
                         isPreview={true}
+                        loadedImages={loadedImages}
+                        setLoadedImages={setLoadedImageHandler}
                         addButton={
                           <div className={classes.addButton}>
                             <p className={classes.plus}>+</p>
