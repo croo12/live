@@ -45,7 +45,8 @@ public class RealtorController {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@Validated RealtorRequest.Reissue reissue, Errors errors) {
+    public ResponseEntity<?> reissue(@Validated @RequestBody RealtorRequest.Reissue reissue, Errors errors) {
+        System.out.println("r "+reissue.getAccessToken());
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -60,7 +61,7 @@ public class RealtorController {
         return realtorService.logout(logout);
     }
 
-    @DeleteMapping()
+    @DeleteMapping
     public ResponseEntity<?> withdrawl(Authentication authentication) {
         log.info("회원 탈퇴");
         UserDetails principal = (UserDetails) authentication.getPrincipal();
@@ -86,10 +87,11 @@ public class RealtorController {
         return realtorService.temporaryPassword(request);
     }
 
-    @GetMapping ("/{realtorNo}")
-    public ResponseEntity<?> findRealtorDetail(@PathVariable("realtorNo") Long realtorNo) {
+    @GetMapping
+    public ResponseEntity<?> findRealtorDetail(Authentication authentication) {
         log.info("공인중개사 정보 상세 조회");
-        return realtorService.findRealtorDetail(realtorNo);
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return realtorService.findRealtorDetail(principal);
     }
 
     @GetMapping ("/{realtorNo}/consultings")
@@ -104,7 +106,7 @@ public class RealtorController {
         return realtorService.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
     }
 
-    @GetMapping
+    @GetMapping("/popular")
     public ResponseEntity<?> findRealtorList(Authentication authentication, @RequestParam String orderBy) {
         log.info("메인페이지 공인중개사 목록 조회");
         UserDetails principal = (UserDetails) authentication.getPrincipal();

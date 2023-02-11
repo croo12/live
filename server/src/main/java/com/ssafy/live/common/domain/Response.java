@@ -1,5 +1,6 @@
 package com.ssafy.live.common.domain;
 
+import com.ssafy.live.common.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
+@Builder
 @Component
 public class Response {
 
@@ -19,6 +21,14 @@ public class Response {
         private String message;
         private Object data;
         private Object error;
+    }
+
+    public static Body reissue() {
+        return Body.builder()
+                .state(HttpStatus.UNAUTHORIZED.value())
+                .message(ErrorCode.ACCESS_TOKEN_EXPIRED.getMessage())
+                .error("TOKEN-0001")
+                .build();
     }
 
     public ResponseEntity<?> success(Object data, String msg, HttpStatus status) {

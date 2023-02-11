@@ -26,8 +26,8 @@ public class JwtTokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 6 * 60 * 60 * 1000L;             // 30분 30 * 60 * 1000L test 1분
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 24 * 60 * 60 * 1000L;    // 7일 7 * 24 * 60 * 60 * 1000L test 3분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1 * 60 * 1000L;             // 30분 30 * 60 * 1000L test 1분
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 3 * 24 * 60 * 60 * 1000L;    // 7일 7 * 24 * 60 * 60 * 1000L test 3분
 
     private final Key key;
 
@@ -90,18 +90,19 @@ public class JwtTokenProvider {
     // 토큰 정보를 검증하는 메서드
     public boolean validateToken(String token) {
         try {
+            System.out.println(token +"!!!!!!!!-!-!-!-!-!-!-!");
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT Token", e);
-        } catch (ExpiredJwtException e) {
-            log.info("Expired JWT Token", e);
-        } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT Token", e);
-        } catch (IllegalArgumentException e) {
-            log.info("JWT claims string is empty.", e);
+        } catch(SecurityException | MalformedJwtException e) {
+            log.error("Invalid JWT signature");
+            return false;
+        } catch(UnsupportedJwtException e) {
+            log.error("Unsupported JWT token");
+            return false;
+        } catch(IllegalArgumentException e) {
+            log.error("JWT token is invalid");
+            return false;
         }
-        return false;
     }
 
     private Claims parseClaims(String accessToken) {

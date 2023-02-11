@@ -114,9 +114,11 @@ public class RealtorService {
     }
 
 
-    public ResponseEntity<?> findRealtorDetail(Long realtorNo) {
-        Realtor realtor = realtorRepository.findById(realtorNo).orElseThrow(()->new BadRequestException(REALTOR_NOT_FOUND));
-        return response.success(RealtorResponse.FindDetail.toEntity(realtor),"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
+    public ResponseEntity<?> findRealtorDetail(UserDetails user) {
+        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
+                .orElseThrow(()->new BadRequestException(REALTOR_NOT_FOUND));
+        RealtorResponse.FindDetail detail = RealtorResponse.FindDetail.toEntity(realtor);
+        return response.success(detail,"공인중개사 상세 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
     public ResponseEntity<?> findRealtorDetailByRegion(Long realtorNo, String regionCode) {
