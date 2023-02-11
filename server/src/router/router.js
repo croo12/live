@@ -9,7 +9,7 @@ import HouseDetail from "../components/HouseDetail";
 import HouseRegist from "../components/house/HouseRegist";
 import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
-import MyPageUser from "../components/mypage/MyPageUser";
+import MyPageUser, { myPageUserLoader } from "../components/mypage/MyPageUser";
 import MyPageUserDetail, {
   userInfoLoader,
 } from "../components/mypage/MyPageUserDetail";
@@ -72,7 +72,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="mypage" element={<MyPage />}>
         <Route path="" element={<Navigate replace to="user" />} />
-        <Route path="user" element={<MyPageUser />} loader={userInfoLoader}>
+        <Route path="user" element={<MyPageUser />} loader={myPageUserLoader}>
           <Route path="user-record" element={<MyPageUserRecord />}></Route>
           <Route path="user-review" element={<MyPageUserReview />}></Route>
           <Route path="user-reservation" element={<MyPageUserReservation />}>

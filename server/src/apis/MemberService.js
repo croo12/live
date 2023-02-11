@@ -1,5 +1,5 @@
 import { userAction } from "../store/user-slice";
-import axiosInstance from "../util/axios";
+import axiosInstance, { getAuthHeader } from "../util/axios";
 import store from "../store/store";
 
 export const userLogin = async (data, dispatch) => {
@@ -9,11 +9,7 @@ export const userLogin = async (data, dispatch) => {
   };
 
   await axiosInstance
-    .post(`users/login`, data, {
-      headers: {
-        Authorization: null,
-      },
-    })
+    .post(`users/login`, data, {})
     .then(({ data }) => {
       if (data.state === 200) {
         result = data.data;
@@ -31,17 +27,21 @@ export const userLogin = async (data, dispatch) => {
 };
 
 export const userLogout = async (dispatch) => {
-  const { accessToken, refreshToken } = store.getState().user;
-  console.log(accessToken, refreshToken);
+  // const { accessToken, refreshToken } = store.getState().user;
+  // console.log(accessToken, refreshToken);
 
-  const data = {
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-  };
+  // const data = {
+  //   accessToken: accessToken,
+  //   refreshToken: refreshToken,
+  // };
 
-  await axiosInstance.post("users/logout", data).then((res) => {
-    dispatch(userAction.logout());
-  });
+  const headers = getAuthHeader();
+
+  await axiosInstance
+    .post("users/logout", undefined, { headers })
+    .then((res) => {
+      dispatch(userAction.logout());
+    });
 };
 
 //내 정보 줘
@@ -52,23 +52,31 @@ export const getUserInfo = async (accessToken) => {
   console.log(myAccessToken);
 
   if (accessToken) {
+    console.log(`매개변수 있음 `, accessToken);
     await axiosInstance
       .get("users", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
-      .then(({ data }) => {
+      .then((res) => {
+        console.log(res);
+        const data = res.data;
         if (data.state === 200) {
-          userInfo = data.data;
+          userInfo = data;
         }
       });
   } else {
-    console.log(`매개변수 accessToken 이 없습니다. ${accessToken}`);
+    console.log(`매개변수 accessToken이 없음., ${myAccessToken}`);
+    const headers = getAuthHeader();
+    console.log(headers);
 
     await axiosInstance
       .get("users", {
-        headers: { Authorization: `Bearer ${myAccessToken}` },
+        headers,
       })
-      .then(({ data }) => {
+      .then((res) => {
+        console.log(res);
+        const data = res.data;
+
         if (data.state === 200) {
           userInfo = data.data;
         }
@@ -114,10 +122,11 @@ export const getRealtorInfo = async (accessToken) => {
       });
   } else {
     console.log(`매개변수 accessToken 이 없습니다. ${accessToken}`);
+    const headers = getAuthHeader();
 
     await axiosInstance
       .get("realtors", {
-        headers: { Authorization: `Bearer ${myAccessToken}` },
+        headers,
       })
       .then(({ data }) => {
         if (data.state === 200) {
@@ -130,17 +139,21 @@ export const getRealtorInfo = async (accessToken) => {
 };
 
 export const realtorLogout = async (dispatch) => {
-  const { accessToken, refreshToken } = store.getState().user;
-  console.log(accessToken, refreshToken);
+  // const { accessToken, refreshToken } = store.getState().user;
+  // console.log(accessToken, refreshToken);
 
-  const data = {
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-  };
+  // const data = {
+  //   accessToken: accessToken,
+  //   refreshToken: refreshToken,
+  // };
 
-  await axiosInstance.post("realtors/logout", data).then((res) => {
-    dispatch(userAction.logout());
-  });
+  const headers = getAuthHeader();
+
+  await axiosInstance
+    .post("realtors/logout", undefined, { headers })
+    .then((res) => {
+      dispatch(userAction.logout());
+    });
 };
 
 // export const logout = async () => {

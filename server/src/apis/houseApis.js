@@ -1,4 +1,4 @@
-import axiosInstance from "../util/axios";
+import axiosInstance, { getAuthHeader } from "../util/axios";
 
 export const registHouseData = async (data) => {
   const formData = new FormData();
@@ -12,10 +12,13 @@ export const registHouseData = async (data) => {
     formData.append("files", element);
   });
 
+  const headers = getAuthHeader();
+
   const sendRequest = async () => {
-    const response = await axiosInstance.post("/items", formData, {
+    const response = await axiosInstance.post("items", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        ...headers,
       },
     });
 

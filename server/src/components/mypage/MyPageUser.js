@@ -6,8 +6,9 @@ import { TfiWrite } from "react-icons/tfi";
 
 import classes from "./MyPageUser.module.scss";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
-import { useAuth } from "../common/AuthProtector";
 import { getUserInfo } from "../../apis/MemberService";
+
+import sample from "../../assets/image/sample.jpg";
 
 const MyPageUser = () => {
   const navigate = useNavigate();
@@ -15,10 +16,6 @@ const MyPageUser = () => {
   const onClickHandler = () => {
     navigate("/mypage/user-detail-info");
   };
-
-  const { userInfo, doLogout } = useAuth();
-
-  console.log(userInfo);
 
   const [btnActive, setBtnActive] = useState(0);
 
@@ -39,10 +36,14 @@ const MyPageUser = () => {
     navigate("/mypage/user/user-reservation");
   };
 
+  const [num, setNum] = useState(0);
   const userInfo = useLoaderData();
+
   console.log(userInfo);
 
-  const [num, setNum] = useState(0);
+  if (!userInfo) {
+    return <div> 아 시발 뭐임 </div>;
+  }
 
   return (
     <>
@@ -51,7 +52,10 @@ const MyPageUser = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-                <img alt="프로필" src={userInfo.imageSrc}></img>
+                <img
+                  alt="프로필"
+                  src={userInfo.imageSrc !== null ? userInfo.imageSrc : sample}
+                ></img>
               </div>
               <div className={classes.rightDesc}>
                 <p>
@@ -138,10 +142,12 @@ const MyPageUser = () => {
   );
 };
 
-export const userInfoLoader = async () => {
+export const myPageUserLoader = async () => {
   const response = await getUserInfo();
 
-  if (response?.data) return response.data.data;
+  console.log(response);
+
+  if (response) return response;
   else return null;
 };
 

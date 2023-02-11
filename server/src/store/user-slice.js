@@ -17,7 +17,7 @@ const userSlice = createSlice({
   reducers: {
     login(state, { payload }) {
       const { accessToken, refreshToken } = payload;
-
+      console.log(accessToken, refreshToken);
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
     },
