@@ -7,14 +7,20 @@ import {
   logout,
   realtorLogin,
   getUserInfo,
+  getRealtorInfo,
 } from "../apis/MemberService";
 import classes from "./LoginPage.module.scss";
 import { useAuth } from "../components/common/AuthProtector";
+import { useDispatch, useSelector } from "react-redux";
+import { userAction } from "../store/user-slice";
 
 const LoginPage = () => {
   const [loginMode, setLoginMode] = useState("USER"); // 로그인 모드 상태 확인 ( USER , REALTOR )
   const { userInfo, doLogin, doLogout } = useAuth();
   const navigation = useNavigate();
+
+  const selector = useSelector;
+  const dispatch = useDispatch();
 
   const loginModeHandler = (event) => {
     // 로그인 모드 변경 함수
@@ -26,49 +32,50 @@ const LoginPage = () => {
     // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
     try {
-      const tmp = {
-        accessToken: null,
-        refreshToken: null,
-        name: null,
-        id: null,
-        isRealtor: null,
-      };
+      const tmp = {};
 
-      const result = await userLogin(userLoginInfo);
-      const accessToken = result?.data.data.accessToken;
-      const refreshToken = result?.data.data.refreshToken;
-      console.log(accessToken);
-      if (accessToken) {
-        tmp["accessToken"] = accessToken;
-        tmp["refreshToken"] = refreshToken;
+      const result = await userLogin(userLoginInfo, dispatch);
+      const { accessToken } = result;
 
-        const response = await getUserInfo(accessToken);
-        const data = response?.data.data;
+      console.log("유저 로그인 성공");
+      dispatch(userAction.setIsRealtor(false));
 
-        console.log(response);
+      const userInfo = await getUserInfo(accessToken);
+      tmp["profile"] = userInfo.imageSrc;
+      tmp["id"] = userInfo.id;
+      tmp["isRealtor"] = false;
+      tmp["name"] = userInfo.name;
 
-        tmp["id"] = data.id;
-        tmp["name"] = data.name;
-        tmp["isRealtor"] = false;
+      dispatch(userAction.setInfo(tmp));
 
-        if (data) {
-          doLogin(tmp);
-        } else {
-          console.log(result);
-        }
-      } else {
-        throw new Error(`로그인 실패`);
-      }
+      navigation("/mypage/user");
     } catch (err) {
       console.log(err);
-      console.log(`hi`);
     }
   };
 
   const realtorLoginHandler = async (realtorLoginInfo) => {
     // 중개사 회원 로그인 처리
+    // try {
+    const tmp = {};
 
-    realtorLogin(realtorLoginInfo).then((result) => console.log(result));
+    // console.log(realtorLoginInfo);
+
+    const { accessToken } = await realtorLogin(realtorLoginInfo, dispatch);
+
+    console.log("중개사 로그인 성공");
+    dispatch(userAction.setIsRealtor(true));
+
+    const realtorInfo = await getRealtorInfo(accessToken);
+    console.log(realtorInfo);
+
+    tmp["profile"] = realtorInfo.imageSrc;
+    tmp["id"] = "중개사는 이런거없음";
+    tmp["isRealtor"] = true;
+    tmp["name"] = realtorInfo.name;
+
+    dispatch(userAction.setInfo(tmp));
+
     navigation("/");
   };
 

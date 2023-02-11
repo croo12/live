@@ -16,6 +16,10 @@ const MyPageUser = () => {
     navigate("/mypage/user-detail-info");
   };
 
+  const { userInfo, doLogout } = useAuth();
+
+  console.log(userInfo);
+
   const [btnActive, setBtnActive] = useState(0);
 
   const recordOnClickHandler = () => {

@@ -7,7 +7,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
+
 import session from "redux-persist/lib/storage/session";
 import persistReducer from "redux-persist/es/persistReducer";
 import houseSlice from "./house-slice";

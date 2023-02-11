@@ -46,24 +46,26 @@ const FindBrokerOfficeModalOverlay = (props) => {
         </form>
         <button onClick={onClickHandler}>찾기</button>
       </div>
-      {realtorList.map((item, idx) => {
-        return (
-          <Card key={idx}>
-            <div
-              className={classes.brokerList}
-              onClick={() => {
-                modalStateChangeHandler();
-                props.addRealtorInformationHandler(realtorList[idx]);
-              }}
-            >
-              <h4>{item.bsnmCmpnm}</h4>
-              <p>
-                {item.brkrNm} | {item.ldCodeNm}
-              </p>
-            </div>
-          </Card>
-        );
-      })}
+      <div className={classes.listBox}>
+        {realtorList.map((item, idx) => {
+          return (
+            <Card key={idx}>
+              <div
+                className={classes.brokerList}
+                onClick={() => {
+                  modalStateChangeHandler();
+                  props.addRealtorInformationHandler(realtorList[idx]);
+                }}
+              >
+                <h4>{item.bsnmCmpnm}</h4>
+                <p>
+                  {item.brkrNm} | {item.ldCodeNm}
+                </p>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 };
