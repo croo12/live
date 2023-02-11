@@ -124,11 +124,10 @@ public class RealtorService {
     public ResponseEntity<?> findRealtorDetailByRegion(Long realtorNo, String regionCode) {
         Realtor realtor = realtorRepository.findById(realtorNo).orElseThrow(()->new BadRequestException(REALTOR_NOT_FOUND));
         List<RealtorByRegionProjectionInterface> result = realtorRepository.findRealtorDetailByRegion(realtorNo, regionCode);
-        List< Items > items= result.stream().map(item ->
-                RealtorResponse.FindAllDetail.Items.toEntity(item))
+        List<Items> items= result.stream().map(Items::toEntity)
                 .collect(Collectors.toList());
         List<RealtorResponse.FindAllDetail.Reviews> reviews = realtor.getReviews().stream()
-                .map(review -> RealtorResponse.FindAllDetail.Reviews.toEntity(review))
+                .map(RealtorResponse.FindAllDetail.Reviews::toEntity)
                 .collect(Collectors.toList());
         return response.success(RealtorResponse.FindAllDetail.toEntity(realtor, items, reviews),"공인중개사의 정보, 보유 매물 및 리뷰 정보가 조회되었습니다.", HttpStatus.OK);
     }
@@ -165,7 +164,7 @@ public class RealtorService {
     public ResponseEntity<?> findDistinctRealtorWithItemsByHouseByRegion(String regionCode) {
         List<Realtor> findRealtors = realtorRepository.findDistinctRealtor(regionCode);
         List<RealtorResponse.FindByRegion> list = findRealtors.stream()
-            .map(r -> RealtorResponse.FindByRegion.toEntity(r))
+            .map(RealtorResponse.FindByRegion::toEntity)
             .collect(Collectors.toList());
         return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }

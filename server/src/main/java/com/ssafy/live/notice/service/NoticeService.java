@@ -34,11 +34,7 @@ public class NoticeService {
         } else {
             notices = noticeRepository.findByRealtor(realtorRepository.findByBusinessNumber(user.getUsername()).get());
         }
-        list = notices.stream().map((notice)-> NoticeResponse.Notices.builder()
-                        .noticeInfo(notice.getNoticeInfo())
-                        .noticeWriter(notice.getNoticeWriter())
-                        .noticeDate(notice.getCreatedDate())
-                        .build())
+        list = notices.stream().map( NoticeResponse.Notices::toEntity)
                 .collect(Collectors.toList());
         return response.success(list,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }

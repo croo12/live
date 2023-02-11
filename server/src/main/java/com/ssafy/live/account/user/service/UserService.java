@@ -136,12 +136,7 @@ public class UserService {
         String imgSrc = s3Service.upload(file);
         users.updateUser(request, passwordEncoder.encode(request.getPassword()), imgSrc);
         usersRepository.save(users);
-        UserResponse.Update updateUser = UserResponse.Update.builder()
-            .phone(users.getPhone())
-            .email(users.getEmail())
-            .imageSrc(users.getImageSrc())
-            .region(users.getRegion())
-            .build();
+        UserResponse.Update updateUser = UserResponse.Update.toDto(users);
         return response.success(updateUser, "회원 정보 수정을 완료했습니다.", HttpStatus.OK);
     }
 

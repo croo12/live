@@ -2,9 +2,11 @@ package com.ssafy.live.review.service;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
+import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.exception.BadRequestException;
+import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
 import com.ssafy.live.review.controller.dto.ReviewRequest;
 import com.ssafy.live.review.controller.dto.ReviewResponse;
@@ -37,13 +39,9 @@ public class ReviewService {
     public ResponseEntity<?> regist(ReviewRequest.Regist regist) {
         Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
                         .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
-        reviewRepository.save(Review.builder()
-                .realtor(realtor)
-                        .users(usersRepository.findById(regist.getUserNo()).get())
-                        .consulting(consultingRepository.findById(regist.getConsultingNo()).get())
-                        .reviewInfo(regist.getReviewInfo())
-                        .ratingScore(regist.getRatingScore())
-                .build());
+        Users users = usersRepository.findById(regist.getUserNo()).get();
+        Consulting consulting = consultingRepository.findById(regist.getConsultingNo()).get();
+        reviewRepository.save(ReviewRequest.Regist.toEntity(realtor, users, consulting, regist.getReviewInfo(), regist.getRatingScore()));
         Long count = reviewRepository.countBy(realtor);
         realtor.updateRatingScore(count, regist.getRatingScore());
         realtorRepository.save(realtor);
