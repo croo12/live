@@ -11,7 +11,7 @@ public class HouseResponse {
     @Builder
     public static class HouseDetailResponse {
         private Long houseNo;
-        private boolean isContracted;
+        private boolean contracted;
         private String address;
         private String addressDetail;
         private float supplyArea;
@@ -46,7 +46,7 @@ public class HouseResponse {
                     .dong(house.getDong())
                     .regionCode(house.getRegionCode())
                     .buildingName(house.getBuildingName())
-                    .isContracted(house.isContracted())
+                    .contracted(house.isContracted())
                     .build();
         }
     }

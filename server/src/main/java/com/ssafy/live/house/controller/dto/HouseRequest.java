@@ -33,7 +33,7 @@ public class HouseRequest {
         private int bathroom;
         @NotBlank(message = "준공년도를 입력하세요")
         private int completionYear;
-        private boolean isContracted;
+        private boolean contracted;
         private String purpose;
         private String sido;
         private String gugun;
@@ -59,7 +59,7 @@ public class HouseRequest {
                     .zipCode(zipcode)
                     .regionCode(regionCode)
                     .buildingName(buildingName)
-                    .isContracted(isContracted)
+                    .contracted(contracted)
                     .build();
         }
     }

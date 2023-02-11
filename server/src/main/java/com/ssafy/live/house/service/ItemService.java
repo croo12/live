@@ -94,7 +94,7 @@ public class ItemService {
         Item updatedItem = itemUpdateRequest.toEntity();
 
         updatedItem.setHouse(item.getHouse());
-        updatedItem.getHouse().setIsContracted(itemUpdateRequest.isContracted());
+        updatedItem.getHouse().setContracted(itemUpdateRequest.isContracted());
 
         List<ItemImage> itemImages = itemImageRepository.findAllByItemNo(item.getNo());
         Set<Long> newImageNoSet = itemUpdateRequest.getItemImages();
