@@ -45,9 +45,9 @@ const MyPageUserModify = () => {
 
     const frm = new FormData();
 
-    frm.append(frm, "profile");
+    frm.append(frm, "file");
     frm.append(
-      "ModifyUser",
+      "Update",
       new Blob([JSON.stringify(changeData)], { type: "application/json" })
     );
 
@@ -61,6 +61,7 @@ const MyPageUserModify = () => {
       }
     } catch (error) {
       console.error("회원 정보 수정 과정에서 에러가 발생하였습니다.");
+      console.log(error);
     }
   };
 
