@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
-import { userLogin, logout, realtorLogin } from "../apis/MemberService";
+import {
+  userLogin,
+  logout,
+  realtorLogin,
+  getUserInfo,
+} from "../apis/MemberService";
 import classes from "./LoginPage.module.scss";
 import { useAuth } from "../components/common/AuthProtector";
 
@@ -21,23 +26,41 @@ const LoginPage = () => {
     // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
     try {
+      const tmp = {
+        accessToken: null,
+        refreshToken: null,
+        name: null,
+        id: null,
+        isRealtor: null,
+      };
+
       const result = await userLogin(userLoginInfo);
-      const data = result?.data.data;
+      const accessToken = result?.data.data.accessToken;
+      const refreshToken = result?.data.data.refreshToken;
+      console.log(accessToken);
+      if (accessToken) {
+        tmp["accessToken"] = accessToken;
+        tmp["refreshToken"] = refreshToken;
 
-      if (data) {
-        const tmp = {
-          id: data.id,
-          name: data.name,
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-          isRealtor: false,
-        };
+        const response = await getUserInfo(accessToken);
+        const data = response?.data.data;
 
-        doLogin(tmp);
+        console.log(response);
+
+        tmp["id"] = data.id;
+        tmp["name"] = data.name;
+        tmp["isRealtor"] = false;
+
+        if (data) {
+          doLogin(tmp);
+        } else {
+          console.log(result);
+        }
       } else {
-        console.log(result);
+        throw new Error(`로그인 실패`);
       }
     } catch (err) {
+      console.log(err);
       console.log(`hi`);
     }
   };

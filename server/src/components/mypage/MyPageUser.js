@@ -5,8 +5,9 @@ import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { TfiWrite } from "react-icons/tfi";
 
 import classes from "./MyPageUser.module.scss";
-import sample from "../../assets/image/sample.jpg";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { useAuth } from "../common/AuthProtector";
+import { getUserInfo } from "../../apis/MemberService";
 
 const MyPageUser = () => {
   const navigate = useNavigate();
@@ -17,19 +18,27 @@ const MyPageUser = () => {
 
   const [btnActive, setBtnActive] = useState(0);
 
-  const privacyOnclickHandler = () => {
+  const recordOnClickHandler = () => {
     setBtnActive(1);
+    navigate("/mypage/user/user-record");
   };
-  const alarmonClickHandler = () => {
+  const reviewOnClickHadler = () => {
     setBtnActive(2);
+    navigate("/mypage/user/user-review");
   };
-  const reviewonClickHandler = () => {
+  const contractOnClickHandler = () => {
     setBtnActive(3);
+    navigate("/mypage/user/user-contract");
   };
   const reservationonClickHandler = () => {
     setBtnActive(4);
-    navigate("/mypage/user-reservation");
+    navigate("/mypage/user/user-reservation");
   };
+
+  const userInfo = useLoaderData();
+  console.log(userInfo);
+
+  const [num, setNum] = useState(0);
 
   return (
     <>
@@ -38,18 +47,18 @@ const MyPageUser = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-                <img src={sample}></img>
+                <img alt="프로필" src={userInfo.imageSrc}></img>
               </div>
               <div className={classes.rightDesc}>
                 <p>
-                  안녕하세요, <strong>박세준</strong>님<br />
+                  안녕하세요, <strong>{userInfo.name}</strong>님<br />
                   <span>일반 회원</span>
                   <button onClick={onClickHandler}>개인정보 조회</button>
                 </p>
                 <div className={classes.temperature}>온도그래프</div>
                 <progress
                   className={classes.progress}
-                  value="36.5"
+                  value={userInfo.score}
                   min="0"
                   max="100"
                 ></progress>
@@ -66,7 +75,7 @@ const MyPageUser = () => {
                 btnActive === 1 ? classes.active : ""
               }`}
             >
-              <button onClick={privacyOnclickHandler}>
+              <button onClick={recordOnClickHandler} num={num}>
                 <div className={classes.leftLogo}>
                   <AiOutlineVideoCameraAdd />
                 </div>
@@ -80,12 +89,12 @@ const MyPageUser = () => {
                 btnActive === 2 ? classes.active : ""
               }`}
             >
-              <button onClick={alarmonClickHandler}>
+              <button onClick={reviewOnClickHadler}>
                 <div className={classes.leftLogo}>
                   <BsFillBellFill />
                 </div>
-                <div className={classes.rightDesc} style={{}}>
-                  <strong>알람</strong>
+                <div className={classes.rightDesc}>
+                  <strong>리뷰조회</strong>
                 </div>
               </button>
             </div>
@@ -94,12 +103,12 @@ const MyPageUser = () => {
                 btnActive === 3 ? classes.active : ""
               }`}
             >
-              <button onClick={reviewonClickHandler}>
+              <button onClick={contractOnClickHandler}>
                 <div className={classes.leftLogo}>
                   <BsSearch />
                 </div>
                 <div className={classes.rightDesc}>
-                  <strong>리뷰조회</strong>
+                  <strong>계약현황</strong>
                 </div>
               </button>
             </div>
@@ -120,8 +129,16 @@ const MyPageUser = () => {
           </div>
         </div>
       </div>
+      <Outlet />
     </>
   );
+};
+
+export const userInfoLoader = async () => {
+  const response = await getUserInfo();
+
+  if (response?.data) return response.data.data;
+  else return null;
 };
 
 export default MyPageUser;

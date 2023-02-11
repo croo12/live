@@ -1,14 +1,17 @@
 import { useRef, useState, useEffect } from "react";
 
 import classes from "./MyPageUserModify.module.scss";
-import MyPageUser from "./MyPageUser";
 import blankImage from "../../assets/image/blank_profile.png";
 import axiosInstance from "../../util/axios";
+import { useLoaderData } from "react-router-dom";
 import ImageInput from "../common/ImageInput";
+import { getUserInfo } from "../../apis/MemberService";
 import { getAuthHeader } from "../../util/axios";
+import { useNavigate } from "react-router-dom";
 
 const MyPageUserModify = () => {
   const formData = useRef();
+  const navigate = useNavigate();
 
   const [profile, setProfile] = useState("");
   const [previewProfile, setPreviewProfile] = useState("");
@@ -17,20 +20,21 @@ const MyPageUserModify = () => {
     setProfile(data);
   };
 
+  const userDetail = useLoaderData();
+
   useEffect(() => {
     if (!profile) {
       setPreviewProfile(null);
       return;
-    } else {
-      const reader = new FileReader();
-      reader.readAsDataURL(profile);
-
-      reader.onload = () => {
-        const preview = reader.result;
-
-        setPreviewProfile(preview);
-      };
     }
+    const reader = new FileReader();
+    reader.readAsDataURL(profile);
+
+    reader.onload = () => {
+      const preview = reader.result;
+
+      setPreviewProfile(preview);
+    };
   }, [profile]);
 
   const onChangeUser = async (e) => {
@@ -45,7 +49,7 @@ const MyPageUserModify = () => {
 
     const frm = new FormData();
 
-    frm.append("file", frm);
+    frm.append("file", profile);
     frm.append(
       "Update",
       new Blob([JSON.stringify(changeData)], { type: "application/json" })
@@ -58,13 +62,14 @@ const MyPageUserModify = () => {
 
       const result = await axiosInstance.post("users/info", frm, {
         headers: {
-          Authorization : getAuthHeader().Authorization,
-          "Content-Type": "multipart/form-data"
-        }
+          Authorization: getAuthHeader().Authorization,
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (result) {
         alert("회원 정보 수정");
+        navigate("/");
       }
     } catch (error) {
       console.error("회원 정보 수정 과정에서 에러가 발생하였습니다.");
@@ -74,7 +79,6 @@ const MyPageUserModify = () => {
 
   return (
     <>
-      {/* <MyPageUser /> */}
       <form onSubmit={onChangeUser} ref={formData}>
         <div>
           <div className={classes.viewPrivacy}>
@@ -83,10 +87,11 @@ const MyPageUserModify = () => {
                 <div className={classes.privacyInfo}>
                   <div className={classes.privacyImg}>
                     {previewProfile ? (
-                      <img src={previewProfile} />
+                      <img src={previewProfile} alt="User Profile" />
                     ) : (
                       <img
                         src={blankImage}
+                        alt="Blank Profile"
                         style={{ width: "50px", borderRadius: "70%" }}
                       />
                     )}
@@ -112,15 +117,17 @@ const MyPageUserModify = () => {
                   </div>
                   <div className={classes.privacyDetail}>
                     <div>
-                      <label>아이디</label>
-                      <span>parksj0230</span>
+                      <strong>아이디</strong>
+                      <span>{userDetail.id}</span>
                     </div>
                     <div>
                       <strong>이름</strong>
-                      <span>박세준</span>
+                      <span>{userDetail.name}</span>
                     </div>
                     <div>
-                      <label>비밀번호</label>
+                      <label>
+                        <strong>비밀번호</strong>
+                      </label>
                       <input
                         type="password"
                         id="userPass"
@@ -128,7 +135,9 @@ const MyPageUserModify = () => {
                       ></input>
                     </div>
                     <div>
-                      <label>이메일</label>
+                      <label>
+                        <strong>이메일</strong>
+                      </label>
                       <input
                         type="text"
                         id="userEmail"
@@ -136,7 +145,9 @@ const MyPageUserModify = () => {
                       ></input>
                     </div>
                     <div>
-                      <strong>휴대폰 번호</strong>
+                      <label>
+                        <strong>휴대폰 번호</strong>
+                      </label>
                       <input
                         type="text"
                         id="userPhone"
@@ -146,15 +157,15 @@ const MyPageUserModify = () => {
                   </div>
                   <div>
                     <strong>지역</strong>
-                    <span>시/군/구</span>
+                    <span>{userDetail.region}</span>
                   </div>
                   <div>
                     <strong>성별</strong>
-                    <span>남</span>
+                    <span>{userDetail.gender}</span>
                   </div>
                   <div>
                     <strong>평가점수</strong>
-                    <span>3</span>
+                    <span>{userDetail.score}</span>
                   </div>
                 </div>
                 <br />
@@ -168,6 +179,13 @@ const MyPageUserModify = () => {
       </form>
     </>
   );
+};
+
+export const userInfoLoader = async () => {
+  const response = await getUserInfo();
+
+  if (response?.data) return response.data.data;
+  else return null;
 };
 
 export default MyPageUserModify;
