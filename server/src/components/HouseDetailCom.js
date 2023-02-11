@@ -7,7 +7,7 @@ import Map from "../UI/Map";
 import Icons from "../assets/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { reservedItemAction } from "../store/reserved-item-slice";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import classes from "./HouseDetailCom.module.scss";
 import { useEffect } from "react";
@@ -15,6 +15,13 @@ import { getHouseByItemNo } from "../apis/houseApis";
 import { houseActions } from "../store/house-slice";
 
 const HouseDetailCom = (props) => {
+  const [houseInfo, setHouseInfo] = useState();
+  const [options, setOptions] = useState([]);
+  const [isInfoMore, setIsInfoMore] = useState(false);
+  const [isOptionMore, setIsOptionMore] = useState(false);
+
+  const navigate = useNavigate();
+
   //예약 아이템 추가하기
   const dispatch = useDispatch();
 
@@ -42,29 +49,31 @@ const HouseDetailCom = (props) => {
     appendDots: true,
   };
 
-  //상상속의 하우스 자료
-  const [houseInfo, setHouseInfo] = useState();
-
-  const [isInfoMore, setIsInfoMore] = useState(false);
-  const [isOptionMore, setIsOptionMore] = useState(false);
-
-  const foldHandler = () => {
-    document.getElementById("moreInfoBtn").style.display = "";
-    document.getElementById("houseInfo").style.display = "none";
-  };
-
   useEffect(() => {
-    // 처음 화면 불러질 때 상세정보 가져오기입니당.
     const response = async () => {
       const itemNo = params.itemNo;
 
       const result = await getHouseByItemNo(itemNo);
+
+      if (!result) {
+        return;
+      }
 
       setHouseInfo(result.data);
     };
 
     response();
   }, []);
+
+  useEffect(() => {
+    if (houseInfo === undefined) return;
+
+    setOptions(
+      Object.entries(houseInfo.itemOption).filter((option) => {
+        return option[1] === true;
+      })
+    );
+  }, [houseInfo]);
 
   console.log(houseInfo);
 
@@ -103,7 +112,7 @@ const HouseDetailCom = (props) => {
               <p>{houseInfo.maintenanceFee} 만원</p>
             </div>
             <div className={classes.description}>
-              <pre>
+              {/* <pre>
                 {`😀 행복한 집 😀
 
 안녕하세요 .
@@ -111,8 +120,7 @@ const HouseDetailCom = (props) => {
 꿀 매물 해피하우스 소개드립니당.
                 
 상담신청해주세용!`}
-                {/* {houseInfo.description} */}
-              </pre>
+              </pre> */}
             </div>
           </div>
 
@@ -190,8 +198,10 @@ const HouseDetailCom = (props) => {
                   {Icons.completionYear} {houseInfo.house.completionYear}년 준공
                 </div>
                 <div>
-                  {Icons.marker} {houseInfo.house.address} (
-                  {houseInfo.house.buildingName})
+                  {Icons.marker} {houseInfo.house.address}
+                  {houseInfo.house.buildingName
+                    ? "(" + houseInfo.house.buildingName + ")"
+                    : ""}
                 </div>
                 <button
                   onClick={() => {
@@ -209,87 +219,345 @@ const HouseDetailCom = (props) => {
           <div className={classes.optionInfo}>
             <h3>옵션 정보</h3>
             <div>
-              <div className={classes.optionBox}>
-                <div>{Icons.bed}</div>
-                <p>침대</p>
-              </div>
-              <div className={classes.optionBox}>
-                <div>{Icons.washingMachine}</div> <p>세탁기</p>
-              </div>
-              <div className={classes.optionBox}>
-                <div>{Icons.airConditioner}</div> <p>에어컨</p>
-              </div>
-              <div className={classes.optionBox}>
-                <div>{Icons.desk}</div> <p>책상</p>
-              </div>
+              {/* 4개만 우선적으로 보여주고... 그담 나머지 보여주는데... 어떻게 아이콘이랑 이름이랑 매칭시키지..?
+               */}
+              {options.slice(0, 4).map((option) => {
+                if (option[0] === "bed") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.bed}</div>
+                      <p>침대</p>
+                    </div>
+                  );
+                } else if (option[0] === "bed") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.bed}</div>
+                      <p>침대</p>
+                    </div>
+                  );
+                } else if (option[0] === "washingMachine") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.washingMachine}</div> <p>세탁기</p>
+                    </div>
+                  );
+                } else if (option[0] === "airConditioner") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.airConditioner}</div> <p>에어컨</p>
+                    </div>
+                  );
+                } else if (option[0] === "desk") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.desk}</div> <p>책상</p>
+                    </div>
+                  );
+                } else if (option[0] === "closet") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.closet}</div> <p>옷장</p>
+                    </div>
+                  );
+                } else if (option[0] === "bathtub") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.bathtub}</div> <p>욕조</p>
+                    </div>
+                  );
+                } else if (option[0] === "sink") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.sink}</div> <p>싱크대</p>
+                    </div>
+                  );
+                } else if (option[0] === "cctv") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.cctv}</div> <p>CCTV</p>
+                    </div>
+                  );
+                } else if (option[0] === "diningTable") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.diningTable}</div> <p>식탁</p>
+                    </div>
+                  );
+                } else if (option[0] === "sofa") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.sofa}</div> <p>소파</p>
+                    </div>
+                  );
+                } else if (option[0] === "shoeRack") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.shoeRack}</div> <p>신발장</p>
+                    </div>
+                  );
+                } else if (option[0] === "refrigerator") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.refrigerator}</div> <p>냉장고</p>
+                    </div>
+                  );
+                } else if (option[0] === "dryingMachine") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.dryingMachine}</div> <p>건조기</p>
+                    </div>
+                  );
+                } else if (option[0] === "bidet") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.bidet}</div> <p>비데</p>
+                    </div>
+                  );
+                } else if (option[0] === "dishwasher") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.dishwasher}</div> <p>식기세척기</p>
+                    </div>
+                  );
+                } else if (option[0] === "gasStove") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.gasStove}</div> <p>가스레인지</p>
+                    </div>
+                  );
+                } else if (option[0] === "inductionCooktop") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.inductionCooktop}</div> <p>인덕션</p>
+                    </div>
+                  );
+                } else if (option[0] === "microwave") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.microwave}</div> <p>전자레인지</p>
+                    </div>
+                  );
+                } else if (option[0] === "oven") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.oven}</div> <p>오븐</p>
+                    </div>
+                  );
+                } else if (option[0] === "guard") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.guard}</div> <p>경비원</p>
+                    </div>
+                  );
+                } else if (option[0] === "intercom") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.intercom}</div> <p>인터폰</p>
+                    </div>
+                  );
+                } else if (option[0] === "keycard") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.keycard}</div> <p>카드키</p>
+                    </div>
+                  );
+                } else if (option[0] === "fireAlarm") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.fireAlarm}</div> <p>화재경보기</p>
+                    </div>
+                  );
+                } else if (option[0] === "veranda") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.veranda}</div> <p>베란다</p>
+                    </div>
+                  );
+                } else if (option[0] === "terrace") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.terrace}</div> <p>테라스</p>
+                    </div>
+                  );
+                } else if (option[0] === "garden") {
+                  return (
+                    <div className={classes.optionBox}>
+                      <div>{Icons.garden}</div> <p>마당</p>
+                    </div>
+                  );
+                }
+              })}
+
               {isOptionMore && (
                 <>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.closet}</div> <p>옷장</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.bathtub}</div> <p>욕조</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.sink}</div> <p>싱크대</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.cctv}</div> <p>CCTV</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.table}</div> <p>식탁</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.sofa}</div> <p>소파</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.shoeRack}</div> <p>신발장</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.refrigerator}</div> <p>냉장고</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.dryingMachine}</div> <p>건조기</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.bidet}</div> <p>비데</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.dishWasher}</div> <p>식기세척기</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.gasStore}</div> <p>가스레인지</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.inductionCooktop}</div> <p>인덕션</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.microwave}</div> <p>전자레인지</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.gasOven}</div> <p>오븐</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.guard}</div> <p>경비원</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.intercom}</div> <p>인터폰</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.keycard}</div> <p>카드키</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.fireAlarm}</div> <p>화재경보기</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.veranda}</div> <p>베란다</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.terrace}</div> <p>테라스</p>
-                  </div>
-                  <div className={classes.optionBox}>
-                    <div>{Icons.garden}</div> <p>마당</p>
-                  </div>
+                  {options.slice(4, options.length).map((option) => {
+                    if (option[0] === "bed") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.bed}</div>
+                          <p>침대</p>
+                        </div>
+                      );
+                    } else if (option[0] === "bed") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.bed}</div>
+                          <p>침대</p>
+                        </div>
+                      );
+                    } else if (option[0] === "washingMachine") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.washingMachine}</div> <p>세탁기</p>
+                        </div>
+                      );
+                    } else if (option[0] === "airConditioner") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.airConditioner}</div> <p>에어컨</p>
+                        </div>
+                      );
+                    } else if (option[0] === "desk") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.desk}</div> <p>책상</p>
+                        </div>
+                      );
+                    } else if (option[0] === "closet") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.closet}</div> <p>옷장</p>
+                        </div>
+                      );
+                    } else if (option[0] === "bathtub") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.bathtub}</div> <p>욕조</p>
+                        </div>
+                      );
+                    } else if (option[0] === "sink") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.sink}</div> <p>싱크대</p>
+                        </div>
+                      );
+                    } else if (option[0] === "cctv") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.cctv}</div> <p>CCTV</p>
+                        </div>
+                      );
+                    } else if (option[0] === "diningTable") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.diningTable}</div> <p>식탁</p>
+                        </div>
+                      );
+                    } else if (option[0] === "sofa") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.sofa}</div> <p>소파</p>
+                        </div>
+                      );
+                    } else if (option[0] === "shoeRack") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.shoeRack}</div> <p>신발장</p>
+                        </div>
+                      );
+                    } else if (option[0] === "refrigerator") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.refrigerator}</div> <p>냉장고</p>
+                        </div>
+                      );
+                    } else if (option[0] === "dryingMachine") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.dryingMachine}</div> <p>건조기</p>
+                        </div>
+                      );
+                    } else if (option[0] === "bidet") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.bidet}</div> <p>비데</p>
+                        </div>
+                      );
+                    } else if (option[0] === "dishwasher") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.dishWasher}</div> <p>식기세척기</p>
+                        </div>
+                      );
+                    } else if (option[0] === "gasStove") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.gasStove}</div> <p>가스레인지</p>
+                        </div>
+                      );
+                    } else if (option[0] === "inductionCooktop") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.inductionCooktop}</div> <p>인덕션</p>
+                        </div>
+                      );
+                    } else if (option[0] === "microwave") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.microwave}</div> <p>전자레인지</p>
+                        </div>
+                      );
+                    } else if (option[0] === "oven") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.oven}</div> <p>오븐</p>
+                        </div>
+                      );
+                    } else if (option[0] === "guard") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.guard}</div> <p>경비원</p>
+                        </div>
+                      );
+                    } else if (option[0] === "intercom") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.intercom}</div> <p>인터폰</p>
+                        </div>
+                      );
+                    } else if (option[0] === "keycard") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.keycard}</div> <p>카드키</p>
+                        </div>
+                      );
+                    } else if (option[0] === "fireAlarm") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.fireAlarm}</div> <p>화재경보기</p>
+                        </div>
+                      );
+                    } else if (option[0] === "veranda") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.veranda}</div> <p>베란다</p>
+                        </div>
+                      );
+                    } else if (option[0] === "terrace") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.terrace}</div> <p>테라스</p>
+                        </div>
+                      );
+                    } else if (option[0] === "garden") {
+                      return (
+                        <div className={classes.optionBox}>
+                          <div>{Icons.garden}</div> <p>마당</p>
+                        </div>
+                      );
+                    }
+                  })}
                 </>
               )}
             </div>
@@ -314,15 +582,40 @@ const HouseDetailCom = (props) => {
 
           <hr />
 
-          <div>
-            <p> 상세 설명 -&gt; 유저가 매물 검색으로 들어갔을 때만</p>
-            <hr />
+          <div className={classes.detailDesc}>
+            <h3>상세 설명</h3>
+            <div>
+              <pre>
+                {`😀 행복한 집 😀
+
+안녕하세요 .
+
+꿀 매물 해피하우스 소개드립니당.
+
+상담신청해주세용!`}
+                {/* {houseInfo.description} */}
+              </pre>
+            </div>
           </div>
-          <div>
-            <p> 지도 -&gt; 고정</p>
-            <Map address="유성구 봉명동 469-46" houseName="따듯한 우리집" />
-            <hr />
+
+          <hr />
+
+          <div className={classes.mapBox}>
+            <h3>위치</h3>
+            <div>
+              <p>{houseInfo.house.address}</p>
+              <Map
+                address={houseInfo.house.address}
+                houseName={
+                  houseInfo.house.buildingName
+                    ? houseInfo.house.buildingName
+                    : houseInfo.house.addressDetail
+                }
+              />
+            </div>
           </div>
+
+          <hr />
           <div>
             <p> 수정 / 삭제 -&gt; 중개사 && 내 매물일 때만</p>
           </div>
@@ -366,7 +659,7 @@ const HouseDetailCom = (props) => {
               <div>{Icons.elevator} 엘리베이터 있음/없음</div>
               <div>{Icons.purpose} 다세대주택(건축물 용도)</div>
               <div>{Icons.marker} 유성구 덕명동 12-34</div>
-              <button onClick={foldHandler}>접기</button>
+              <button>접기</button>
             </div>
             <hr />
           </div>
@@ -405,18 +698,22 @@ const HouseDetailCom = (props) => {
             <hr />
           </div>
           <div>
-            <p> 지도 -&gt; 고정</p>
-            <Map address="유성구 봉명동 469-46" houseName="따듯한 우리집" />
-            <hr />
-          </div>
-          <div>
             <p> 수정 / 삭제 -&gt; 중개사 && 내 매물일 때만</p>
           </div>
         </div>
       </div>
     </div>
   ) : (
-    <></>
+    <>
+      <div>데이터가 존재하지 않습니다.</div>
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        홈으로
+      </button>
+    </>
   );
 };
 

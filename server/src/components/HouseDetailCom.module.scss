@@ -119,8 +119,8 @@
             flex-wrap: nowrap;
             margin: 0.25em;
             box-sizing: border-box;
-            width: 150px;
-            height: 150px;
+            width: 9.375em;
+            height: 9.375em;
             border: 1px solid #bbbbbb;
             border-radius: 4px;
 
@@ -141,6 +141,33 @@
           font-size: 0.875em;
           color: #bbbbbb;
           cursor: pointer;
+        }
+      }
+
+      .detailDesc {
+        h3 {
+          font-size: 1.25em;
+        }
+
+        div {
+          margin: 1.25em 0;
+
+          font-size: 1em;
+        }
+      }
+
+      .mapBox {
+        h3 {
+          font-size: 1.25em;
+        }
+
+        div {
+          margin: 1.25em 0;
+          font-size: 1em;
+
+          p {
+            font-size: 1.25em;
+          }
         }
       }
     }
