@@ -56,6 +56,9 @@ const MyPageUserModify = () => {
         headers: getAuthHeader(),
       });
 
+      console.log(getAuthHeader());
+      console.log(frm);
+
       if (result) {
         alert("회원 정보 수정");
       }
