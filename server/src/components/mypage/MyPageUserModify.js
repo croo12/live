@@ -51,7 +51,7 @@ const MyPageUserModify = () => {
     );
 
     try {
-      const result = await axiosInstance.post("users/info");
+      const result = await axiosInstance.post("users/info", frm);
 
       if (result) {
         alert("회원 정보 수정");
