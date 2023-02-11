@@ -20,7 +20,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
             "r.rating_score as starScore, count(i.realtor_no) as total, r.description, r.business_address as businessAddress FROM live.realtor r " +
             "left join review v on r.realtor_no=v.realtor_no " +
             "left join item i on i.realtor_no=r.realtor_no " +
-            "where r.realtor_no in (select distinct i.realtor_no from item i inner join house h on h.house_no=i.house_no where h.dong LIKE %:dong%)" +
+            "where r.realtor_no in (select distinct i.realtor_no from item i inner join house h on h.house_no=i.house_no where h.dong LIKE %:dong%) " +
             "group by r.realtor_no " +
             "order by review desc, starScore desc", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByReviewsDesc(String dong);
@@ -29,7 +29,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
             "r.rating_score as starScore, count(i.realtor_no) as total, r.description, r.business_address as businessAddress FROM live.realtor r " +
             "left join review v on r.realtor_no=v.realtor_no " +
             "left join item i on i.realtor_no=r.realtor_no " +
-            "where r.realtor_no in (select distinct i.realtor_no from item i inner join house h on h.house_no=i.house_no where h.dong LIKE %:dong%)" +
+            "where r.realtor_no in (select distinct i.realtor_no from item i inner join house h on h.house_no=i.house_no where h.dong LIKE %:dong%) " +
             "group by r.realtor_no " +
             "order by starScore desc, review desc", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByStarRatingDesc(String dong);
@@ -47,7 +47,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "on r.realtor_no = i.realtor_no "
         + "inner join house h "
         + "on i.house_no = h.house_no "
-        + "where h.region_code LIKE :regionCode% AND h.contracted = false"
+        + "where h.region_code LIKE :regionCode% AND h.contracted = false "
         + "group by r.realtor_no order by r.rating_score DESC", nativeQuery=true)
     List<Realtor> findDistinctRealtor(String regionCode);
 
@@ -58,7 +58,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "on m.item_no = i.item_no "
         + "inner join house h "
         + "on i.house_no = h.house_no "
-        + "where h.region_code LIKE :regionCode% and r.realtor_no=:realtorNo) AND h.contracted = false"
+        + "where h.region_code LIKE :regionCode% and r.realtor_no=:realtorNo) AND h.contracted = false "
         + "UNION DISTINCT "
         + "(SELECT i.item_no as itemNo, m.image_src as imageSrc, i.deposit, i.rent, h.address, h.floor, i.building_name as buildingName FROM realtor r "
         + "inner join item i "
@@ -67,6 +67,6 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "on m.item_no = i.item_no "
         + "inner join house h "
         + "on i.house_no = h.house_no "
-        + "where h.region_code NOT LIKE :regionCode% and r.realtor_no=:realtorNo) AND h.contracted = false;", nativeQuery=true)
+        + "where h.region_code NOT LIKE :regionCode% and r.realtor_no=:realtorNo) AND h.contracted = false", nativeQuery=true)
     List<RealtorByRegionProjectionInterface> findRealtorDetailByRegion(Long realtorNo, String regionCode);
 }
