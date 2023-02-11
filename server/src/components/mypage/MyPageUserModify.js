@@ -5,6 +5,7 @@ import MyPageUser from "./MyPageUser";
 import blankImage from "../../assets/image/blank_profile.png";
 import axiosInstance from "../../util/axios";
 import ImageInput from "../common/ImageInput";
+import { getAuthHeader } from "../../util/axios";
 
 const MyPageUserModify = () => {
   const formData = useRef();
@@ -51,7 +52,9 @@ const MyPageUserModify = () => {
     );
 
     try {
-      const result = await axiosInstance.post("users/info", frm);
+      const result = await axiosInstance.post("users/info", frm, {
+        headers: getAuthHeader(),
+      });
 
       if (result) {
         alert("회원 정보 수정");
