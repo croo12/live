@@ -1,8 +1,5 @@
 package com.ssafy.live.house.service;
 
-import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
-import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
-
 import com.ssafy.live.account.common.service.S3Service;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
@@ -17,11 +14,6 @@ import com.ssafy.live.house.domain.entity.ItemOption;
 import com.ssafy.live.house.domain.repository.HouseRepository;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,6 +21,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
 
 @Slf4j
 @Service

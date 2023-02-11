@@ -8,8 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/reviews")
