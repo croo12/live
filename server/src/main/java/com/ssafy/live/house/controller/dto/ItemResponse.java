@@ -21,6 +21,7 @@ public class ItemResponse {
     public static class ItemDetailResponse{
 
         private Long itemNo;
+        private Long realtorNo;
         private int deposit;
         private int rent;
         private int maintenanceFee;
@@ -43,6 +44,7 @@ public class ItemResponse {
                     .house(HouseResponse.HouseDetailResponse.toDto(item.getHouse()))
                     .itemOption(ItemOptionResponse.ItemOptionDetailResponse.toDto(item.getItemOption()))
                     .itemNo(item.getNo())
+                    .realtorNo(item.getRealtor().getNo())
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
                     .maintenanceFee(item.getMaintenanceFee())
@@ -61,6 +63,7 @@ public class ItemResponse {
     @AllArgsConstructor
     public static class ItemSimpleResponse {
         private Long itemNo;
+        private Long realtorNo;
         private int deposit;
         private int rent;
         private int maintenanceFee;
@@ -73,6 +76,7 @@ public class ItemResponse {
         public static ItemSimpleResponse toDto(Item item) {
             return ItemSimpleResponse.builder()
                     .itemNo(item.getNo())
+                    .realtorNo(item.getRealtor().getNo())
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
                     .maintenanceFee(item.getMaintenanceFee())
