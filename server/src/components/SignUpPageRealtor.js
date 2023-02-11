@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Modal from "../UI/Modal";
 import FindBrokerOfficeModalOverlay from "./FindBrokerOfficeModalOverlay";
 import { Link } from "react-router-dom";
@@ -21,6 +21,24 @@ const SignUpPageRealtor = () => {
   const [previewProfile, setPreviewProfile] = useState("");
 
   const [authenticity, setAuthenticity] = useState(null);
+
+  const bsnmCmpnmRef = useRef();
+  const brkrNmRef = useRef();
+  const jurirnoRef = useRef();
+  const ldCodeNmRef = useRef();
+  const registDeRef = useRef();
+
+  const addRealtorInformationHandler = (data) => {
+    console.log(data);
+
+    const { bsnmCmpnm, brkrNm, jurirno, ldCodeNm, registDe } = data;
+
+    bsnmCmpnmRef.current.value = bsnmCmpnm;
+    brkrNmRef.current.value = brkrNm;
+    jurirnoRef.current.value = jurirno;
+    ldCodeNmRef.current.value = ldCodeNm;
+    registDeRef.current.value = registDe;
+  };
 
   const onChangeHanldler = (e) => {
     e.preventDefault();
@@ -116,6 +134,7 @@ const SignUpPageRealtor = () => {
         {findBrokerOffice && (
           <Modal onConfirm={FindBrokerOfficeChangeHandler}>
             <FindBrokerOfficeModalOverlay
+              addRealtorInformationHandler={addRealtorInformationHandler}
               onModalStateChange={FindBrokerOfficeChangeHandler}
             />
           </Modal>
@@ -171,19 +190,53 @@ const SignUpPageRealtor = () => {
             </div>
             <div className={classes.inputBox}>
               <label htmlFor="businessCorp">사업자 상호 </label>
-              <input id="businessCorp" name="businessCorp" type="text" />
+              <input
+                id="businessCorp"
+                name="businessCorp"
+                type="text"
+                ref={bsnmCmpnmRef}
+                readOnly
+              />
             </div>
             <div className={classes.inputBox}>
               <label htmlFor="realtorName">사업자 대표명 </label>
-              <input id="realtorName" name="realtorName" type="text" />
+              <input
+                id="realtorName"
+                name="realtorName"
+                type="text"
+                ref={brkrNmRef}
+                readOnly
+              />
             </div>
             <div className={classes.inputBox}>
               <label htmlFor="field">중개등록번호</label>
-              <input id="field" name="field" type="text" />
+              <input
+                id="field"
+                name="field"
+                type="text"
+                ref={jurirnoRef}
+                readOnly
+              />
             </div>
             <div className={classes.inputBox}>
               <label htmlFor="businessAddress">주소</label>
-              <input id="businessAddress" name="businessAddress" type="text" />
+              <input
+                id="businessAddress"
+                name="businessAddress"
+                type="text"
+                ref={ldCodeNmRef}
+                readOnly
+              />
+            </div>
+            <div className={classes.inputBox}>
+              <label htmlFor="registDate">개업일자</label>
+              <input
+                id="registDate"
+                name="registDate"
+                type="date"
+                ref={registDeRef}
+                readOnly
+              />
             </div>
             <div className={classes.inputBox}>
               <label htmlFor="realtorPhone">전화번호</label>

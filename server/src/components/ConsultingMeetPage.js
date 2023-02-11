@@ -133,7 +133,8 @@ const ConsultingMeetPage = ({
 
       case USER_STATUS.ENTER_SESSION:
         setInfo(`중개사에게 연결 중입니다...`);
-        register();
+        setTimeout(register, 2000);
+        
         break;
 
       case USER_STATUS.CONNECTING:
