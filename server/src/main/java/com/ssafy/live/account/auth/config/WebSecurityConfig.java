@@ -47,11 +47,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin().disable()
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-            .antMatchers("/users", "/users/login", "/users/id", "/realtors", "/realtors/login", "/realtors/id").permitAll()
+            .antMatchers("/users", "/users/login", "/users/reissue", "/users/id", "/realtors", "/realtors/login", "/realtors/id", "/realtors/reissue").permitAll()
 //            .antMatchers("/users/info", "/users/passcheck", "/users/").hasAuthority("USER")
             .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()
             .antMatchers("/realtors/region", "/realtors/{realtorNo}", "/realtors/info", "/realtors/passcheck", "/realtors/{realtorNo}/consultings").hasAuthority("REALTOR")
             .antMatchers("/consultings/**").permitAll()
+            .antMatchers("/contracts/**").permitAll()
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
 
