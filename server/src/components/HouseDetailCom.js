@@ -665,23 +665,24 @@ const HouseDetailCom = (props) => {
                     </>
                   )}
                 </div>
-                {!isOptionMore ? (
-                  <button
-                    onClick={() => {
-                      setIsOptionMore(true);
-                    }}
-                  >
-                    추가 정보 보기 ▶
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      setIsOptionMore(false);
-                    }}
-                  >
-                    ◀ 추가 정보 접기
-                  </button>
-                )}
+                {options.length > 6 &&
+                  (!isOptionMore ? (
+                    <button
+                      onClick={() => {
+                        setIsOptionMore(true);
+                      }}
+                    >
+                      추가 정보 보기 ▶
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setIsOptionMore(false);
+                      }}
+                    >
+                      ◀ 추가 정보 접기
+                    </button>
+                  ))}
               </div>
 
               <hr />
