@@ -51,21 +51,7 @@ public class ContractService {
                 .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         Item item = itemRepository.findById(regist.getItemNo())
                 .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
-        Contract contract = Contract.builder()
-            .users(users)
-            .realtor(realtor)
-            .item(item)
-            .moveOnDate(regist.getMoveOnDate())
-            .numberOfResidents(regist.getNumberOfResidents())
-            .contractState(ContractStatus.CONTRACT_APPROVING)
-            .specialContract(regist.getSpecialContract())
-            .tenantAddress(regist.getTenantAddress())
-            .tenantAge(regist.getTenantAge())
-            .commission(regist.getCommission())
-            .downPayment((item.getDeposit()/100)*10)
-            .balance((item.getDeposit()/100)*90)
-            .termOfContract(regist.getTermOfContract())
-                .build();
+        Contract contract = ContractRequest.Regist.toEntity(users, realtor, item);
         contractRepository.save(contract);
 
         //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());

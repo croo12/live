@@ -156,6 +156,7 @@ public class ContractResponse {
             private int termOfContract;
             private int tenantAge;
             private String tenantAddress;
+            private String tenantDetailAddress;
             public static ContractInfo toEntity(Contract contract) {
                 return ContractInfo.builder()
                     .moveOnDate(contract.getMoveOnDate())
@@ -166,7 +167,7 @@ public class ContractResponse {
                     .commission(contract.getCommission())
                     .termOfContract(contract.getTermOfContract())
                     .tenantAge(contract.getTenantAge())
-                    .tenantAddress(contract.getTenantAddress())
+                    .tenantDetailAddress(contract.getTenantDetailAddress())
                     .build();
             }
         }
