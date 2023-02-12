@@ -57,10 +57,6 @@ export const getHouseByItemNo = async (data) => {
   const getData = async () => {
     const response = await axiosInstance.get(`/items/${data}`);
 
-    if (response.data.result === "fail") {
-      throw new Error(404);
-    }
-
     return response.data;
   };
 
@@ -68,9 +64,7 @@ export const getHouseByItemNo = async (data) => {
     const response = await getData();
 
     return response;
-  } catch {
-    // 따로처리안할래~~
-  }
+  } catch {}
 };
 
 export const modifyHouseData = async (data) => {
