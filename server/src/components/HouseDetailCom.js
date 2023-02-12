@@ -14,11 +14,12 @@ import { useEffect } from "react";
 import { getHouseByItemNo } from "../apis/houseApis";
 import { houseActions } from "../store/house-slice";
 
-const HouseDetailCom = (props) => {
+const HouseDetailCom = () => {
   const [houseInfo, setHouseInfo] = useState();
   const [options, setOptions] = useState([]);
   const [isInfoMore, setIsInfoMore] = useState(false);
   const [isOptionMore, setIsOptionMore] = useState(false);
+  const [errMessage, setErrMessage] = useState("Loading...");
 
   const navigate = useNavigate();
 
@@ -53,9 +54,10 @@ const HouseDetailCom = (props) => {
     const response = async () => {
       const itemNo = params.itemNo;
 
-      const result = await getHouseByItemNo(itemNo);
+      const result = await getHouseByItemNo(itemNo ? itemNo : props.itemNo);
 
-      if (!result) {
+      if (result.result === "fail") {
+        setErrMessage(result.message);
         return;
       }
 
@@ -104,15 +106,27 @@ const HouseDetailCom = (props) => {
             <div>
               <span>보증금/월세</span>
               <p>
-                {houseInfo.deposit}/{houseInfo.rent} 만원
+                {houseInfo.deposit
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                /
+                {houseInfo.rent
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                만원
               </p>
             </div>
             <div>
               <span>관리비</span>
-              <p>{houseInfo.maintenanceFee} 만원</p>
+              <p>
+                {houseInfo.maintenanceFee
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                만원
+              </p>
             </div>
-            <div className={classes.description}>
-              {/* <pre>
+            {/* <div className={classes.description}>
+              <pre>
                 {`😀 행복한 집 😀
 
 안녕하세요 .
@@ -120,17 +134,30 @@ const HouseDetailCom = (props) => {
 꿀 매물 해피하우스 소개드립니당.
                 
 상담신청해주세용!`}
-              </pre> */}
-            </div>
+              </pre>
+            </div> */}
           </div>
 
           <div className={classes.itemInfo}>
             <h3>매물 정보</h3>
             <div>
-              {Icons.area} {houseInfo.house.exclusivePrivateArea}m² (전용{" "}
-              {Math.round(houseInfo.house.exclusivePrivateArea / 3.3)}평) /{" "}
-              {houseInfo.house.supplyArea}m² (공급{" "}
-              {Math.round(houseInfo.house.supplyArea / 3.3)}평)
+              {Icons.area}{" "}
+              {houseInfo.house.exclusivePrivateArea
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              m² (전용{" "}
+              {Math.round(houseInfo.house.exclusivePrivateArea / 3.3)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              평) /{" "}
+              {houseInfo.house.supplyArea
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              m² (공급{" "}
+              {Math.round(houseInfo.house.supplyArea / 3.3)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              평)
             </div>
             <div>
               {Icons.room}{" "}
@@ -586,14 +613,14 @@ const HouseDetailCom = (props) => {
             <h3>상세 설명</h3>
             <div>
               <pre>
-                {`😀 행복한 집 😀
+                {/* {`😀 행복한 집 😀
 
 안녕하세요 .
 
 꿀 매물 해피하우스 소개드립니당.
 
-상담신청해주세용!`}
-                {/* {houseInfo.description} */}
+상담신청해주세용!`} */}
+                {houseInfo.description}
               </pre>
             </div>
           </div>
@@ -613,11 +640,6 @@ const HouseDetailCom = (props) => {
                 }
               />
             </div>
-          </div>
-
-          <hr />
-          <div>
-            <p> 수정 / 삭제 -&gt; 중개사 && 내 매물일 때만</p>
           </div>
         </div>
 
@@ -705,14 +727,16 @@ const HouseDetailCom = (props) => {
     </div>
   ) : (
     <>
-      <div>데이터가 존재하지 않습니다.</div>
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        홈으로
-      </button>
+      <div>
+        <h1>{errMessage}</h1>
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          홈으로
+        </button>
+      </div>
     </>
   );
 };
