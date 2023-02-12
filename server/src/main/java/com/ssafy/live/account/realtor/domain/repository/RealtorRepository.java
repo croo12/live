@@ -54,19 +54,21 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
     @Query(value = "(SELECT i.item_no as itemNo, m.image_src as imageSrc, i.deposit, i.rent, h.address, h.floor, i.building_name as buildingName FROM realtor r "
         + "inner join item i "
         + "on r.realtor_no = i.realtor_no "
-        + "left join (select * from item_image where item_image_no in (select min(item_image_no) from item_image group by item_no)) m "
+        + "left join item_image m "
         + "on m.item_no = i.item_no "
         + "inner join house h "
         + "on i.house_no = h.house_no "
-        + "where h.region_code LIKE :regionCode% and r.realtor_no=:realtorNo AND h.contracted = false)"
+        + "where h.region_code LIKE :regionCode% and r.realtor_no=:realtorNo AND h.contracted = false "
+        + "AND m.item_image_no in (select min(item_image_no) from item_image group by item_no)) "
         + "UNION DISTINCT "
         + "(SELECT i.item_no as itemNo, m.image_src as imageSrc, i.deposit, i.rent, h.address, h.floor, i.building_name as buildingName FROM realtor r "
         + "inner join item i "
         + "on r.realtor_no = i.realtor_no "
-        + "left join (select * from item_image where item_image_no in (select min(item_image_no) from item_image group by item_no)) m "
+        + "left join item_image m "
         + "on m.item_no = i.item_no "
         + "inner join house h "
         + "on i.house_no = h.house_no "
-        + "where h.region_code NOT LIKE :regionCode% and r.realtor_no=:realtorNo AND h.contracted = false)", nativeQuery=true)
+        + "where h.region_code NOT LIKE :regionCode% and r.realtor_no=:realtorNo AND h.contracted = false "
+        + "AND m.item_image_no in (select min(item_image_no) from item_image group by item_no))", nativeQuery=true)
     List<RealtorByRegionProjectionInterface> findRealtorDetailByRegion(Long realtorNo, String regionCode);
 }
