@@ -132,6 +132,7 @@ public class ConsultingService {
                     if (consultingItems.size()>0) {
                         count = consultingItems.size() - 1;
                         buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
+                        System.out.println("~~~~~~~~~~~~~~"+buildingName);
                     }
                     list.add(ReservationUser.toEntity(consulting, realtor, buildingName, count));
                 });
