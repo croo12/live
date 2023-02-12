@@ -2,14 +2,13 @@
   padding: 55px 60px;
   width: 35rem;
 
-  @media (max-width: 480px) {
-    //모바일 기준
-    padding: 20px 30px;
+  @media (max-width: 1024px) {
+    width: 100%;
   }
 
   .formInner {
     .inputBox {
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       label {
         float: left;
         display: block;
