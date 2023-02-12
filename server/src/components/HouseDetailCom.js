@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { getHouseByItemNo } from "../apis/houseApis";
 import { houseActions } from "../store/house-slice";
 import Modal from "../UI/Modal";
+import { useAuth } from "./common/AuthProtector";
 
 const HouseDetailCom = (props) => {
   const [houseInfo, setHouseInfo] = useState();
@@ -20,6 +21,8 @@ const HouseDetailCom = (props) => {
   const [errMessage, setErrMessage] = useState("Loading...");
 
   const navigate = useNavigate();
+
+  const { userInfo } = useAuth();
 
   //예약 아이템 추가하기
   const dispatch = useDispatch();
@@ -109,6 +112,7 @@ const HouseDetailCom = (props) => {
                 </div>
 
                 <div className={classes.imageButtonBox}>
+                  <div>.</div>
                   <button onClick={previewModalHandler}>
                     <div>
                       <svg fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,12 +177,23 @@ const HouseDetailCom = (props) => {
             </div> */}
                 </div>
                 <div className={classes.controlButtonBox}>
-                  유저면
-                  <button>담기</button>
-                  <button>계약</button>
-                  중개사면
-                  <button>수정</button>
-                  <button>삭제</button>
+                  {userInfo.isRealtor ? (
+                    <>
+                      <button
+                        onClick={() => {
+                          navigate(`/house/modify/${houseInfo.itemNo}`);
+                        }}
+                      >
+                        수정
+                      </button>
+                      <button>삭제</button>
+                    </>
+                  ) : (
+                    <>
+                      <button>담기</button>
+                      <button>계약</button>
+                    </>
+                  )}
                 </div>
               </div>
 
