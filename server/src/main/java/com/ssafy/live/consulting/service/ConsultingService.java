@@ -12,8 +12,6 @@ import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
-import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationRealtor;
-import com.ssafy.live.consulting.controller.dto.ConsultingResponse.ReservationUser;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.consulting.domain.entity.ConsultingItem;
 import com.ssafy.live.consulting.domain.repository.ConsultingItemRepository;
@@ -87,21 +85,20 @@ public class ConsultingService {
     public ResponseEntity<?>  reservationListByRealtor(UserDetails user, int status) {
         ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
         if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            return listByUser(usersRepository.findById(user.getUsername()).get().getNo(), statuses);
+            return listByUserOrRealtor(usersRepository.findById(user.getUsername()).get().getNo(), statuses, "USER");
         } else {
-            return listByRealtor(realtorRepository.findByBusinessNumber(user.getUsername()).get().getNo(), statuses);
+            return listByUserOrRealtor(realtorRepository.findByBusinessNumber(user.getUsername()).get().getNo(), statuses, "REALTOR");
         }
     }
 
-    private ResponseEntity<?> listByRealtor(Long realtoNo, ConsultingStatus[] statuses) {
+    private ResponseEntity<?> listByUserOrRealtor(Long realtoNo, ConsultingStatus[] statuses, String target) {
         List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatusOrderByConsultingDate(realtorRepository.findById(realtoNo).get(), statuses[0], statuses[1]);
-        List<ConsultingResponse.ReservationRealtor> list = new ArrayList<>();
+        List<ConsultingResponse.ReservationInfo> list = new ArrayList<>();
         if (consultingsList.isEmpty()) {
             listNotFound();
         }
         consultingsList.stream()
             .forEach(consulting -> {
-                Users user = consulting.getUsers();
                 List<ConsultingItem> consultingItems = consulting.getConsultingItems();
                 int count = 0;
                 String buildingName = "";
@@ -109,38 +106,19 @@ public class ConsultingService {
                     count = consultingItems.size() - 1;
                     buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
                 }
-                list.add(ReservationRealtor.toResponse(consulting, user, buildingName, count));
+                if(target.equals("USER")) {
+                    Realtor realtor = consulting.getRealtor();
+                    list.add(ConsultingResponse.ReservationInfo.toResponse(consulting, realtor, buildingName, count));
+                } else {
+                    Users user = consulting.getUsers();
+                    list.add(ConsultingResponse.ReservationInfo.toResponse(consulting, user, buildingName, count));
+                }
             });
         if (list.isEmpty()) {
             listNotFound();
         }
         return response.success( list, "상담 목록을 조회하였습니다.", HttpStatus.OK);
     }
-
-    public ResponseEntity<?> listByUser(Long userNo, ConsultingStatus[] statuses) {
-        List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatusOrderByConsultingDate(usersRepository.findById(userNo).get(), statuses[0], statuses[1]);
-        List<ConsultingResponse.ReservationUser> list = new ArrayList<>();
-        if (consultingsList.isEmpty()) {
-            listNotFound();
-        }
-        consultingsList.stream()
-                .forEach(consulting -> {
-                    Realtor realtor = consulting.getRealtor();
-                    List<ConsultingItem> consultingItems = consulting.getConsultingItems();
-                    int count = 0;
-                    String buildingName = "";
-                    System.out.println("size : "+consultingItems.size());
-                    if (consultingItems.size()>0) {
-                        count = consultingItems.size() - 1;
-                        buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
-                    }
-                    list.add(ReservationUser.toEntity(consulting, realtor, buildingName, count));
-                });
-        if (list.isEmpty()) {
-            listNotFound();
-        }
-         return response.success(list, "상담 목록을 조회하였습니다.", HttpStatus.OK);
-   }
 
     public ResponseEntity<?> changeStatus(UserDetails user, ConsultingRequest.ChangeStatus request) {
         Consulting consulting = consultingRepository.findById(request.getCounsultingNo())
