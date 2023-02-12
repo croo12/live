@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import Button from "../UI/Button";
-import { makeUUID } from "../util/UUID";
+import Button from "../../UI/Button";
+import { makeUUID } from "../../util/UUID";
 
 import classes from "./ConsultingMeetPage.module.scss";
-import { REALTOR_STATUS, USER_STATUS } from "../pages/ConsultingPage";
+import { REALTOR_STATUS, USER_STATUS } from "../../pages/ConsultingPage";
 import { BsRecordCircle } from "react-icons/bs";
 import { AiOutlineSound } from "react-icons/ai";
 import { IoExitOutline, IoVolumeMuteOutline } from "react-icons/io5";
-import useWebSocket from "../util/useWebSocket";
-import useWebRTC from "../util/useWebRTC";
+import useWebSocket from "../../util/useWebSocket";
+import useWebRTC from "../../util/useWebRTC";
 import { useNavigate } from "react-router-dom";
-import useRecording from "../util/useRecording";
+import useRecording from "../../util/useRecording";
 import { useSelector } from "react-redux";
+import { usePrompt } from "../../util/usePrompt";
 
 const ConsultingMeetPage = ({
   userInfo,
@@ -80,7 +81,7 @@ const ConsultingMeetPage = ({
         setInfo(`내 기기 연결 중...`);
         onExistingParticipants(responseMsg);
         if (isRealtor) {
-          // statusChangeHandler(REALTOR_STATUS.START_BUT_NOT_CONNECT);
+          statusChangeHandler(REALTOR_STATUS.START_BUT_NOT_CONNECT);
         } else {
           // statusChangeHandler(USER_STATUS.)
         }
@@ -164,6 +165,11 @@ const ConsultingMeetPage = ({
   const toggleAudio = () => {
     setAudio(!audio);
   };
+
+  usePrompt({
+    when: localVideo.current?.srcObject,
+    message: `페이지 이동으로 통화가 종료될 수 있습니다. \n 정말로 나가시겠습니까?`,
+  });
 
   return (
     <>

@@ -18,7 +18,7 @@ const ReservationRealtorInfo = ({ realtorDetail, addItemHandler }) => {
           <div>
             <img src={realtorInfo.imageSrc} alt="중개사 리스트" />
           </div>
-          <div>
+          <div className={classes.mainDescription}>
             <h3> {realtorInfo.corp} </h3>
             <p className={classes.name}>
               {realtorInfo.name} <span>공인중개사</span>
@@ -42,7 +42,7 @@ const ReservationRealtorInfo = ({ realtorDetail, addItemHandler }) => {
             <p>이 중개사는 현재 거래 가능한 매물이 없습니다!</p>
           )}
         </div>
-        <div>
+        <div className={classes.reviewLists}>
           <h3>리뷰 수 ㅣ{reviewsList.length}</h3>
           {reviewsList?.length ? (
             <>
