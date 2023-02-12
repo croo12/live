@@ -26,8 +26,9 @@ public class ConsultingResponse {
         private Long consultingNo;
         private Long realtorNo;
         private Long userNo;
-        private String userName;
-        private String userImage;
+        private String name;
+        private String image;
+        private String info;
         private LocalDateTime consultingDate;
         private int status;
         private String representativeItem;
@@ -38,8 +39,8 @@ public class ConsultingResponse {
                     .consultingNo(consulting.getNo())
                     .realtorNo(consulting.getRealtor().getNo())
                     .userNo(user.getNo())
-                    .userName(user.getName())
-                    .userImage(user.getImageSrc())
+                    .name(user.getName())
+                    .image(user.getImageSrc())
                     .consultingDate(consulting.getConsultingDate())
                     .status(consulting.getStatus().getValue())
                     .representativeItem(buildingName)
@@ -151,6 +152,7 @@ public class ConsultingResponse {
             private Long realtorNo;
             private String corp;
             private String name;
+            private String phone;
             private String businessAddress;
             private String imageSrc;
 
@@ -159,6 +161,7 @@ public class ConsultingResponse {
                     .realtorNo(realtor.getNo())
                     .corp(realtor.getCorp())
                     .name(realtor.getName())
+                    .phone(realtor.getPhone())
                     .businessAddress(realtor.getBusinessAddress())
                     .imageSrc(realtor.getImageSrc())
                     .build();
@@ -191,6 +194,7 @@ public class ConsultingResponse {
             private int deposit;
             private int rent;
             private int maintenanceFee;
+            private float area;
             private List<String> images;
             public static ItemForContract.ItemInfo toEntity(Item item, List<String> images) {
                 return ItemForContract.ItemInfo.builder()
@@ -200,6 +204,7 @@ public class ConsultingResponse {
                     .rent(item.getRent())
                     .deposit(item.getDeposit())
                     .maintenanceFee(item.getMaintenanceFee())
+                    .area(item.getHouse().getExclusivePrivateArea())
                     .images(images)
                     .build();
             }
