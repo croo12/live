@@ -94,7 +94,7 @@ public class ConsultingService {
     }
 
     private ResponseEntity<?> listByRealtor(Long realtoNo, ConsultingStatus[] statuses) {
-        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatus(realtorRepository.findById(realtoNo).get(), statuses[0], statuses[1]);
+        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatusOrderByConsultingDate(realtorRepository.findById(realtoNo).get(), statuses[0], statuses[1]);
         List<ConsultingResponse.ReservationRealtor> list = new ArrayList<>();
         if (consultingsList.isEmpty()) {
             listNotFound();
@@ -118,7 +118,7 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?> listByUser(Long userNo, ConsultingStatus[] statuses) {
-        List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatus(usersRepository.findById(userNo).get(), statuses[0], statuses[1]);
+        List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatusOrderByConsultingDate(usersRepository.findById(userNo).get(), statuses[0], statuses[1]);
         List<ConsultingResponse.ReservationUser> list = new ArrayList<>();
         if (consultingsList.isEmpty()) {
             listNotFound();
@@ -129,10 +129,10 @@ public class ConsultingService {
                     List<ConsultingItem> consultingItems = consulting.getConsultingItems();
                     int count = 0;
                     String buildingName = "";
+                    System.out.println("size : "+consultingItems.size());
                     if (consultingItems.size()>0) {
                         count = consultingItems.size() - 1;
                         buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
-                        System.out.println("~~~~~~~~~~~~~~"+buildingName);
                     }
                     list.add(ReservationUser.toEntity(consulting, realtor, buildingName, count));
                 });
