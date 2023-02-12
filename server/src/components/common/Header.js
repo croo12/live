@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./Header.module.scss";
 import logo from "../../assets/image/liveLogo.png";
 import { makeUUID } from "../../util/UUID";
@@ -18,6 +18,7 @@ const Header = () => {
 
   const { userInfo, accessToken } = useAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const logoutEventHandler = (e) => {
     e.preventDefault();
@@ -30,6 +31,8 @@ const Header = () => {
     } else {
       userLogout(dispatch);
     }
+
+    navigate("/");
   };
 
   return (
@@ -53,14 +56,16 @@ const Header = () => {
           ) : (
             ""
           )}
-          <li>
-            <NavLink
-              to={"/reservation"}
-              onClick={isToggled && isToggledHandler}
-            >
-              예약
-            </NavLink>
-          </li>
+          {userInfo.isRealtor === false && (
+            <li>
+              <NavLink
+                to={"/reservation"}
+                onClick={isToggled && isToggledHandler}
+              >
+                예약
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink
               to={`/consulting/${makeUUID()}`}

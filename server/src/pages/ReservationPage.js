@@ -4,9 +4,7 @@ import ReservationRightDiv from "../components/reservation/ReservationRightDiv";
 import ListBox from "../UI/ListBox";
 import ReservationSearchBox from "../components/reservation/ReservationSearchBox";
 import { useEffect, useRef, useState } from "react";
-
 import { useSelector } from "react-redux";
-
 import classes from "./ReservationPage.module.scss";
 import { FiAlertCircle } from "react-icons/fi";
 import { useLoaderData } from "react-router-dom";
@@ -15,6 +13,7 @@ import {
   searchRealtorList,
   searchReservationRealtorDetail,
 } from "../apis/reservationApis";
+import Modal from "../UI/Modal";
 
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
@@ -30,6 +29,12 @@ const ReservationPage = () => {
 
   const [realtorList, setRealtorList] = useState([]);
   const [realtorDetail, setRealtorDetail] = useState(null);
+
+  const [modalActive, setModalActive] = useState(false);
+
+  const modalToggleHandler = () => {
+    setModalActive(!modalActive);
+  };
 
   //예약 목록
   const selectedItems = useSelector((state) => {
@@ -49,7 +54,9 @@ const ReservationPage = () => {
     }
 
     (async () => {
-      const { data } = await searchReservationRealtorDetail(realtorNo, params);
+      const res = await searchReservationRealtorDetail(realtorNo, params);
+      console.log(res);
+      const data = res.data;
       setRealtorDetail(data.data);
     })();
   };
@@ -91,7 +98,7 @@ const ReservationPage = () => {
     (async () => {
       try {
         const result = await searchRealtorList(params);
-
+        console.log(result.data.data);
         setRealtorList(result.data.data);
       } catch (err) {
         console.error(err);
@@ -99,8 +106,14 @@ const ReservationPage = () => {
     })();
   }, [reserveData]);
 
+  const removeItemHandler = (idx) => {
+    console.log(idx);
+  };
+
   //예약 ㄱㄱ
-  const registReservationHandler = () => {};
+  const registReservationHandler = (detail) => {
+    const data = {};
+  };
 
   return (
     <>
@@ -135,7 +148,9 @@ const ReservationPage = () => {
             {selectedItems.length === 0 ? (
               <NullCard />
             ) : (
-              <ReservationHouseCardContent />
+              <ReservationHouseCardContent
+                removeItemHandler={removeItemHandler}
+              />
             )}
           </ListBox>
         </div>
@@ -160,20 +175,46 @@ const ReservationPage = () => {
           </div>
         </div>
         <div className={classes.reserveBtnContainer}>
-          <button
-            onClick={() => {
-              console.log("ㅎㅇ");
-            }}
-          >
-            예약하기
-          </button>
+          <button onClick={modalToggleHandler}>예약하기</button>
         </div>
       </div>
+      {modalActive && (
+        <Modal onConfirm={modalToggleHandler}>
+          <DoReserve
+            registHandler={registReservationHandler}
+            modalToggleHandler={modalToggleHandler}
+          ></DoReserve>
+        </Modal>
+      )}
     </>
   );
 };
 
 export default ReservationPage;
+
+const DoReserve = (props) => {
+  const detail = useRef();
+
+  return (
+    <div className={classes.doReserve}>
+      <label>요청사항</label>
+      <textarea
+        ref={detail}
+        placeholder={`세부적인 요청사항이 있다면 입력해주세요.`}
+      ></textarea>
+      <div className={classes.reserveBtnContainer}>
+        <button
+          onClick={() => {
+            props.registHandler(detail.current.value);
+            props.modalToggleHandler();
+          }}
+        >
+          예약 요청하기
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const NullCard = () => {
   return <div className={classes.nullCard}>선택한 매물이 없어요</div>;
