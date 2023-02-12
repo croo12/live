@@ -59,17 +59,17 @@ const Icons = {
   bathtub: <TbBath />, //욕조
   sink: <FaSink />, //싱크대
   cctv: <BiCctv />, //CCTV
-  table: <GiTable />, //식탁
+  diningTable: <GiTable />, //식탁
   sofa: <TbSofa />, //소파
   shoeRack: <GiConverseShoe />, //신발장
   refrigerator: <RiFridgeLine />, //냉장고
   dryingMachine: <MdLocalLaundryService />, //건조기
   bidet: <GrRestroom />, //비데
   dishWasher: <CgSmartHomeWashMachine />, //식기세척기
-  gasStore: <GiGasStove />, //가스레인지
+  gasStove: <GiGasStove />, //가스레인지
   inductionCooktop: <BiFoodTag />, //인덕션
   microwave: <MdOutlineMicrowave />, //전자레인지
-  gasOven: <GiChickenOven />, //오븐
+  oven: <GiChickenOven />, //오븐
   guard: <GiCaptainHatProfile />, //경비원
   intercom: <BiPhoneCall />, //인터폰
   keycard: <RiSecurePaymentFill />, //카드키
