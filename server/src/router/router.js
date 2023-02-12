@@ -59,7 +59,14 @@ const router = createBrowserRouter(
         loader={sidoLoader}
       ></Route>
       <Route path="consulting/:sessionId" element={<ConsultingPage />}>
-        <Route index element={<ConsultingRightReservationList />} />
+        <Route
+          index
+          element={
+            <ProtectedRouter condition={true}>
+              <ConsultingRightReservationList />
+            </ProtectedRouter>
+          }
+        />
         <Route
           path=":consultingNo"
           element={<ConsultingRightReservationHouseList />}
