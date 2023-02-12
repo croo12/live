@@ -67,6 +67,6 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "on m.item_no = i.item_no "
         + "inner join house h "
         + "on i.house_no = h.house_no "
-        + "where h.region_code NOT LIKE :regionCode% and r.realtor_no=:realtorNo) AND h.contracted = false", nativeQuery=true)
+        + "where h.region_code NOT LIKE :regionCode% and r.realtor_no=:realtorNo AND h.contracted = false)", nativeQuery=true)
     List<RealtorByRegionProjectionInterface> findRealtorDetailByRegion(Long realtorNo, String regionCode);
 }
