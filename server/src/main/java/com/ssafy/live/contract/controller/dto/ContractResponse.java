@@ -96,12 +96,14 @@ public class ContractResponse {
             private String name;
             private String businessAddress;
             private String imageSrc;
+            private String phone;
             public static RealtorInfo toEntity(Realtor realtor) {
                 return RealtorInfo.builder()
                     .corp(realtor.getCorp())
                     .name(realtor.getName())
                     .businessAddress(realtor.getBusinessAddress())
                     .imageSrc(realtor.getImageSrc())
+                    .phone(realtor.getPhone())
                     .build();
             }
         }
