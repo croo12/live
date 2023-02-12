@@ -1,6 +1,5 @@
 import classes from "./RealtorCardContent.module.scss";
 import sample from "../assets/image/sample.jpg";
-import { CiLocationOn } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
 /* 사진, 사무소 이름, 중개사 이름 리뷰 별점평균? */
@@ -85,7 +84,7 @@ export const RealtorContractCardContent = (props) => {
       <div className={classes.rightDesc}>
         <div className={classes.realtorOfficeInfo}>
           <div>
-            <strong>{data.realtoroffice}</strong>
+            <h3>{data.realtoroffice}</h3>
           </div>
           <div className={classes.realtorName}>
             <strong>{data.name}</strong> <span>공인중개사</span>
@@ -118,7 +117,7 @@ export const ReservationRealtorCardContent = ({
   highlight,
   setHighlight,
 }) => {
-  console.log(idx);
+  // console.log(idx, realtorNo, imageSrc);
   return (
     <div
       className={`${classes.realtorReservationCard} ${

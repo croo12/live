@@ -118,6 +118,7 @@ const ConsultingPage = (props) => {
       <div className={classes.consulting_page}>
         <div className={classes.video_box}>
           <ConsultingMeetPage
+            userInfo={userInfo}
             isRealtor={isRealtor}
             status={status}
             statusChangeHandler={statusChangeHandler}

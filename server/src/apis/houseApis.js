@@ -77,9 +77,13 @@ export const modifyHouseData = async (data) => {
     new Blob([JSON.stringify(data.jsonData)], { type: "application/json" })
   );
 
+  console.log(data);
+
   data.files.forEach((element) => {
     formData.append("files", element);
   });
+
+  const headers = getAuthHeader();
 
   const sendRequest = async () => {
     // 요청보낼 떄 URI {itemNo} 굳이 넘겨줘야 되나? 필요가 있음?????
@@ -89,6 +93,7 @@ export const modifyHouseData = async (data) => {
       {
         headers: {
           "Content-Type": "multipart/form-data",
+          ...headers,
         },
       }
     );

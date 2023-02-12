@@ -61,7 +61,8 @@ export const getUserInfo = async (accessToken) => {
         console.log(res);
         const data = res.data;
         if (data.state === 200) {
-          userInfo = data;
+          userInfo = data.data;
+          return userInfo;
         }
       });
   } else {
@@ -79,6 +80,7 @@ export const getUserInfo = async (accessToken) => {
 
         if (data.state === 200) {
           userInfo = data.data;
+          return userInfo
         }
       });
   }
