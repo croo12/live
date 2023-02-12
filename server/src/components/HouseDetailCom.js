@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { getHouseByItemNo } from "../apis/houseApis";
 import { houseActions } from "../store/house-slice";
 
-const HouseDetailCom = () => {
+const HouseDetailCom = (props) => {
   const [houseInfo, setHouseInfo] = useState();
   const [options, setOptions] = useState([]);
   const [isInfoMore, setIsInfoMore] = useState(false);
