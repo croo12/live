@@ -1,5 +1,9 @@
 .houseDetail {
   height: 100%;
-  width: 1400px;
-  margin: 32px calc((100vw - 1400px) / 2);
+  width: 1024px;
+  margin: 32px calc((100vw - 1024px) / 2);
+
+  h1 {
+    margin: 1em;
+  }
 }
