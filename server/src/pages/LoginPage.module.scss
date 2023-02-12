@@ -17,18 +17,19 @@
 
     .loginArea {
       top: 90px;
-      width: 680px;
+      max-width: 35rem;
       position: absolute;
 
       @media (max-width: 1024px) {
-        width: 100%;
+        width: 80%;
       }
 
       .loginHead {
+        margin-top: 5%;
         width: 100%;
         height: 97px;
         font-weight: 700;
-        font-size: 80px;
+        font-size: 70px;
         line-height: 97px;
         text-align: center;
         color: #42d395;
@@ -41,7 +42,6 @@
         border-style: solid;
         border-color: #eaeaea;
         border-radius: 6px;
-        height: 520px;
 
         .loginTab {
           input {
@@ -52,13 +52,15 @@
             display: inline-block;
             box-sizing: border-box;
             line-height: 48px;
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 19px;
+            font-weight: bold;
+            text-align: center;
             width: 50%;
-            height: 48px;
+            height: 46px;
             border: 1px solid #eaeaea;
             border-radius: 6px 6px 0px 0px;
             transition: all 0.3s ease;
+            color: #BBBBBB;
             cursor: pointer;
 
             :hover {
@@ -68,7 +70,8 @@
 
           input:checked + label {
             background: #42d395;
-            color: white;
+            color: #ffffff;
+            border-color: #42d395;
           }
         }
       }

@@ -1,6 +1,6 @@
 .loginFieldSet {
-  padding: 80px 120px;
-  width: 100%;
+  padding: 55px 60px;
+  width: 35rem;
 
   @media (max-width: 480px) {
     //모바일 기준
@@ -21,8 +21,8 @@
       input {
         box-sizing: border-box;
         width: 100%;
-        height: 48px;
-        font-size: 16px;
+        height: 45px;
+        font-size: 15px;
         border: 1px solid #d9d9d9;
         padding: 4px 20px;
         border-radius: 6px;
@@ -71,10 +71,10 @@
       width: 100%;
       height: 46px;
       background: #022f1c;
-      border-color: #022f1c;
+      border-style: hidden;
       border-radius: 6px;
       font-weight: 700;
-      font-size: 20px;
+      font-size: 18px;
       color: #fafafa;
       transition: all 0.2s ease;
       cursor: pointer;
