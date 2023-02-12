@@ -59,6 +59,7 @@ public class RealtorResponse {
 
         public static RealtorResponse.FindByRegion toEntity(Realtor realtor) {
             return RealtorResponse.FindByRegion.builder()
+                    .realtorNo(realtor.getNo())
                 .name(realtor.getName())
                 .phone(realtor.getPhone())
                 .corp(realtor.getCorp())
