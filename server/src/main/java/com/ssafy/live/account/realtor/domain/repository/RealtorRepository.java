@@ -58,7 +58,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "on m.item_no = i.item_no "
         + "inner join house h "
         + "on i.house_no = h.house_no "
-        + "where h.region_code LIKE :regionCode% and r.realtor_no=:realtorNo) AND h.contracted = false "
+        + "where h.region_code LIKE :regionCode% and r.realtor_no=:realtorNo AND h.contracted = false)"
         + "UNION DISTINCT "
         + "(SELECT i.item_no as itemNo, m.image_src as imageSrc, i.deposit, i.rent, h.address, h.floor, i.building_name as buildingName FROM realtor r "
         + "inner join item i "
