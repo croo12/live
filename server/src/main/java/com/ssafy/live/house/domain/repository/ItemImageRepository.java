@@ -10,8 +10,7 @@ import java.util.List;
 @Repository
 public interface ItemImageRepository extends JpaRepository<ItemImage, Long> {
 
-    List<ItemImage> findAllByItemNo(Long no);
-    ItemImage findTop1ByItemNo(Long no);
-
     List<ItemImage> findByItem(Item item);
+
+    List<ItemImage> findByItemNo(Long no);
 }

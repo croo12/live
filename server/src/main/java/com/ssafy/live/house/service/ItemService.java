@@ -97,24 +97,30 @@ public class ItemService {
         updatedItem.setHouse(item.getHouse());
         updatedItem.getHouse().setContracted(itemUpdateRequest.isContracted());
 
-        List<ItemImage> itemImages = itemImageRepository.findAllByItemNo(item.getNo());
+        List<ItemImage> itemImages = itemImageRepository.findByItemNo(item.getNo());
+        List<ItemImage> newImages = new ArrayList<>();
         Set<Long> newImageNoSet = itemUpdateRequest.getItemImages();
         for (ItemImage img : itemImages) {
             if (!newImageNoSet.contains(img.getNo())) {
                 s3Service.deleteFile(img.getImageSrc());
                 itemImageRepository.deleteById(img.getNo());
             }
+            else{
+                newImages.add(img);
+            }
         }
 
         for (MultipartFile file : files) {
-            String imageSrc = s3Service.upload(file);
-            ItemImage itemImage = ItemImage.builder()
-                    .item(item)
-                    .imageSrc(imageSrc)
-                    .build();
-            itemImages.add(itemImage);
+            if(!file.isEmpty()) {
+                String imageSrc = s3Service.upload(file);
+                ItemImage itemImage = ItemImage.builder()
+                        .item(item)
+                        .imageSrc(imageSrc)
+                        .build();
+                newImages.add(itemImage);
+            }
         }
-        updatedItem.setItemImages(itemImages);
+        updatedItem.setItemImages(newImages);
 
         itemRepository.save(updatedItem);
         return response.success("매물 정보가 수정되었습니다.", HttpStatus.OK);
