@@ -22,13 +22,6 @@ const MainPage = () => {
       <section className={classes.ranking}>
         <MainRanking /> {/*지금 인기있는 공인중개사*/}
       </section>
-      <button
-        onClick={() => {
-          setVisible(true);
-        }}
-      >
-        알람을 만들어버리는 버튼
-      </button>
       {isVisible && (
         <CustomAlert
           title={`나 강림`}

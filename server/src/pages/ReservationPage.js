@@ -4,23 +4,25 @@ import ReservationRightDiv from "../components/reservation/ReservationRightDiv";
 import ListBox from "../UI/ListBox";
 import ReservationSearchBox from "../components/reservation/ReservationSearchBox";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./ReservationPage.module.scss";
 import { FiAlertCircle } from "react-icons/fi";
 import { useLoaderData } from "react-router-dom";
 import axiosInstance from "../util/axios";
 import {
+  registResevation,
   searchRealtorList,
   searchReservationRealtorDetail,
 } from "../apis/reservationApis";
 import Modal from "../UI/Modal";
+import { reservedItemAction } from "../store/reserved-item-slice";
 
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
     sido: "",
     gugun: "",
     dong: "",
-    date: null,
+    date: new Date(),
   });
 
   const isMount = useRef(false);
@@ -31,6 +33,7 @@ const ReservationPage = () => {
   const [realtorDetail, setRealtorDetail] = useState(null);
 
   const [modalActive, setModalActive] = useState(false);
+  const dispatch = useDispatch();
 
   const modalToggleHandler = () => {
     setModalActive(!modalActive);
@@ -40,6 +43,8 @@ const ReservationPage = () => {
   const selectedItems = useSelector((state) => {
     return state.reserve.selectedItems;
   });
+
+  // console.log(selectedItems);
 
   //중개사 세부 소환
   const clickRealtorEventHandler = (realtorNo) => {
@@ -106,13 +111,32 @@ const ReservationPage = () => {
     })();
   }, [reserveData]);
 
-  const removeItemHandler = (idx) => {
-    console.log(idx);
+  const removeItemHandler = (itemNo) => {
+    if (window.confirm("매물 목록에서 삭제하겠습니까?")) {
+      dispatch(reservedItemAction.removeItem(itemNo));
+    }
   };
 
   //예약 ㄱㄱ
   const registReservationHandler = (detail) => {
+    console.log(realtorDetail);
+    console.log(selectedItems);
+
     const data = {};
+    data["requirement"] = detail;
+    data["status"] = false;
+    data["realtorNo"] = realtorDetail.realtorInfo.no;
+    data["consultingDate"] = reserveData.date;
+
+    const itemList = [];
+
+    selectedItems.forEach((el) => {
+      itemList.push(el.itemNo);
+    });
+
+    data["itemList"] = itemList;
+
+    registResevation(data);
   };
 
   return (
