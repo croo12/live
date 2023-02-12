@@ -20,7 +20,7 @@ const ErrorCommonPage = ({ navigate, errorMsg }) => {
       )}
       <button
         onClick={() => {
-          navigate("/");
+          navigation("/");
         }}
       >
         고 홈

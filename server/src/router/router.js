@@ -39,6 +39,8 @@ import { loader as houseModifyLoader } from "../components/house/HouseModify";
 import { ProtectedRouter } from "../components/common/AuthProtector";
 import ContractPageUser from "../components/contract/ContractPageUser";
 import ContractPageRealtor from "../components/contract/ContractPageRealtor";
+import ConsultingRightReservationList from "../components/consulting/ConsultingRightReservationList";
+import ConsultingRightReservationHouseList from "../components/consulting/ConsultingRightReservationHouseList";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -56,7 +58,13 @@ const router = createBrowserRouter(
         element={<ReservationPage />}
         loader={sidoLoader}
       ></Route>
-      <Route path="consulting/:sessionId" element={<ConsultingPage />}></Route>
+      <Route path="consulting/:sessionId" element={<ConsultingPage />}>
+        <Route index element={<ConsultingRightReservationList />} />
+        <Route
+          path=":consultingNo"
+          element={<ConsultingRightReservationHouseList />}
+        />
+      </Route>
       <Route path="house" element={<HousePage />}>
         <Route index element={<HouseList />}></Route>
         <Route path="regist" element={<HouseRegist />}></Route>

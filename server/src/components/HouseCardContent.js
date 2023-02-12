@@ -72,12 +72,13 @@ export const ConsultingHouseCardContent = (props) => {
 
   return (
     <>
-      <div
-        className={`${classes.houseCardContent} ${classes.consulting_inner}`}
-      >
+      <div className={`${classes.consulting_inner} `}>
         <div className={classes.upperCard}>
           <div className={classes.leftBox}>
-            <h3> 월세 500/ 60 </h3>
+            <div>{props.idx + 1}번 매물</div>
+            <h3>
+              <span>월세</span> 500 / 60
+            </h3>
             <p> 크기 35 /관리비 n만 </p>
             <p> 대전 서구 갈마로... </p>
           </div>
@@ -90,10 +91,16 @@ export const ConsultingHouseCardContent = (props) => {
         </div>
         {props.detail === props.idx && (
           <div className={classes.badge}>
-            <HouseDetailCom isConsulting={true} />
+            <div>
+              <button style={{ cursor: "pointer" }} onClick={clickEventHandler}>
+                매물목록으로
+              </button>
+            </div>
+            <HouseDetailCom isConsulting={true} itemNo={8} />
           </div>
         )}
       </div>
+
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
           <HouseDetailCom houseId={123} />

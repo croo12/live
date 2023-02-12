@@ -1,3 +1,4 @@
+
 .houseCardContent {
   border: 1px solid;
 
@@ -75,38 +76,114 @@
 }
 
 .consulting_inner {
-  position: relative;
+  // position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid;
+
+  border-image-source: linear-gradient(
+    237.31deg,
+    rgba(255, 255, 255, 0.6) -7.89%,
+    rgba(243, 243, 243, 0) 48.19%,
+    rgba(255, 255, 255, 0.446875) 110.44%
+  );
+
+  background: linear-gradient(
+    237.31deg,
+    rgba(255, 255, 255, 0.6) -7.89%,
+    rgba(243, 243, 243, 0) 48.19%,
+    rgba(255, 255, 255, 0.446875) 110.44%
+  );
+
+  background: linear-gradient(
+      45.74deg,
+      rgba(232, 232, 232, 0.15) -0.5%,
+      rgba(246, 246, 246, 0.00445545) 33.81%,
+      rgba(246, 246, 246, 0) 70.76%,
+      rgba(250, 250, 250, 0.15) 100.85%
+    ),
+    linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
+
+  background-color: rgba(2, 47, 28, 1);
+  border-radius: 12px;
+
+  &::after {
+    content: "";
+    background: linear-gradient(
+      237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%
+    );
+    
+    border-radius: 10px;
+    z-index: 999;
+  }
 
   .upperCard {
+    display: flex;
+    flex: 4;
+
     .leftBox {
+      padding-top: 8px;
+      flex: 1;
+      color: aliceblue;
+
+      > div {
+        text-align: left;
+        padding: 4px;
+        padding-left: 8px;
+
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+      }
+
       h3 {
-        font-size: 1.7vw;
-        color : #FAFAFA;
+        font-size: 1.4rem;
+        font-weight: 580;
+        color: #fafafa;
+
+        padding: 0.4rem;
+
+        > span {
+          font-size: 1rem;
+        }
+      }
+
+      p {
+        font-size: 0.7rem;
       }
     }
-    
+
     .rightBox {
-      img  {
-        
-        width: 11vw;
-        height: 11vw;
-        border-radius: 4vw;
+      border-radius: 0.1rem;
+
+      flex: 1;
+      img {
+        width: 100%;
+        height: auto;
 
         object-fit: contain;
+        padding: 4px;
+
+        border-radius: 1rem;
       }
     }
-    @media (max-width: 768px) { 
+
+    @media (max-width: 768px) {
       .leftBox {
         h3 {
           font-size: 7vw;
-          color : #FAFAFA;
+          color: #fafafa;
         }
       }
-      
+
       .rightBox {
-        img  {
+        img {
           padding: 0;
-          
+
           width: 26vw;
           height: 18vh;
           border-radius: 10vw;
@@ -117,19 +194,35 @@
     }
   }
 
+  .downCard {
+    text-align: left;
+    flex: 1;
+
+    button {
+      background-color: inherit;
+      border: 0;
+      padding: 1vw;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
   .badge {
-    padding: 10px 20px;
+    padding: 1rem;
     border-radius: 3px;
-    background-color: #ececec;
+    background-color: rgba(2, 47, 28, 1);
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
     position: absolute;
-    z-index: 1;
+    z-index: 4;
     left: 0;
     right: 0;
-    bottom: 0;
-    transform: translate(0,100%);
+    top: 0;
+    // transform: translate(0, 100%);
 
-    height: 30vw;
+    height: 100%;
     // @extend %flex;
     // animation: animainfos cubic-bezier(0.425, 1.04, 0.47, 1.105) 0.75s forwards;
 
@@ -137,9 +230,56 @@
     overflow-x: hidden;
 
     @media (max-width: 768px) {
-      height: 70vw;
+      // height: 70vw;
 
-      transform: translate(0,100%);
+      // transform: translate(0, 100%);
+    }
+
+    > div {
+      &:first-child {
+        border-top-left-radius: 0.6rem;
+        border-top-right-radius: 0.6rem;
+      }
+
+      > button {
+        width: 100%;
+        padding: 0.7rem;
+
+        background-color: inherit;
+        border: 0;
+
+        color: #fafafa;
+
+        font-size: 1rem;
+        font-weight: 550;
+      }
+
+      border-image-source: linear-gradient(
+        237.31deg,
+        rgba(255, 255, 255, 0.6) -7.89%,
+        rgba(243, 243, 243, 0) 48.19%,
+        rgba(255, 255, 255, 0.446875) 110.44%
+      );
+
+      background: linear-gradient(
+        237.31deg,
+        rgba(255, 255, 255, 0.6) -7.89%,
+        rgba(243, 243, 243, 0) 48.19%,
+        rgba(255, 255, 255, 0.446875) 110.44%
+      );
+
+      background: linear-gradient(
+          45.74deg,
+          rgba(232, 232, 232, 0.15) -0.5%,
+          rgba(246, 246, 246, 0.00445545) 33.81%,
+          rgba(246, 246, 246, 0) 70.76%,
+          rgba(250, 250, 250, 0.15) 100.85%
+        ),
+        linear-gradient(
+          0deg,
+          rgba(250, 250, 250, 0.3),
+          rgba(250, 250, 250, 0.3)
+        );
     }
 
     span {
@@ -159,7 +299,6 @@
   }
 }
 
-
 ///예약 - 매물 카드 컨텐트
 
 .reservationItem {
@@ -170,8 +309,8 @@
 
   width: 24vw;
 
-  background: linear-gradient(0deg, #f3f0f0, #FAFAFA),
-  linear-gradient(0deg, #FAFAFA, #FAFAFA);
+  background: linear-gradient(0deg, #f3f0f0, #fafafa),
+    linear-gradient(0deg, #fafafa, #fafafa);
 
   text-align: left;
 
@@ -199,13 +338,12 @@
   button:last-child {
     display: block;
     font-size: 0.8rem;
-    
+
     padding: 4px;
     padding-top: 2vw;
-    
+
     border: 0;
-    
-    
+
     text-decoration: underline;
     text-align: left;
 
@@ -213,8 +351,7 @@
   }
 }
 
-
-///예약 - 중개사의 매물목록 
+///예약 - 중개사의 매물목록
 
 .houseItem {
   display: flex;
@@ -283,14 +420,14 @@
   button:last-child {
     display: block;
     font-size: 0.8rem;
-    
+
     padding: 4px;
     padding-top: 2vw;
-    
+
     border: 0;
 
-    background-color: #FFFFFF;
-    
+    background-color: #ffffff;
+
     text-decoration: underline;
     text-align: left;
 
@@ -317,9 +454,9 @@
       .leftDesc {
         flex: 3;
 
-        p{
-          color:rgba(112, 112, 112, 1);
-          font-weight:400;
+        p {
+          color: rgba(112, 112, 112, 1);
+          font-weight: 400;
           font-family: Roboto;
         }
 
@@ -332,69 +469,69 @@
 
             strong {
               flex: 2;
-              padding:1% 0 0 0;
+              padding: 1% 0 0 0;
             }
 
-            input{
-                background: #FAFAFA;
-                border: 1px solid #BBBBBB;
-                border-radius: 4px;
-                color:#050505;
-                padding:2%;
-                font-size: 400;
-                margin-bottom: 2%;
-              }
+            input {
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
           }
 
           .extraFee {
             display: flex;
 
-             strong {
-                flex: 2;
-                padding: 1% 0 0 0;
+            strong {
+              flex: 2;
+              padding: 1% 0 0 0;
             }
-              
-             input {
-                background: #FAFAFA;
-                border: 1px solid #BBBBBB;
-                border-radius: 4px;
-                color: #050505;
-                padding: 2%;
-                font-size: 400;
-                margin-bottom: 2%;
-              }
+
+            input {
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
           }
 
           .term {
             display: flex;
 
             strong {
-                flex: 2;
-                padding: 1% 0 0 0;
-              }
-            
-              input {
-                background: #FAFAFA;
-                border: 1px solid #BBBBBB;
-                border-radius: 4px;
-                color: #050505;
-                padding: 2%;
-                font-size: 400;
-                margin-bottom: 2%;
-              }
+              flex: 2;
+              padding: 1% 0 0 0;
+            }
+
+            input {
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
           }
 
           .moveDate {
             display: flex;
 
-          strong {
+            strong {
               flex: 2;
               padding: 1% 0 0 0;
             }
-          
+
             input {
-              background: #FAFAFA;
-              border: 1px solid #BBBBBB;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
               border-radius: 4px;
               color: #050505;
               padding: 2%;

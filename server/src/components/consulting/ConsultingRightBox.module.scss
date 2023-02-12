@@ -14,8 +14,13 @@
 .inner_content {
     overflow-y: hidden;
     height: 100%;
-
     width: 100%;
+
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    position: relative;
 
   &.isActive{
       overflow-y: auto;
