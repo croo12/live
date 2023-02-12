@@ -1,4 +1,5 @@
 .houseDetailCom {
+  box-sizing: border-box;
   height: 100%;
   width: 100%;
   font-size: 16px;
@@ -6,16 +7,23 @@
   .imageBox {
     width: 100%;
     display: flex;
+    box-sizing: border-box;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 6px;
+
     .mainImage {
       display: inline-flex;
       width: 50%;
       img {
         box-sizing: border-box;
-        width: 43.25em;
-        height: 31.5em;
+        // 1400 기준
+        // width: 43.25em;
+        // height: 31.5em;
+        width: 31.4em;
+        height: 23em;
         margin: 0.25em;
         border: 1px solid rgb(218, 218, 218);
-        // border-radius: 6px;
+        border-radius: 6px;
       }
     }
     .subImage {
@@ -24,11 +32,14 @@
       width: 50%;
       img {
         box-sizing: border-box;
-        width: 21.375em;
-        height: 15.5em;
+        // 1400 기준
+        // width: 21.375em;
+        // height: 15.5em;
+        width: 15.45em;
+        height: 11.25em;
         margin: 0.25em;
         border: 1px solid rgb(218, 218, 218);
-        // border-radius: 6px;
+        border-radius: 6px;
       }
     }
   }
@@ -36,17 +47,21 @@
   .contentBox {
     display: flex;
     text-align: left;
+    margin: 0.5em 0;
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 6px;
 
-    .leftBox {
-      width: calc(50% - 0.5em);
-      margin: 0.25em;
+    .InnerBox {
+      width: calc(100% - 1em);
+      padding: 0.5em 1.5em;
 
       .itemDesc {
         margin: 0.75em 0;
 
         p {
           font-size: 1.25em;
-          margin: 0.25em 0;
+          margin: 0.5em 0;
+          font-weight: 700;
         }
 
         div {
@@ -79,13 +94,26 @@
         }
 
         div {
-          margin: 1em 0;
+          font-weight: 700;
           display: flex;
+
+          div {
+            width: 33.3%;
+            margin: 1em 0;
+          }
+
+          .Area {
+            width: 100%;
+          }
+
+          .addressInfo {
+            width: 66.66%;
+          }
 
           svg {
             width: 1.375em;
             height: 1.375em;
-            margin-right: 2.5em;
+            margin-right: 1.5em;
           }
         }
 
@@ -93,14 +121,16 @@
           border: none;
           background: transparent;
           font-size: 0.875em;
+          font-weight: 700;
+          margin: 1em 0 0 0;
           color: #bbbbbb;
           cursor: pointer;
         }
       }
 
       hr {
-        margin: 2.5em 4%;
-        width: 92%;
+        margin: 2.5em 0;
+        width: 100%;
       }
 
       .optionInfo {
@@ -120,8 +150,8 @@
             flex-wrap: nowrap;
             margin: 0.25em;
             box-sizing: border-box;
-            width: 9.375em;
-            height: 9.375em;
+            width: 9em;
+            height: 9em;
             border: 1px solid #bbbbbb;
             border-radius: 4px;
 
@@ -132,6 +162,7 @@
 
             p {
               font-size: 1.125em;
+              font-weight: 700;
             }
           }
         }
@@ -140,6 +171,8 @@
           border: none;
           background: transparent;
           font-size: 0.875em;
+          font-weight: 700;
+          margin: 1em 0 0 0;
           color: #bbbbbb;
           cursor: pointer;
         }
@@ -152,8 +185,9 @@
 
         div {
           margin: 1.25em 0;
-
           font-size: 1em;
+          font-weight: 700;
+          padding: 0 1em;
         }
       }
 
@@ -168,13 +202,15 @@
 
           p {
             font-size: 1.25em;
+            font-weight: 700;
+          }
+
+          div {
+            width: 98%;
+            margin: 1%;
           }
         }
       }
-    }
-
-    .rightBox {
-      width: 50%;
     }
   }
 }
