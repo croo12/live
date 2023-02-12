@@ -4,7 +4,6 @@ import { REALTOR_STATUS } from "../pages/ConsultingPage";
 import { ConsultingHouseCardContent } from "./HouseCardContent";
 import { ConsultingReservationCardContent } from "./ReservationCardContent";
 import { useNavigate } from "react-router-dom";
-import HouseDetailCom from "./HouseDetailCom";
 import classes from "./ConsultingRightBox.module.scss";
 import { GiHamburgerMenu } from "react-icons/gi";
 

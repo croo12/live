@@ -6,7 +6,6 @@ import ConsultingRightBox from "../components/ConsultingRightBox";
 import { usePrompt } from "../util/usePrompt";
 
 import classes from "./ConsultingPage.module.scss";
-import useRecording from "../util/useRecording";
 import { useAuth } from "../components/common/AuthProtector";
 
 export const REALTOR_STATUS = {
