@@ -10,7 +10,7 @@ import {
   BiCctv,
 } from "react-icons/bi";
 import { BsWind, BsFlower1, BsHouseDoor } from "react-icons/bs";
-import { CgSmartHomeWashMachine } from "react-icons/cg";
+import { CgSmartHomeWashMachine, CgSmartHomeBoiler } from "react-icons/cg";
 import { FaSink } from "react-icons/fa";
 import {
   GiDesk,
@@ -36,7 +36,7 @@ import {
   RiSecurePaymentFill,
   RiAlarmWarningLine,
 } from "react-icons/ri";
-import { TbBath, TbSofa } from "react-icons/tb";
+import { TbBath, TbSofa, TbStairs } from "react-icons/tb";
 
 const Icons = {
   // 매물 상세 - 매물 정보
@@ -50,6 +50,8 @@ const Icons = {
   purpose: <BiBuildingHouse />, // 건축물용도 아이콘
   marker: <HiOutlineLocationMarker />, // 위치(상세주소) 아이콘
   completionYear: <BsHouseDoor />,
+  entrance: <TbStairs />,
+  heating: <CgSmartHomeBoiler />,
   // 매물 상세 - 매물 옵션
   bed: <BiBed />, //침대
   washingMachine: <MdOutlineLocalLaundryService />, //세탁기
