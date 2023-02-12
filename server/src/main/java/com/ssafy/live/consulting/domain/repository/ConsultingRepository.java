@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
-    List<Consulting> findByRealtorAndStatusOrStatus(Realtor realtor, ConsultingStatus reservervationProcessing, ConsultingStatus realtorResponseComplete);
-    List<Consulting> findByUsersAndStatusOrStatus(Users user, ConsultingStatus status, ConsultingStatus status1);
+    List<Consulting> findByRealtorAndStatusOrStatusOrderByConsultingDate(Realtor realtor, ConsultingStatus reservervationProcessing, ConsultingStatus realtorResponseComplete);
+    List<Consulting> findByUsersAndStatusOrStatusOrderByConsultingDate(Users user, ConsultingStatus status, ConsultingStatus status1);
     List<Consulting> findByConsultingDateBetween(LocalDateTime start, LocalDateTime end);
 }
