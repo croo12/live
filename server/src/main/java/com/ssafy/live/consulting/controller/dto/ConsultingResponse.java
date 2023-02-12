@@ -151,6 +151,7 @@ public class ConsultingResponse {
             private Long realtorNo;
             private String corp;
             private String name;
+            private String phone;
             private String businessAddress;
             private String imageSrc;
 
@@ -159,6 +160,7 @@ public class ConsultingResponse {
                     .realtorNo(realtor.getNo())
                     .corp(realtor.getCorp())
                     .name(realtor.getName())
+                    .phone(realtor.getPhone())
                     .businessAddress(realtor.getBusinessAddress())
                     .imageSrc(realtor.getImageSrc())
                     .build();
