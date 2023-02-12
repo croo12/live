@@ -87,7 +87,7 @@ public class ItemService {
     }
 
     public ResponseEntity<?> updateItemDetail(UserDetails user, ItemRequest.ItemUpdateRequest itemUpdateRequest, List<MultipartFile> files) throws IOException {
-        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
+        realtorRepository.findByBusinessNumber(user.getUsername())
                 .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
 
         Item item = itemRepository.findById(itemUpdateRequest.getItemNo())
@@ -114,7 +114,7 @@ public class ItemService {
                     .build();
             itemImages.add(itemImage);
         }
-        item.setItemImages(itemImages);
+        updatedItem.setItemImages(itemImages);
 
         itemRepository.save(updatedItem);
         return response.success("매물 정보가 수정되었습니다.", HttpStatus.OK);
