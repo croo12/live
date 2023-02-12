@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import classes from "./PreviewCarousel.module.scss";
 import { useRef } from "react";
 
 // 캐러셀 화살표 커스텀
@@ -33,7 +34,7 @@ const PrevArrow = (props) => {
 };
 
 // 캐러셀
-const CarouselTemp = (props) => {
+const PreviewCarousel = (props) => {
   const mySettings = props.settings;
   const items = props.items;
 
@@ -85,21 +86,23 @@ const CarouselTemp = (props) => {
                     return (
                       <li
                         style={{
-                          width: "10%",
-                          height: "3rem",
-                          border: "1px solid",
+                          width: `${88 / items.length}%`,
+                          height: "4em",
+                          border: "1px solid #bbbbbb",
+                          borderRadius: "4px",
                           marginRight: "1px",
                         }}
-                        key={idx}
+                        key={item.itemImageNo}
                         onClick={() => dotClickHandler(idx)}
                       >
                         <img
-                          src={item.imgSrc}
-                          alt={idx}
+                          src={item.imageSrc}
+                          alt={item.itemImageNo}
                           style={{
                             width: "100%",
                             height: "100%",
                             background: "rgba(0,0,0,0.1)",
+                            borderRadius: "3px",
                           }}
                         />
                       </li>
@@ -138,16 +141,31 @@ const CarouselTemp = (props) => {
       };
 
   return (
-    <div style={{ width: "700px" }}>
+    <div className={classes.previewBox}>
+      <div className={classes.buttonBox}>
+        <button
+          onClick={() => {
+            props.onClose();
+          }}
+        >
+          ✖
+        </button>
+      </div>
       <Slider {...settings} ref={sliderRef}>
         {items &&
-          items.map((item, idx) => {
-            console.log(idx);
-            return <img src={item.imgSrc} key={idx} alt={idx} />;
+          items.map((item) => {
+            return (
+              <img
+                className={classes.currPreview}
+                src={item.imageSrc}
+                key={item.itemImageNo}
+                alt={item.itemImageNo}
+              />
+            );
           })}
       </Slider>
     </div>
   );
 };
 
-export default CarouselTemp;
+export default PreviewCarousel;
