@@ -10,6 +10,7 @@ public enum SMSContent {
     NEW_CONSULTING("새로운 상담 예약이 접수되었습니다."),
     CONSULTING_CANCEL("상담 예약이 취소되었습니다."),
     CONSULTING_CHANGE("상담 정보가 변경되었습니다. 확인해주세요."),
+    CONSULTING_START("Live 상담이 시작됩니다. 입장해주세요."),
     CONSULTING_CONFIRMED("상담 예약이 확정되었습니다."),
     TODAY_CONSULTING("금일 예약된 상담이 있습니다. 확인 후 상담을 진행해주세요."),
     CONSULTING_NOW("중개사가 실시간 화상 상담실에 입장하였습니다. 서둘러 입장하셔서 좋은 방을 찾아보세요."),
