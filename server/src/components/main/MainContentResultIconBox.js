@@ -5,7 +5,10 @@ const MainContentResultIconBox = (props) => {
     <div className={classes.iconBox}>
       {props.icon}
       {/* <p className={classes.name}> {props.name} </p> */}
-      <p className={classes.content}> {props.content} </p>
+      <p style={{ textAlign: "center" }} className={classes.content}>
+        {" "}
+        {props.content}{" "}
+      </p>
     </div>
   );
 };
