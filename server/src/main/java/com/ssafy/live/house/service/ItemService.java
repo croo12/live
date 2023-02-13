@@ -28,8 +28,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
-import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -87,12 +86,18 @@ public class ItemService {
     }
 
     public ResponseEntity<?> updateItemDetail(UserDetails user, ItemRequest.ItemUpdateRequest itemUpdateRequest, List<MultipartFile> files) throws IOException {
-        realtorRepository.findByBusinessNumber(user.getUsername())
+        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
                 .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
 
         Item item = itemRepository.findById(itemUpdateRequest.getItemNo())
                 .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
+
+        if(item.getRealtor().getNo() != realtor.getNo()) {
+            throw new BadRequestException(USER_MISMATCH);
+        }
+
         Item updatedItem = itemUpdateRequest.toEntity();
+        updatedItem.setRealtor(realtor);
 
         updatedItem.setHouse(item.getHouse());
         updatedItem.getHouse().setContracted(itemUpdateRequest.isContracted());

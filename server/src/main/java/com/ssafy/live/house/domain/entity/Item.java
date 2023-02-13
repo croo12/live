@@ -71,6 +71,7 @@ public class Item extends BaseEntity {
     public void setItemImages(List<ItemImage> itemImages) {
         this.itemImages = itemImages;
     }
+    public void setRealtor(Realtor realtor) {this.realtor = realtor;}
 
     public void updatePayment(int deposit, int rent, int maintenanceFee) {
         this.deposit = deposit;

@@ -14,7 +14,8 @@ public enum ErrorCode {
     CONSULTING_NOT_FOUND(HttpStatus.BAD_REQUEST,"상담 정보를 찾을 수 없습니다."),
     ITEM_NOT_FOUND(HttpStatus.BAD_REQUEST,"매물 정보를 찾을 수 없습니다."),
     HOUSE_NOT_FOUND(HttpStatus.BAD_REQUEST,"주택 정보를 찾을 수 없습니다."),
-    REALTOR_NOT_FOUND(HttpStatus.BAD_REQUEST,"공인중개사 정보를 찾을 수 없습니다.");
+    REALTOR_NOT_FOUND(HttpStatus.BAD_REQUEST,"공인중개사 정보를 찾을 수 없습니다."),
+    USER_MISMATCH(HttpStatus.BAD_REQUEST,"사용자 정보가 일치하지 않습니다.");
 
 
     private final HttpStatus httpStatus;
