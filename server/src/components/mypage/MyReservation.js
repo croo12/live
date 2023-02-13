@@ -5,6 +5,7 @@ import ReservationCardContent3, { DUMMY6 } from "../ReservationCardContent3";
 import { DUMMY5 } from "../ReservationCardContent2";
 import classes from "./MyReservation.module.scss";
 import MyReservationDetailRealtor from "./MyReservationDetailRealtor";
+import { getReservationList } from "../../apis/reservationApis"
 // import MyReservationDetailUser from "./MyReservationDetailUser";
 
 const data = ["신청된 상담", "확정된 상담", "종료된 상담"];
@@ -17,9 +18,10 @@ const MyReservation = () => {
   const [reservationRealtor, setReservationRealtor] = useState(DUMMY6);
   const [tabActive, setTabActive] = useState(0);
 
+
   const toggleActive = (e) => {
     setTabActive(Number.parseInt(e.target.value));
-  };
+  }
 
   const [detailInfo, setDetailInfo] = useState(true);
   const onDetailReservationHandler = (detailInfo) => {
@@ -111,5 +113,11 @@ const MyReservation = () => {
     </div>
   );
 };
+
+// export const myReservationLoader = async () => {
+//   const response = await getReservationList(0);
+//   if (response.data) return response.data;
+//   else return null;
+// };
 
 export default MyReservation;

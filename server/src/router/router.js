@@ -10,12 +10,14 @@ import HouseRegist from "../components/house/HouseRegist";
 import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
 import MyPageUser, { myPageUserLoader } from "../components/mypage/MyPageUser";
+//import { myReservationLoader } from "../components/mypage/MyReservation";
 import MyPageUserDetail, {
   userInfoLoader,
 } from "../components/mypage/MyPageUserDetail";
 import MyPageUserModify from "../components/mypage/MyPageUserModify";
 import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
 import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
+import { loader as consultingLoader } from "../components/mypage/MyPageUserReservationDetail";
 import MyPageUserReview from "../components/mypage/MyPageUserReview";
 import MyPageUserRecord from "../components/mypage/MyPageUserRecord";
 import MyPageUserContract from "../components/mypage/MyPageUserContract";
@@ -75,10 +77,14 @@ const router = createBrowserRouter(
         <Route path="user" element={<MyPageUser />} loader={myPageUserLoader}>
           <Route path="user-record" element={<MyPageUserRecord />}></Route>
           <Route path="user-review" element={<MyPageUserReview />}></Route>
-          <Route path="user-reservation" element={<MyPageUserReservation />}>
+          <Route
+            path="user-reservation"
+            element={<MyPageUserReservation />}
+          >
             <Route
-              path="user-reservation-detail"
+              path="user-reservation-detail/:consultingNo"
               element={<MyPageUserReservationDetail />}
+              loader={consultingLoader}
             ></Route>
           </Route>
           <Route path="user-contract" element={<MyPageUserContract />}>
