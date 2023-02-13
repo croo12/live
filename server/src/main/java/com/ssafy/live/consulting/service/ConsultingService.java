@@ -85,14 +85,17 @@ public class ConsultingService {
     public ResponseEntity<?>  reservationListByRealtor(UserDetails user, int status) {
         ConsultingStatus[] statuses = ConsultingStatus.setStatus(status);
         if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            return listByUserOrRealtor(usersRepository.findById(user.getUsername()).get().getNo(), statuses, "USER");
+            Long no = usersRepository.findById(user.getUsername()).get().getNo();
+            List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatusOrderByConsultingDate(usersRepository.findById(no).get(), statuses[0], statuses[1]);
+ return listByUserOrRealtor(consultingsList, statuses, "USER");
         } else {
-            return listByUserOrRealtor(realtorRepository.findByBusinessNumber(user.getUsername()).get().getNo(), statuses, "REALTOR");
+            Long no = realtorRepository.findByBusinessNumber(user.getUsername()).get().getNo();
+            List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatusOrderByConsultingDate(realtorRepository.findById(no).get(), statuses[0], statuses[1]);
+            return listByUserOrRealtor(consultingsList, statuses, "REALTOR");
         }
     }
 
-    private ResponseEntity<?> listByUserOrRealtor(Long realtoNo, ConsultingStatus[] statuses, String target) {
-        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatusOrderByConsultingDate(realtorRepository.findById(realtoNo).get(), statuses[0], statuses[1]);
+    private ResponseEntity<?> listByUserOrRealtor(List<Consulting> consultingsList, ConsultingStatus[] statuses, String target) {
         List<ConsultingResponse.ReservationInfo> list = new ArrayList<>();
         if (consultingsList.isEmpty()) {
             listNotFound();
