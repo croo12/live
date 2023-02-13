@@ -163,13 +163,13 @@ public class RealtorService {
         return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findRealtorList(String orderBy) {
+    public ResponseEntity<?> findRealtorList(int orderBy) {
         List<RealtorProjectionInterface> findRealtors = null;
-        if(orderBy.equals("review")) {
+        if(orderBy == 0) {
             findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc();
-        } else if(orderBy.equals("star")) {
+        } else if(orderBy == 1) {
             findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc();
-        } else if(orderBy.equals("item")) {
+        } else if(orderBy == 2) {
             findRealtors = realtorRepository.findAllByOrderByCountByItemDesc();
         }
         return response.success(findRealtors,"메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
