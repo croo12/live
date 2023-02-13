@@ -29,3 +29,24 @@ export const getContractInfoByItemNo = async (data) => {
     return null;
   }
 };
+
+export const getContractList = async (data) => {
+  const headers = getAuthHeader();
+
+  const getData = async () => {
+    const response = await axiosInstance.get("/contracts", {
+      params: {
+        status: data,
+      },
+      headers,
+    });
+
+    return response.data;
+  };
+
+  try {
+    const response = await getData();
+
+    return response;
+  } catch {}
+};
