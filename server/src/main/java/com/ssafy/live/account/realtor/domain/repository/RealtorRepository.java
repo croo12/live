@@ -16,24 +16,24 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
     boolean existsByBusinessNumber(String businessNumber);
     Realtor findByEmailAndBusinessNumber(String email, String businessNumber);
 
-    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, r.phone, " +
-            "r.rating_score as starScore, count(i.realtor_no) as total, r.description, r.business_address as businessAddress FROM live.realtor r " +
+    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, " +
+            "r.rating_score as starScore, count(i.realtor_no) as total FROM live.realtor r " +
             "left join review v on r.realtor_no=v.realtor_no " +
             "left join item i on i.realtor_no=r.realtor_no " +
             "group by r.realtor_no " +
             "order by review desc, starScore desc LIMIT 4", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByReviewsDesc();
 
-    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, r.phone, " +
-            "r.rating_score as starScore, count(i.realtor_no) as total, r.description, r.business_address as businessAddress FROM live.realtor r " +
+    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, " +
+            "r.rating_score as starScore, count(i.realtor_no) as total FROM live.realtor r " +
             "left join review v on r.realtor_no=v.realtor_no " +
             "left join item i on i.realtor_no=r.realtor_no " +
             "group by r.realtor_no " +
             "order by starScore desc, review desc LIMIT 4", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByStarRatingDesc();
 
-    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, r.phone, " +
-            "r.rating_score as starScore, count(i.realtor_no) as total, r.description, r.business_address as businessAddress FROM live.realtor r " +
+    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, " +
+            "r.rating_score as starScore, count(i.realtor_no) as total FROM live.realtor r " +
             "left join review v on r.realtor_no=v.realtor_no " +
             "left join item i on i.realtor_no=r.realtor_no " +
             "group by r.realtor_no " +
