@@ -24,31 +24,31 @@ public class ContractRequest {
         private Long userNo;
         @NotNull(message = "매물 번호는 필수 입력값입니다.")
         private Long itemNo;
-        private static LocalDate moveOnDate;
-        private static int numberOfResidents;
-        private static String specialContract;
-        private static String tenantAddress;
-        private static String tenantDetailAddress;
-        private static int tenantAge;
-        private static int commission;
-        private static int termOfContract;
+        private LocalDate moveOnDate;
+        private int numberOfResidents;
+        private String specialContract;
+        private String tenantAddress;
+        private String tenantDetailAddress;
+        private int tenantAge;
+        private int commission;
+        private int termOfContract;
 
-        public static Contract toEntity(Users users, Realtor realtor, Item item) {
+        public static Contract toEntity(Users users, Realtor realtor, Item item, ContractRequest.Regist regist) {
             return Contract.builder()
                     .users(users)
                     .realtor(realtor)
                     .item(item)
-                    .moveOnDate(moveOnDate)
-                    .numberOfResidents(numberOfResidents)
+                    .moveOnDate(regist.getMoveOnDate())
+                    .numberOfResidents(regist.getNumberOfResidents())
                     .contractState(ContractStatus.CONTRACT_APPROVING)
-                    .specialContract(specialContract)
-                    .tenantAddress(tenantAddress)
-                    .tenantDetailAddress(tenantDetailAddress)
-                    .tenantAge(tenantAge)
-                    .commission(commission)
+                    .specialContract(regist.getSpecialContract())
+                    .tenantAddress(regist.getTenantAddress())
+                    .tenantDetailAddress(regist.getTenantDetailAddress())
+                    .tenantAge(regist.getTenantAge())
+                    .commission(regist.getCommission())
                     .downPayment((item.getDeposit() / 100) * 10)
                     .balance((item.getDeposit() / 100) * 90)
-                    .termOfContract(termOfContract)
+                    .termOfContract(regist.getTermOfContract())
                     .build();
         }
     }

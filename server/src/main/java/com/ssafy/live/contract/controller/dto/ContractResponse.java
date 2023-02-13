@@ -33,6 +33,8 @@ public class ContractResponse {
             private String name;
             private String imageSrc;
             private String desc;
+            private String gender;
+            private int age;
             public static MemberInfo toRealtor(Realtor realtor) {
                 return MemberInfo.builder()
                         .name(realtor.getName())
@@ -40,27 +42,33 @@ public class ContractResponse {
                         .desc(realtor.getCorp())
                         .build();
             }
-            public static MemberInfo toUser(Users users) {
+            public static MemberInfo toUser(Users users, int age) {
                 return MemberInfo.builder()
                         .name(users.getName())
                         .imageSrc(users.getImageSrc())
                         .desc(users.getPhone())
+                        .gender(users.getGender())
+                        .age(age)
                         .build();
             }
         }
         @Getter
         @Builder
         public static class ItemInfo {
+            private Long itemNo;
             private String buildingName;
             private String address;
+            private String imageSrc;
             private int rent;
             private int deposit;
             private int maintenanceFee;
             private float exclusivePrivateArea;
-            public static ItemInfo toEntity(Item item) {
+            public static ItemInfo toEntity(Item item, String imageSrc) {
                 return ItemInfo.builder()
+                        .itemNo(item.getNo())
                         .buildingName(item.getHouse().getBuildingName())
                         .address(item.getHouse().getAddress())
+                        .imageSrc(imageSrc)
                         .rent(item.getRent())
                         .deposit(item.getDeposit())
                         .maintenanceFee(item.getMaintenanceFee())
@@ -82,13 +90,13 @@ public class ContractResponse {
         private ContractInfo contractInfo;
 
         public static ContractDetail toEntity(RealtorInfo realtorInfo, UserInfo userInfo,
-            ItemInfo itemInfo, ContractInfo contractInfo) {
+                                              ItemInfo itemInfo, ContractInfo contractInfo) {
             return ContractDetail.builder()
-                .realtorInfo(realtorInfo)
-                .userInfo(userInfo)
-                .itemInfo(itemInfo)
-                .contractInfo(contractInfo)
-                .build();
+                    .realtorInfo(realtorInfo)
+                    .userInfo(userInfo)
+                    .itemInfo(itemInfo)
+                    .contractInfo(contractInfo)
+                    .build();
         }
 
         @Getter
@@ -101,12 +109,12 @@ public class ContractResponse {
             private String phone;
             public static RealtorInfo toEntity(Realtor realtor) {
                 return RealtorInfo.builder()
-                    .corp(realtor.getCorp())
-                    .name(realtor.getName())
-                    .businessAddress(realtor.getBusinessAddress())
-                    .imageSrc(realtor.getImageSrc())
-                    .phone(realtor.getPhone())
-                    .build();
+                        .corp(realtor.getCorp())
+                        .name(realtor.getName())
+                        .businessAddress(realtor.getBusinessAddress())
+                        .imageSrc(realtor.getImageSrc())
+                        .phone(realtor.getPhone())
+                        .build();
             }
         }
 
@@ -118,10 +126,10 @@ public class ContractResponse {
             private String gender;
             public static UserInfo toEntity(Users user) {
                 return UserInfo.builder()
-                    .name(user.getName())
-                    .phone(user.getPhone())
-                    .gender(user.getGender())
-                    .build();
+                        .name(user.getName())
+                        .phone(user.getPhone())
+                        .gender(user.getGender())
+                        .build();
             }
         }
 
@@ -137,14 +145,14 @@ public class ContractResponse {
             private List<String> images;
             public static ItemInfo toEntity(Item item, List<String> images) {
                 return ItemInfo.builder()
-                    .address(item.getHouse().getAddress())
-                    .buildingName(item.getHouse().getBuildingName())
-                    .deposit(item.getDeposit())
-                    .rent(item.getRent())
-                    .mainteneceFee(item.getMaintenanceFee())
-                    .exclusivePrivateArea(item.getHouse().getExclusivePrivateArea())
-                    .images(images)
-                    .build();
+                        .address(item.getHouse().getAddress())
+                        .buildingName(item.getHouse().getBuildingName())
+                        .deposit(item.getDeposit())
+                        .rent(item.getRent())
+                        .mainteneceFee(item.getMaintenanceFee())
+                        .exclusivePrivateArea(item.getHouse().getExclusivePrivateArea())
+                        .images(images)
+                        .build();
             }
         }
 
@@ -163,16 +171,16 @@ public class ContractResponse {
             private String tenantDetailAddress;
             public static ContractInfo toEntity(Contract contract) {
                 return ContractInfo.builder()
-                    .moveOnDate(contract.getMoveOnDate())
-                    .numberOfResidents(contract.getNumberOfResidents())
-                    .specialContract(contract.getSpecialContract())
-                    .downPayment(contract.getDownPayment())
-                    .balance(contract.getBalance())
-                    .commission(contract.getCommission())
-                    .termOfContract(contract.getTermOfContract())
-                    .tenantAge(contract.getTenantAge())
-                    .tenantDetailAddress(contract.getTenantDetailAddress())
-                    .build();
+                        .moveOnDate(contract.getMoveOnDate())
+                        .numberOfResidents(contract.getNumberOfResidents())
+                        .specialContract(contract.getSpecialContract())
+                        .downPayment(contract.getDownPayment())
+                        .balance(contract.getBalance())
+                        .commission(contract.getCommission())
+                        .termOfContract(contract.getTermOfContract())
+                        .tenantAge(contract.getTenantAge())
+                        .tenantDetailAddress(contract.getTenantDetailAddress())
+                        .build();
             }
         }
     }
