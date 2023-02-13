@@ -76,17 +76,24 @@ const PreviewCarousel = (props) => {
             return (
               <div
                 style={{
+                  width: "100%",
                   display: "flex",
                   position: "static",
-                  justifyContent: "center",
+                  justifyContent: "space-between",
                 }}
               >
-                <ul>
+                <ul
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
                   {items.map((item, idx) => {
                     return (
                       <li
                         style={{
-                          width: `${88 / items.length}%`,
+                          width: `${(90 - items.length) / items.length}%`,
                           height: "4em",
                           border: "1px solid #bbbbbb",
                           borderRadius: "4px",
