@@ -163,16 +163,12 @@ public class RealtorService {
         return response.success(list,"공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findRealtorList(UserDetails user, String orderBy) {
-        String region = "";
-        if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            region = usersRepository.findById(user.getUsername()).get().getRegion();
-        }
+    public ResponseEntity<?> findRealtorList(String orderBy) {
         List<RealtorProjectionInterface> findRealtors = null;
         if(orderBy.equals("review")) {
-            findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc(region);
+            findRealtors = realtorRepository.findAllByOrderByCountByReviewsDesc();
         } else if(orderBy.equals("star")) {
-            findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc(region);
+            findRealtors = realtorRepository.findAllByOrderByCountByStarRatingDesc();
         } else if(orderBy.equals("item")) {
             findRealtors = realtorRepository.findAllByOrderByCountByItemDesc();
         }

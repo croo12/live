@@ -39,11 +39,12 @@ public class ConsultingRequest {
     }
 
     @Getter
+    @Builder
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class ChangeStatus {
 
-        private Long counsultingNo;
+        private Long consultingNo;
         private int status;
     }
 }
