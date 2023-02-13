@@ -2,13 +2,16 @@ import axiosInstance from "../util/axios";
 import { getAuthHeader } from "../util/axios";
 
 export const getContractInfoByItemNo = async (data) => {
+  const headers = getAuthHeader();
+
+  console.log(data, headers);
+
   const getData = async () => {
     const response = await axiosInstance.get(`/consultings/contracts/${data}`, {
-      headers: {
-        Authorization: getAuthHeader().Authorization,
-        "Content-type": "application/json",
-      },
+      headers,
     });
+
+    console.log(response);
 
     if (response.data.result === "fail") {
       throw new Error(404);
