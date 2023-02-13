@@ -18,6 +18,7 @@ const MyPageUser = () => {
   };
 
   const [btnActive, setBtnActive] = useState(0);
+  const { userInfo } = useAuth();
 
   const recordOnClickHandler = () => {
     setBtnActive(1);
@@ -36,7 +37,6 @@ const MyPageUser = () => {
     navigate("/mypage/user/user-reservation");
   };
 
-  const userInfo = useLoaderData();
   console.log(userInfo);
 
   const [num, setNum] = useState(0);
@@ -48,7 +48,7 @@ const MyPageUser = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-              <img
+                <img
                   alt="프로필"
                   src={userInfo.imageSrc !== null ? userInfo.imageSrc : sample}
                 ></img>
@@ -136,12 +136,6 @@ const MyPageUser = () => {
       <Outlet />
     </>
   );
-};
-
-export const myPageUserLoader = async () => {
-  const response = await getUserInfo();
-  if (response) return response;
-  else return null;
 };
 
 export default MyPageUser;

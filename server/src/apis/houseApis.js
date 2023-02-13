@@ -110,3 +110,24 @@ export const modifyHouseData = async (data) => {
 export const getHouseListByRealtorNo = () => {
   // items/realtors/
 };
+
+
+
+export const getItemListBySearch = async (data) => {
+  let response = [];
+
+  const headers = getAuthHeader();
+
+  await axiosInstance
+    .post(`items/regions`, data, {
+      headers,
+    })
+    .then((res) => {
+      console.log(res);
+      if (res) {
+        response = res.data.data;
+      }
+    });
+
+  return response;
+};

@@ -3,7 +3,9 @@
     font-family: 'Roboto';
     font-style: normal;
 
-    h3 {}
+    padding: 2rem 8rem;
+
+    > h2 { margin-bottom: 3rem;}
 
     .date {
         text-align: left;
@@ -106,6 +108,8 @@
             color: white;
             font-weight: 700;
             border: none;
+
+            cursor: pointer;
         }
     }
 }

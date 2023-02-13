@@ -95,12 +95,13 @@ export const realtorLogin = async (data, dispatch) => {
     refreshToken: null,
   };
 
-  await axiosInstance.post(`realtors/login`, data).then(({ data }) => {
+  await axiosInstance.post(`realtors/login`, data).then((res) => {
+    const data = res.data;
     if (data.state === 200) {
       result = { ...result, ...data.data };
       dispatch(userAction.login(result));
     } else {
-      console.log(data);
+      console.log(res);
     }
   });
 
