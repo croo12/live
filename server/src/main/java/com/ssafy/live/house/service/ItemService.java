@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -142,10 +143,12 @@ public class ItemService {
         return response.success(itemList, "매물 목록이 조회되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findItemsByRealtor(Long realtorNo, String regionCode) {
+    public ResponseEntity<?> findItemsByRealtor(UserDetails user, String regionCode) {
 
-        realtorRepository.findById(realtorNo).orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
-        List<ItemResponse.ItemSimpleResponse> itemList = itemRepository.findByRealtorAndRegionCode(realtorNo, regionCode)
+        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
+                .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
+
+        List<ItemResponse.ItemSimpleResponse> itemList = itemRepository.findByRealtorAndRegionCode(realtor.getNo(), regionCode)
                 .stream()
                 .map(ItemResponse.ItemSimpleResponse::toDto)
                 .collect(Collectors.toList());
