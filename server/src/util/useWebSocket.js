@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-const JAVA_SERVER_URL =
-  process.env.NODE_ENV === "development"
-    ? `wss://localhost:8080/groupcall`
-    : `wss://live-live.store:8080/groupcall`;
+const JAVA_SERVER_URL = `wss://live-live.store:8080/groupcall`;
 
 const useWebSocket = () => {
   const [responseMsg, setResponseMsg] = useState("");

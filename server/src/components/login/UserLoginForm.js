@@ -4,7 +4,7 @@
 
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import Alert from "../../UI/Alert";
+import CustomAlert from "../../UI/Alert";
 import Modal from "../../UI/Modal";
 import axiosInstance from "../../util/axios";
 import FindPassModalOverlay from "./FindPassModalOverlay";
@@ -139,12 +139,14 @@ const UserLoginForm = (props) => {
         </div>
       </form>
 
-      <Alert
-        title={"임시 비밀번호 전송"}
-        content={`고객님의 이메일주소로 임시 비밀번호를 전송하였습니다`}
-        visible={viewAlert}
-        setVisible={setViewAlert}
-      />
+      {viewAlert && (
+        <CustomAlert
+          title={"임시 비밀번호 전송"}
+          content={`고객님의 이메일주소로 임시 비밀번호를 전송하였습니다`}
+          // visible={viewAlert}
+          setter={setViewAlert}
+        />
+      )}
     </>
   );
 };

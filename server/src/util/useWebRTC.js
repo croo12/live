@@ -152,6 +152,7 @@ const useWebRTC = ({
       delete participants.current[request.name];
     },
     register() {
+      console.log("등록시도합니다...");
       const message = {
         id: "joinRoom",
         name: name,

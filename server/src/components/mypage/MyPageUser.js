@@ -16,10 +16,6 @@ const MyPageUser = () => {
     navigate("/mypage/user-detail-info");
   };
 
-  const { userInfo, doLogout } = useAuth();
-
-  console.log(userInfo);
-
   const [btnActive, setBtnActive] = useState(0);
 
   const recordOnClickHandler = () => {
@@ -51,7 +47,10 @@ const MyPageUser = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-                <img alt="프로필" src={userInfo.imageSrc}></img>
+              <img
+                  alt="프로필"
+                  src={userInfo.imageSrc !== null ? userInfo.imageSrc : sample}
+                ></img>
               </div>
               <div className={classes.rightDesc}>
                 <p>
@@ -138,10 +137,9 @@ const MyPageUser = () => {
   );
 };
 
-export const userInfoLoader = async () => {
+export const myPageUserLoader = async () => {
   const response = await getUserInfo();
-
-  if (response?.data) return response.data.data;
+  if (response) return response;
   else return null;
 };
 

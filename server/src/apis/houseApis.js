@@ -1,4 +1,4 @@
-import axiosInstance from "../util/axios";
+import axiosInstance, { getAuthHeader } from "../util/axios";
 
 export const registHouseData = async (data) => {
   const formData = new FormData();
@@ -12,10 +12,13 @@ export const registHouseData = async (data) => {
     formData.append("files", element);
   });
 
+  const headers = getAuthHeader();
+
   const sendRequest = async () => {
-    const response = await axiosInstance.post("/items", formData, {
+    const response = await axiosInstance.post("items", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        ...headers,
       },
     });
 
@@ -54,10 +57,6 @@ export const getHouseByItemNo = async (data) => {
   const getData = async () => {
     const response = await axiosInstance.get(`/items/${data}`);
 
-    if (response.data.result === "fail") {
-      throw new Error(404);
-    }
-
     return response.data;
   };
 
@@ -65,9 +64,7 @@ export const getHouseByItemNo = async (data) => {
     const response = await getData();
 
     return response;
-  } catch {
-    // 따로처리안할래~~
-  }
+  } catch {}
 };
 
 export const modifyHouseData = async (data) => {
@@ -80,9 +77,13 @@ export const modifyHouseData = async (data) => {
     new Blob([JSON.stringify(data.jsonData)], { type: "application/json" })
   );
 
+  console.log(data);
+
   data.files.forEach((element) => {
     formData.append("files", element);
   });
+
+  const headers = getAuthHeader();
 
   const sendRequest = async () => {
     // 요청보낼 떄 URI {itemNo} 굳이 넘겨줘야 되나? 필요가 있음?????
@@ -92,6 +93,7 @@ export const modifyHouseData = async (data) => {
       {
         headers: {
           "Content-Type": "multipart/form-data",
+          ...headers,
         },
       }
     );

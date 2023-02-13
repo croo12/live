@@ -32,8 +32,6 @@ const LoginPage = () => {
     // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
 
     try {
-      const tmp = {};
-
       const result = await userLogin(userLoginInfo, dispatch);
       const { accessToken } = result;
 
@@ -41,6 +39,9 @@ const LoginPage = () => {
       dispatch(userAction.setIsRealtor(false));
 
       const userInfo = await getUserInfo(accessToken);
+      console.log(userInfo);
+
+      const tmp = {};
       tmp["profile"] = userInfo.imageSrc;
       tmp["id"] = userInfo.id;
       tmp["isRealtor"] = false;

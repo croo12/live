@@ -11,8 +11,10 @@ import useWebSocket from "../util/useWebSocket";
 import useWebRTC from "../util/useWebRTC";
 import { useNavigate } from "react-router-dom";
 import useRecording from "../util/useRecording";
+import { useSelector } from "react-redux";
 
 const ConsultingMeetPage = ({
+  userInfo,
   isRealtor,
   status,
   statusChangeHandler,
@@ -29,7 +31,7 @@ const ConsultingMeetPage = ({
   const [info, setInfo] = useState("준비중...");
 
   //이름 만들기용 현재 무작위지만 나중에 실제 닉네임으로 변경 필요
-  const [name] = useState(makeUUID());
+  const [name] = useState(userInfo.id);
 
   //녹화 관리용 [녹화 상태인가? , 녹화시작, 녹화종료]
   const [recording, startRecording, stopRecording] = useRecording({
@@ -62,6 +64,13 @@ const ConsultingMeetPage = ({
     sessionId,
   });
 
+  const firstRegist = useRef(!isRealtor);
+
+  if (firstRegist.current) {
+    setTimeout(() => register(), 2000);
+    firstRegist.current = !firstRegist.current;
+  }
+
   useEffect(() => {
     console.info(`Received message: `, responseMsg);
 
@@ -85,6 +94,8 @@ const ConsultingMeetPage = ({
       //상대가 나갔다
       case "participantLeft":
         onParticipantLeft(responseMsg);
+        setInfo(`상대의 연결이 끊어졌습니다`);
+        setTimeout(() => setInfo(""), 2000);
         break;
 
       case "receiveVideoAnswer":
@@ -133,8 +144,7 @@ const ConsultingMeetPage = ({
 
       case USER_STATUS.ENTER_SESSION:
         setInfo(`중개사에게 연결 중입니다...`);
-        setTimeout(register, 2000);
-        
+
         break;
 
       case USER_STATUS.CONNECTING:
