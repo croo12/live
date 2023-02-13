@@ -2,11 +2,24 @@ import { useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import HouseDetailCom from "./HouseDetailCom";
-import classes from "./HouseCardContent.module.scss";
-
+//import classes from "./HouseCardContent.module.scss";
+import classes from "./HouseCardContent2.module.scss";
 import sample from "../assets/image/sample.jpg";
 
-const HouseCardContent = (props) => {
+const HouseCardContent = ({
+  props,
+  address,
+  addressDetail,
+  buildingName,
+  deposit,
+  description,
+  imageSrc,
+  maintenanceFee,
+  rent,
+  consultingNo,
+  exclusivePrivateArea,
+  itemNo
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isModal, setModal] = useState(false);
@@ -23,26 +36,26 @@ const HouseCardContent = (props) => {
 
   return (
     <>
-      <div className={classes.houseCardContent}>
-        <div className={classes.upperCard}>
-          <div className={classes.leftBox}>
-            <h3> 월세 500/ 60 </h3>
-            <p> 크기 35 /관리비 n만 </p>
-            <p> 대전 서구 갈마로... </p>
+      <div className={classes.HouseCardContent2}>
+        <div className={classes.houseContent}>
+          <div className={classes.leftContent}>
+            <img src={imageSrc}></img>
           </div>
-          <div className={classes.rightBox}>
-            <img src={sample} alt={"토토로"}></img>
+          <div className={classes.rightContent}>
+            <p>원룸</p>
+            <p>{buildingName}</p>
+            <h2>월세 {deposit}/{rent}</h2>
+            <p>
+              방 {exclusivePrivateArea}㎡ . 관리비 {
+                maintenanceFee === 0 ? ("없음") : (maintenanceFee)
+              }
+              <br /> {address} 
+              <br /> {addressDetail}
+              <br /> {description}
+            </p>
           </div>
-        </div>
-        <div className={classes.downCard}>
-          <button onClick={clickEventHandler}>상세 정보 보기 </button>
         </div>
       </div>
-      {isModal && (
-        <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom houseId={123} />
-        </Modal>
-      )}
     </>
   );
 };
