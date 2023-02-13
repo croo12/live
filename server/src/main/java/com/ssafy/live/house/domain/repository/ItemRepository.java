@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    @Query(value = "SELECT i.* from Item i "
-        + "inner join House h on h.house_no=i.house_no "
-        + "inner join Realtor r on r.realtor_no=i.realtor_no "
+    @Query(value = "SELECT i.* from item i "
+        + "inner join house h on h.house_no=i.house_no "
+        + "inner join realtor r on r.realtor_no=i.realtor_no "
         + "WHERE h.building_name LIKE %:word% "
         + "AND h.region_code LIKE :regionCode% "
         + "AND h.contracted = false "
