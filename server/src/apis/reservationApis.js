@@ -50,12 +50,28 @@ export const getReservationList = async (data) => {
 
 export const getReservationDetail = async (data) => {
   let result = null;
-  console.log("데이터 보내줘라"+data)
   await axiosInstance.get(`consultings/${data}`, {
       headers: getAuthHeader(),
     }).then((data)=> {
       result = data.data;
-      console.log("api 스토어!!! "+result)
+    });
+    return result;
+};
+
+export const changeReservationStatus = async (data) => {
+  const headers = getAuthHeader();
+  let result = null;
+  await axiosInstance
+    .patch("consultings", {
+      consultingNo : data['consultingNo'],
+      status : data['status']
+    }, { headers : headers })
+    .then((res) => {
+      console.log("예약 성공", res);
+      result = res.data;
+    })
+    .catch((err) => {
+      console.error("예약하기에서 에러...", err);
     });
     return result;
 };

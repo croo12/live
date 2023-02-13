@@ -85,7 +85,7 @@ const MyPageUserDetail = () => {
   );
 };
 
-export const userInfoLoader = async () => {
+export const userDetailInfoLoader = async () => {
   const response = await getUserInfo();
 
   if (response?.data) return response.data.data;

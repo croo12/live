@@ -2,19 +2,66 @@ import classes from "./MyPageRealtorReservationDetail.module.scss";
 
 import ListBox from "../../UI/ListBox";
 import MyReservationSearchBox from "./MyReservationSearchBox";
-import HouseCardContent2 from "../HouseCardContent2";
+import HouseCardContent from "../HouseCardContent";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { getReservationDetail } from "../../apis/reservationApis";
+import axiosInstance from "../../util/axios";
+import { useEffect, useState } from "react";
+import { registConsultingItems } from "../../apis/consultingApi";
 
 const MyPageRealtorReservationDetail = () => {
+  const { reservationDetail, sidoList } = useLoaderData();
+  const [selectedList, setSelectedList] = useState(reservationDetail.itemList);
+  const [wantAddList, setWantAddList] = useState([]);
+
+  const navigation = useNavigate();
+
+  const searchedListClickHander = (data) => {
+    setWantAddList([...wantAddList, data]);
+  };
+
+  const removeItemClickHandler = ({ idx }) => {
+    if (window.confirm("선택한 매물을 정말로 삭제하시겠습니까? ")) {
+      setWantAddList(wantAddList.filter((el, index) => index !== idx));
+    }
+  };
+
+  const removeSelectedItemClickHandler = ({ idx }) => {
+    if (window.confirm("고객이 선택한 매물을 정말로 삭제하시겠습니까?"))
+      setSelectedList(selectedList.filter((el, index) => index !== idx));
+  };
+
+  const { consultingNo } = useParams();
+
+  const adjustConsulting = () => {
+    const newArray = [...selectedList, ...wantAddList];
+    const itemList = [];
+
+    console.log(newArray);
+
+    newArray.forEach((element) => {
+      itemList.push(element.itemNo);
+    });
+
+    console.log(itemList);
+
+    const data = { itemList };
+
+    if (confirm("정말로 수정하시겠습니까?")) {
+      registConsultingItems(consultingNo, data);
+      navigation("/mypage/realtor/realtor-reservation");
+    }
+  };
+
   return (
     <>
-      중개사 예약 상세
       <div className={classes.reservationdetailrealtor}>
-        <h3>예약 내역</h3>
+        <h2>예약 내역</h2>
         <div className={classes.date}>
           <p>
             <strong>일시</strong>
             <br />
-            2023년 1월 25일 (수) 오전 11:00
+            {reservationDetail.consultingDate.substring(0, 10)}
           </p>
         </div>
         <div className={classes.require}>
@@ -22,10 +69,7 @@ const MyPageRealtorReservationDetail = () => {
             <strong>요청사항</strong>
           </p>
           <div className={classes.requestbox}>
-            <p>
-              저는 대전시 유성구 덕명동 매물을 원해요. 추가로 좋은 매물이 있다면
-              추천해주세요.
-            </p>
+            <p>{reservationDetail.requirement}</p>
           </div>
           <br />
           <hr />
@@ -36,9 +80,10 @@ const MyPageRealtorReservationDetail = () => {
           <div className={classes.selectlocation}>
             <h4>어떤 매물을 원하세요?</h4>
             <div>
-              <ListBox dataArray={[1]}>
-                <MyReservationSearchBox />
-              </ListBox>
+              <MyReservationSearchBox
+                sidoList={sidoList}
+                searchedListClickHander={searchedListClickHander}
+              />
             </div>
           </div>
           <div className={classes.forsalelist}>
@@ -46,20 +91,26 @@ const MyPageRealtorReservationDetail = () => {
               <p>
                 <strong>현재 요청된 매물</strong>
               </p>
-              <ListBox dataArray={[1, 2]} direction={false}>
-                <HouseCardContent2 />
+              <ListBox dataArray={selectedList} direction={false}>
+                <HouseCardContent
+                  searchedListClickHandler={removeSelectedItemClickHandler}
+                />
               </ListBox>
             </div>
             <div className={classes.addedforsale}>
               <p>
                 <strong>추가한 매물</strong>
               </p>
-              <ListBox dataArray={[1, 2]} direction={false}>
-                <HouseCardContent2 />
+              <ListBox dataArray={wantAddList} direction={false}>
+                <HouseCardContent
+                  searchedListClickHandler={removeItemClickHandler}
+                />
               </ListBox>
             </div>
           </div>
-          <button className={classes.btn2}>적용하기</button>
+          <button className={classes.btn2} onClick={adjustConsulting}>
+            적용하기
+          </button>
         </div>
       </div>
     </>
@@ -67,3 +118,21 @@ const MyPageRealtorReservationDetail = () => {
 };
 
 export default MyPageRealtorReservationDetail;
+
+export const realtorReservationLoader = async ({ params }) => {
+  console.log(params.consultingNo);
+
+  const reservationDetail = await getReservationDetail(params.consultingNo);
+  const sidoList = await axiosInstance.get("regions", {
+    params: {
+      regionCode: "",
+    },
+  });
+
+  const result = {
+    reservationDetail: reservationDetail.data,
+    sidoList: sidoList.data.data,
+  };
+
+  return result;
+};

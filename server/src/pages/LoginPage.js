@@ -36,7 +36,7 @@ const LoginPage = () => {
       if (result.message) {
         return result.message;
       }
-      
+
       const { accessToken } = result;
 
       console.log("유저 로그인 성공");
@@ -50,6 +50,7 @@ const LoginPage = () => {
       tmp["id"] = userInfo.id;
       tmp["isRealtor"] = false;
       tmp["name"] = userInfo.name;
+      tmp["score"] = userInfo.score;
 
       dispatch(userAction.setInfo(tmp));
 
@@ -81,7 +82,7 @@ const LoginPage = () => {
 
     dispatch(userAction.setInfo(tmp));
 
-    navigation("/");
+    navigation("/mypage/realtor");
   };
 
   return (

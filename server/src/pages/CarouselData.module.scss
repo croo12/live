@@ -1,17 +1,25 @@
 .carouseldata {
     .upImg {
-        width: 16vw;
-        height: 250px;
+        width: 14vw;
+        height: 14vw;
         border-radius: 20px;
         margin-right: 65px;
         display: flex;
         justify-content: center;
         align-items:center;
+        background-size: cover;
     }
     .downDesc{
         color: white; 
         text-align: left;
         padding: 10px 30px;
+        .downDescInfo {
+            p {
+                padding: 3px 0;
+                font-size: 0.8em;
+                font-weight: 300;
+            }
+        }
     }
 }
 
@@ -32,6 +40,12 @@
                 color: white;
                 text-align: left;
                 padding: 10px 30px;
+                .downDescInfo {
+                    p {
+                        font-size: 0.8em;
+                        font-weight: 300;
+                    }
+                }
             }
         }
     

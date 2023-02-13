@@ -11,6 +11,7 @@ const HouseCardContent2 = ({
   maintenanceFee,
   rent,
   consultingNo,
+  exclusivePrivateArea,
   itemNo
 }) => {
   const navigation = useNavigate();
@@ -30,7 +31,7 @@ const HouseCardContent2 = ({
             <p>{buildingName}</p>
             <h2>월세 {deposit}/{rent}</h2>
             <p>
-              방 1.29㎡ . 관리비 {
+              방 {exclusivePrivateArea}㎡ . 관리비 {
                 maintenanceFee === 0 ? ("없음") : (maintenanceFee)
               }
               <br /> {address} 
