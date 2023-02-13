@@ -21,6 +21,10 @@ import MyPageUserRecord from "../components/mypage/MyPageUserRecord";
 import MyPageUserContract from "../components/mypage/MyPageUserContract";
 import MyPageUserContractDetail from "../components/mypage/MyPageUserContractDetail";
 import MyPageRealtor from "../components/mypage/MyPageRealtor";
+import MyPageRealtorReview from "../components/mypage/MyPageRealtorReview";
+import MyPageRealtorContract from "../components/mypage/MyPageRealtorContract";
+import MyPageRealtorReservation from "../components/mypage/MyPageRealtorReservation";
+import MyPageRealtorReservationDetail from "../components/mypage/MyPageRealtorReservationDetail";
 import MyPageRealtorDetail from "../components/mypage/MyPageRealtorDetail";
 import MyPageRealtorModify from "../components/mypage/MyPageRealtorModify";
 import ConsultingPage from "../pages/ConsultingPage";
@@ -39,6 +43,7 @@ import { loader as houseModifyLoader } from "../components/house/HouseModify";
 import { ProtectedRouter } from "../components/common/AuthProtector";
 import ContractPageUser from "../components/contract/ContractPageUser";
 import ContractPageRealtor from "../components/contract/ContractPageRealtor";
+import { loader as ContractUserLoader } from "../components/contract/ContractPageUser";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -71,16 +76,18 @@ const router = createBrowserRouter(
         ></Route>
       </Route>
       <Route path="mypage" element={<MyPage />}>
-        <Route path="" element={<Navigate replace to="user" />} />
+        <Route path="" element={<Navigate replace to="realtor" />} />
         <Route path="user" element={<MyPageUser />} loader={myPageUserLoader}>
           <Route path="user-record" element={<MyPageUserRecord />}></Route>
           <Route path="user-review" element={<MyPageUserReview />}></Route>
-          <Route path="user-reservation" element={<MyPageUserReservation />}>
-            <Route
-              path="user-reservation-detail"
-              element={<MyPageUserReservationDetail />}
-            ></Route>
-          </Route>
+          <Route
+            path="user-reservation"
+            element={<MyPageUserReservation />}
+          ></Route>
+          <Route
+            path="user-reservation-detail"
+            element={<MyPageUserReservationDetail />}
+          ></Route>
           <Route path="user-contract" element={<MyPageUserContract />}>
             <Route
               path="user-contract-detail"
@@ -98,16 +105,34 @@ const router = createBrowserRouter(
           element={<MyPageUserModify />}
           loader={userInfoLoader}
         ></Route>
-        <Route path="realtor" element={<MyPageRealtor />}></Route>
+        <Route path="realtor" element={<MyPageRealtor />}>
+          <Route
+            path="realtor-review"
+            element={<MyPageRealtorReview />}
+          ></Route>
+          <Route
+            path="realtor-contract"
+            element={<MyPageRealtorContract />}
+          ></Route>
+          <Route
+            path="realtor-reservation"
+            element={<MyPageRealtorReservation />}
+          ></Route>
+          <Route
+            path="realtor-reservation-detail"
+            element={<MyPageRealtorReservationDetail />}
+          ></Route>
+        </Route>
+        <Route
+          path="realtor-detail-info"
+          element={<MyPageRealtorDetail />}
+        ></Route>
+        <Route
+          path="realtor-modify-info"
+          element={<MyPageRealtorModify />}
+        ></Route>
       </Route>
-      <Route
-        path="realtor-detail-info"
-        element={<MyPageRealtorDetail />}
-      ></Route>
-      <Route
-        path="realtor-modify-info"
-        element={<MyPageRealtorModify />}
-      ></Route>
+
       <Route
         path="alert"
         element={
@@ -119,7 +144,11 @@ const router = createBrowserRouter(
       ></Route>
       <Route path="contract" element={<ContractPage />}>
         <Route path="" element={<Navigate replace to="user-contract" />} />
-        <Route path="user-contract" element={<ContractPageUser />}></Route>
+        <Route
+          path="user-contract"
+          element={<ContractPageUser />}
+          loader={ContractUserLoader}
+        ></Route>
         <Route
           path="realtor-contract"
           element={<ContractPageRealtor />}

@@ -15,18 +15,21 @@ const MyPageRealtor = () => {
 
   const { userInfo, doLogout } = useAuth();
 
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const [btnActive, setBtnActive] = useState(0);
 
-  const alarmonClickHandler = () => {
-    setBtnActive(1);
-  };
   const reviewonClickHandler = () => {
+    setBtnActive(1);
+    navigate("/mypage/realtor/realtor-review");
+  };
+  const contractOnClickHandler = () => {
     setBtnActive(2);
+    navigate("/mypage/realtor/realtor-contract");
   };
   const reservationonClickHandler = () => {
     setBtnActive(3);
+    navigate("/mypage/realtor/realtor-reservation");
   };
   return (
     <>
@@ -57,12 +60,12 @@ const MyPageRealtor = () => {
                 btnActive === 1 ? classes.active : ""
               }`}
             >
-              <button onClick={alarmonClickHandler}>
+              <button onClick={reviewonClickHandler}>
                 <div className={classes.leftLogo}>
                   <BsFillBellFill />
                 </div>
                 <div className={classes.rightDesc}>
-                  <strong>알람</strong>
+                  <strong>리뷰 조회</strong>
                 </div>
               </button>
             </div>
@@ -71,7 +74,7 @@ const MyPageRealtor = () => {
                 btnActive === 2 ? classes.active : ""
               }`}
             >
-              <button onClick={reviewonClickHandler}>
+              <button onClick={contractOnClickHandler}>
                 <div className={classes.leftLogo}>
                   <BsSearch />
                 </div>
@@ -97,6 +100,7 @@ const MyPageRealtor = () => {
           </div>
         </div>
       </div>
+      <Outlet />
     </>
   );
 };
