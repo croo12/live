@@ -1,10 +1,72 @@
 import { useState } from "react";
+import axiosInstance, { getAuthHeader } from "../../util/axios";
 import classes from "./ContractExpectedCost.module.scss";
 
-const ContractExpectedCost = () => {
-  const [downPayment] = useState(10000000); // 계약금
-  const [balance] = useState(9000000); // 잔금
-  const [brokerageFee] = useState(300000);
+const ContractExpectedCost = (props) => {
+  const deposit = props.passInfo.deposit;
+  const rent = props.passInfo.rent;
+
+  const balance = deposit * 0.1;
+  const downPayment = deposit * 0.9;
+
+  let transactionAmount = deposit * (rent * 100);
+  let commission = 0;
+  if (transactionAmount < 50000000) {
+    transactionAmount = deposit * (rent * 70);
+  }
+
+  if (transactionAmount < 50000000) {
+    commission = transactionAmount * 0.005;
+    if (commission > 200000) {
+      commission = 200000;
+    }
+  } else if (transactionAmount < 100000000) {
+    commission = transactionAmount * 0.004;
+    if (commission > 300000) {
+      commission = 300000;
+    }
+  } else if (transactionAmount < 600000000) {
+    commission = transactionAmount * 0.003;
+  } else if (transactionAmount < 1200000000) {
+    commission = transactionAmount * 0.004;
+  } else if (transactionAmount < 1500000000) {
+    commission = transactionAmount * 0.005;
+  } else {
+    commission = transactionAmount * 0.006;
+  }
+
+  const onClickHandler = async () => {
+    const totInfoData = {
+      termOfContract: props.passInfo.userTermOfContract,
+      moveOnDate: props.passInfo.userMoveOnDate,
+      tenantAddress: props.passInfo.address,
+      addressDetail: props.passInfo.addressDetail,
+      tenantAge: props.passInfo.age,
+      numberOfResidents: props.passInfo.numberOfResidents,
+      specialContract: props.passInfo.specialContract,
+      downPayment: downPayment,
+      balance: balance,
+      commission: commission,
+    };
+
+    console.log(totInfoData);
+
+    const infoTotHandler = JSON.stringify(totInfoData);
+    console.log(infoTotHandler);
+
+    try {
+      const result = await axiosInstance.post("contracts", infoTotHandler, {
+        headers: {
+          Authorization: getAuthHeader().Authorization,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className={classes.expectedCost}>
       <div className={classes.inner}>
@@ -13,43 +75,22 @@ const ContractExpectedCost = () => {
           <div className={classes.costBox}>
             <div className={classes.downPayment}>
               <p>계약금</p>
-              <input
-                onChange={() => {
-                  console.log("하위");
-                }}
-                type="text"
-                value={downPayment + "원"}
-              />
+              <input type="text" defaultValue={downPayment + "원"} />
             </div>
             <div className={classes.balance}>
               <p>잔금</p>
-              <input
-                onChange={() => {
-                  console.log("하위");
-                }}
-                type="text"
-                value={balance + "원"}
-              />
+              <input type="text" defaultValue={balance + "원"} />
             </div>
             <div className={classes.brokerageFee}>
               <p>중개보수</p>
-              <input
-                onChange={() => {
-                  console.log("하위");
-                }}
-                type="text"
-                value={brokerageFee + "원"}
-              />
+              <input type="text" defaultValue={commission + "원"} />
             </div>
           </div>
           <hr />
           <div className={classes.cost}>
             <div className={classes.totalEstimatedCost}>
               <h5>총 예상 비용</h5>
-              <strong>1,030,000원</strong>
-            </div>
-            <div className={classes.totalCost}>
-              <strong>일금 일천만삼십만원정</strong>
+              <strong>{downPayment + balance + commission}원</strong>
             </div>
           </div>
           <br />
@@ -69,7 +110,7 @@ const ContractExpectedCost = () => {
               </div>
             </div>
           </div>
-          <button>계약 요청하기</button>
+          <button onClick={onClickHandler}>계약 요청하기</button>
         </div>
       </div>
     </div>
