@@ -16,7 +16,7 @@ public class ContractRequest {
     @Builder
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public class Regist {
+    public static class Regist {
 
         @NotNull(message = "공인중개사 번호는 필수 입력값입니다.")
         private Long realtorNo;
@@ -57,7 +57,7 @@ public class ContractRequest {
     @Builder
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public class Update {
+    public static class Update {
 
         private Long contractNo;
         private int deposit;
