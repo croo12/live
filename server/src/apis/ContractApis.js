@@ -23,5 +23,6 @@ export const getContractInfoByItemNo = async (data) => {
     return response;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };

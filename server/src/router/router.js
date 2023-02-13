@@ -47,6 +47,7 @@ import ConsultingRightReservationList from "../components/consulting/ConsultingR
 import ConsultingRightReservationHouseList, {
   consultingDetailLoader,
 } from "../components/consulting/ConsultingRightReservationHouseList";
+import { loader as ContractUserLoader } from "../components/contract/ContractPageUser";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -93,7 +94,6 @@ const router = createBrowserRouter(
         ></Route>
       </Route>
       <Route path="mypage" element={<MyPage />}>
-        <Route path="" element={<Navigate replace to="realtor" />} />
         <Route path="user" element={<MyPageUser />} loader={myPageUserLoader}>
           <Route path="user-record" element={<MyPageUserRecord />}></Route>
           <Route path="user-review" element={<MyPageUserReview />}></Route>
