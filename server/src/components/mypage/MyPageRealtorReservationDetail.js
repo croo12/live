@@ -2,9 +2,11 @@ import classes from "./MyPageRealtorReservationDetail.module.scss";
 
 import ListBox from "../../UI/ListBox";
 import MyReservationSearchBox from "./MyReservationSearchBox";
-import HouseCardContent2 from "../HouseCardContent2";
+import HouseCardContent from "../HouseCardContent";
+import { useLoaderData } from "react-router-dom";
 
 const MyPageRealtorReservationDetail = () => {
+  const getLoaderData = useLoaderData().data;
   return (
     <>
       중개사 예약 상세
@@ -14,7 +16,7 @@ const MyPageRealtorReservationDetail = () => {
           <p>
             <strong>일시</strong>
             <br />
-            2023년 1월 25일 (수) 오전 11:00
+            {getLoaderData.consultingDate.substring(0, 10)}
           </p>
         </div>
         <div className={classes.require}>
@@ -23,8 +25,7 @@ const MyPageRealtorReservationDetail = () => {
           </p>
           <div className={classes.requestbox}>
             <p>
-              저는 대전시 유성구 덕명동 매물을 원해요. 추가로 좋은 매물이 있다면
-              추천해주세요.
+            {getLoaderData.requirement}
             </p>
           </div>
           <br />
@@ -46,8 +47,8 @@ const MyPageRealtorReservationDetail = () => {
               <p>
                 <strong>현재 요청된 매물</strong>
               </p>
-              <ListBox dataArray={[1, 2]} direction={false}>
-                <HouseCardContent2 />
+              <ListBox dataArray={getLoaderData.itemList} direction={false}>
+                <HouseCardContent />
               </ListBox>
             </div>
             <div className={classes.addedforsale}>
@@ -55,7 +56,7 @@ const MyPageRealtorReservationDetail = () => {
                 <strong>추가한 매물</strong>
               </p>
               <ListBox dataArray={[1, 2]} direction={false}>
-                <HouseCardContent2 />
+                <HouseCardContent />
               </ListBox>
             </div>
           </div>
