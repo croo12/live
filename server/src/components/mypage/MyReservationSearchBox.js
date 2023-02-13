@@ -1,78 +1,148 @@
 import SelectBox from "../../UI/SelectBox";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import axiosInstance from "../../util/axios";
 
 import classes from "./MyReservationSearchBox.module.scss";
 
-const dummyMaker = (str) => {
-  return [
-    { name: `${str}이름 1`, value: `${str} value 1` },
-    { name: `${str}이름 2`, value: `${str} value 2` },
-    { name: `${str}이름 3`, value: `${str} value 3` },
-  ];
-};
-
 const MyReservationSearchBox = (props) => {
-  const sido = useRef("");
-  const gugun = useRef("");
-  const dong = useRef("");
-  const refDate = useRef(new Date());
+  const [sido, setSido] = useState();
+  const [gugun, setGugun] = useState();
+  const [dong, setDong] = useState();
+  const buildingName = useRef();
 
-  const regionsSido = "/regions/sidos로 얻은 데이터";
-  const regionsGugun = "/regions/guguns로 얻은 데이터";
-  const regionsDong = "/regions/dongs로 얻은 데이터";
+  const [sidoList, setSidoList] = useState([]);
+  const [gugunList, setGugunList] = useState([]);
+  const [dongList, setDongList] = useState([]);
 
-  const changeEventHandler = (e, refs) => {
-    console.log(e);
+  const changeEventHandler = (e, setter) => {
     if (e.target) {
-      refs.current = e.target.value;
+      if (e.target.id === "sidoSelector") {
+        setGugun("");
+        setDong("");
+      }
+
+      if (e.target.id === "gugunSelector") {
+        setDong("");
+      }
+
+      setter(e.target.value);
     } else {
-      refs.current = e;
+      console.log("뭥미");
     }
   };
+
+  useEffect(() => {
+    (async () => {  
+      try {
+        const result = await axiosInstance.get("regions", {
+          params: {
+            regionCode: "",
+          },
+        });
+  
+        const dataArray = result.data.data;
+        setSidoList(dataArray);
+      } catch (err) {
+        throw new Error(err);
+      }
+    })();
+  }, []);
+
+useEffect(() => {
+  (async () => {
+    if (!sido) {
+      setGugunList([]);
+      setDongList([]);
+      return;
+    }
+
+    try {
+      const result = await axiosInstance.get("regions", {
+        params: {
+          regionCode: sido.substring(0, 2),
+        },
+      });
+
+      const dataArray = result.data.data;
+      dataArray.shift();
+      setGugunList(dataArray);
+    } catch (err) {
+      throw new Error(err);
+    }
+  })();
+}, [sido]);
+
+useEffect(() => {
+  (async () => {
+    if (!gugun) {
+      setDongList([]);
+      return;
+    }
+
+    try {
+      const result = await axiosInstance.get("regions", {
+        params: {
+          regionCode: gugun.substring(0, 5),
+        },
+      });
+
+      const dataArray = result.data.data;
+      dataArray.shift();
+      setDongList(dataArray);
+    } catch (err) {
+      throw new Error(err);
+    }
+  })();
+}, [gugun]);
+
 
   return (
     <div className={classes.searchBox}>
       {/* <p>안녕 나는 검색상자</p> */}
       <div className={classes.selectBox}>
-        <SelectBox
-          dataArray={dummyMaker("시")}
+      <SelectBox
+          dataArray={sidoList}
           first={"시를 선택해 주세요"}
-          value={"value"}
-          name={"name"}
+          defaultValue={sido}
+          value={"regionCode"}
+          name={"sidoName"}
           id={"sidoSelector"}
           changeEventHandler={(e) => {
-            changeEventHandler(e, sido);
+            changeEventHandler(e, setSido);
           }}
         />
         <SelectBox
-          dataArray={dummyMaker("구")}
+          dataArray={gugunList}
           first={"구를 선택해 주세요"}
-          value={"value"}
-          name={"name"}
-          id={""}
+          defaultValue={gugun}
+          value={"regionCode"}
+          name={"gugunName"}
+          id={"gugunSelector"}
           changeEventHandler={(e) => {
-            changeEventHandler(e, gugun);
+            changeEventHandler(e, setGugun);
           }}
         />
         <SelectBox
-          dataArray={dummyMaker("동")}
+          dataArray={dongList}
           first={"동을 선택해 주세요"}
-          value={"value"}
-          name={"name"}
+          defaultValue={dong}
+          value={"regionCode"}
+          name={"dongName"}
+          id={"dongSelector"}
           changeEventHandler={(e) => {
-            changeEventHandler(e, dong);
+            changeEventHandler(e, setDong);
           }}
         />
       </div>
       <div className={classes.searchInput}>
-        <input placeholder="건물명을 입력해주세요." />{" "}
+        <input 
+        placeholder="건물명을 입력해주세요."
+        id="buildingName" 
+        ref={buildingName}
+        />
         <button
           onClick={() =>
-            props.clickSearchEventHandler(
-              sido.current,
-              gugun.current,
-              dong.current
-            )
+            props.clickSearchEventHandler(sido, gugun, dong, buildingName.current.value)
           }
         >
           검색
