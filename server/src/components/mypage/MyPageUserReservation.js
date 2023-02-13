@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import classes from "./MyReservation.module.scss";
 import ListBox from "../../UI/ListBox";
 import ReservationCardContent2 from "../ReservationCardContent2";
-import { DUMMY5 } from "../ReservationCardContent2";
-import { useLoaderData } from "react-router-dom";
 import { getReservationList } from "../../apis/reservationApis"
 
 const data = ["신청된 상담", "확정된 상담", "종료된 상담"];

@@ -81,12 +81,12 @@ const router = createBrowserRouter(
             path="user-reservation"
             element={<MyPageUserReservation />}
           >
-            <Route
+          </Route>
+          <Route
               path="user-reservation-detail/:consultingNo"
               element={<MyPageUserReservationDetail />}
               loader={consultingLoader}
             ></Route>
-          </Route>
           <Route path="user-contract" element={<MyPageUserContract />}>
             <Route
               path="user-contract-detail"

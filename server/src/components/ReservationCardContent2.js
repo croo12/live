@@ -25,7 +25,7 @@ const ReservationCardContent2 = ({
   const navigation = useNavigate();
   const onDetailHandler = () => {
     console.log(consultingNo);
-    navigation(`user-reservation-detail/${consultingNo}`);
+    navigation(`../user-reservation-detail/${consultingNo}`);
   };
 
   return (
