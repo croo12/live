@@ -37,3 +37,25 @@ export const registResevation = (data) => {
       console.error("예약하기에서 에러...", err);
     });
 };
+
+export const getReservationList = async (data) => {
+  let result = null;
+  await axiosInstance.get(`consultings?situation=${data}`, {
+      headers: getAuthHeader(),
+    }).then((data)=> {
+      result = data.data;
+    });
+    return result;
+};
+
+export const getReservationDetail = async (data) => {
+  let result = null;
+  console.log("데이터 보내줘라"+data)
+  await axiosInstance.get(`consultings/${data}`, {
+      headers: getAuthHeader(),
+    }).then((data)=> {
+      result = data.data;
+      console.log("api 스토어!!! "+result)
+    });
+    return result;
+};

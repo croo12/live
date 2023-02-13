@@ -57,7 +57,7 @@
     }
 
     .rightContent {
-        flex: 4;
+        flex: 6;
 
         div {
             display: flex;
@@ -66,8 +66,9 @@
             padding: 0 5% 5% 0;
 
             .btn0{
+                flex: 1;
+                padding: 1.5% 0;
                 margin-right: 2%;
-                padding: 2% 3%;
                 border:none;
                 font-size: 1rem;
                 background: #FF5959;
@@ -75,14 +76,13 @@
                 width:40%;
                 color:white;
                 font-weight:700;
-                position:relative;
                 left:55%;
             }
 
             .btn1 {
                 flex: 1;
+                padding: 1.5% 0;
                 margin-right: 2%;
-                padding: 1% 0;
                 border: 0.3px solid rgba(112, 112, 112, 1);
                 font-size: 1rem;
                 border-radius: 4px;
@@ -105,6 +105,7 @@
             .btn3{
                 flex: 1;
                 padding: 1.5% 0;
+                margin-right: 2%;
                 background: white;
                 border: 1px solid #42D395;
                 color: #42D395;

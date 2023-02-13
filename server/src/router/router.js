@@ -10,12 +10,14 @@ import HouseRegist from "../components/house/HouseRegist";
 import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
 import MyPageUser, { myPageUserLoader } from "../components/mypage/MyPageUser";
+//import { myReservationLoader } from "../components/mypage/MyReservation";
 import MyPageUserDetail, {
   userInfoLoader,
 } from "../components/mypage/MyPageUserDetail";
 import MyPageUserModify from "../components/mypage/MyPageUserModify";
 import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
 import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
+import { loader as consultingLoader } from "../components/mypage/MyPageUserReservationDetail";
 import MyPageUserReview from "../components/mypage/MyPageUserReview";
 import MyPageUserRecord from "../components/mypage/MyPageUserRecord";
 import MyPageUserContract from "../components/mypage/MyPageUserContract";
@@ -100,11 +102,13 @@ const router = createBrowserRouter(
           <Route
             path="user-reservation"
             element={<MyPageUserReservation />}
-          ></Route>
+          >
+          </Route>
           <Route
-            path="user-reservation-detail"
-            element={<MyPageUserReservationDetail />}
-          ></Route>
+              path="user-reservation-detail/:consultingNo"
+              element={<MyPageUserReservationDetail />}
+              loader={consultingLoader}
+            ></Route>
           <Route path="user-contract" element={<MyPageUserContract />}>
             <Route
               path="user-contract-detail"
@@ -162,7 +166,7 @@ const router = createBrowserRouter(
       <Route path="contract" element={<ContractPage />}>
         <Route path="" element={<Navigate replace to="user-contract" />} />
         <Route
-          path="user-contract"
+          path="user-contract/:itemNo"
           element={<ContractPageUser />}
           loader={ContractUserLoader}
         ></Route>
