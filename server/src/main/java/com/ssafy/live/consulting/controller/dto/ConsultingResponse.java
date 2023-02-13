@@ -89,7 +89,7 @@ public class ConsultingResponse {
             private String imageSrc;
             private float exclusivePrivateArea;
 
-            public static MyConsultingItem toEntity(Item item, House house) {
+            public static MyConsultingItem toEntity(Item item, House house, String imageSrc) {
                 return ConsultingResponse.ReservationDetail.MyConsultingItem.builder()
                         .itemNo(item.getNo())
                         .deposit(item.getDeposit())
@@ -99,6 +99,7 @@ public class ConsultingResponse {
                         .buildingName(item.getHouse().getBuildingName())
                         .address(house.getAddress())
                         .addressDetail(house.getAddressDetail())
+                        .imageSrc(imageSrc)
                         .exclusivePrivateArea(house.getExclusivePrivateArea())
                         .build();
             }

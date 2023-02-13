@@ -54,4 +54,9 @@ public class ConsultingController {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         return consultingService.infoForContact(principal, itemNo);
     }
+
+    @PostMapping("/{consultingNo}")
+    public ResponseEntity<?> consultingLink(@PathVariable Long consultingNo, @RequestBody ConsultingRequest.AddLink link)  {
+        return consultingService.consultingLink(consultingNo, link);
+    }
 }
