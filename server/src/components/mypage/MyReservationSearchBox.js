@@ -3,16 +3,20 @@ import { useRef, useState, useEffect } from "react";
 import axiosInstance from "../../util/axios";
 
 import classes from "./MyReservationSearchBox.module.scss";
+import { getItemListBySearch } from "../../apis/houseApis";
+import ListBox from "../../UI/ListBox";
+import HouseCardContent from "../HouseCardContent";
 
 const MyReservationSearchBox = (props) => {
-  const [sido, setSido] = useState();
-  const [gugun, setGugun] = useState();
-  const [dong, setDong] = useState();
+  const [sido, setSido] = useState("");
+  const [gugun, setGugun] = useState("");
+  const [dong, setDong] = useState("");
   const buildingName = useRef();
 
-  const [sidoList, setSidoList] = useState([]);
   const [gugunList, setGugunList] = useState([]);
   const [dongList, setDongList] = useState([]);
+
+  const [searchedList, setSearchedList] = useState([]);
 
   const changeEventHandler = (e, setter) => {
     if (e.target) {
@@ -32,76 +36,117 @@ const MyReservationSearchBox = (props) => {
   };
 
   useEffect(() => {
-    (async () => {  
+    if (props.sidoList) {
+      console.log(`외부에서 들어온 리스트가 있음`);
+    } else {
+      (async () => {
+        try {
+          const result = await axiosInstance.get("regions", {
+            params: {
+              regionCode: "",
+            },
+          });
+
+          const dataArray = result.data.data;
+          setSidoList(dataArray);
+        } catch (err) {
+          throw new Error(err);
+        }
+      })();
+    }
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (!sido) {
+        setGugunList([]);
+        setDongList([]);
+        return;
+      }
+
       try {
         const result = await axiosInstance.get("regions", {
           params: {
-            regionCode: "",
+            regionCode: sido.substring(0, 2),
           },
         });
-  
+
         const dataArray = result.data.data;
-        setSidoList(dataArray);
+        dataArray.shift();
+        setGugunList(dataArray);
       } catch (err) {
         throw new Error(err);
       }
     })();
-  }, []);
+  }, [sido]);
 
-useEffect(() => {
-  (async () => {
+  useEffect(() => {
+    (async () => {
+      if (!gugun) {
+        setDongList([]);
+        return;
+      }
+
+      try {
+        const result = await axiosInstance.get("regions", {
+          params: {
+            regionCode: gugun.substring(0, 5),
+          },
+        });
+
+        const dataArray = result.data.data;
+        dataArray.shift();
+        setDongList(dataArray);
+      } catch (err) {
+        throw new Error(err);
+      }
+    })();
+  }, [gugun]);
+
+  const searchEventHandler = async () => {
+    const data = {};
+
+    let word = buildingName.current.value;
+    if (!word) {
+      word = "";
+    }
+
+    data["word"] = word;
+
     if (!sido) {
-      setGugunList([]);
-      setDongList([]);
+      alert("광역시도는 필수 입력값입니다.");
       return;
     }
 
-    try {
-      const result = await axiosInstance.get("regions", {
-        params: {
-          regionCode: sido.substring(0, 2),
-        },
-      });
-
-      const dataArray = result.data.data;
-      dataArray.shift();
-      setGugunList(dataArray);
-    } catch (err) {
-      throw new Error(err);
-    }
-  })();
-}, [sido]);
-
-useEffect(() => {
-  (async () => {
     if (!gugun) {
-      setDongList([]);
-      return;
+      data["regionCode"] = sido.substring(0, 2);
+    } else if (!dong) {
+      data["regionCode"] = gugun.substring(0, 5);
+    } else {
+      data["regionCode"] = dong;
     }
 
-    try {
-      const result = await axiosInstance.get("regions", {
-        params: {
-          regionCode: gugun.substring(0, 5),
-        },
-      });
+    // console.log(data);
+    const response = await getItemListBySearch(data);
+    const list = response;
 
-      const dataArray = result.data.data;
-      dataArray.shift();
-      setDongList(dataArray);
-    } catch (err) {
-      throw new Error(err);
+    console.log(list);
+    setSearchedList(list);
+  };
+
+  const clickSearchedListHandler = (data) => {
+    if (props?.searchedListClickHander) {
+      props.searchedListClickHander(data);
     }
-  })();
-}, [gugun]);
 
+    setSearchedList([]);
+  };
 
   return (
     <div className={classes.searchBox}>
-      {/* <p>안녕 나는 검색상자</p> */}
       <div className={classes.selectBox}>
-      <SelectBox
-          dataArray={sidoList}
+        <SelectBox
+          dataArray={props.sidoList}
           first={"시를 선택해 주세요"}
           defaultValue={sido}
           value={"regionCode"}
@@ -135,18 +180,23 @@ useEffect(() => {
         />
       </div>
       <div className={classes.searchInput}>
-        <input 
-        placeholder="건물명을 입력해주세요."
-        id="buildingName" 
-        ref={buildingName}
-        />
-        <button
-          onClick={() =>
-            props.clickSearchEventHandler(sido, gugun, dong, buildingName.current.value)
-          }
-        >
-          검색
-        </button>
+        <div className={classes.inputText}>
+          <input
+            placeholder="건물명을 입력해주세요."
+            id="buildingName"
+            ref={buildingName}
+          />
+          <button onClick={() => searchEventHandler()}>검색</button>
+        </div>
+        {searchedList.length !== 0 && (
+          <div className={classes.badge}>
+            <ListBox dataArray={searchedList}>
+              <HouseCardContent
+                searchedListClickHandler={clickSearchedListHandler}
+              />
+            </ListBox>
+          </div>
+        )}
       </div>
     </div>
   );

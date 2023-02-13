@@ -25,7 +25,7 @@ const ContractCardContent = () => {
           </div>
         </div>
         <hr />
-        <div classname={classes.downCardContent} style={{ display: "flex" }}>
+        <div className={classes.downCardContent} style={{ display: "flex" }}>
           <div
             className={classes.contractLeftInfo}
             style={{ flex: "1", textAlign: "left", marginTop: "7%" }}
@@ -48,7 +48,7 @@ const ContractCardContent = () => {
             </div>
           </div>
           <div
-            classname={classes.contractRightImg}
+            className={classes.contractRightImg}
             style={{ flex: "0.5", width: "10px" }}
           >
             <img src={sample} style={{ width: "100%" }}></img>

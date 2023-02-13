@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import classes from "./ReservationCardContent3.module.scss";
-import sample from "../assets/image/sample.jpg";
+import { changeReservationStatus } from "../apis/reservationApis";
 
 const ReservationCardContent3 = ({
   userstate,
@@ -18,6 +18,17 @@ const ReservationCardContent3 = ({
   status,
 }) => {
   const navigate = useNavigate();
+  const onChangeReservationHandler = async (status, e) => {
+    if(status === 5 && !confirm("예약을 거절하시겠습니까?")){ 
+      return;
+    }
+    const data = {};
+    data["consultingNo"] = consultingNo;
+    data["status"] = status;
+    const result = await changeReservationStatus(data);
+    alert(result)
+    e.preventDefault();
+  };
   const onDetailHandler = () => {
     navigate(`../realtor-reservation-detail/${consultingNo}`);
   };
@@ -42,7 +53,7 @@ const ReservationCardContent3 = ({
           <div className={classes.consultingInfo}>
             <div className={classes.consultingDate}>
               <p>
-                상담일시
+                상담 일시
                 <br />
                 <strong>{consultingDate.substring(0, 10)}</strong>
               </p>
@@ -68,10 +79,7 @@ const ReservationCardContent3 = ({
             <button className={classes.btn1} onClick={onDetailHandler}>
               예약 상세보기
             </button>
-            <button className={classes.btn0}>예약 거절하기</button>
-            <button className={classes.btn3} onClick={onAddItemsHandler}>
-              매물 수정하기
-            </button>
+            <button className={classes.btn0} onClick={(e)=>{onChangeReservationHandler(5, e)}}>예약 거절하기</button>
           </div>
         )}
         {tabActive === 1 && (

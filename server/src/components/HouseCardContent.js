@@ -8,6 +8,7 @@ import sample from "../assets/image/sample.jpg";
 
 const HouseCardContent = ({
   props,
+  idx,
   address,
   addressDetail,
   buildingName,
@@ -18,7 +19,8 @@ const HouseCardContent = ({
   rent,
   consultingNo,
   exclusivePrivateArea,
-  itemNo
+  itemNo,
+  searchedListClickHandler,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,9 +36,29 @@ const HouseCardContent = ({
     }
   };
 
+  const itemData = {
+    idx,
+    itemNo,
+    address,
+    addressDetail,
+    buildingName,
+    deposit,
+    description,
+    imageSrc,
+    maintenanceFee,
+    rent,
+    exclusivePrivateArea,
+  };
+
   return (
     <>
-      <div className={classes.HouseCardContent2}>
+      <div
+        onClick={() => {
+          searchedListClickHandler(itemData);
+        }}
+        className={classes.HouseCardContent2}
+        style={{ cursor: "pointer" }}
+      >
         <div className={classes.houseContent}>
           <div className={classes.leftContent}>
             <img src={imageSrc}></img>
@@ -44,12 +66,13 @@ const HouseCardContent = ({
           <div className={classes.rightContent}>
             <p>원룸</p>
             <p>{buildingName}</p>
-            <h2>월세 {deposit}/{rent}</h2>
+            <h2>
+              월세 {deposit}/{rent}
+            </h2>
             <p>
-              방 {exclusivePrivateArea}㎡ . 관리비 {
-                maintenanceFee === 0 ? ("없음") : (maintenanceFee)
-              }
-              <br /> {address} 
+              방 {exclusivePrivateArea}㎡ . 관리비{" "}
+              {maintenanceFee === 0 ? "없음" : maintenanceFee}
+              <br /> {address}
               <br /> {addressDetail}
               <br /> {description}
             </p>

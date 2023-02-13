@@ -8,6 +8,7 @@ const initialState = {
     name: "",
     isRealtor: null,
     profile: null,
+    score: 0,
   },
 };
 
@@ -27,6 +28,7 @@ const userSlice = createSlice({
         name: "",
         isRealtor: null,
         profile: null,
+        score: 0,
       };
       state.accessToken = null;
       state.refreshToken = null;
