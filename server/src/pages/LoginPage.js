@@ -33,6 +33,10 @@ const LoginPage = () => {
 
     try {
       const result = await userLogin(userLoginInfo, dispatch);
+      if (result.message) {
+        return result.message;
+      }
+      
       const { accessToken } = result;
 
       console.log("유저 로그인 성공");

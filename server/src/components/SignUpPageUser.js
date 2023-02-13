@@ -138,8 +138,8 @@ const SignUpPageUser = () => {
     try {
       const result = await axiosInstance.post("users", frm, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
       if (result) {
         alert(`회원가입 성공`);

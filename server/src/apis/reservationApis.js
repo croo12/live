@@ -28,7 +28,14 @@ export const searchReservationRealtorDetail = (realtorNo, params) => {
  */
 export const registResevation = (data) => {
   const headers = getAuthHeader();
-  return axiosInstance.get(``);
+  axiosInstance
+    .post(`consultings`, data, { headers })
+    .then((res) => {
+      console.log("예약 성공", res);
+    })
+    .catch((err) => {
+      console.error("예약하기에서 에러...", err);
+    });
 };
 
 export const getReservationList = async (data) => {

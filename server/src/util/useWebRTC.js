@@ -63,9 +63,10 @@ const useWebRTC = ({
         audio: true,
         video: {
           mandatory: {
-            width: 1980,
+            width: 1920,
+            height: 1080,
             maxFrameRate: 30,
-            minFrameRate: 30,
+            minFrameRate: 10,
           },
         },
       };
@@ -115,9 +116,10 @@ const useWebRTC = ({
         video: isRealtor
           ? {
               mandatory: {
-                width: 1980,
+                width: 1920,
+                height: 1080,
                 maxFrameRate: 30,
-                minFrameRate: 30,
+                minFrameRate: 10,
               },
             }
           : false,

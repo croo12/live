@@ -89,16 +89,12 @@ export const RealtorContractCardContent = (props) => {
           <div className={classes.realtorName}>
             <strong>{data.name}</strong> <span>공인중개사</span>
           </div>
-          <div className={classes.realtorInfo}>{data.realtorInfo}</div>
           <div className={classes.realtorAddress}>
             <FiMapPin /> {data.realtorAddress}
           </div>
           <div className={classes.realtorPhone}>
             <BsTelephone /> {data.realtorPhone}
           </div>
-        </div>
-        <div className={classes.realtorNum}>
-          <strong>★ {data.starNum}</strong>
         </div>
       </div>
     </div>
