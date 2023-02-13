@@ -51,7 +51,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "group by r.realtor_no order by r.rating_score DESC", nativeQuery=true)
     List<Realtor> findDistinctRealtor(String regionCode);
 
-    @Query(value = "(SELECT i.item_no as itemNo, m.image_src as imageSrc, i.deposit, i.rent, h.address, h.floor, i.building_name as buildingName FROM realtor r "
+    @Query(value = "(SELECT i.item_no as itemNo, m.image_src as imageSrc, i.deposit, i.rent, h.address, h.floor, i.building_name as buildingName, h.exclusive_private_area as area FROM realtor r "
         + "inner join item i "
         + "on r.realtor_no = i.realtor_no "
         + "left join item_image m "
@@ -61,7 +61,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "where h.region_code LIKE :regionCode% and r.realtor_no=:realtorNo AND h.contracted = false "
         + "AND m.item_image_no in (select min(item_image_no) from item_image group by item_no)) "
         + "UNION DISTINCT "
-        + "(SELECT i.item_no as itemNo, m.image_src as imageSrc, i.deposit, i.rent, h.address, h.floor, i.building_name as buildingName FROM realtor r "
+        + "(SELECT i.item_no as itemNo, m.image_src as imageSrc, i.deposit, i.rent, h.address, h.floor, i.building_name as buildingName, h.exclusive_private_area as area FROM realtor r "
         + "inner join item i "
         + "on r.realtor_no = i.realtor_no "
         + "left join item_image m "

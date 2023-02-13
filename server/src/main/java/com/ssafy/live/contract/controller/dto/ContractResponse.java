@@ -56,6 +56,7 @@ public class ContractResponse {
             private int rent;
             private int deposit;
             private int maintenanceFee;
+            private float exclusivePrivateArea;
             public static ItemInfo toEntity(Item item) {
                 return ItemInfo.builder()
                         .buildingName(item.getHouse().getBuildingName())
@@ -63,6 +64,7 @@ public class ContractResponse {
                         .rent(item.getRent())
                         .deposit(item.getDeposit())
                         .maintenanceFee(item.getMaintenanceFee())
+                        .exclusivePrivateArea(item.getHouse().getExclusivePrivateArea())
                         .build();
             }
         }
@@ -131,6 +133,7 @@ public class ContractResponse {
             private int deposit;
             private int rent;
             private int mainteneceFee;
+            private float exclusivePrivateArea;
             private List<String> images;
             public static ItemInfo toEntity(Item item, List<String> images) {
                 return ItemInfo.builder()
@@ -139,6 +142,7 @@ public class ContractResponse {
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
                     .mainteneceFee(item.getMaintenanceFee())
+                    .exclusivePrivateArea(item.getHouse().getExclusivePrivateArea())
                     .images(images)
                     .build();
             }

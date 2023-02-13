@@ -55,6 +55,7 @@ public class RealtorResponse {
         private String corp;
         private String description;
         private String businessAddress;
+        private float ratingScore;
         private String imageSrc;
 
         public static RealtorResponse.FindByRegion toEntity(Realtor realtor) {
@@ -65,6 +66,7 @@ public class RealtorResponse {
                 .corp(realtor.getCorp())
                 .description(realtor.getDescription())
                 .businessAddress(realtor.getBusinessAddress())
+                .ratingScore(realtor.getRatingScore())
                 .imageSrc(realtor.getImageSrc())
                 .build();
         }
@@ -144,6 +146,7 @@ public class RealtorResponse {
             private String address;
             private int floor;
             private String buildingName;
+            private float exclusivePrivateArea;
             public static Items toEntity(RealtorByRegionProjectionInterface item) {
                 return Items.builder()
                     .itemNo(item.getItemNo())
@@ -153,6 +156,7 @@ public class RealtorResponse {
                     .address(item.getAddress())
                     .floor(item.getFloor())
                     .buildingName(item.getBuildingName())
+                    .exclusivePrivateArea(item.getArea())
                     .build();
             }
         }
