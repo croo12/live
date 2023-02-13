@@ -17,14 +17,14 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
     @Query(value = "SELECT c from Consulting c " +
             "WHERE c.realtor = :realtor " +
-            "AND (c.status=:reservervationProcessing " +
-            "OR c.status=:realtorResponseComplete)")
-    List<Consulting> findByRealtorAndStatusOrStatusOrderByConsultingDate(Realtor realtor, ConsultingStatus reservervationProcessing, ConsultingStatus realtorResponseComplete);
+            "AND (c.status=:status " +
+            "OR c.status=:status1)")
+    List<Consulting> findByRealtorAndStatusOrStatusOrderByConsultingDate(Realtor realtor, ConsultingStatus status, ConsultingStatus status1);
 
     @Query(value = "SELECT c from Consulting c " +
             "WHERE c.users = :user " +
-            "AND (c.status=:reservervationProcessing " +
-            "OR c.status=:realtorResponseComplete)")
+            "AND (c.status=:status " +
+            "OR c.status=:status1)")
     List<Consulting> findByUsersAndStatusOrStatusOrderByConsultingDate(Users user, ConsultingStatus status, ConsultingStatus status1);
     List<Consulting> findByConsultingDateBetween(LocalDateTime start, LocalDateTime end);
 }
