@@ -174,7 +174,7 @@ const HouseDetailCom = (props) => {
                 </div>
                 <div className={classes.controlButtonBox}>
                   유저면
-                  <button>담기</button>
+                  <button onClick={()=>{dispatch(reservedItemAction.addItem(houseInfo))}}>담기</button>
                   <button>계약</button>
                   중개사면
                   <button>수정</button>
