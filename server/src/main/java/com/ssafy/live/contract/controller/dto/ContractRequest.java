@@ -33,22 +33,22 @@ public class ContractRequest {
         private int commission;
         private int termOfContract;
 
-        public Contract toEntity(Users users, Realtor realtor, Item item) {
+        public static Contract toEntity(Users users, Realtor realtor, Item item, ContractRequest.Regist regist) {
             return Contract.builder()
                     .users(users)
                     .realtor(realtor)
                     .item(item)
-                    .moveOnDate(moveOnDate)
-                    .numberOfResidents(numberOfResidents)
+                    .moveOnDate(regist.getMoveOnDate())
+                    .numberOfResidents(regist.getNumberOfResidents())
                     .contractState(ContractStatus.CONTRACT_APPROVING)
-                    .specialContract(specialContract)
-                    .tenantAddress(tenantAddress)
-                    .tenantDetailAddress(tenantDetailAddress)
-                    .tenantAge(tenantAge)
-                    .commission(commission)
+                    .specialContract(regist.getSpecialContract())
+                    .tenantAddress(regist.getTenantAddress())
+                    .tenantDetailAddress(regist.getTenantDetailAddress())
+                    .tenantAge(regist.getTenantAge())
+                    .commission(regist.getCommission())
                     .downPayment((item.getDeposit() / 100) * 10)
                     .balance((item.getDeposit() / 100) * 90)
-                    .termOfContract(termOfContract)
+                    .termOfContract(regist.getTermOfContract())
                     .build();
         }
     }

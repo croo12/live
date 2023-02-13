@@ -36,6 +36,7 @@ public class ConsultingController {
     @PatchMapping
     public ResponseEntity<?> changeStatus(Authentication authentication, @RequestBody ConsultingRequest.ChangeStatus request) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
+        System.out.println("sㅏ 좀 찍우저ㅜ라");
         return consultingService.changeStatus(principal, request);
     }
 

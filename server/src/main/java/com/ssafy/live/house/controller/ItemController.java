@@ -41,7 +41,7 @@ public class ItemController {
         return itemService.updateItemDetail(principal, itemUpdateRequest, files);
     }
 
-    @GetMapping("/regions")
+    @PostMapping("/regions")
     public ResponseEntity<?> itemsByBuildingName(Authentication authentication, @RequestBody ItemRequest.ItemsByBuildingName request)  {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         return itemService.itemsByBuildingName(principal, request);
