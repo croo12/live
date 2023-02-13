@@ -47,12 +47,13 @@ public class ItemController {
         return itemService.itemsByBuildingName(principal, request);
     }
 
-    @GetMapping("/realtors/{realtorNo}")
+    @GetMapping("/realtor")
     public ResponseEntity<?> findItemsByRealtor(
-            @PathVariable Long realtorNo,
+            Authentication authentication,
             @RequestParam String regionCode
             ){
-        return itemService.findItemsByRealtor(realtorNo, regionCode);
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return itemService.findItemsByRealtor(principal, regionCode);
     }
 
 }
