@@ -8,24 +8,35 @@ const ReservationCardContent3 = ({
   consultingdate,
   consultinglocation,
   tabActive,
+  consultingDate,
+  consultingNo,
+  itemCount,
+  personalInfo,
+  image,
+  name,
+  representativeItem,
+  status,
 }) => {
   const navigate = useNavigate();
   const onDetailHandler = () => {
-    navigate("../realtor-reservation-detail");
+    navigate(`../realtor-reservation-detail/${consultingNo}`);
+  };
+  const onAddItemsHandler = () => {
+    navigate("/");
   };
 
   return (
     <div className={classes.content}>
       <div className={classes.leftContent}>
         <div className={classes.leftImg}>
-          <img src={sample} />
+          <img src={image} />
         </div>
         <div className={classes.rightDesc}>
           <div className={classes.personalInfo}>
             <p>
-              {userstate}
+              {personalInfo}
               <br />
-              <strong>{username}</strong>
+              <strong>{name}</strong>
             </p>
           </div>
           <div className={classes.consultingInfo}>
@@ -33,14 +44,19 @@ const ReservationCardContent3 = ({
               <p>
                 상담일시
                 <br />
-                <strong>{consultingdate}</strong>
+                <strong>{consultingDate.substring(0, 10)}</strong>
               </p>
             </div>
             <div className={classes.consultingLocation}>
               <p>
-                장소
+              상담 매물
                 <br />
-                <strong>{consultinglocation}</strong>
+                {
+                    itemCount === 0
+                    ?
+                    representativeItem
+                    : representativeItem+ ' 외 '+ itemCount+'건'
+                  }
               </p>
             </div>
           </div>
@@ -49,7 +65,13 @@ const ReservationCardContent3 = ({
       <div className={classes.rightContent}>
         {tabActive === 0 && (
           <div>
+            <button className={classes.btn1} onClick={onDetailHandler}>
+              예약 상세보기
+            </button>
             <button className={classes.btn0}>예약 거절하기</button>
+            <button className={classes.btn3} onClick={onAddItemsHandler}>
+              매물 수정하기
+            </button>
           </div>
         )}
         {tabActive === 1 && (
@@ -58,7 +80,6 @@ const ReservationCardContent3 = ({
               예약 상세보기
             </button>
             <button className={classes.btn2}>상담 바로가기</button>
-            <button className={classes.btn3}>예약 확정하기</button>
           </div>
         )}
         {tabActive === 2 && (
@@ -74,17 +95,4 @@ const ReservationCardContent3 = ({
 };
 
 export default ReservationCardContent3;
-export const DUMMY6 = [
-  {
-    userstate: "일반회원",
-    username: "김희연",
-    consultingdate: "1월 25일 (수)",
-    consultinglocation: "싸피 하우스 외 5건",
-  },
-  {
-    userstate: "일반회원",
-    username: "김희연",
-    consultingdate: "1월 25일 (수)",
-    consultinglocation: "싸피 하우스 외 5건",
-  },
-];
+

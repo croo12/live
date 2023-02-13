@@ -58,7 +58,7 @@ const ReservationCardContent2 = ({
                   {
                     itemCount === 0
                     ?
-                    '0건'
+                    representativeItem
                     : representativeItem+ ' 외 '+ itemCount+'건'
                   }
                   </strong>

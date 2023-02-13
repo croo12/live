@@ -8,6 +8,7 @@ import classes from "./MyPageUser.module.scss";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { useAuth } from "../common/AuthProtector";
 import { getUserInfo } from "../../apis/MemberService";
+import sample from "../../assets/image/sample.jpg";
 
 const MyPageUser = () => {
   const navigate = useNavigate();
