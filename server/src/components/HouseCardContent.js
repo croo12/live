@@ -70,6 +70,8 @@ export const ConsultingHouseCardContent = (props) => {
     }
   };
 
+  console.log(props);
+
   return (
     <>
       <div className={`${classes.consulting_inner} `}>
@@ -77,13 +79,16 @@ export const ConsultingHouseCardContent = (props) => {
           <div className={classes.leftBox}>
             <div>{props.idx + 1}번 매물</div>
             <h3>
-              <span>월세</span> 500 / 60
+              <span>월세</span> {props.rent} / {props.deposit}
             </h3>
-            <p> 크기 35 /관리비 n만 </p>
-            <p> 대전 서구 갈마로... </p>
+            <p> 크기 35 /관리비 {props.maintenanceFee}만 </p>
+            <p> {props.address} </p>
           </div>
           <div className={classes.rightBox}>
-            <img src={sample} alt={"토토로"} />
+            <img
+              src={props.imageSrc ? props.imageSrc : sample}
+              alt={"토토로"}
+            />
           </div>
         </div>
         <div className={classes.downCard}>
@@ -96,7 +101,7 @@ export const ConsultingHouseCardContent = (props) => {
                 매물목록으로
               </button>
             </div>
-            <HouseDetailCom isConsulting={true} itemNo={8} />
+            <HouseDetailCom isConsulting={true} itemNo={props.itemNo} />
           </div>
         )}
       </div>

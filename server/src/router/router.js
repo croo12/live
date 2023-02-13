@@ -40,7 +40,9 @@ import { ProtectedRouter } from "../components/common/AuthProtector";
 import ContractPageUser from "../components/contract/ContractPageUser";
 import ContractPageRealtor from "../components/contract/ContractPageRealtor";
 import ConsultingRightReservationList from "../components/consulting/ConsultingRightReservationList";
-import ConsultingRightReservationHouseList from "../components/consulting/ConsultingRightReservationHouseList";
+import ConsultingRightReservationHouseList, {
+  consultingDetailLoader,
+} from "../components/consulting/ConsultingRightReservationHouseList";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -70,6 +72,7 @@ const router = createBrowserRouter(
         <Route
           path=":consultingNo"
           element={<ConsultingRightReservationHouseList />}
+          loader={consultingDetailLoader}
         />
       </Route>
       <Route path="house" element={<HousePage />}>

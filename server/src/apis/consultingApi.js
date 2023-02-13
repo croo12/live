@@ -24,7 +24,7 @@ export const getConsultingDetail = async (consultingNo) => {
     .get(`consultings/${consultingNo}`, { headers })
     .then((res) => {
       console.log(res);
-      result = res;
+      result = res.data;
     })
     .catch((err) => console.error(err));
 
