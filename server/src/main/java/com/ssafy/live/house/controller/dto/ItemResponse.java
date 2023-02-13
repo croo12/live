@@ -30,6 +30,7 @@ public class ItemResponse {
         private Heating heating;
         private Direction direction;
         private Entrance entrance;
+        private float exclusivePrivateArea;
         private List<ItemImageResponse> itemImages;
         private HouseResponse.HouseDetailResponse house;
         private ItemOptionResponse.ItemOptionDetailResponse itemOption;
@@ -53,6 +54,7 @@ public class ItemResponse {
                     .heating(item.getHeating())
                     .direction(item.getDirection())
                     .entrance(item.getEntrance())
+                    .exclusivePrivateArea(item.getHouse().getExclusivePrivateArea())
                     .itemImages(imgs)
                     .build();
         }
@@ -72,6 +74,7 @@ public class ItemResponse {
         private String image;
         private String address;
         private String addressDetail;
+        private float exclusivePrivateArea;
 
         public static ItemSimpleResponse toDto(Item item) {
             return ItemSimpleResponse.builder()
@@ -84,6 +87,7 @@ public class ItemResponse {
                     .image(item.getItemImages().get(0).getImageSrc())
                     .address(item.getHouse().getAddress())
                     .addressDetail(item.getHouse().getAddressDetail())
+                    .exclusivePrivateArea(item.getHouse().getExclusivePrivateArea())
                     .build();
         }
     }

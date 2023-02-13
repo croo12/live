@@ -9,4 +9,5 @@ public interface RealtorByRegionProjectionInterface {
     String getAddress();
     int getFloor();
     String getBuildingName();
+    float getArea();
 }
