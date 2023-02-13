@@ -7,13 +7,13 @@ const ReservationCardContent3 = ({
   username,
   consultingdate,
   consultinglocation,
-  onDetailReservationHandler,
   tabActive,
-  userInfo,
 }) => {
+  const navigate = useNavigate();
   const onDetailHandler = () => {
-    onDetailReservationHandler(null);
+    navigate("../realtor-reservation-detail");
   };
+
   return (
     <div className={classes.content}>
       <div className={classes.leftContent}>

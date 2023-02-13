@@ -1,6 +1,5 @@
 .cardBox {
   display: flex;
-  
 
   div{
 
@@ -15,7 +14,6 @@
       }
     }
 
-
     &:last-child{
       flex: 2;
     }
@@ -26,6 +24,7 @@
   display: flex;
   
   border: 1px solid;
+  padding: 1rem;
 
   border-image-source: linear-gradient(
     237.31deg,

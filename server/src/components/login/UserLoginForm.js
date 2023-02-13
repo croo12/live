@@ -20,7 +20,7 @@ const UserLoginForm = (props) => {
   const userIdInputRef = useRef();
   const passwordInputRef = useRef();
 
-  const loginHandler = (event) => {
+  const loginHandler = async (event) => {
     // 일반 회원 로그인 처리
     event.preventDefault();
 
@@ -42,7 +42,13 @@ const UserLoginForm = (props) => {
       password,
     };
 
-    props.onUserLogin(userLoginInfo);
+    const result = await props.onUserLogin(userLoginInfo);
+
+    if (result === "사용자 정보를 찾을 수 없습니다.") {
+      setLoginError(1);
+    } else {
+      setLoginError(2);
+    }
   };
 
   const findPasswordHandler = async (userFindPasswordInfo) => {
@@ -78,7 +84,7 @@ const UserLoginForm = (props) => {
       case 1:
         return `존재하지 않는 아이디입니다.`;
       case 2:
-        return `회원 정보가 틀렸습니다.`;
+        return `비밀번호가 틀렸습니다.`;
       case 3:
         return `아이디가 입력되지 않았습니다`;
       case 4:
@@ -122,7 +128,12 @@ const UserLoginForm = (props) => {
               ></input>
             </div>
           </div>
-          {loginError !== 0 && <div> {showErrorMessage(loginError)} </div>}
+          {loginError !== 0 && (
+            <div style={{ color: "red", padding: "0.6rem" }}>
+              {" "}
+              {showErrorMessage(loginError)}{" "}
+            </div>
+          )}
           <div className={classes.formUtil}>
             <div className={classes.keepLogin}>
               <input type="checkbox" id="keepLogin" />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import HouseDetailCom from "./HouseDetailCom";
@@ -70,19 +70,25 @@ export const ConsultingHouseCardContent = (props) => {
     }
   };
 
+  console.log(props);
+
   return (
     <>
-      <div
-        className={`${classes.houseCardContent} ${classes.consulting_inner}`}
-      >
+      <div className={`${classes.consulting_inner} `}>
         <div className={classes.upperCard}>
           <div className={classes.leftBox}>
-            <h3> 월세 500/ 60 </h3>
-            <p> 크기 35 /관리비 n만 </p>
-            <p> 대전 서구 갈마로... </p>
+            <div>{props.idx + 1}번 매물</div>
+            <h3>
+              <span>월세</span> {props.rent} / {props.deposit}
+            </h3>
+            <p> 크기 35 /관리비 {props.maintenanceFee}만 </p>
+            <p> {props.address} </p>
           </div>
           <div className={classes.rightBox}>
-            <img src={sample} alt={"토토로"} />
+            <img
+              src={props.imageSrc ? props.imageSrc : sample}
+              alt={"토토로"}
+            />
           </div>
         </div>
         <div className={classes.downCard}>
@@ -90,10 +96,16 @@ export const ConsultingHouseCardContent = (props) => {
         </div>
         {props.detail === props.idx && (
           <div className={classes.badge}>
-            <HouseDetailCom isConsulting={true} />
+            <div>
+              <button style={{ cursor: "pointer" }} onClick={clickEventHandler}>
+                매물목록으로
+              </button>
+            </div>
+            <HouseDetailCom isConsulting={true} itemNo={props.itemNo} />
           </div>
         )}
       </div>
+
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
           <HouseDetailCom houseId={123} />
@@ -194,75 +206,82 @@ export const RealtorHousesCardContent = ({
 
 export const ContractHouseCardContent = (props) => {
   const forSale = props.ContractInfo;
-  return (
-    <div className={classes.contractForSale}>
-      <div className={classes.inner}>
-        <h2>매물 정보</h2>
-        <br />
-        <div className={classes.contractContent}>
-          <div className={classes.leftDesc}>
-            <p>매물번호 {forSale.houseNumber}</p>
+  const formData = useRef();
 
-            <h4>{forSale.houseAddress}</h4>
-            <p>{forSale.houseArea}</p>
-            <p>
-              {" "}
-              방 {forSale.houseRoomCnt}/{forSale.houseSupplyArea}㎡(전용
-              {forSale.houseExclusivePrivateArea}
-              평)
-            </p>
-            <div className={classes.infoBoxList}>
-              <div className={classes.forSale}>
-                <strong>매물가격</strong>{" "}
-                <input
-                  onChange={() => {
-                    console.log(`갸마다마`);
-                  }}
-                  type="text"
-                  value={
-                    "월세" +
-                    forSale.houseDeposit +
-                    "/" +
-                    forSale.houseMonthlyFee
-                  }
-                  readOnly
-                />
-              </div>
-              <div className={classes.extraFee}>
-                <strong>추가 비용</strong>{" "}
-                <input
-                  onChange={() => {
-                    console.log(`갸마다마`);
-                  }}
-                  value={"관리비" + forSale.houseExtraFee}
-                ></input>
-              </div>
-              <div className={classes.term}>
-                <strong>계약 기간</strong>{" "}
-                <input
-                  onChange={() => {
-                    console.log(`갸마다마`);
-                  }}
-                  value={forSale.houseMonth + "개월"}
-                ></input>
-              </div>
-              <div className={classes.moveDate}>
-                <strong>입주 희망일</strong>{" "}
-                <input
-                  onChange={() => {
-                    console.log(`갸마다마`);
-                  }}
-                  value={forSale.houseMoveIn}
-                ></input>
+  const insertInfo = (e) => {
+    e.preventDefault();
+    const info = {
+      userTermOfContract: formData.current.userTermOfContract.value,
+      userMoveOnDate: formData.current.userMoveOnDate.value,
+    };
+    props.fx2(info);
+  };
+
+  return (
+    <form onSubmit={insertInfo} ref={formData}>
+      <div className={classes.contractForSale}>
+        <div className={classes.inner}>
+          <h2>매물 정보</h2>
+          <br />
+          <div className={classes.contractContent}>
+            <div className={classes.leftDesc}>
+              <p>매물번호 {forSale.houseNumber}</p>
+
+              <h4>{forSale.houseAddress}</h4>
+              <h4>{forSale.houseName}</h4>
+              <p>{forSale.houseArea}</p>
+              <p> {forSale.houseSupplyArea}㎡(전용 면적)</p>
+              <div className={classes.infoBoxList}>
+                <div className={classes.forSale}>
+                  <strong>매물가격</strong>{" "}
+                  <input
+                    type="text"
+                    value={
+                      "월세 " +
+                      forSale.houseDeposit +
+                      "/" +
+                      forSale.houseMonthlyFee
+                    }
+                    readOnly
+                  />
+                </div>
+                <div className={classes.extraFee}>
+                  <strong>추가 비용</strong>{" "}
+                  <input
+                    value={"관리비 " + forSale.houseExtraFee}
+                    readOnly
+                  ></input>
+                </div>
+                <div className={classes.term}>
+                  <label htmlFor="userTermOfContract">
+                    <strong>계약 기간</strong>
+                  </label>{" "}
+                  <input
+                    defaultValue={"12개월"}
+                    id="userTermOfContract"
+                    name="userTermOfContract"
+                  ></input>
+                </div>
+                <div className={classes.moveDate}>
+                  <label htmlFor="userMoveOnDate">
+                    <strong>입주 희망일</strong>
+                  </label>{" "}
+                  <input
+                    defaultValue={"2023-01-13"}
+                    id="userMoveOnDate"
+                    name="userMoveOnDate"
+                  ></input>
+                </div>
               </div>
             </div>
+            <div className={classes.rightImg}>
+              <img src={forSale.houseImage}></img>
+            </div>
           </div>
-          <div className={classes.rightImg}>
-            <img src={sample}></img>
-          </div>
+          <hr />
         </div>
-        <hr />
       </div>
-    </div>
+      <button>입력</button>
+    </form>
   );
 };

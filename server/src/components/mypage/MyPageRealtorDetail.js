@@ -1,11 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import classes from "./MyPageRealtorDetail.module.scss";
 
 const MyPageRealtorDetail = () => {
+  const navigate = useNavigate();
   const onQuitHandler = () => {
     alert("정말 탈퇴하시겠습니까?");
   };
 
-  const onClickHandler = () => {};
+  const onChangeHandler = () => {
+    navigate("/mypage/realtor-modify-info");
+  };
   return (
     <>
       {" "}
@@ -51,7 +55,7 @@ const MyPageRealtorDetail = () => {
               <br />
               <div className={classes.buttonItem}>
                 <button onClick={onQuitHandler}>회원탈퇴</button>
-                <button onClick={onClickHandler}>정보수정</button>
+                <button onClick={onChangeHandler}>정보수정</button>
               </div>
             </div>
           </div>

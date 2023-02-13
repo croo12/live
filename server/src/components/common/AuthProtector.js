@@ -51,6 +51,7 @@ export const ProtectedRouter = ({ children, condition }) => {
   const { userInfo } = useAuth();
 
   if (!userInfo?.id) {
+    alert("로그인이 필요한 페이지입니다.");
     return <Navigate to="/login" />;
   }
 
@@ -61,6 +62,11 @@ export const ProtectedRouter = ({ children, condition }) => {
     (condition === true && userInfo.isRealtor === false) ||
     (condition === false && userInfo.isRealtor === true)
   ) {
+    alert(
+      condition
+        ? "중개사만 사용할 수 있는 페이지입니다."
+        : "일반 고객만 사용할 수 있는 페이지입니다"
+    );
     return <Navigate to="/" />;
   }
 

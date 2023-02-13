@@ -66,14 +66,16 @@ const Header = () => {
               </NavLink>
             </li>
           )}
-          <li>
-            <NavLink
-              to={`/consulting/${makeUUID()}`}
-              onClick={isToggled && isToggledHandler}
-            >
-              상담
-            </NavLink>
-          </li>
+          {userInfo.isRealtor && (
+            <li>
+              <NavLink
+                to={`/consulting/${makeUUID()}`}
+                onClick={isToggled && isToggledHandler}
+              >
+                상담
+              </NavLink>
+            </li>
+          )}
           {accessToken && (
             <li>
               <NavLink to={"/mypage"} onClick={isToggled && isToggledHandler}>
