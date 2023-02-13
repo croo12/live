@@ -9,6 +9,5 @@ public interface RealtorProjectionInterface {
     Float getStarScore();
     int getTotal();
     String getDescription();
-    String getPhone();
     String getBusinessAddress();
 }
