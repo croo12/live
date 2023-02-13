@@ -56,8 +56,8 @@ const ContractPageUser = () => {
   );
 };
 
-export const loader = async () => {
-  const itemNo = 1;
+export const loader = async ({ params }) => {
+  const itemNo = params.itemNo;
   const result = await getContractInfoByItemNo(itemNo);
 
   return result;
