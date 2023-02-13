@@ -42,7 +42,7 @@ const ReservationCardContent3 = ({
           <div className={classes.consultingInfo}>
             <div className={classes.consultingDate}>
               <p>
-                상담일시
+                상담 일시
                 <br />
                 <strong>{consultingDate.substring(0, 10)}</strong>
               </p>
