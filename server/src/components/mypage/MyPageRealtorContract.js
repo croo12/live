@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import classes from "./MyPageRealtorContract.module.scss";
 import ListBox from "../../UI/ListBox";
 import ContractCardContent from "../ContractCardContent";
-import { getContractList } from "../../apis/contractApis";
+import { getContractList } from "../../apis/ContractApis";
 import { useAuth } from "../common/AuthProtector";
 
 const data = ["대기중 계약", "진행중 계약", "완료된 계약"];
@@ -45,9 +45,7 @@ const MyPageRealtorContract = () => {
                       <button
                         key={index}
                         value={index}
-                        className={`${classes.btn} ${
-                          index === currentTab ? classes.active : ""
-                        }`}
+                        className={`${classes.btn} ${index === currentTab ? classes.active : ""}`}
                         onClick={tabChangeHandler}
                       >
                         {title}
