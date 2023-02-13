@@ -1,11 +1,18 @@
 import { useState } from "react";
-import classes from "./MyPageUserContract.module.scss";
+
+import classes from "./MyPageRealtorContract.module.scss";
 import ListBox from "../../UI/ListBox";
 import ContractCardContent from "../ContractCardContent";
 
-const data = ["전체 계약", "대기중 계약", "진행중 계약", "완료된 계약"];
+const data = [
+  "전체 계약",
+  "대기중 계약",
+  "진행중 계약",
+  "완료된 계약",
+  "취소된 계약",
+];
 
-const MyPageUserContract = () => {
+const MyPageRealtorContract = () => {
   const [tabActive, setTabActive] = useState(0);
 
   const toggleActive = (e) => {
@@ -69,6 +76,14 @@ const MyPageUserContract = () => {
                       </ListBox>
                     </div>
                   )}
+                  {tabActive === 4 && (
+                    <div>
+                      <p>취소된 계약</p>
+                      <ListBox dataArray={[0, 1]} direction={false}>
+                        <ContractCardContent tabActive={tabActive} />
+                      </ListBox>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -79,4 +94,4 @@ const MyPageUserContract = () => {
   );
 };
 
-export default MyPageUserContract;
+export default MyPageRealtorContract;

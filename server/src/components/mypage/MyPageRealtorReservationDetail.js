@@ -1,11 +1,13 @@
-import classes from "./MyReservationDetailRealtor.module.scss";
-import HouseCardContent2 from "../HouseCardContent2";
+import classes from "./MyPageRealtorReservationDetail.module.scss";
+
 import ListBox from "../../UI/ListBox";
 import MyReservationSearchBox from "./MyReservationSearchBox";
+import HouseCardContent2 from "../HouseCardContent2";
 
-const MyReservationDetailRealtor = () => {
+const MyPageRealtorReservationDetail = () => {
   return (
     <>
+      중개사 예약 상세
       <div className={classes.reservationdetailrealtor}>
         <h3>예약 내역</h3>
         <div className={classes.date}>
@@ -64,4 +66,4 @@ const MyReservationDetailRealtor = () => {
   );
 };
 
-export default MyReservationDetailRealtor;
+export default MyPageRealtorReservationDetail;

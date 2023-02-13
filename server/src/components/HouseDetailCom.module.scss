@@ -4,42 +4,102 @@
   width: 100%;
   font-size: 16px;
 
-  .imageBox {
-    width: 100%;
-    display: flex;
-    box-sizing: border-box;
-    border: 1px solid rgb(218, 218, 218);
-    border-radius: 6px;
+  max-width: 1024px;
 
-    .mainImage {
-      display: inline-flex;
-      width: 50%;
-      img {
-        box-sizing: border-box;
-        // 1400 기준
-        // width: 43.25em;
-        // height: 31.5em;
-        width: 31.4em;
-        height: 23em;
-        margin: 0.25em;
-        border: 1px solid rgb(218, 218, 218);
-        border-radius: 6px;
+  @media (max-width: 1024px) {
+    font-size: calc(15.6 * 0.1vw);
+  }
+
+  .imageContent {
+    display: flex;
+    width: 100%;
+
+    .imageBox {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+      border: 1px solid rgb(218, 218, 218);
+      border-radius: 6px;
+
+      .mainImage {
+        display: inline-flex;
+        justify-content: center;
+        width: 50%;
+        img {
+          box-sizing: border-box;
+          // width: 31em;
+          // height: 23em;
+          width: calc(100% - 0.5em);
+          height: 23em;
+          margin: 0.25em 0 0.25em 0.25em;
+          border: 1px solid rgb(218, 218, 218);
+          border-radius: 6px;
+        }
+      }
+      .subImage {
+        display: inline-flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 50%;
+        img {
+          box-sizing: border-box;
+          // 1400 기준
+          // width: 21.375em;
+          // height: 15.5em;
+          width: calc(50% - 0.5em);
+          height: 11.25em;
+          margin: 0.25em;
+          border: 1px solid rgb(218, 218, 218);
+          border-radius: 6px;
+        }
       }
     }
-    .subImage {
-      display: inline-flex;
-      flex-wrap: wrap;
-      width: 50%;
-      img {
-        box-sizing: border-box;
-        // 1400 기준
-        // width: 21.375em;
-        // height: 15.5em;
-        width: 15.45em;
-        height: 11.25em;
-        margin: 0.25em;
-        border: 1px solid rgb(218, 218, 218);
-        border-radius: 6px;
+
+    .imageButtonBox {
+      width: 100%;
+      position: absolute;
+      display: flex;
+      align-self: flex-end;
+      justify-content: flex-end;
+      max-width: 1024px;
+      padding: 1%;
+      button {
+        width: 6em;
+        height: 1.75em;
+        font-weight: 700;
+        font-size: 1.25em;
+        border-radius: 4px;
+        background: white;
+        cursor: pointer;
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 0.1em;
+          font-size: 0.75em;
+          transition: all 0.1s ease;
+
+          svg {
+            width: 1em;
+            height: 1em;
+            margin: 0 0.5em 0 0;
+
+            rect {
+              width: 0.25em;
+              height: 0.25em;
+              fill: #707070;
+            }
+          }
+        }
+      }
+
+      button:hover {
+        div {
+          font-size: 0.8em;
+          opacity: 0.8;
+        }
       }
     }
   }
@@ -52,38 +112,104 @@
     border-radius: 6px;
 
     .InnerBox {
-      width: calc(100% - 1em);
+      width: calc(100%);
       padding: 0.5em 1.5em;
 
-      .itemDesc {
-        margin: 0.75em 0;
+      .innerHeader {
+        display: flex;
 
-        p {
-          font-size: 1.25em;
-          margin: 0.5em 0;
-          font-weight: 700;
-        }
+        .itemDesc {
+          width: 66.66%;
+          margin: 0.75em 0;
 
-        div {
-          display: flex;
-          align-items: center;
-          margin: 0.25em 0;
-
-          span {
-            display: inline-block;
-            width: 7.5em;
-            font-size: 1.25em !important;
+          p {
+            font-size: 1.25em;
+            margin: 0.5em 0;
             font-weight: 700;
           }
 
-          p {
-            font-size: 1em;
+          div {
+            display: flex;
+            align-items: center;
+            margin: 0.25em 0;
+
+            span {
+              display: inline-block;
+              width: 7.5em;
+              font-size: 1.25em !important;
+              font-weight: 700;
+            }
+
+            p {
+              font-size: 1em;
+            }
+          }
+
+          .description {
+            margin: 2.5em 0;
+            font-size: 0.875em;
           }
         }
 
-        .description {
-          margin: 2.5em 0;
-          font-size: 0.875em;
+        .controlButtonBox {
+          width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+
+          .modifyButton {
+            width: 11em;
+            height: 2.5em;
+            font-size: 1.075em;
+            font-weight: 700;
+            color: #42d395;
+            background: white;
+            border: 2px solid #42d395;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+
+          .modifyButton:hover {
+            color: white;
+            background: #42d395;
+          }
+
+          .pickButton {
+            width: 8em;
+            height: 2em;
+            font-size: 1.075em;
+            font-weight: 700;
+            color: #42d395;
+            background: white;
+            border: 2px solid #42d395;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+
+          .pickButton:hover {
+            color: white;
+            background: #42d395;
+          }
+
+          .contractButton {
+            width: 8em;
+            height: 2em;
+            font-size: 1.075em;
+            font-weight: 700;
+            color: #0d6dfdbd;
+            background: white;
+            border: 2px solid #0d6dfdbd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+
+          .contractButton:hover {
+            color: white;
+            background: #0d6dfdbd;
+          }
         }
       }
 
@@ -129,11 +255,12 @@
       }
 
       hr {
-        margin: 2.5em 0;
-        width: 100%;
+        margin: 2.5em 1%;
+        width: 98%;
       }
 
       .optionInfo {
+        width: 100%;
         h3 {
           font-size: 1.25em;
         }
@@ -150,19 +277,23 @@
             flex-wrap: nowrap;
             margin: 0.25em;
             box-sizing: border-box;
-            width: 9em;
-            height: 9em;
+            width: 15.5%;
+            height: auto;
             border: 1px solid #bbbbbb;
             border-radius: 4px;
 
-            svg {
-              width: 3em;
-              height: 3em;
+            div {
+              margin: 13%;
+              svg {
+                width: 3em;
+                height: 3em;
+              }
             }
 
             p {
               font-size: 1.125em;
               font-weight: 700;
+              margin-bottom: 10%;
             }
           }
         }
@@ -207,6 +338,7 @@
 
           div {
             width: 98%;
+            height: 25em;
             margin: 1%;
           }
         }
