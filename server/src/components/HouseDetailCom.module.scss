@@ -152,10 +152,64 @@
         }
 
         .controlButtonBox {
-          width: 33.34%;
+          width: 50%;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: space-evenly;
+
+          .modifyButton {
+            width: 11em;
+            height: 2.5em;
+            font-size: 1.075em;
+            font-weight: 700;
+            color: #42d395;
+            background: white;
+            border: 2px solid #42d395;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+
+          .modifyButton:hover {
+            color: white;
+            background: #42d395;
+          }
+
+          .pickButton {
+            width: 8em;
+            height: 2em;
+            font-size: 1.075em;
+            font-weight: 700;
+            color: #42d395;
+            background: white;
+            border: 2px solid #42d395;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+
+          .pickButton:hover {
+            color: white;
+            background: #42d395;
+          }
+
+          .contractButton {
+            width: 8em;
+            height: 2em;
+            font-size: 1.075em;
+            font-weight: 700;
+            color: #0d6dfdbd;
+            background: white;
+            border: 2px solid #0d6dfdbd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          }
+
+          .contractButton:hover {
+            color: white;
+            background: #0d6dfdbd;
+          }
         }
       }
 

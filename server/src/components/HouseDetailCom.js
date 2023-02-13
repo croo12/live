@@ -82,8 +82,6 @@ const HouseDetailCom = (props) => {
     setPreviewModal(!previewModal);
   };
 
-  console.log(userInfo.isRealtor);
-
   return (
     <>
       {previewModal && (
@@ -171,24 +169,34 @@ const HouseDetailCom = (props) => {
                   {userInfo.isRealtor === true ? (
                     <>
                       <button
+                        className={classes.modifyButton}
                         onClick={() => {
                           navigate(`/house/modify/${houseInfo.itemNo}`);
                         }}
                       >
-                        수정
+                        수 정
                       </button>
-                      <button>삭제</button>
                     </>
                   ) : userInfo.isRealtor === false ? (
                     <>
                       <button
+                        className={classes.pickButton}
                         onClick={() =>
                           dispatch(reservedItemAction.addItem(houseInfo))
                         }
                       >
-                        담기
+                        담 기
                       </button>
-                      <button>계약</button>
+                      <button
+                        className={classes.contractButton}
+                        onClick={() => {
+                          navigate(
+                            `/contract/user-contract/${houseInfo.itemNo}`
+                          );
+                        }}
+                      >
+                        계 약
+                      </button>
                     </>
                   ) : (
                     <></>
@@ -337,9 +345,8 @@ const HouseDetailCom = (props) => {
               <div className={classes.optionInfo}>
                 <h3>옵션 정보</h3>
                 <div>
-                  {/* 4개만 우선적으로 보여주고... 그담 나머지 보여주는데... 어떻게 아이콘이랑 이름이랑 매칭시키지..?
-                   */}
                   {options.slice(0, 6).map((option) => {
+                    console.log(option);
                     if (option[0] === "bed") {
                       return (
                         <div className={classes.optionBox} key={option[0]}>
