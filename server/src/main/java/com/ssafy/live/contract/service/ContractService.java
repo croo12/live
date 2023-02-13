@@ -51,8 +51,7 @@ public class ContractService {
                 .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         Item item = itemRepository.findById(regist.getItemNo())
                 .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
-
-        Contract contract = regist.toEntity(users, realtor, item);
+        Contract contract = ContractRequest.Regist.toEntity(users, realtor, item, regist);
         contractRepository.save(contract);
 
         //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
@@ -66,24 +65,24 @@ public class ContractService {
         List<ContractResponse.ContractList> list = null;
         if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
             list = contractRepository.findByContractStateAndUsers(contractStatus, usersRepository.findById(user.getUsername()).get()).stream()
-                .map((contract)->
-                     ContractResponse.ContractList.toEntity(
-                         contract.getRealtor().getNo(),
-                         ContractResponse.ContractList.MemberInfo.toRealtor(contract.getRealtor()),
-                         ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem())
-                     )
-                )
-                .collect(Collectors.toList());
+                    .map((contract)->
+                            ContractResponse.ContractList.toEntity(
+                                    contract.getNo(),
+                                    ContractResponse.ContractList.MemberInfo.toRealtor(contract.getRealtor()),
+                                    ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem(), itemImageRepository.findByItem(contract.getItem()).get(0).getImageSrc())
+                            )
+                    )
+                    .collect(Collectors.toList());
         } else if(user.getAuthorities().contains(new SimpleGrantedAuthority("REALTOR"))) {
             list = contractRepository.findByContractStateAndRealtor(contractStatus, realtorRepository.findByBusinessNumber(user.getUsername()).get()).stream()
-                .map((contract)->
-                        ContractResponse.ContractList.toEntity(
-                            contract.getUsers().getNo(),
-                            ContractResponse.ContractList.MemberInfo.toUser(contract.getUsers()),
-                            ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem())
-                        )
-                )
-                .collect(Collectors.toList());
+                    .map((contract)->
+                            ContractResponse.ContractList.toEntity(
+                                    contract.getNo(),
+                                    ContractResponse.ContractList.MemberInfo.toUser(contract.getUsers(), contract.getTenantAge()),
+                                    ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem(), itemImageRepository.findByItem(contract.getItem()).get(0).getImageSrc())
+                            )
+                    )
+                    .collect(Collectors.toList());
         } else {
             throw new BadRequestException(WRONG_AUTHENTICATION_TYPE);
         }
@@ -95,12 +94,12 @@ public class ContractService {
         List<ItemImage> itemImages = itemImageRepository.findByItem(contract.getItem());
         List<String> images = itemImages.stream().map((i)->i.getImageSrc()).collect(Collectors.toList());
         ContractResponse.ContractDetail contractDetail = ContractResponse.ContractDetail
-            .toEntity(
-                ContractResponse.ContractDetail.RealtorInfo.toEntity(contract.getRealtor()),
-                ContractResponse.ContractDetail.UserInfo.toEntity(contract.getUsers()),
-                ContractResponse.ContractDetail.ItemInfo.toEntity(contract.getItem(), images),
-                ContractResponse.ContractDetail.ContractInfo.toEntity(contract)
-            );
+                .toEntity(
+                        ContractResponse.ContractDetail.RealtorInfo.toEntity(contract.getRealtor()),
+                        ContractResponse.ContractDetail.UserInfo.toEntity(contract.getUsers()),
+                        ContractResponse.ContractDetail.ItemInfo.toEntity(contract.getItem(), images),
+                        ContractResponse.ContractDetail.ContractInfo.toEntity(contract)
+                );
 
         return response.success(contractDetail, "계약 상세를 조회하였습니다.", HttpStatus.OK);
     }
