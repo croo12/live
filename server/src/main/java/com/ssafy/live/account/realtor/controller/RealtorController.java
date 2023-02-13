@@ -105,9 +105,8 @@ public class RealtorController {
     }
 
     @GetMapping("/popular")
-    public ResponseEntity<?> findRealtorList(Authentication authentication, @RequestParam String orderBy) {
+    public ResponseEntity<?> findRealtorList(@RequestParam String orderBy) {
         log.info("메인페이지 공인중개사 목록 조회");
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
-        return realtorService.findRealtorList(principal, orderBy);
+        return realtorService.findRealtorList(orderBy);
     }
 }

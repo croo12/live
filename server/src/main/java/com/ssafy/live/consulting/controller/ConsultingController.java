@@ -4,6 +4,7 @@ import com.ssafy.live.account.common.error.ErrorHandler;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.service.ConsultingService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/consultings")
@@ -36,7 +38,6 @@ public class ConsultingController {
     @PatchMapping
     public ResponseEntity<?> changeStatus(Authentication authentication, @RequestBody ConsultingRequest.ChangeStatus request) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
-        System.out.println("sㅏ 좀 찍우저ㅜ라");
         return consultingService.changeStatus(principal, request);
     }
 

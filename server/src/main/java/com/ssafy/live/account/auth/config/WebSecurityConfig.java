@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin().disable()
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-            .antMatchers("/users", "/users/login", "/users/reissue", "/users/id", "/realtors", "/realtors/login", "/realtors/id", "/realtors/reissue").permitAll()
+            .antMatchers("/users", "/users/login", "/users/reissue", "/users/id", "/realtors", "/realtors/login", "/realtors/id", "/realtors/reissue", "/consultings").permitAll()
 //            .antMatchers("/users/info", "/users/passcheck", "/users/").hasAuthority("USER")
                 .antMatchers("/users/**", "/realtors/**").permitAll()
            // .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()

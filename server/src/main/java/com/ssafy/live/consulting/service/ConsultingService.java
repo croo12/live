@@ -124,10 +124,10 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?> changeStatus(UserDetails user, ConsultingRequest.ChangeStatus request) {
-        Consulting consulting = consultingRepository.findById(request.getCounsultingNo())
+        Consulting consulting = consultingRepository.findById(request.getConsultingNo())
             .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
-            consulting.updateStatus(request.getStatus());
+        consulting.updateStatus(request.getStatus());
         consultingRepository.save(consulting);
         String writer, info;
         SMSContent smsContent;
