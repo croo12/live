@@ -15,7 +15,7 @@ const HouseModify = () => {
   const [entrance, setEntrance] = useState(getLoaderData.entrance);
   const [heating, setHeating] = useState(getLoaderData.heating);
 
-  const realtorNo = useRef();
+  // const realtorNo = useRef();
   const buildingName = useRef();
   const deposit = useRef();
   const description = useRef();
@@ -252,7 +252,7 @@ const HouseModify = () => {
   console.log(getLoaderData);
 
   useEffect(() => {
-    realtorNo.value = getLoaderData.realtorNo;
+    // realtorNo.value = getLoaderData.realtorNo;
     buildingName.current.value = getLoaderData.house.buildingName;
     deposit.current.value = getLoaderData.deposit;
     description.current.value = getLoaderData.description;
