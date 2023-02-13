@@ -51,7 +51,8 @@ public class ContractService {
                 .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         Item item = itemRepository.findById(regist.getItemNo())
                 .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
-        Contract contract = ContractRequest.Regist.toEntity(users, realtor, item);
+
+        Contract contract = regist.toEntity(users, realtor, item);
         contractRepository.save(contract);
 
         //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
