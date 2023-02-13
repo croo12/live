@@ -1,60 +1,112 @@
 import classes from "./ContractCardContent.module.scss";
 import sample from "../assets/image/sample.jpg";
+import { useNavigate } from "react-router-dom";
 
-const ContractCardContent = () => {
+const ContractCardContent = (props) => {
+  const navigate = useNavigate();
   return (
     <>
-      <div className={classes.contractContent}>
-        <div className={classes.upCardContent} style={{ display: "flex" }}>
-          <div
-            className={classes.leftImg}
-            style={{ width: "200px", flex: "1" }}
-          >
-            <img
-              src={sample}
-              style={{ width: "100%", borderRadius: "70%" }}
-            ></img>
-          </div>
-          <div className={classes.middleDesc} style={{ flex: "3" }}>
-            <strong>김지수</strong>
-            <p>26세 / 여</p>
-            <p>010-1111-2222</p>
-          </div>
-          <div className={classes.contractState} style={{ flex: "1" }}>
-            <p>승인 대기 중</p>
-          </div>
-        </div>
-        <hr />
-        <div className={classes.downCardContent} style={{ display: "flex" }}>
-          <div
-            className={classes.contractLeftInfo}
-            style={{ flex: "1", textAlign: "left", marginTop: "7%" }}
-          >
-            <p>매물번호 258-1470</p>
-            <strong>대전 유성구 수통골로 55번길 127</strong>
-            <p>방 1/ 26㎡ </p>
-            <div className={classes.priceInfo}>
-              <div className={classes.forSalePrice} style={{ display: "flex" }}>
-                <p style={{ flex: "1" }}>매물 가격</p>
-                <strong style={{ flex: "1" }}>월세 1000/90 만원</strong>
+      <div className={classes.contractCard}>
+        <div className={classes.profileField}>
+          <div className={classes.profileBox}>
+            <div className={classes.profileImage}>
+              <img src={props.memberInfo.imageSrc} />
+            </div>
+            <div className={classes.memberInfo}>
+              {!props.isRealtor && <p> {props.memberInfo.desc}</p>}
+              <div>
+                <strong>{props.memberInfo.name}</strong>
+                {props.isRealtor && (
+                  <p>
+                    {props.memberInfo.age}세/{props.memberInfo.gender}
+                  </p>
+                )}
               </div>
-              <div
-                className={classes.maintenanceFee}
-                style={{ display: "flex" }}
-              >
-                <p style={{ flex: "1" }}>관리비</p>
-                <strong style={{ flex: "1" }}>10 만원</strong>
-              </div>
+              <div>{props.isRealtor && <p> {props.memberInfo.desc}</p>}</div>
             </div>
           </div>
-          <div
-            className={classes.contractRightImg}
-            style={{ flex: "0.5", width: "10px" }}
-          >
-            <img src={sample} style={{ width: "100%" }}></img>
+
+          <div className={classes.contractStatus}>
+            <p
+              className={
+                props.status === 0
+                  ? classes.approve
+                  : props.status === 1
+                  ? classes.processing
+                  : classes.complete
+              }
+            >
+              {props.status === 0
+                ? "승인 대기중"
+                : props.status === 1
+                ? "계약 진행"
+                : "계약 완료"}
+            </p>
           </div>
         </div>
-        <button>계약 상세보기</button>
+
+        <hr />
+
+        <div className={classes.contentField}>
+          <div className={classes.contentBox}>
+            <div className={classes.itemInfo}>
+              <div className={classes.noInfo}>
+                <p>매물번호 {props.itemInfo.itemNo}</p>
+                <p>계약번호 {props.contractNo}</p>
+              </div>
+              <strong>
+                {props.itemInfo.address}&nbsp;
+                <p>({props.itemInfo.buildingName})</p>
+              </strong>
+              <p>
+                방 {props.itemInfo.room}/ {props.itemInfo.exclusivePrivateArea}
+                ㎡{" "}
+                {"(전용" +
+                  Math.round(props.itemInfo.exclusivePrivateArea / 3.3) +
+                  "평)"}
+              </p>
+            </div>
+            <div className={classes.priceInfo}>
+              <div className={classes.forSalePrice}>
+                <p>
+                  매물 가격
+                  <strong>
+                    &nbsp;월세 {props.itemInfo.deposit} 만원/
+                    {props.itemInfo.rent} 만원
+                  </strong>
+                </p>
+              </div>
+              <div className={classes.maintenanceFee}>
+                <p>
+                  관리비&nbsp;
+                  <strong>{props.itemInfo.maintenanceFee} 만원</strong>
+                </p>
+              </div>
+            </div>
+            <div className={classes.contractButton}>
+              {props.isRealtor ? (
+                <button
+                  onClick={() => {
+                    navigate(`/contract/realtor-contract/${props.contractNo}`);
+                  }}
+                >
+                  계약 상세보기
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    navigate(`/contract/user-contract/${props.contractNo}`);
+                  }}
+                >
+                  계약 상세보기
+                </button>
+              )}
+            </div>
+          </div>
+          <div className={classes.imageBox}>
+            <img src={props.itemInfo.imageSrc}></img>
+          </div>
+        </div>
       </div>
     </>
   );

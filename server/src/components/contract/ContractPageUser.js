@@ -6,7 +6,7 @@ import ContractRequireInfo from "./ContractRequireInfo";
 import ContractExpectedCost from "./ContractExpectedCost";
 import classes from "./ContractPageUser.module.scss";
 import axiosInstance from "../../util/axios";
-import { getContractInfoByItemNo } from "../../apis/ContractApis";
+import { getContractInfoByItemNo } from "../../apis/contractApis";
 import { useLoaderData } from "react-router-dom";
 
 const ContractPageUser = () => {
