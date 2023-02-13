@@ -112,7 +112,7 @@
     border-radius: 6px;
 
     .InnerBox {
-      width: calc(100% - 1em);
+      width: calc(100%);
       padding: 0.5em 1.5em;
 
       .innerHeader {
@@ -201,11 +201,12 @@
       }
 
       hr {
-        margin: 2.5em 0;
-        width: 100%;
+        margin: 2.5em 1%;
+        width: 98%;
       }
 
       .optionInfo {
+        width: 100%;
         h3 {
           font-size: 1.25em;
         }
@@ -222,19 +223,23 @@
             flex-wrap: nowrap;
             margin: 0.25em;
             box-sizing: border-box;
-            width: 9em;
-            height: 9em;
+            width: 15.5%;
+            height: auto;
             border: 1px solid #bbbbbb;
             border-radius: 4px;
 
-            svg {
-              width: 3em;
-              height: 3em;
+            div {
+              margin: 13%;
+              svg {
+                width: 3em;
+                height: 3em;
+              }
             }
 
             p {
               font-size: 1.125em;
               font-weight: 700;
+              margin-bottom: 10%;
             }
           }
         }

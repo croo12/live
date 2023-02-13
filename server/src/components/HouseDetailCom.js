@@ -82,6 +82,8 @@ const HouseDetailCom = (props) => {
     setPreviewModal(!previewModal);
   };
 
+  console.log(userInfo.isRealtor);
+
   return (
     <>
       {previewModal && (
@@ -164,20 +166,9 @@ const HouseDetailCom = (props) => {
                       만원
                     </p>
                   </div>
-                  {/* <div className={classes.description}>
-              <pre>
-              {`😀 행복한 집 😀
-              
-              안녕하세요 .
-              
-              꿀 매물 해피하우스 소개드립니당.
-              
-              상담신청해주세용!`}
-              </pre>
-            </div> */}
                 </div>
                 <div className={classes.controlButtonBox}>
-                  {userInfo.isRealtor ? (
+                  {userInfo.isRealtor === true ? (
                     <>
                       <button
                         onClick={() => {
@@ -188,11 +179,19 @@ const HouseDetailCom = (props) => {
                       </button>
                       <button>삭제</button>
                     </>
-                  ) : (
+                  ) : userInfo.isRealtor === false ? (
                     <>
-                      <button>담기</button>
+                      <button
+                        onClick={() =>
+                          dispatch(reservedItemAction.addItem(houseInfo))
+                        }
+                      >
+                        담기
+                      </button>
                       <button>계약</button>
                     </>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </div>
@@ -705,16 +704,7 @@ const HouseDetailCom = (props) => {
               <div className={classes.detailDesc}>
                 <h3>상세 설명</h3>
                 <div>
-                  <pre>
-                    {`😀 행복한 집 😀
-
-안녕하세요 .
-
-꿀 매물 해피하우스 소개드립니당.
-
-상담신청해주세용!`}
-                    {houseInfo.description}
-                  </pre>
+                  <pre>{houseInfo.description}</pre>
                 </div>
               </div>
 
