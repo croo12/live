@@ -47,6 +47,16 @@ const Header = () => {
           </button>
         </div>
         <ul className={`${classes["menu"]} ${isToggled && classes.active}`}>
+          <li>
+            <NavLink to={"/alert"} onClick={isToggled && isToggledHandler}>
+              알람
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/contract"} onClick={isToggled && isToggledHandler}>
+              계약
+            </NavLink>
+          </li>
           {userInfo.isRealtor ? (
             <li>
               <NavLink to={"/house"} onClick={isToggled && isToggledHandler}>
@@ -58,20 +68,14 @@ const Header = () => {
           )}
           {userInfo.isRealtor === false && (
             <li>
-              <NavLink
-                to={"/reservation"}
-                onClick={isToggled && isToggledHandler}
-              >
+              <NavLink to={"/reservation"} onClick={isToggled && isToggledHandler}>
                 예약
               </NavLink>
             </li>
           )}
           {userInfo.isRealtor && (
             <li>
-              <NavLink
-                to={`/consulting/${makeUUID()}`}
-                onClick={isToggled && isToggledHandler}
-              >
+              <NavLink to={`/consulting/${makeUUID()}`} onClick={isToggled && isToggledHandler}>
                 상담
               </NavLink>
             </li>
@@ -108,16 +112,6 @@ const Header = () => {
               </NavLink>
             </li>
           )}
-          <li>
-            <NavLink to={"/alert"} onClick={isToggled && isToggledHandler}>
-              알람
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/contract"} onClick={isToggled && isToggledHandler}>
-              계약
-            </NavLink>
-          </li>
         </ul>
       </div>
     </div>

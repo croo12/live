@@ -1,37 +1,3 @@
-.carouseldataLast {
-    .upImg {
-        width: 14vw;
-        height: 14vw;
-        border-radius: 20px;
-        margin-right: 65px;
-        display: flex;
-        justify-content: center;
-        align-items:center;
-        background: url(../assets/image/sample.jpg);
-        // background: linear-gradient(
-        //     to right,
-        //     rgba(20, 20, 20, 0) 10%,
-        //     rgba(20, 20, 20, 0.25) 25%,
-        //     rgba(20, 20, 20, 1) 50%,
-        //     rgba(20, 20, 20, 1) 75%,
-        //     rgba(20, 20, 20, 1) 100%
-        //   ), url(../assets/image/sample.jpg);
-        background-size: cover;
-    }
-    .downDesc{
-        color: white; 
-        text-align: left;
-        padding: 10px 30px;
-        .downDescInfo {
-            p {
-                padding: 3px 0;
-                font-size: 0.9em;
-                font-weight: 400;
-            }
-        }
-    }
-}
-
 .carouseldata {
     .upImg {
         width: 14vw;
@@ -41,7 +7,6 @@
         display: flex;
         justify-content: center;
         align-items:center;
-        background: url(../assets/image/sample.jpg);
         background-size: cover;
     }
     .downDesc{
@@ -51,8 +16,8 @@
         .downDescInfo {
             p {
                 padding: 3px 0;
-                font-size: 0.9em;
-                font-weight: 400;
+                font-size: 0.8em;
+                font-weight: 300;
             }
         }
     }
@@ -77,8 +42,8 @@
                 padding: 10px 30px;
                 .downDescInfo {
                     p {
-                        font-size: 0.9em;
-                        font-weight: 400;
+                        font-size: 0.8em;
+                        font-weight: 300;
                     }
                 }
             }
