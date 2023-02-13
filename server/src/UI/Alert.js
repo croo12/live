@@ -1,45 +1,33 @@
 import ReactDOM from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import classes from "./Alert.module.scss";
+import { NavLink } from "react-router-dom";
 
-const useAlert = (isVisible, timeout) => {
-  const [visible, setVisible] = useState(isVisible);
-  const timeoutId = useRef(null);
+const CustomAlert = ({ title, content, link, linkName, setter }) => {
+  // const [viewAlert, setAlert] = useState(true);
 
-  useEffect(() => {
-    if (isVisible) {
-      timeoutId.current = setTimeout(() => setVisible(false), timeout);
-    }
-    return () => {
-      clearTimeout(timeoutId.current);
-    };
-  }, [isVisible, timeout]);
-
-  return visible;
-};
-
-const Alert = ({ title, content, visible, setVisible }) => {
-  const viewAlert = useAlert(visible, 4000);
+  console.log(`도전`);
 
   useEffect(() => {
-    return () => {
-      setVisible(false);
-    };
+    setTimeout(() => {
+      console.log(setter);
+      setter(false);
+    }, 5000);
   }, []);
 
   return (
     <>
       {ReactDOM.createPortal(
-        viewAlert && (
-          <div className={classes.alert}>
-            <h2> {title} </h2>
-            <p> {content} </p>
-          </div>
-        ),
+        <div className={classes.alert}>
+          <h2> {title} </h2>
+          <hr />
+          <p> {content} </p>
+          {link && <NavLink to={link}>{linkName ? linkName : link}</NavLink>}
+        </div>,
         document.getElementById("overlay-root")
       )}
     </>
   );
 };
 
-export default Alert;
+export default CustomAlert;

@@ -70,19 +70,25 @@ export const ConsultingHouseCardContent = (props) => {
     }
   };
 
+  console.log(props);
+
   return (
     <>
-      <div
-        className={`${classes.houseCardContent} ${classes.consulting_inner}`}
-      >
+      <div className={`${classes.consulting_inner} `}>
         <div className={classes.upperCard}>
           <div className={classes.leftBox}>
-            <h3> 월세 500/ 60 </h3>
-            <p> 크기 35 /관리비 n만 </p>
-            <p> 대전 서구 갈마로... </p>
+            <div>{props.idx + 1}번 매물</div>
+            <h3>
+              <span>월세</span> {props.rent} / {props.deposit}
+            </h3>
+            <p> 크기 35 /관리비 {props.maintenanceFee}만 </p>
+            <p> {props.address} </p>
           </div>
           <div className={classes.rightBox}>
-            <img src={sample} alt={"토토로"} />
+            <img
+              src={props.imageSrc ? props.imageSrc : sample}
+              alt={"토토로"}
+            />
           </div>
         </div>
         <div className={classes.downCard}>
@@ -90,10 +96,16 @@ export const ConsultingHouseCardContent = (props) => {
         </div>
         {props.detail === props.idx && (
           <div className={classes.badge}>
-            <HouseDetailCom isConsulting={true} />
+            <div>
+              <button style={{ cursor: "pointer" }} onClick={clickEventHandler}>
+                매물목록으로
+              </button>
+            </div>
+            <HouseDetailCom isConsulting={true} itemNo={props.itemNo} />
           </div>
         )}
       </div>
+
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
           <HouseDetailCom houseId={123} />
@@ -124,27 +136,30 @@ export const ReservationHouseCardContent = (props) => {
     }
   };
 
+  console.log("이 집 정보", props);
+  const house = props.house;
+
   return (
     <div
       onClick={() => {
-        props.setHighlightEventHandler(props.idx);
+        props.removeItemHandler(props.itemNo);
       }}
-      className={`${classes.reservationItem}``${
-        props.highlightNumber === props.idx ? classes.active : ""
-      }`}
+      className={`${classes.reservationItem} `}
     >
       <div className={classes.image}>
         <img src={sample} alt="선택한 매물 목록" />
       </div>
       <div>
-        <h3>월세 1,000 / 49</h3>
-        <p>방1 29m. 관리비 3</p>
-        <p>대전 서구 도산로 253</p>
+        <h3>
+          월세 {props.rent} / {props.deposit}
+        </h3>
+        <p>방1 29m. 관리비 {props.maintenanceFee}</p>
+        <p>{house.address}</p>
       </div>
-      <button onClick={clickEventHandler}>상세 정보 보기</button>
+      {/* <button onClick={clickEventHandler}>상세 정보 보기</button> */}
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom houseId={123} />
+          <HouseDetailCom itemNo={props.itemNo} />
         </Modal>
       )}
     </div>
@@ -180,7 +195,7 @@ export const RealtorHousesCardContent = ({
       </div>
       {isModal && (
         <Modal onConfirm={onConfirm}>
-          <HouseDetailCom houseId={itemNo} />
+          <HouseDetailCom itemNo={itemNo} />
         </Modal>
       )}
     </div>

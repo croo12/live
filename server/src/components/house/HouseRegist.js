@@ -160,7 +160,6 @@ const HouseRegist = () => {
     //--------------------------------------------------------------------------
     const response = await registHouseData({
       jsonData: {
-        realtorNo: 1, //수정해주세용~~
         deposit: deposit.current.value.replaceAll(",", ""),
         rent: rent.current.value.replaceAll(",", ""),
         maintenanceFee: maintenanceFee.current.value.replaceAll(",", ""),

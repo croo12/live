@@ -32,7 +32,10 @@ const userSlice = createSlice({
       state.refreshToken = null;
     },
     setInfo(state, { payload }) {
-      state.userInfo = { ...state.userInfo, ...payload };
+      console.log(payload);
+      const newInfo = { ...state.userInfo, ...payload };
+      console.log(newInfo);
+      state.userInfo = newInfo;
     },
     setIsRealtor(state, { payload }) {
       state.userInfo = { ...state.userInfo, isRealtor: payload };

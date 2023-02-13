@@ -10,7 +10,7 @@ import {
   BiCctv,
 } from "react-icons/bi";
 import { BsWind, BsFlower1, BsHouseDoor } from "react-icons/bs";
-import { CgSmartHomeWashMachine } from "react-icons/cg";
+import { CgSmartHomeWashMachine, CgSmartHomeBoiler } from "react-icons/cg";
 import { FaSink } from "react-icons/fa";
 import {
   GiDesk,
@@ -36,7 +36,7 @@ import {
   RiSecurePaymentFill,
   RiAlarmWarningLine,
 } from "react-icons/ri";
-import { TbBath, TbSofa } from "react-icons/tb";
+import { TbBath, TbSofa, TbStairs } from "react-icons/tb";
 
 const Icons = {
   // 매물 상세 - 매물 정보
@@ -50,6 +50,8 @@ const Icons = {
   purpose: <BiBuildingHouse />, // 건축물용도 아이콘
   marker: <HiOutlineLocationMarker />, // 위치(상세주소) 아이콘
   completionYear: <BsHouseDoor />,
+  entrance: <TbStairs />,
+  heating: <CgSmartHomeBoiler />,
   // 매물 상세 - 매물 옵션
   bed: <BiBed />, //침대
   washingMachine: <MdOutlineLocalLaundryService />, //세탁기
@@ -59,17 +61,17 @@ const Icons = {
   bathtub: <TbBath />, //욕조
   sink: <FaSink />, //싱크대
   cctv: <BiCctv />, //CCTV
-  table: <GiTable />, //식탁
+  diningTable: <GiTable />, //식탁
   sofa: <TbSofa />, //소파
   shoeRack: <GiConverseShoe />, //신발장
   refrigerator: <RiFridgeLine />, //냉장고
   dryingMachine: <MdLocalLaundryService />, //건조기
   bidet: <GrRestroom />, //비데
   dishWasher: <CgSmartHomeWashMachine />, //식기세척기
-  gasStore: <GiGasStove />, //가스레인지
+  gasStove: <GiGasStove />, //가스레인지
   inductionCooktop: <BiFoodTag />, //인덕션
   microwave: <MdOutlineMicrowave />, //전자레인지
-  gasOven: <GiChickenOven />, //오븐
+  oven: <GiChickenOven />, //오븐
   guard: <GiCaptainHatProfile />, //경비원
   intercom: <BiPhoneCall />, //인터폰
   keycard: <RiSecurePaymentFill />, //카드키

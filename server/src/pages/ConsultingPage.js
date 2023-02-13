@@ -1,12 +1,11 @@
 import { useState } from "react";
 
 import { useParams } from "react-router-dom";
-import ConsultingMeetPage from "../components/ConsultingMeetPage";
-import ConsultingRightBox from "../components/ConsultingRightBox";
+import ConsultingMeetPage from "../components/consulting/ConsultingMeetPage";
+import ConsultingRightBox from "../components/consulting/ConsultingRightBox";
 import { usePrompt } from "../util/usePrompt";
 
 import classes from "./ConsultingPage.module.scss";
-import useRecording from "../util/useRecording";
 import { useAuth } from "../components/common/AuthProtector";
 
 export const REALTOR_STATUS = {
@@ -95,11 +94,6 @@ const ConsultingPage = (props) => {
     // setStatus(status);
   };
 
-  usePrompt({
-    when: true,
-    message: `페이지 이동으로 통화가 종료될 수 있습니다. \n 정말로 나가시겠습니까?`,
-  });
-
   const toggleTest = () => {
     toggleRealtor(!isRealtor);
   };
@@ -118,6 +112,7 @@ const ConsultingPage = (props) => {
       <div className={classes.consulting_page}>
         <div className={classes.video_box}>
           <ConsultingMeetPage
+            userInfo={userInfo}
             isRealtor={isRealtor}
             status={status}
             statusChangeHandler={statusChangeHandler}
@@ -133,6 +128,7 @@ const ConsultingPage = (props) => {
             toggleListInMobile={toggleListInMobile}
             status={status}
             viewList={viewList}
+            sessionId={sessionId}
           />
         </div>
       </div>

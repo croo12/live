@@ -6,17 +6,18 @@ export const userLogin = async (data, dispatch) => {
   let result = {
     accessToken: null,
     refreshToken: null,
+    message: null,
   };
 
   await axiosInstance
     .post(`users/login`, data, {})
     .then(({ data }) => {
+      console.log(data);
       if (data.state === 200) {
         result = data.data;
-        console.log(result);
         dispatch(userAction.login(result));
       } else {
-        console.log(data);
+        result["message"] = data.message;
       }
     })
     .catch((err) => {
@@ -61,7 +62,8 @@ export const getUserInfo = async (accessToken) => {
         console.log(res);
         const data = res.data;
         if (data.state === 200) {
-          userInfo = data;
+          userInfo = data.data;
+          return userInfo;
         }
       });
   } else {
@@ -79,6 +81,7 @@ export const getUserInfo = async (accessToken) => {
 
         if (data.state === 200) {
           userInfo = data.data;
+          return userInfo
         }
       });
   }

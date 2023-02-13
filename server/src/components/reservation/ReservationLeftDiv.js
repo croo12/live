@@ -16,7 +16,7 @@ const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
   return (
     <div className={classes.leftContainer}>
       <h2>공인 중개사 목록</h2>
-      <div>
+      <div className={classes.leftListContainer}>
         {realtors?.length ? (
           <ListBox dataArray={realtors}>
             <ReservationRealtorCardContent

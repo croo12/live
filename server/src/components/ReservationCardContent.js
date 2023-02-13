@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../UI/Button";
 
 import classes from "./ReservationCardContent.module.scss";
@@ -39,10 +39,16 @@ export default ReservationCardContent;
 export const ConsultingReservationCardContent = (props) => {
   const [isConsulting, setConsulting] = useState(props.isConsulting);
   const realtor = useRef(props.isRealtor);
+  const navigation = useNavigate();
 
   const clickEventHandler = () => {
-    if (props.statusChangeHandler)
+    if (props.statusChangeHandler) {
       props.statusChangeHandler(REALTOR_STATUS.START_BUT_NOT_CONNECT);
+    }
+
+    const itemNo = 8;
+
+    navigation(`/consulting/${props.sessionId}/${itemNo}`);
   };
 
   return (
