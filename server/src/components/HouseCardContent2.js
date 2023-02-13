@@ -15,7 +15,7 @@ const HouseCardContent2 = ({
 }) => {
   const navigation = useNavigate();
   const onContractHandler = () => {
-    navigation(`./user-contract/${itemNo}`);
+    navigation(`/contract/user-contract/${itemNo}`);
   };
   return (
     <>
