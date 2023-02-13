@@ -22,7 +22,7 @@ public enum ConsultingStatus {
         else if(status == 1) {
             return new ConsultingStatus[]{CONSULTING_CONFIRMED, CONSULTING_RPOCESSING};
         }else {
-            return new ConsultingStatus[]{CONSULTING_PAST, CONSULTING_PAST};
+            return new ConsultingStatus[]{CONSULTING_PAST, CONSULTING_CANCLED};
         }
     }
 
