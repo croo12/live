@@ -1,23 +1,17 @@
 import { useState } from "react";
 import classes from "./MyPageUserContract.module.scss";
 import ListBox from "../../UI/ListBox";
-import { DUMMY5 } from "../ReservationCardContent2";
-import ReservationCardContent2 from "../ReservationCardContent2";
+import ContractCardContent from "../ContractCardContent";
 
 const data = ["전체 계약", "대기중 계약", "진행중 계약", "완료된 계약"];
 
 const MyPageUserContract = () => {
-  const [reservationUser, setreservationUser] = useState(DUMMY5);
   const [tabActive, setTabActive] = useState(0);
 
   const toggleActive = (e) => {
     setTabActive(Number.parseInt(e.target.value));
   };
 
-  const [detailInfo, setDetailInfo] = useState(true);
-  const onDetailReservationHandler = (detailInfo) => {
-    setDetailInfo(detailInfo);
-  };
   return (
     <>
       <div className={classes.consultBox}>
@@ -46,32 +40,32 @@ const MyPageUserContract = () => {
                   {tabActive === 0 && (
                     <div>
                       <p>전체 계약</p>
-                      <ListBox dataArray={reservationUser} direction={false}>
-                        <ReservationCardContent2 tabActive={tabActive} />
+                      <ListBox dataArray={[0, 1]} direction={false}>
+                        <ContractCardContent tabActive={tabActive} />
                       </ListBox>
                     </div>
                   )}
                   {tabActive === 1 && (
                     <div>
                       <p>대기중 계약</p>
-                      <ListBox dataArray={reservationUser} direction={false}>
-                        <ReservationCardContent2 tabActive={tabActive} />
+                      <ListBox dataArray={[0, 1]} direction={false}>
+                        <ContractCardContent tabActive={tabActive} />
                       </ListBox>
                     </div>
                   )}
                   {tabActive === 2 && (
                     <div>
                       <p>진행중 계약</p>
-                      <ListBox dataArray={reservationUser} direction={false}>
-                        <ReservationCardContent2 tabActive={tabActive} />
+                      <ListBox dataArray={[0, 1]} direction={false}>
+                        <ContractCardContent tabActive={tabActive} />
                       </ListBox>
                     </div>
                   )}
                   {tabActive === 3 && (
                     <div>
                       <p>완료된 계약</p>
-                      <ListBox dataArray={reservationUser} direction={false}>
-                        <ReservationCardContent2 tabActive={tabActive} />
+                      <ListBox dataArray={[0, 1]} direction={false}>
+                        <ContractCardContent tabActive={tabActive} />
                       </ListBox>
                     </div>
                   )}

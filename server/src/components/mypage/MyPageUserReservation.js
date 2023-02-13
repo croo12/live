@@ -1,5 +1,5 @@
 import { useState } from "react";
-import classes from "./MyPageRealtorReservationDetail.module.scss";
+import classes from "./MyPageUserReservation.module.scss";
 import ListBox from "../../UI/ListBox";
 import ReservationCardContent2 from "../ReservationCardContent2";
 import { DUMMY5 } from "../ReservationCardContent2";
@@ -13,10 +13,6 @@ const MyPageUserReservation = () => {
     setTabActive(Number.parseInt(e.target.value));
   };
 
-  const [detailInfo, setDetailInfo] = useState(true);
-  const onDetailReservationHandler = (detailInfo) => {
-    setDetailInfo(detailInfo);
-  };
   return (
     <>
       <div className={classes.consultBox}>

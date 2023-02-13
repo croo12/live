@@ -23,11 +23,27 @@ const ContractPageUser = () => {
     age: "",
   });
 
-  const [requireInfo, setRequireInfo] = useState({});
+  const [requireInfo, setRequireInfo] = useState({
+    numberOfResidents: "",
+    specialContract: "",
+  });
+
+  const passInfo = {
+    userTermOfContract: forSaleInfo.userTermOfContract,
+    userMoveOnDate: forSaleInfo.userMoveOnDate,
+    address: tenantInfo.address,
+    addressDetail: tenantInfo.addressDetail,
+    age: tenantInfo.age,
+    numberOfResidents: requireInfo.numberOfResidents,
+    specialContract: requireInfo.specialContract,
+    deposit: data.data.itemInfo.deposit,
+    rent: data.data.itemInfo.rent,
+  };
 
   // console.log(data);
   // console.log(forSaleInfo);
-  console.log(tenantInfo);
+  // console.log(tenantInfo);
+  console.log(requireInfo);
 
   return (
     <>
@@ -47,10 +63,10 @@ const ContractPageUser = () => {
         />
       </section>
       <section>
-        <ContractRequireInfo />
+        <ContractRequireInfo fx={setRequireInfo} />
       </section>
       <section>
-        <ContractExpectedCost />
+        <ContractExpectedCost passInfo={passInfo} />
       </section>
     </>
   );
