@@ -54,6 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
            // .antMatchers("/realtors/region", "/realtors/{realtorNo}", "/realtors/info", "/realtors/passcheck", "/realtors/{realtorNo}/consultings").hasAuthority("REALTOR")
             .antMatchers("/consultings/**").permitAll()
             .antMatchers("/contracts/**").permitAll()
+                .antMatchers("/items/**").permitAll()
+                .antMatchers("/items").permitAll()
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
 
