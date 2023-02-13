@@ -21,58 +21,42 @@ public class ConsultingResponse {
     @Builder
     @Getter
     @AllArgsConstructor
-    public static class ReservationRealtor {
+    public static class ReservationInfo {
 
         private Long consultingNo;
         private Long realtorNo;
         private Long userNo;
         private String name;
+        private String personalInfo;
         private String image;
-        private String info;
         private LocalDateTime consultingDate;
         private int status;
         private String representativeItem;
         private int itemCount;
 
-        public static ReservationRealtor toResponse(Consulting consulting, Users user, String buildingName, int count) {
-            return ReservationRealtor.builder()
+        public static ReservationInfo toResponse(Consulting consulting, Realtor realtor, String buildingName, int count) {
+            return ReservationInfo.builder()
                     .consultingNo(consulting.getNo())
-                    .realtorNo(consulting.getRealtor().getNo())
-                    .userNo(user.getNo())
-                    .name(user.getName())
-                    .image(user.getImageSrc())
+                    .realtorNo(realtor.getNo())
+                    .userNo(consulting.getUsers().getNo())
+                    .name(realtor.getName())
+                    .personalInfo(realtor.getCorp())
+                    .image(realtor.getImageSrc())
                     .consultingDate(consulting.getConsultingDate())
                     .status(consulting.getStatus().getValue())
                     .representativeItem(buildingName)
                     .itemCount(count)
                     .build();
         }
-    }
 
-    @Builder
-    @Getter
-    @AllArgsConstructor
-    public static class ReservationUser {
-
-        private Long consultingNo;
-        private Long realtorNo;
-        private Long userNo;
-        private String realtorName;
-        private String realtorCorp;
-        private String realtorImage;
-        private LocalDateTime consultingDate;
-        private int status;
-        private String representativeItem;
-        private int itemCount;
-
-        public static ReservationUser toEntity(Consulting consulting, Realtor realtor, String buildingName, int count) {
-            return ReservationUser.builder()
+        public static ReservationInfo toResponse(Consulting consulting, Users user, String buildingName, int count) {
+            return ReservationInfo.builder()
                     .consultingNo(consulting.getNo())
-                    .realtorNo(realtor.getNo())
+                    .realtorNo(user.getNo())
                     .userNo(consulting.getUsers().getNo())
-                    .realtorName(realtor.getName())
-                    .realtorCorp(realtor.getCorp())
-                    .realtorImage(realtor.getImageSrc())
+                    .name(user.getName())
+                    .personalInfo(user.getPhone())
+                    .image(user.getImageSrc())
                     .consultingDate(consulting.getConsultingDate())
                     .status(consulting.getStatus().getValue())
                     .representativeItem(buildingName)
@@ -103,6 +87,7 @@ public class ConsultingResponse {
             private String address;
             private String addressDetail;
             private String imageSrc;
+            private float exclusivePrivateArea;
 
             public static MyConsultingItem toEntity(Item item, House house) {
                 return ConsultingResponse.ReservationDetail.MyConsultingItem.builder()
@@ -114,6 +99,7 @@ public class ConsultingResponse {
                         .buildingName(item.getHouse().getBuildingName())
                         .address(house.getAddress())
                         .addressDetail(house.getAddressDetail())
+                        .exclusivePrivateArea(house.getExclusivePrivateArea())
                         .build();
             }
         }

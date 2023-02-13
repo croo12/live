@@ -60,6 +60,9 @@ public class Contract extends BaseEntity {
     @Column(name = "tenant_address")
     private String tenantAddress;
 
+    @Column(name = "tenant_detail_address")
+    private String tenantDetailAddress;
+
     @Column(name = "tenant_age")
     private int tenantAge;
 

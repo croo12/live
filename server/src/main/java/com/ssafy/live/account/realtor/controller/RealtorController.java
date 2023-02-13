@@ -41,6 +41,7 @@ public class RealtorController {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
+        log.info("공인중개사 로그인");
         return realtorService.login(login);
     }
 
