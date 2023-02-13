@@ -171,7 +171,8 @@ public class ConsultingService {
                 .forEach(consultingItem -> {
                     Item item = consultingItem.getItem();
                     House house = consultingItem.getItem().getHouse();
-                    items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.toEntity(item, house));
+                    List<ItemImage> itemImages = itemImageRepository.findByItem(item);
+                    items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.toEntity(item, house, itemImages.get(0).getImageSrc()));
                 });
         ConsultingResponse.ReservationDetail detail = ConsultingResponse.ReservationDetail.toEntity(consultingNo, consulting, items);
         return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
@@ -228,5 +229,13 @@ public class ConsultingService {
             .toEntity(item, images);
         ConsultingResponse.ItemForContract contractInfo = ConsultingResponse.ItemForContract.toEntity(realtor, users, itemInfo);
         return response.success(contractInfo, "계약 할 매물 정보를 조회하였습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> consultingLink(Long consultingNo, ConsultingRequest.AddLink link) {
+        Consulting consulting = consultingRepository.findById(consultingNo).get();
+        consulting.addLink(link.getLink());
+        consultingRepository.save(consulting);
+        //smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_START, consulting.getUsers());
+        return response.success("상담링크가 전송되었습니다.", HttpStatus.OK);
     }
 }

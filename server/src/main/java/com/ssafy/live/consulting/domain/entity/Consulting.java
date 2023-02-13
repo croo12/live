@@ -6,6 +6,7 @@ import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.Entity.status.ConsultingStatus;
 import com.ssafy.live.common.domain.Entity.status.ConsultingStatusConverter;
 import com.ssafy.live.common.domain.Entity.BaseEntity;
+import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.review.domain.entity.Review;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -46,6 +47,7 @@ public class Consulting extends BaseEntity {
     private LocalDateTime consultingDate;
 
     private String requirement;
+    private String link;
 
     @Convert(converter = ConsultingStatusConverter.class)
     @Enumerated(EnumType.ORDINAL)
@@ -57,5 +59,9 @@ public class Consulting extends BaseEntity {
         } else if (status == 5) {
             this.status = ConsultingStatus.CONSULTING_CANCLED;
         }
+    }
+
+    public void addLink(String link) {
+        this.link = link;
     }
 }

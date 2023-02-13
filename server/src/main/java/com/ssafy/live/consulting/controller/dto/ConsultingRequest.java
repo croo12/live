@@ -31,6 +31,14 @@ public class ConsultingRequest {
     }
 
     @Getter
+    @Builder
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class AddLink {
+        private String link;
+    }
+
+    @Getter
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class ChangeStatus {
