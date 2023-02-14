@@ -1,6 +1,9 @@
 .realtorCard {
   flex-direction: row;
-  padding: 15px 15px;
+  padding: 2em 1.5em 1em 1.5em;
+  font-size: 0.8vw;
+  text-align: right;
+  color: #FAFAFA;
 
   &.isActive0 {
     background: linear-gradient(
@@ -50,26 +53,26 @@
     display: flex;
 
     .leftImg {
-      // width: 80%;
-      height: 80px;
+      max-height: 60px;
       flex: 1;
-      padding: 0 0 0 2%;
 
       img {
-        width: 100%;
-        height: 80px;
+        width: 4rem;
+        height: 4rem;
         border-radius: 70%;
       }
     }
 
     .rightDesc {
       flex: 2;
-      padding: 6% 5% 0 0;
+      margin: 6% 0 8% 0;
+      .realtorName {
+        font-size: 1rem;
+      }
     }
   }
 
   .downCard {
-    text-align: center;
     padding: 8% 0;
   }
 }
