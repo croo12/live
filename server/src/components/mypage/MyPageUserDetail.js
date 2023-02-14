@@ -24,7 +24,7 @@ const MyPageUserDetail = () => {
   };
 
   const userDetail = useLoaderData();
-  console.log(userDetail);
+  
 
   const onClickHandler = () => {
     navigate("/mypage/user-modify-info");
@@ -86,10 +86,8 @@ const MyPageUserDetail = () => {
 };
 
 export const userDetailInfoLoader = async () => {
-  const response = await getUserInfo();
-
-  if (response?.data) return response.data.data;
-  else return null;
+  const response = await getUserInfo(getAuthHeader());
+  return response;
 };
 
 export default MyPageUserDetail;

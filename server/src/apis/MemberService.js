@@ -51,16 +51,13 @@ export const getUserInfo = async (accessToken) => {
   console.log(myAccessToken);
 
   if (accessToken) {
-    console.log(`매개변수 있음 `, accessToken);
     await axiosInstance
       .get("users", {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: getAuthHeader(),
       })
       .then((res) => {
-        console.log(res);
-        const data = res.data;
-        if (data.state === 200) {
-          userInfo = data.data;
+        if (res.data.state === 200) {
+          userInfo = res.data.data;
           return userInfo;
         }
       });

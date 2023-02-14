@@ -8,10 +8,14 @@ import ImageInput from "../common/ImageInput";
 import { getUserInfo } from "../../apis/MemberService";
 import { getAuthHeader } from "../../util/axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userAction } from "../../store/user-slice";
 
 const MyPageUserModify = () => {
   const formData = useRef();
   const navigate = useNavigate();
+
+  const dispatch = useDispatch()
 
   const [profile, setProfile] = useState("");
   const [previewProfile, setPreviewProfile] = useState("");
@@ -68,7 +72,16 @@ const MyPageUserModify = () => {
       });
 
       if (result) {
-        alert("회원 정보 수정");
+        alert("회원 정보 수정 !!");
+        const data = {
+          id: userDetail.id,
+          name: userDetail.name,
+          isRealtor: false,
+          profile: userDetail.imageSrc,
+          score: userDetail.score,
+        };
+        dispatch(userAction.setInfo(data));
+        alert(data.score);
         navigate("/");
       }
     } catch (error) {
@@ -182,10 +195,8 @@ const MyPageUserModify = () => {
 };
 
 export const userInfoLoader = async () => {
-  const response = await getUserInfo();
-
-  if (response?.data) return response.data.data;
-  else return null;
+  const response = await getUserInfo(getAuthHeader());
+  return response;
 };
 
 export default MyPageUserModify;
