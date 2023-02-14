@@ -22,10 +22,15 @@ const ReservationCardContent2 = ({
   status,
   userNo,
   idx,
+  link,
 }) => {
   const navigation = useNavigate();
   const onDetailHandler = () => {
     navigation(`../user-reservation-detail/${consultingNo}`);
+  };
+
+  const goConsultingPage = () => {
+    navigation(link);
   };
 
   return (
@@ -97,7 +102,9 @@ const ReservationCardContent2 = ({
             <button className={classes.btn1} onClick={onDetailHandler}>
               예약 상세보기
             </button>
-            <button className={classes.btn2}>상담 바로가기</button>
+            <button onClick={goConsultingPage} className={classes.btn2}>
+              상담 바로가기
+            </button>
           </div>
         )}
         {tabActive === 2 && (
