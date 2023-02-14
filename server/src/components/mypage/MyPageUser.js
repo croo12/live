@@ -48,10 +48,7 @@ const MyPageUser = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-                <img
-                  alt="프로필"
-                  src={userInfo.imageSrc !== null ? userInfo.imageSrc : sample}
-                ></img>
+                <img alt="프로필" src={userInfo.profile !== null ? userInfo.profile : sample}></img>
               </div>
               <div className={classes.rightDesc}>
                 <p>
@@ -60,12 +57,7 @@ const MyPageUser = () => {
                   <button onClick={onClickHandler}>개인정보 조회</button>
                 </p>
                 <div className={classes.temperature}>온도그래프</div>
-                <progress
-                  className={classes.progress}
-                  value={userInfo.score}
-                  min="0"
-                  max="100"
-                ></progress>
+                <progress className={classes.progress} value={userInfo.score} min="0" max="100"></progress>
               </div>
             </div>
           </div>
@@ -74,11 +66,7 @@ const MyPageUser = () => {
       <div className={classes.itemBox}>
         <div className={classes.inner}>
           <div className={classes.itemBoxContent}>
-            <div
-              className={`${classes.privacy} ${
-                btnActive === 1 ? classes.active : ""
-              }`}
-            >
+            <div className={`${classes.privacy} ${btnActive === 1 ? classes.active : ""}`}>
               <button onClick={recordOnClickHandler} num={num}>
                 <div className={classes.leftLogo}>
                   <AiOutlineVideoCameraAdd />
@@ -88,11 +76,7 @@ const MyPageUser = () => {
                 </div>
               </button>
             </div>
-            <div
-              className={`${classes.alarm} ${
-                btnActive === 2 ? classes.active : ""
-              }`}
-            >
+            <div className={`${classes.alarm} ${btnActive === 2 ? classes.active : ""}`}>
               <button onClick={reviewOnClickHadler}>
                 <div className={classes.leftLogo}>
                   <BsFillBellFill />
@@ -102,11 +86,7 @@ const MyPageUser = () => {
                 </div>
               </button>
             </div>
-            <div
-              className={`${classes.review} ${
-                btnActive === 3 ? classes.active : ""
-              }`}
-            >
+            <div className={`${classes.review} ${btnActive === 3 ? classes.active : ""}`}>
               <button onClick={contractOnClickHandler}>
                 <div className={classes.leftLogo}>
                   <BsSearch />
@@ -116,11 +96,7 @@ const MyPageUser = () => {
                 </div>
               </button>
             </div>
-            <div
-              className={`${classes.reservation} ${
-                btnActive === 4 ? classes.active : ""
-              }`}
-            >
+            <div className={`${classes.reservation} ${btnActive === 4 ? classes.active : ""}`}>
               <button onClick={reservationonClickHandler}>
                 <div className={classes.leftLogo}>
                   <TfiWrite />
