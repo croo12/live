@@ -1,7 +1,11 @@
 package com.ssafy.live.house.controller.dto;
 
 import com.ssafy.live.house.domain.entity.ItemOption;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ItemOptionResponse {
 
@@ -44,37 +48,37 @@ public class ItemOptionResponse {
 
         public static ItemOptionDetailResponse toDto(ItemOption itemOption) {
             return ItemOptionDetailResponse.builder()
-                    .itemNo(itemOption.getItemNo())
-                    .bed(itemOption.isBed())
-                    .washingMachine(itemOption.isWashingMachine())
-                    .airConditioner(itemOption.isAirConditioner())
-                    .desk(itemOption.isDesk())
-                    .closet(itemOption.isCloset())
-                    .bath(itemOption.isBath())
-                    .sink(itemOption.isSink())
-                    .cctv(itemOption.isCctv())
-                    .diningTable(itemOption.isDiningTable())
-                    .sofa(itemOption.isSofa())
-                    .shoeRack(itemOption.isShoeRack())
-                    .refrigerator(itemOption.isRefrigerator())
-                    .dryingMachine(itemOption.isDryingMachine())
-                    .bathtub(itemOption.isBathtub())
-                    .bidet(itemOption.isBidet())
-                    .dishwasher(itemOption.isDishwasher())
-                    .gasStove(itemOption.isGasStove())
-                    .inductionCooktop(itemOption.isInductionCooktop())
-                    .microwave(itemOption.isMicrowave())
-                    .oven(itemOption.isOven())
-                    .guard(itemOption.isGuard())
-                    .intercom(itemOption.isIntercom())
-                    .keycard(itemOption.isKeycard())
-                    .elevator(itemOption.isElevator())
-                    .fireAlarm(itemOption.isFireAlarm())
-                    .veranda(itemOption.isVeranda())
-                    .terrace(itemOption.isTerrace())
-                    .garden(itemOption.isGarden())
-                    .parkingLot(itemOption.isParkingLot())
-                    .build();
+                .itemNo(itemOption.getItemNo())
+                .bed(itemOption.isBed())
+                .washingMachine(itemOption.isWashingMachine())
+                .airConditioner(itemOption.isAirConditioner())
+                .desk(itemOption.isDesk())
+                .closet(itemOption.isCloset())
+                .bath(itemOption.isBath())
+                .sink(itemOption.isSink())
+                .cctv(itemOption.isCctv())
+                .diningTable(itemOption.isDiningTable())
+                .sofa(itemOption.isSofa())
+                .shoeRack(itemOption.isShoeRack())
+                .refrigerator(itemOption.isRefrigerator())
+                .dryingMachine(itemOption.isDryingMachine())
+                .bathtub(itemOption.isBathtub())
+                .bidet(itemOption.isBidet())
+                .dishwasher(itemOption.isDishwasher())
+                .gasStove(itemOption.isGasStove())
+                .inductionCooktop(itemOption.isInductionCooktop())
+                .microwave(itemOption.isMicrowave())
+                .oven(itemOption.isOven())
+                .guard(itemOption.isGuard())
+                .intercom(itemOption.isIntercom())
+                .keycard(itemOption.isKeycard())
+                .elevator(itemOption.isElevator())
+                .fireAlarm(itemOption.isFireAlarm())
+                .veranda(itemOption.isVeranda())
+                .terrace(itemOption.isTerrace())
+                .garden(itemOption.isGarden())
+                .parkingLot(itemOption.isParkingLot())
+                .build();
         }
 
     }

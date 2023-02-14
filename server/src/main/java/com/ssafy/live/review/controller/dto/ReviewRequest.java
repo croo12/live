@@ -4,9 +4,12 @@ import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.review.domain.entity.Review;
-import lombok.*;
-
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ReviewRequest {
 
@@ -26,14 +29,15 @@ public class ReviewRequest {
         private int ratingScore;
         private int iscontract;
 
-        public static Review toEntity(Realtor realtor, Users users, Consulting consulting, String reviewInfo, int ratingScore) {
+        public static Review toEntity(Realtor realtor, Users users, Consulting consulting,
+            String reviewInfo, int ratingScore) {
             return Review.builder()
-                    .realtor(realtor)
-                    .users(users)
-                    .consulting(consulting)
-                    .reviewInfo(reviewInfo)
-                    .ratingScore(ratingScore)
-                    .build();
+                .realtor(realtor)
+                .users(users)
+                .consulting(consulting)
+                .reviewInfo(reviewInfo)
+                .ratingScore(ratingScore)
+                .build();
         }
     }
 }

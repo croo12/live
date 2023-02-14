@@ -6,13 +6,26 @@ import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.Entity.item.Direction;
 import com.ssafy.live.common.domain.Entity.item.Entrance;
 import com.ssafy.live.common.domain.Entity.item.Heating;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
@@ -21,7 +34,6 @@ import java.util.List;
 @AttributeOverride(name = "no", column = @Column(name = "item_no"))
 @Entity
 public class Item extends BaseEntity {
-
 
     private int deposit;
 
@@ -65,13 +77,18 @@ public class Item extends BaseEntity {
     public void setOption(ItemOption option) {
         this.itemOption = option;
     }
+
     public void setHouse(House house) {
         this.house = house;
     }
+
     public void setItemImages(List<ItemImage> itemImages) {
         this.itemImages = itemImages;
     }
-    public void setRealtor(Realtor realtor) {this.realtor = realtor;}
+
+    public void setRealtor(Realtor realtor) {
+        this.realtor = realtor;
+    }
 
     public void updatePayment(int deposit, int rent, int maintenanceFee) {
         this.deposit = deposit;

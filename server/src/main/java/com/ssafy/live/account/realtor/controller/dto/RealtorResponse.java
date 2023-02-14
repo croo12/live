@@ -2,10 +2,13 @@ package com.ssafy.live.account.realtor.controller.dto;
 
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.review.domain.entity.Review;
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class RealtorResponse {
 
@@ -34,12 +37,12 @@ public class RealtorResponse {
 
         public static RealtorResponse.UpdateRealtor toEntity(Realtor realtor) {
             return UpdateRealtor.builder()
-                    .name(realtor.getName())
-                    .email(realtor.getEmail())
-                    .phone(realtor.getPhone())
-                    .description(realtor.getDescription())
-                    .imageSrc(realtor.getImageSrc())
-                    .build();
+                .name(realtor.getName())
+                .email(realtor.getEmail())
+                .phone(realtor.getPhone())
+                .description(realtor.getDescription())
+                .imageSrc(realtor.getImageSrc())
+                .build();
         }
     }
 
@@ -60,7 +63,7 @@ public class RealtorResponse {
 
         public static RealtorResponse.FindByRegion toEntity(Realtor realtor) {
             return RealtorResponse.FindByRegion.builder()
-                    .realtorNo(realtor.getNo())
+                .realtorNo(realtor.getNo())
                 .name(realtor.getName())
                 .phone(realtor.getPhone())
                 .corp(realtor.getCorp())
@@ -88,14 +91,14 @@ public class RealtorResponse {
 
         public static RealtorResponse.FindDetail toEntity(Realtor realtor) {
             return FindDetail.builder()
-                    .name(realtor.getName())
-                    .email(realtor.getEmail())
-                    .phone(realtor.getPhone())
-                    .description(realtor.getDescription())
-                    .imageSrc(realtor.getImageSrc())
-                    .businessAddress(realtor.getBusinessAddress())
-                    .ratingScore(realtor.getRatingScore())
-                    .build();
+                .name(realtor.getName())
+                .email(realtor.getEmail())
+                .phone(realtor.getPhone())
+                .description(realtor.getDescription())
+                .imageSrc(realtor.getImageSrc())
+                .businessAddress(realtor.getBusinessAddress())
+                .ratingScore(realtor.getRatingScore())
+                .build();
         }
     }
 
@@ -108,9 +111,11 @@ public class RealtorResponse {
         private RealtorInfo realtorInfo;
         private List<Items> itemsList;
         private List<Reviews> reviewsList;
+
         @Getter
         @Builder
         public static class RealtorInfo {
+
             private Long no;
             private String name;
             private String email;
@@ -121,6 +126,7 @@ public class RealtorResponse {
             private String registrationNumber;
             private String description;
             private String businessAddress;
+
             private static RealtorInfo toEntity(Realtor realtor) {
                 return RealtorInfo.builder()
                     .no(realtor.getNo())
@@ -136,9 +142,11 @@ public class RealtorResponse {
                     .build();
             }
         }
+
         @Getter
         @Builder
         public static class Items {
+
             private Long itemNo;
             private String imageSrc;
             private int deposit;
@@ -147,6 +155,7 @@ public class RealtorResponse {
             private int floor;
             private String buildingName;
             private float exclusivePrivateArea;
+
             public static Items toEntity(RealtorByRegionProjectionInterface item) {
                 return Items.builder()
                     .itemNo(item.getItemNo())
@@ -164,10 +173,12 @@ public class RealtorResponse {
         @Getter
         @Builder
         public static class Reviews {
+
             private Long reviewNo;
             private String reviewInfo;
             private int ratingScore;
             private LocalDateTime createDate;
+
             public static Reviews toEntity(Review review) {
                 return Reviews.builder()
                     .reviewNo(review.getNo())
@@ -178,13 +189,13 @@ public class RealtorResponse {
             }
         }
 
-        public static FindAllDetail toEntity(Realtor realtor, List<Items> itemsList, List<Reviews> reviewsList) {
+        public static FindAllDetail toEntity(Realtor realtor, List<Items> itemsList,
+            List<Reviews> reviewsList) {
             return RealtorResponse.FindAllDetail.builder()
-                    .realtorInfo(RealtorInfo.toEntity(realtor))
-                    .itemsList(itemsList)
-                    .reviewsList(reviewsList)
-                    .build();
+                .realtorInfo(RealtorInfo.toEntity(realtor))
+                .itemsList(itemsList)
+                .reviewsList(reviewsList)
+                .build();
         }
     }
-
 }

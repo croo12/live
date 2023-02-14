@@ -3,6 +3,7 @@ package com.ssafy.live.account.user.controller;
 import com.ssafy.live.account.common.error.ErrorHandler;
 import com.ssafy.live.account.user.controller.dto.UserRequest;
 import com.ssafy.live.account.user.service.UserService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,7 +29,10 @@ public class UserController {
     private final UserService usersService;
 
     @PostMapping
-    public ResponseEntity<?> signUp(@Validated @RequestPart(value = "SignUp") UserRequest.SignUp signUp, Errors errors, @RequestPart(value = "file", required = false) MultipartFile uploadFile) throws IOException {
+    public ResponseEntity<?> signUp(
+        @Validated @RequestPart(value = "SignUp") UserRequest.SignUp signUp, Errors errors,
+        @RequestPart(value = "file", required = false) MultipartFile uploadFile)
+        throws IOException {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -39,7 +47,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Validated @RequestBody UserRequest.Login login, Errors errors) {
-        // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -64,7 +71,9 @@ public class UserController {
     }
 
     @PostMapping("/info")
-    public ResponseEntity<?> updateUser(Authentication authentication, @RequestPart(value = "Update")  UserRequest.Update request, @RequestPart(value = "file", required = false) MultipartFile file)
+    public ResponseEntity<?> updateUser(Authentication authentication,
+        @RequestPart(value = "Update") UserRequest.Update request,
+        @RequestPart(value = "file", required = false) MultipartFile file)
         throws IOException {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         return usersService.updateUser(principal, request, file);
@@ -76,7 +85,8 @@ public class UserController {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@Validated @RequestBody UserRequest.Reissue reissue, Errors errors) {
+    public ResponseEntity<?> reissue(@Validated @RequestBody UserRequest.Reissue reissue,
+        Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }

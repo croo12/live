@@ -19,24 +19,24 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                //.apis(RequestHandlerSelectors.any()) // 모든 RequestMapping URI 추출
-                //.paths(PathSelectors.ant("/v2/**")) // 경로 패턴 URI만 추출
-                .apis(RequestHandlerSelectors.basePackage("com.ssafy.live")) // 패키지 기준 추출
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo())
-                .useDefaultResponseMessages(false); // Response 응답 메시지 디폴트값 적용 X
+            .select()
+            //.apis(RequestHandlerSelectors.any()) // 모든 RequestMapping URI 추출
+            //.paths(PathSelectors.ant("/v2/**")) // 경로 패턴 URI만 추출
+            .apis(RequestHandlerSelectors.basePackage("com.ssafy.live")) // 패키지 기준 추출
+            .paths(PathSelectors.any())
+            .build()
+            .apiInfo(apiInfo())
+            .useDefaultResponseMessages(false); // Response 응답 메시지 디폴트값 적용 X
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Live REST API")
-                .description("Live 언택트 부동산 프로젝트")
-                .version("v1")
-                .contact("mnb3559@gmail.com")
-                .license("License")
-                .licenseUrl("localhost:8080")
-                .build();
+            .title("Live REST API")
+            .description("Live 언택트 부동산 프로젝트")
+            .version("v1")
+            .contact("mnb3559@gmail.com")
+            .license("License")
+            .licenseUrl("localhost:8080")
+            .build();
     }
 }

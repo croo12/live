@@ -3,18 +3,24 @@ package com.ssafy.live.account.realtor.controller;
 import com.ssafy.live.account.common.error.ErrorHandler;
 import com.ssafy.live.account.realtor.controller.dto.RealtorRequest;
 import com.ssafy.live.account.realtor.service.RealtorService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,12 +28,13 @@ import java.io.IOException;
 @RequestMapping("/realtors")
 public class RealtorController {
 
-    @Value("${com.example.upload.path}")
-    private String uploadPath;
     private final RealtorService realtorService;
 
     @PostMapping
-    public ResponseEntity<?> signUp(@Validated @RequestPart(value = "SignUp") RealtorRequest.SignUp signUp, Errors errors, @RequestPart(value = "file", required = false) MultipartFile uploadFile) throws IOException {
+    public ResponseEntity<?> signUp(
+        @Validated @RequestPart(value = "SignUp") RealtorRequest.SignUp signUp, Errors errors,
+        @RequestPart(value = "file", required = false) MultipartFile uploadFile)
+        throws IOException {
         // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
@@ -36,7 +43,8 @@ public class RealtorController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Validated @RequestBody RealtorRequest.Login login, Errors errors) {
+    public ResponseEntity<?> login(@Validated @RequestBody RealtorRequest.Login login,
+        Errors errors) {
         // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
@@ -46,8 +54,9 @@ public class RealtorController {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@Validated @RequestBody RealtorRequest.Reissue reissue, Errors errors) {
-        System.out.println("r "+reissue.getAccessToken());
+    public ResponseEntity<?> reissue(@Validated @RequestBody RealtorRequest.Reissue reissue,
+        Errors errors) {
+        System.out.println("r " + reissue.getAccessToken());
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -73,7 +82,9 @@ public class RealtorController {
     }
 
     @PostMapping("/info")
-    public ResponseEntity<?> updateRealtor(Authentication authentication, @RequestPart(value = "Update") RealtorRequest.Update request, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+    public ResponseEntity<?> updateRealtor(Authentication authentication,
+        @RequestPart(value = "Update") RealtorRequest.Update request,
+        @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         log.info("공인중개사 정보수정");
         return realtorService.updateRealtor(principal, request, file);
@@ -92,8 +103,9 @@ public class RealtorController {
         return realtorService.findRealtorDetail(principal);
     }
 
-    @GetMapping ("/{realtorNo}/consultings")
-    public ResponseEntity<?> findRealtorDetailByRegion(@PathVariable("realtorNo") Long realtorNo, @RequestParam("regionCode") String regionCode) {
+    @GetMapping("/{realtorNo}/consultings")
+    public ResponseEntity<?> findRealtorDetailByRegion(@PathVariable("realtorNo") Long realtorNo,
+        @RequestParam("regionCode") String regionCode) {
         log.info("예약페이지 - 공인중개사 정보 상세 조회");
         return realtorService.findRealtorDetailByRegion(realtorNo, regionCode);
     }

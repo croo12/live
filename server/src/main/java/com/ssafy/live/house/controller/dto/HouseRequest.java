@@ -1,18 +1,16 @@
 package com.ssafy.live.house.controller.dto;
 
 import com.ssafy.live.house.domain.entity.House;
+import javax.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
-
 public class HouseRequest {
-
 
     @Getter
     @Builder
     public static class HouseRegistRequest {
-        //House
+
         private Long houseNo;
         @NotBlank(message = "주소를 입력하세요")
         private String address;
@@ -41,26 +39,26 @@ public class HouseRequest {
         private int zipcode;
         private String regionCode;
 
-        public House toEntity(){
+        public House toEntity() {
             return House.builder()
-                    .address(address)
-                    .addressDetail(addressDetail)
-                    .supplyArea(supplyArea)
-                    .exclusivePrivateArea(exclusivePrivateArea)
-                    .floor(floor)
-                    .totalFloor(totalFloor)
-                    .room(room)
-                    .bathroom(bathroom)
-                    .completionYear(completionYear)
-                    .purpose(purpose)
-                    .sido(sido)
-                    .gugun(gugun)
-                    .dong(dong)
-                    .zipCode(zipcode)
-                    .regionCode(regionCode)
-                    .buildingName(buildingName)
-                    .contracted(contracted)
-                    .build();
+                .address(address)
+                .addressDetail(addressDetail)
+                .supplyArea(supplyArea)
+                .exclusivePrivateArea(exclusivePrivateArea)
+                .floor(floor)
+                .totalFloor(totalFloor)
+                .room(room)
+                .bathroom(bathroom)
+                .completionYear(completionYear)
+                .purpose(purpose)
+                .sido(sido)
+                .gugun(gugun)
+                .dong(dong)
+                .zipCode(zipcode)
+                .regionCode(regionCode)
+                .buildingName(buildingName)
+                .contracted(contracted)
+                .build();
         }
     }
 }

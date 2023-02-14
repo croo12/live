@@ -1,12 +1,20 @@
 package com.ssafy.live.account.common.domain;
 
-import com.ssafy.live.account.realtor.controller.dto.RealtorRequest.Update;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import javax.persistence.*;
 import java.security.SecureRandom;
 import java.util.stream.Collectors;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @Setter
@@ -17,7 +25,8 @@ import java.util.stream.Collectors;
 @MappedSuperclass
 public class Member {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
 
     private String password;
@@ -35,17 +44,16 @@ public class Member {
         this.imageSrc = imageSrc;
     }
 
-    public String generateRandomPassword()
-    {
+    public String generateRandomPassword() {
         int len = 10;
         int randNumOrigin = 97, randNumBound = 122;
         SecureRandom random = new SecureRandom();
         return random.ints(len, randNumOrigin, randNumBound + 1)
-                .mapToObj(i -> String.valueOf((char)i))
-                .collect(Collectors.joining());
+            .mapToObj(i -> String.valueOf((char) i))
+            .collect(Collectors.joining());
     }
 
-    public void updatePassword(String temporaryPassword){
+    public void updatePassword(String temporaryPassword) {
         this.password = temporaryPassword;
     }
 

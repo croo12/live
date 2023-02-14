@@ -8,19 +8,28 @@ import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.review.domain.entity.Review;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @SuperBuilder
@@ -42,7 +51,7 @@ public class Realtor extends Member implements UserDetails {
     private LocalDate startDate;
     @Column(name = "rating_score")
     @Builder.Default
-    private float ratingScore= (float) 0;
+    private float ratingScore = (float) 0;
 
     @JsonIgnore
     @Column
@@ -99,6 +108,7 @@ public class Realtor extends Member implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return false;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
@@ -110,8 +120,9 @@ public class Realtor extends Member implements UserDetails {
     }
 
     public void updateRatingScore(Long count, int ratingScore) {
-        this.ratingScore = cutDemical(1, ((this.ratingScore*(count-1))+(float)ratingScore)/(float)count);
-        System.out.println("result = "+this.ratingScore);
+        this.ratingScore = cutDemical(1,
+            ((this.ratingScore * (count - 1)) + (float) ratingScore) / (float) count);
+        System.out.println("result = " + this.ratingScore);
     }
 
     private float cutDemical(int cutSize, float value) {

@@ -1,5 +1,10 @@
 package com.ssafy.live.contract.service;
 
+import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.WRONG_AUTHENTICATION_TYPE;
+
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.realtor.domain.repository.RealtorRepository;
 import com.ssafy.live.account.user.domain.entity.Users;
@@ -18,6 +23,8 @@ import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,11 +32,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.ssafy.live.common.exception.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -46,11 +48,11 @@ public class ContractService {
 
     public ResponseEntity<?> regist(ContractRequest.Regist regist) {
         Users users = usersRepository.findById(regist.getUserNo())
-                .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
+            .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         Realtor realtor = realtorRepository.findById(regist.getRealtorNo())
-                .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
+            .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         Item item = itemRepository.findById(regist.getItemNo())
-                .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
+            .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
         Contract contract = ContractRequest.Regist.toEntity(users, realtor, item, regist);
         contractRepository.save(contract);
 
@@ -63,26 +65,31 @@ public class ContractService {
     public ResponseEntity<?> contractList(UserDetails user, int status) {
         ContractStatus contractStatus = ContractStatus.ofValue(status);
         List<ContractResponse.ContractList> list = null;
-        if(user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            list = contractRepository.findByContractStateAndUsers(contractStatus, usersRepository.findById(user.getUsername()).get()).stream()
-                    .map((contract)->
-                            ContractResponse.ContractList.toEntity(
-                                    contract.getNo(),
-                                    ContractResponse.ContractList.MemberInfo.toRealtor(contract.getRealtor()),
-                                    ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem(), itemImageRepository.findByItem(contract.getItem()).get(0).getImageSrc())
-                            )
+        if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
+            list = contractRepository.findByContractStateAndUsers(contractStatus,
+                    usersRepository.findById(user.getUsername()).get()).stream()
+                .map((contract) ->
+                    ContractResponse.ContractList.toEntity(
+                        contract.getNo(),
+                        ContractResponse.ContractList.MemberInfo.toRealtor(contract.getRealtor()),
+                        ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem(),
+                            itemImageRepository.findByItem(contract.getItem()).get(0).getImageSrc())
                     )
-                    .collect(Collectors.toList());
-        } else if(user.getAuthorities().contains(new SimpleGrantedAuthority("REALTOR"))) {
-            list = contractRepository.findByContractStateAndRealtor(contractStatus, realtorRepository.findByBusinessNumber(user.getUsername()).get()).stream()
-                    .map((contract)->
-                            ContractResponse.ContractList.toEntity(
-                                    contract.getNo(),
-                                    ContractResponse.ContractList.MemberInfo.toUser(contract.getUsers(), contract.getTenantAge()),
-                                    ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem(), itemImageRepository.findByItem(contract.getItem()).get(0).getImageSrc())
-                            )
+                )
+                .collect(Collectors.toList());
+        } else if (user.getAuthorities().contains(new SimpleGrantedAuthority("REALTOR"))) {
+            list = contractRepository.findByContractStateAndRealtor(contractStatus,
+                    realtorRepository.findByBusinessNumber(user.getUsername()).get()).stream()
+                .map((contract) ->
+                    ContractResponse.ContractList.toEntity(
+                        contract.getNo(),
+                        ContractResponse.ContractList.MemberInfo.toUser(contract.getUsers(),
+                            contract.getTenantAge()),
+                        ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem(),
+                            itemImageRepository.findByItem(contract.getItem()).get(0).getImageSrc())
                     )
-                    .collect(Collectors.toList());
+                )
+                .collect(Collectors.toList());
         } else {
             throw new BadRequestException(WRONG_AUTHENTICATION_TYPE);
         }
@@ -92,14 +99,15 @@ public class ContractService {
     public ResponseEntity<?> contractDetail(Long contractNo) {
         Contract contract = contractRepository.findById(contractNo).get();
         List<ItemImage> itemImages = itemImageRepository.findByItem(contract.getItem());
-        List<String> images = itemImages.stream().map((i)->i.getImageSrc()).collect(Collectors.toList());
+        List<String> images = itemImages.stream().map((i) -> i.getImageSrc())
+            .collect(Collectors.toList());
         ContractResponse.ContractDetail contractDetail = ContractResponse.ContractDetail
-                .toEntity(
-                        ContractResponse.ContractDetail.RealtorInfo.toEntity(contract.getRealtor()),
-                        ContractResponse.ContractDetail.UserInfo.toEntity(contract.getUsers()),
-                        ContractResponse.ContractDetail.ItemInfo.toEntity(contract.getItem(), images),
-                        ContractResponse.ContractDetail.ContractInfo.toEntity(contract)
-                );
+            .toEntity(
+                ContractResponse.ContractDetail.RealtorInfo.toEntity(contract.getRealtor()),
+                ContractResponse.ContractDetail.UserInfo.toEntity(contract.getUsers()),
+                ContractResponse.ContractDetail.ItemInfo.toEntity(contract.getItem(), images),
+                ContractResponse.ContractDetail.ContractInfo.toEntity(contract)
+            );
 
         return response.success(contractDetail, "계약 상세를 조회하였습니다.", HttpStatus.OK);
     }
@@ -108,7 +116,8 @@ public class ContractService {
         Contract contract = contractRepository.findById(contractNo).get();
         Item item = itemRepository.findById(contract.getItem().getNo()).get();
         item.updatePayment(update.getDeposit(), update.getRent(), update.getMaintenanceFee());
-        contract.updateInfo(update.getMoveOnDate(), update.getTermOfContract(), update.getSpecialContract(), update.getCommission(), item.getDeposit());
+        contract.updateInfo(update.getMoveOnDate(), update.getTermOfContract(),
+            update.getSpecialContract(), update.getCommission(), item.getDeposit());
         itemRepository.save(item);
         contractRepository.save(contract);
 

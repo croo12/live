@@ -18,9 +18,7 @@ public class RegionController {
     private final RegionService regionService;
 
     @GetMapping("")
-    public ResponseEntity<?> findRegionList(@RequestParam String regionCode){
+    public ResponseEntity<?> findRegionList(@RequestParam String regionCode) {
         return regionService.findRegionList(regionCode);
     }
-
-
 }

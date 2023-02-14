@@ -6,12 +6,15 @@ import com.ssafy.live.common.domain.Entity.item.Entrance;
 import com.ssafy.live.common.domain.Entity.item.Heating;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
-import lombok.*;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ItemRequest {
 
@@ -20,7 +23,8 @@ public class ItemRequest {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class ItemRegistRequest{
+    public static class ItemRegistRequest {
+
         @NotBlank(message = "중개사 정보가 없습니다. 다시 로그인해주세요")
         private Long realtorNo;
         @NotBlank(message = "보증금을 입력하세요. 없을 경우 0을 입력하세요")
@@ -42,17 +46,17 @@ public class ItemRequest {
 
         public Item toEntity(Realtor realtor, House house) {
             return Item.builder()
-                    .realtor(realtor)
-                    .house(house)
-                    .deposit(deposit)
-                    .rent(rent)
-                    .maintenanceFee(maintenanceFee)
-                    .description(description)
-                    .moveInDate(moveInDate)
-                    .heating(heating)
-                    .direction(direction)
-                    .entrance(entrance)
-                    .build();
+                .realtor(realtor)
+                .house(house)
+                .deposit(deposit)
+                .rent(rent)
+                .maintenanceFee(maintenanceFee)
+                .description(description)
+                .moveInDate(moveInDate)
+                .heating(heating)
+                .direction(direction)
+                .entrance(entrance)
+                .build();
         }
 
     }
@@ -61,7 +65,8 @@ public class ItemRequest {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class ItemUpdateRequest{
+    public static class ItemUpdateRequest {
+
         @NotBlank(message = "매물 정보가 없습니다.")
         private Long itemNo;
         @NotBlank(message = "보증금을 입력하세요. 없을 경우 0을 입력하세요")
@@ -83,17 +88,17 @@ public class ItemRequest {
 
         public Item toEntity() {
             return Item.builder()
-                    .no(itemNo)
-                    .deposit(deposit)
-                    .rent(rent)
-                    .maintenanceFee(maintenanceFee)
-                    .description(description)
-                    .moveInDate(moveInDate)
-                    .heating(heating)
-                    .direction(direction)
-                    .entrance(entrance)
-                    .itemOption(itemOption.toEntity(itemNo))
-                    .build();
+                .no(itemNo)
+                .deposit(deposit)
+                .rent(rent)
+                .maintenanceFee(maintenanceFee)
+                .description(description)
+                .moveInDate(moveInDate)
+                .heating(heating)
+                .direction(direction)
+                .entrance(entrance)
+                .itemOption(itemOption.toEntity(itemNo))
+                .build();
         }
 
     }

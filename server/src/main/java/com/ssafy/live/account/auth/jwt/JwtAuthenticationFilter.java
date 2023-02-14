@@ -2,8 +2,12 @@ package com.ssafy.live.account.auth.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.live.common.domain.Response;
-import com.ssafy.live.common.exception.ErrorCode;
 import io.jsonwebtoken.ExpiredJwtException;
+import java.io.IOException;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -12,16 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,10 +29,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final RedisTemplate redisTemplate;
 
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+        FilterChain chain) throws IOException, ServletException {
         try {
             String path = request.getServletPath();
-            if(path.endsWith("reissue")) { // 토큰을 재발급하는 API 경우 토큰 체크 로직 건너뛰기
+            if (path.endsWith("reissue")) { // 토큰을 재발급하는 API 경우 토큰 체크 로직 건너뛰기
                 chain.doFilter(request, response);
             } else {
                 // 1. Request Header 에서 JWT 토큰 추출
@@ -50,7 +46,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     String isLogout = (String) redisTemplate.opsForValue().get(accessToken);
                     if (ObjectUtils.isEmpty(isLogout)) {
                         // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext 에 저장
-                        Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
+                        Authentication authentication = jwtTokenProvider.getAuthentication(
+                            accessToken);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }
                 }
