@@ -12,6 +12,7 @@ import HouseListContent from "./HouseListContent";
 
 import tempImg from "../../assets/image/sample.jpg";
 import Pagination from "../common/Pagination";
+import { getRealtorsHouseList } from "../../apis/houseApis";
 
 export const DUMMY_HOUSE_DATA = [
   {
@@ -107,6 +108,10 @@ const HouseList = () => {
 
     searchInputRef.current.value = "";
   };
+
+  useEffect(() => {
+    getRealtorsHouseList();
+  }, []);
 
   const houseRegistHandler = () => {
     // 매물 등록 페이지 이동 함수
