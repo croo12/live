@@ -150,13 +150,12 @@ public class ItemService {
         return response.success(itemList, "매물 목록이 조회되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> findItemsByRealtor(UserDetails user, String regionCode) {
+    public ResponseEntity<?> findItemsByRealtor(UserDetails user) {
 
         Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
             .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
 
-        List<ItemResponse.ItemSimpleResponse> itemList = itemRepository.findByRealtorAndRegionCode(
-                realtor.getNo(), regionCode)
+        List<ItemResponse.ItemSimpleResponse> itemList = itemRepository.findByRealtor(realtor.getNo())
             .stream()
             .map(ItemResponse.ItemSimpleResponse::toDto)
             .collect(Collectors.toList());
