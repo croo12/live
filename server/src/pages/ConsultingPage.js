@@ -20,7 +20,7 @@ const ConsultingPage = (props) => {
   const { sessionId } = useParams();
 
   const { userInfo } = useAuth();
-  const [isRealtor, toggleRealtor] = useState(userInfo.isRealtor);
+  const isRealtor = userInfo.isRealtor;
 
   const [status, setStatus] = useState(
     isRealtor ? STATUS.REALTOR_ENTER : STATUS.USER_ENTER
@@ -56,7 +56,7 @@ const ConsultingPage = (props) => {
     if (recordingFiles.length !== 0) {
       axiosInstance
         .post(
-          `consultings/${params.consultingNo}/records`,
+          `consultings/${consultingNo}/records`,
           recordingFiles[recordingFiles.length - 1]
         )
         .then((res) =>
