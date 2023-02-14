@@ -215,6 +215,9 @@ public class ConsultingService {
             .noticeWriter(consulting.getRealtor().getName()).build();
         noticeRepository.save(notice);
 
+        consulting.updateStatus(1);
+        consultingRepository.save(consulting);
+
         //smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers());
 
         return response.success("상담 매물 수정이 완료되었습니다.", HttpStatus.OK);
