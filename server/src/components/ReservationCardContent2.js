@@ -22,24 +22,16 @@ const ReservationCardContent2 = ({
   status,
   userNo,
   idx,
+  link,
 }) => {
   const navigation = useNavigate();
   const onDetailHandler = () => {
     navigation(`../user-reservation-detail/${consultingNo}`);
   };
-  // const onChangeReservationHandler = async (status, e) => {
-  //   if (status === 2 && !confirm("예약을 확정하시겠습니까?")) {
-  //     return;
-  //   } else if (status === 5 && !confirm("예약을 취소하시겠습니까?")) {
-  //     return;
-  //   }
-  //   const data = {};
-  //   data["consultingNo"] = consultingNo;
-  //   data["status"] = status;
-  //   changeReservationStatus(data);
-  //   // alert(result)
-  //   e.preventDefault();
-  // };
+
+  const goConsultingPage = () => {
+    navigation(link);
+  };
 
   return (
     <div className={classes.content}>
@@ -110,7 +102,9 @@ const ReservationCardContent2 = ({
             <button className={classes.btn1} onClick={onDetailHandler}>
               예약 상세보기
             </button>
-            <button className={classes.btn2}>상담 바로가기</button>
+            <button onClick={goConsultingPage} className={classes.btn2}>
+              상담 바로가기
+            </button>
           </div>
         )}
         {tabActive === 2 && (

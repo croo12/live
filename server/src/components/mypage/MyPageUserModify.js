@@ -8,14 +8,10 @@ import ImageInput from "../common/ImageInput";
 import { getUserInfo } from "../../apis/MemberService";
 import { getAuthHeader } from "../../util/axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { userAction } from "../../store/user-slice";
 
 const MyPageUserModify = () => {
   const formData = useRef();
   const navigate = useNavigate();
-
-  const dispatch = useDispatch()
 
   const [profile, setProfile] = useState("");
   const [previewProfile, setPreviewProfile] = useState("");
@@ -25,6 +21,7 @@ const MyPageUserModify = () => {
   };
 
   const userDetail = useLoaderData();
+  console.log("유저수정:",userDetail)
 
   useEffect(() => {
     if (!profile) {
@@ -72,17 +69,7 @@ const MyPageUserModify = () => {
       });
 
       if (result) {
-        alert("회원 정보 수정 !!");
-        const data = {
-          id: userDetail.id,
-          name: userDetail.name,
-          isRealtor: false,
-          profile: userDetail.imageSrc,
-          score: userDetail.score,
-        };
-        dispatch(userAction.setInfo(data));
-        alert(data.score);
-        navigate("/");
+        navigate("/mypage/user-detail-info");
       }
     } catch (error) {
       console.error("회원 정보 수정 과정에서 에러가 발생하였습니다.");

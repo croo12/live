@@ -110,26 +110,35 @@ export const getRealtorInfo = async (accessToken) => {
   console.log(myAccessToken);
 
   if (accessToken) {
+    console.log(`매개변수 있음 `, accessToken);
     await axiosInstance
       .get("realtors", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
-      .then(({ data }) => {
+      .then((res) => {
+        console.log(res);
+        const data = res.data;
         if (data.state === 200) {
           realtorInfo = data.data;
+          return realtorInfo;
         }
       });
   } else {
     console.log(`매개변수 accessToken 이 없습니다. ${accessToken}`);
     const headers = getAuthHeader();
+    console.log(headers);
 
     await axiosInstance
       .get("realtors", {
         headers,
       })
-      .then(({ data }) => {
+      .then((res) => {
+        console.log(res);
+        const data = res.data;
+
         if (data.state === 200) {
           realtorInfo = data.data;
+          return realtorInfo;
         }
       });
   }
