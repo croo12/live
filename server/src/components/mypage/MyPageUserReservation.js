@@ -68,7 +68,7 @@ const MyPageUserReservation = () => {
                   })}
                 </span>
                 <div className={classes.consultingList}>
-                  {tabActive === 0 && (
+                  {/* {tabActive === 0 && (
                     <div>
                       <ListBox dataArray={reservationUser} direction={false}>
                         <ReservationCardContent2
@@ -92,18 +92,16 @@ const MyPageUserReservation = () => {
                       </ListBox>
                     </div>
                   )}
-                  {tabActive === 2 && (
-                    <div>
-                      <ListBox dataArray={reservationUser} direction={false}>
-                        <ReservationCardContent2
-                          tabActive={tabActive}
-                          onChangeReservationHandler={
-                            onChangeReservationHandler
-                          }
-                        />
-                      </ListBox>
-                    </div>
-                  )}
+                  {tabActive === 2 && ( */}
+                  <div>
+                    <ListBox dataArray={reservationUser} direction={false}>
+                      <ReservationCardContent2
+                        tabActive={tabActive}
+                        onChangeReservationHandler={onChangeReservationHandler}
+                      />
+                    </ListBox>
+                  </div>
+                  {/* )} */}
                 </div>
               </div>
             </div>

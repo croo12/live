@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
 import {
   getConsultingDetail,
@@ -12,15 +13,19 @@ const ConsultingRightReservationHouseList = () => {
 
   const datas = useLoaderData();
   const params = useParams();
-  console.log("안녕 파람", params);
+  // console.log("안녕 파람", params);
+
+  const userInfo = useSelector((state) => state.user.userInfo);
 
   const dataArray = datas.itemList;
 
   useEffect(() => {
-    const linkUrl = `https://live-live.store/consulting/${params.sessionId}/${params.consultingNo}/${params.realtorNo}/${params.userNo}`;
-    console.log(`링크주소 ${linkUrl}`);
+    if (userInfo.isRealtor) {
+      const linkUrl = `/consulting/${params.sessionId}/${params.consultingNo}/${params.realtorNo}/${params.userNo}`;
+      console.log(`링크주소 ${linkUrl}`);
 
-    registConsultingRoomLink(params.consultingNo, linkUrl);
+      registConsultingRoomLink(params.consultingNo, linkUrl);
+    }
   }, []);
 
   return (
