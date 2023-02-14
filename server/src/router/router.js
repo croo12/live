@@ -68,7 +68,11 @@ const router = createBrowserRouter(
             </ProtectedRouter>
           }
         />
-        <Route path=":consultingNo" element={<ConsultingRightReservationHouseList />} loader={consultingDetailLoader} />
+        <Route
+          path=":consultingNo/:realtorNo/:userNo"
+          element={<ConsultingRightReservationHouseList />}
+          loader={consultingDetailLoader}
+        />
       </Route>
       <Route path="house" element={<HousePage />}>
         <Route index element={<HouseList />}></Route>

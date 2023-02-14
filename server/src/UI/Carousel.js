@@ -118,7 +118,7 @@ function Carousel() {
         {/* <Card />
         <Card /> */}
 
-        {items.map((item) => {
+        {items.map((item, idx) => {
           return (
             <div key={item.id}>
               <CarouselData
