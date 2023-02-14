@@ -1,6 +1,7 @@
 package com.ssafy.live.consulting.service;
 
 import static com.ssafy.live.common.exception.ErrorCode.CONSULTING_NOT_FOUND;
+import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
 
@@ -15,7 +16,6 @@ import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
-import com.ssafy.live.consulting.controller.dto.ConsultingRequest.SaveRec;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.consulting.domain.entity.ConsultingItem;
@@ -166,7 +166,8 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?> detailReservation(Long consultingNo) {
-        Consulting consulting = consultingRepository.findById(consultingNo).get();
+        Consulting consulting = consultingRepository.findById(consultingNo)
+            .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
         if (consulting == null) {
             return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         }
@@ -187,7 +188,8 @@ public class ConsultingService {
 
     public ResponseEntity<?> addConsultingItems(Long consultingNo, AddItem addItem) {
         Set<Long> noList = addItem.getItemList();
-        Consulting consulting = consultingRepository.findById(consultingNo).get();
+        Consulting consulting = consultingRepository.findById(consultingNo)
+            .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
         List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(
             consultingNo);
@@ -202,7 +204,8 @@ public class ConsultingService {
             }
         });
         noList.stream().forEach(index -> {
-            Item item = itemRepository.findById(index).get();
+            Item item = itemRepository.findById(index)
+                .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
             ConsultingItem consultingItem = ConsultingItem.builder().consulting(consulting)
                 .item(item).build();
             consultingItemRepository.save(consultingItem);
@@ -218,7 +221,8 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?> infoForContact(UserDetails user, Long itemNo) {
-        Item item = itemRepository.findById(itemNo).get();
+        Item item = itemRepository.findById(itemNo)
+            .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
         ConsultingResponse.ItemForContract.RealtorInfo realtor = ConsultingResponse.ItemForContract.RealtorInfo.toEntity(
             item.getRealtor());
         ConsultingResponse.ItemForContract.UserInfo users = ConsultingResponse.ItemForContract.UserInfo.toEntity(
@@ -236,7 +240,8 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?> consultingLink(Long consultingNo, ConsultingRequest.AddLink link) {
-        Consulting consulting = consultingRepository.findById(consultingNo).get();
+        Consulting consulting = consultingRepository.findById(consultingNo)
+            .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
         consulting.addLink(link.getLink());
         consultingRepository.save(consulting);
         Notice notice = ConsultingRequest.AddLink.toEntity(consulting, link);
@@ -258,10 +263,10 @@ public class ConsultingService {
                     String type = originalFile.substring(pos + 1);
 
                     //String saveFolder = "C:\\live\\records\\"+consultingNo.toString();        //window
-                    String saveFolder = "/live/records/"+consultingNo.toString();
+                    String saveFolder = "/live/records/" + consultingNo.toString();
                     String saveFile = UUID.randomUUID() + "." + type;
 
-                    File file = new File(saveFolder+"/"+saveFile);
+                    File file = new File(saveFolder + "/" + saveFile);
                     file.getParentFile().mkdirs();
                     rec.transferTo(file);
 
