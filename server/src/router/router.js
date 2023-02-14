@@ -81,7 +81,7 @@ const router = createBrowserRouter(
           }
         />
         <Route
-          path=":consultingNo"
+          path=":consultingNo/:realtorNo/:userNo"
           element={<ConsultingRightReservationHouseList />}
           loader={consultingDetailLoader}
         />

@@ -8,7 +8,6 @@ export const getAuthHeader = () => {
       Authorization: `Bearer ${accessToken}`,
     };
 
-    console.log(`헤더가 잘 가고 있나`, headers);
     return headers;
   } else {
     return null;
@@ -21,8 +20,6 @@ const axiosInstance = _axios.create({
   headers: { timeout: 2000 },
 });
 
-//작동안함
-
 axiosInstance.interceptors.response.use(
   (success) => success,
   async (error) => {
@@ -31,9 +28,6 @@ axiosInstance.interceptors.response.use(
     console.log(`너 작동하고 있니?`, errorCode);
 
     if (errorCode === "ERR_NETWORK") {
-      // const originRequest = error.config;
-      console.log(`왔니?`);
-
       const user = store.getState().user;
 
       console.log(user);

@@ -4,7 +4,7 @@ import Button from "../UI/Button";
 
 import classes from "./ReservationCardContent.module.scss";
 import totoro from "../assets/image/sample.jpg";
-import { REALTOR_STATUS } from "../pages/ConsultingPage";
+import { STATUS } from "../pages/ConsultingPage";
 
 const ReservationCardContent = (props) => {
   const [isConsulting, setConsulting] = useState(props.isConsulting);
@@ -12,7 +12,7 @@ const ReservationCardContent = (props) => {
 
   const clickEventHandler = () => {
     if (props.statusChangeHandler)
-      props.statusChangeHandler(REALTOR_STATUS.START_BUT_NOT_CONNECT);
+      props.statusChangeHandler(STATUS.REALTOR_START_CONSULTING);
   };
 
   return (
@@ -43,23 +43,23 @@ export const ConsultingReservationCardContent = (props) => {
 
   const clickEventHandler = () => {
     if (props.statusChangeHandler) {
-      props.statusChangeHandler(REALTOR_STATUS.START_BUT_NOT_CONNECT);
+      props.statusChangeHandler(STATUS.REALTOR_START_CONSULTING);
     }
 
-    const itemNo = 8;
-
-    navigation(`/consulting/${props.sessionId}/${itemNo}`);
+    navigation(
+      `/consulting/${props.sessionId}/${props.consultingNo}/${props.realtorNo}/${props.userNo}`
+    );
   };
 
   return (
     <div className={classes.consultingCardBox}>
       <div>
-        <img src={totoro} alt="totoro"></img>
-        <p>{realtor ? `고객맨` : `중개사맨`} </p>
+        <img src={props.image ? props.image : totoro} alt="totoro"></img>
+        <p>{props.name} </p>
       </div>
       <div>
         <Link>예약 상세보기▶</Link>
-        <p>상담 일시</p>
+        <p>{props.consultingDate.substring(0, 10)}</p>
         <p>예약 정보</p>
         {!isConsulting && <button>상담 바로가기</button>}
         {isConsulting && (
