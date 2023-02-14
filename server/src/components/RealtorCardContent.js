@@ -12,11 +12,10 @@ const RealtorCardContent = ({ idx, name, total, corp, imageSrc, review, starScor
     >
       <div className={classes.upCard}>
         <div className={classes.leftImg}>
-          <img src={imageSrc} alt="realtor-profile" />
+          <img src={imageSrc} align="left" alt="realtor-profile" />
         </div>
         <div className={classes.rightDesc}>
-          {/* <p>{corp}</p> */}
-          <strong>{name} </strong>
+          <strong className={classes.realtorName}>{name} </strong>
           공인중개사
         </div>
       </div>
