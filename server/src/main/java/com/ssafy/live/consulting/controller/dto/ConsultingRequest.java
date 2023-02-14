@@ -2,6 +2,7 @@ package com.ssafy.live.consulting.controller.dto;
 
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.notice.domain.entity.Notice;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -66,7 +67,7 @@ public class ConsultingRequest {
     @Getter
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class SaveVideo {
+    public static class SaveRec {
 
         private Long consultingNo;
         private List<MultipartFile> multiFileList;

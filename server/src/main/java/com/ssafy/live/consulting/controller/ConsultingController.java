@@ -2,7 +2,10 @@ package com.ssafy.live.consulting.controller;
 
 import com.ssafy.live.account.common.error.ErrorHandler;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
+import com.ssafy.live.consulting.controller.dto.ConsultingRequest.SaveRec;
 import com.ssafy.live.consulting.service.ConsultingService;
+import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -78,9 +83,10 @@ public class ConsultingController {
         return consultingService.consultingLink(consultingNo, link);
     }
 
-    @PostMapping("/videos")
-    public ResponseEntity<?> saveVideo(@RequestBody ConsultingRequest.SaveVideo video) {
-
-        return consultingService.saveVideo(video);
+    @PostMapping("/{consultingNo}/records")
+    public ResponseEntity<?> saveRec(
+        @PathVariable Long consultingNo,
+        @RequestPart List<MultipartFile> records) {
+        return consultingService.saveRec(consultingNo, records);
     }
 }
