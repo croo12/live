@@ -27,19 +27,6 @@ const ReservationCardContent2 = ({
   const onDetailHandler = () => {
     navigation(`../user-reservation-detail/${consultingNo}`);
   };
-  // const onChangeReservationHandler = async (status, e) => {
-  //   if (status === 2 && !confirm("예약을 확정하시겠습니까?")) {
-  //     return;
-  //   } else if (status === 5 && !confirm("예약을 취소하시겠습니까?")) {
-  //     return;
-  //   }
-  //   const data = {};
-  //   data["consultingNo"] = consultingNo;
-  //   data["status"] = status;
-  //   changeReservationStatus(data);
-  //   // alert(result)
-  //   e.preventDefault();
-  // };
 
   return (
     <div className={classes.content}>
