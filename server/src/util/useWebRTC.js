@@ -57,7 +57,7 @@ const useWebRTC = ({
     if (isRealtor) {
       constraints = {
         audio: true,
-        video: false,
+        video: true,
       };
     } else {
       constraints = {
@@ -108,7 +108,7 @@ const useWebRTC = ({
 
       const constraints = {
         audio: true,
-        video: isRealtor,
+        video: true,
       };
 
       const participant = new Participant(name, sendMessage);
