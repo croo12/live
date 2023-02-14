@@ -111,8 +111,6 @@ export const getHouseListByRealtorNo = () => {
   // items/realtors/
 };
 
-
-
 export const getItemListBySearch = async (data) => {
   let response = [];
 
@@ -130,4 +128,22 @@ export const getItemListBySearch = async (data) => {
     });
 
   return response;
+};
+
+export const getRealtorsHouseList = async () => {
+  const headers = getAuthHeader();
+
+  const getData = async () => {
+    const response = await axiosInstance.get("/items/realtor", { headers });
+
+    console.log(response);
+
+    return response.data;
+  };
+
+  try {
+    const response = await getData();
+
+    return response;
+  } catch {}
 };
