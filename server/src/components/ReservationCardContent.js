@@ -43,6 +43,7 @@ export const ConsultingReservationCardContent = (props) => {
 
   const clickEventHandler = () => {
     if (props.statusChangeHandler) {
+
       props.statusChangeHandler(STATUS.REALTOR_START_CONSULTING);
     }
 

@@ -8,7 +8,7 @@ import { AiOutlineSound } from "react-icons/ai";
 import { IoExitOutline, IoVolumeMuteOutline } from "react-icons/io5";
 import useWebSocket from "../../util/useWebSocket";
 import useWebRTC from "../../util/useWebRTC";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useRecording from "../../util/useRecording";
 import { usePrompt } from "../../util/usePrompt";
 
@@ -28,7 +28,6 @@ const ConsultingMeetPage = ({
 
   //비디오 가운데에 나오는 문구 세팅용
   const [info, setInfo] = useState("준비중...");
-  const params = useParams();
 
   //이름 만들기용
   const name = useRef(isRealtor ? "중개사" : "고객");
@@ -40,14 +39,10 @@ const ConsultingMeetPage = ({
     setRecordingFiles,
   });
 
-  // setTimeout(() => register(), 2000);
-  //   firstRegist.current = !firstRegist.current;
-
   const [audio, setAudio] = useState(true);
-  // const [record, setRecord] = useState(false);
 
   const participants = useRef({});
-  const { socket, responseMsg, sendMessage } = useWebSocket();
+  const { socket, responseMsg, sendMessage } = useWebSocket(sessionId);
   const {
     onNewParticipant,
     receiveVideoResponse,
@@ -84,31 +79,14 @@ const ConsultingMeetPage = ({
         //유저에게 알람을 보낸다
 
         //로딩 돌리기?
-        setInfo(`유저의 접속을 기다리고 있습니다...`);
+        setInfo(`유저의 접속을 기다리기`);
 
         //방에 들어아고 내 화면 틀기
         register();
         break;
 
-      // case REALTOR_STATUS.CONNECTING:
-      //   break;
-
-      // case USER_STATUS.ENTER_SESSION:
-      //   setInfo(`중개사에게 연결 중입니다...`);
-
-      //   break;
-
-      // case USER_STATUS.CONNECTING:
-      //   setInfo(``);
-      //   break;
-
-      // case USER_STATUS.END:
-      //   setInfo(`통화 종료`);
-      //   localVideo.current.pause();
-      //   break;
-
       case STATUS.USER_ENTER:
-        setTimeout(() => register(), 2000);
+        //들어왔져염
         break;
 
       default:

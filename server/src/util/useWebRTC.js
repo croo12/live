@@ -39,7 +39,6 @@ class Participant {
 const useWebRTC = ({
   isRealtor,
   participants,
-  socket,
   sendMessage,
   localVideo,
   remoteVideo,
@@ -63,14 +62,7 @@ const useWebRTC = ({
     } else {
       constraints = {
         audio: true,
-        video: {
-          // mandatory: {
-          //   width: 1920,
-          //   height: 1080,
-          //   maxFrameRate: 30,
-          //   minFrameRate: 10,
-          // },
-        },
+        video: true,
       };
     }
 
@@ -112,20 +104,11 @@ const useWebRTC = ({
 
     //나 자신과의 연결임 이거
     onExistingParticipants(msg) {
-      console.log(`onExistingParticipants 작동중...`);
+      console.log(`onExistingParticipants 작동중...`, isRealtor);
 
       const constraints = {
         audio: true,
         video: isRealtor,
-        // ? {
-        //     mandatory: {
-        //       width: 1920,
-        //       height: 1080,
-        //       maxFrameRate: 30,
-        //       minFrameRate: 10,
-        //     },
-        //   }
-        // : false,
       };
 
       const participant = new Participant(name, sendMessage);
@@ -173,8 +156,6 @@ const useWebRTC = ({
       for (let key in participants.current) {
         participants.current[key].dispose();
       }
-
-      socket.current.close();
     },
   };
 };

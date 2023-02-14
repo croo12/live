@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useSelector } from "react-redux";
 
 const JAVA_SERVER_URL = `wss://live-live.store:8080/groupcall`;
 
-const useWebSocket = () => {
+const useWebSocket = (sessionId) => {
   const [responseMsg, setResponseMsg] = useState("");
   const socket = useRef(null);
+  const isRealtor = useSelector((state) => state.user.userInfo.isRealtor);
 
   useEffect(() => {
     socket.current = new WebSocket(JAVA_SERVER_URL);
@@ -16,6 +18,16 @@ const useWebSocket = () => {
 
     socket.current.onopen = () => {
       console.log("WebSocket connection established");
+
+      if (!isRealtor) {
+        console.log("등록시도합니다...", isRealtor);
+        const message = {
+          id: "joinRoom",
+          name: isRealtor ? "중개사" : "고객",
+          room: sessionId,
+        };
+        socket.current.send(JSON.stringify(message));
+      }
     };
 
     socket.current.onclose = () => {
