@@ -13,7 +13,6 @@ const ConsultingRightReservationHouseList = () => {
 
   const datas = useLoaderData();
   const params = useParams();
-  // console.log("안녕 파람", params);
 
   const userInfo = useSelector((state) => state.user.userInfo);
 

@@ -40,11 +40,7 @@ const ConsultingMeetPage = ({
     setRecordingFiles,
   });
 
-  // setTimeout(() => register(), 2000);
-  //   firstRegist.current = !firstRegist.current;
-
   const [audio, setAudio] = useState(true);
-  // const [record, setRecord] = useState(false);
 
   const participants = useRef({});
   const { socket, responseMsg, sendMessage } = useWebSocket();
@@ -108,7 +104,12 @@ const ConsultingMeetPage = ({
       //   break;
 
       case STATUS.USER_ENTER:
-        setTimeout(() => register(), 2000);
+        while (socket.readyState !== 0) {
+          //do nothing
+        }
+
+        register();
+
         break;
 
       default:
