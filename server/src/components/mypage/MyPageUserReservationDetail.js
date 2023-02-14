@@ -4,13 +4,10 @@ import HouseCardContent2 from "../HouseCardContent2";
 import { getReservationDetail } from "../../apis/reservationApis"
 import { useLoaderData } from "react-router-dom";
 
-const MyPageUserReservationDetail = ({
-  props
-}) => {
-  // const {state} = useLocation();
-  // console.log(state);
+const MyPageUserReservationDetail = (props) => {
+  const navigation = useNavigate();
   const onReservationChangeHandler = () => {
-    props.onDetailReservationHandler(true);
+    navigation("/mypage/user/user-reservation");
   };
   const getLoaderData = useLoaderData().data;
 
