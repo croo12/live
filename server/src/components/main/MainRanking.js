@@ -2,16 +2,28 @@ import classes from "./MainRanking.module.scss";
 import ListBox from "../../UI/ListBox";
 
 import RealtorCardContent, { DUMMY } from "../RealtorCardContent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { realtorRank } from "../../apis/MemberService";
 
 const data = ["리뷰", "별점", "매물"];
 
 const MainRanking = () => {
-  const [realtorList, setRealtorList] = useState(DUMMY);
+  const [realtorList, setRealtorList] = useState([]);
   const [btnActive, setBtnActive] = useState(0);
 
-  const toggleActive = (e) => {
-    setBtnActive(Number.parseInt(e.target.value));
+  useEffect(() => {
+    const response = async () => {
+      let result = await realtorRank(0);
+      setRealtorList(result);
+    };
+    response();
+  }, []);
+
+  const toggleActive = async (e) => {
+    const orderBy = Number.parseInt(e.target.value);
+    setBtnActive(orderBy);
+    const result = await realtorRank(orderBy);
+    setRealtorList(result);
   };
 
   return (
@@ -27,9 +39,7 @@ const MainRanking = () => {
               <button
                 key={idx}
                 value={idx}
-                className={`${classes.btn} ${
-                  idx === btnActive ? classes.active : ""
-                }`}
+                className={`${classes.btn} ${idx === btnActive ? classes.active : ""}`}
                 onClick={toggleActive}
               >
                 {item}
@@ -37,11 +47,7 @@ const MainRanking = () => {
             );
           })}
         </div>
-        <ListBox
-          className={classes.listbox}
-          dataArray={realtorList}
-          direction={true}
-        >
+        <ListBox className={classes.listbox} dataArray={realtorList} direction={true}>
           <RealtorCardContent />
         </ListBox>
       </div>

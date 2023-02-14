@@ -120,7 +120,7 @@ function Carousel() {
 
         {items.map((item, idx) => {
           return (
-            <div key={idx}>
+            <div key={item.id}>
               <CarouselData
                 data={item.id}
                 image={item.src}

@@ -4,8 +4,6 @@ import ContractForSale from "./ContractForSale";
 import ContractTenantInfo from "./ContractTenantInfo";
 import ContractRequireInfo from "./ContractRequireInfo";
 import ContractExpectedCost from "./ContractExpectedCost";
-import classes from "./ContractPageUser.module.scss";
-import axiosInstance from "../../util/axios";
 import { getContractInfoByItemNo } from "../../apis/ContractApis";
 import { useLoaderData } from "react-router-dom";
 
@@ -40,27 +38,16 @@ const ContractPageUser = () => {
     rent: data.data.itemInfo.rent,
   };
 
-  // console.log(data);
-  // console.log(forSaleInfo);
-  // console.log(tenantInfo);
-  console.log(requireInfo);
-
   return (
     <>
       <section>
         <ContractInfo realtorInfoList={data.data.realtorInfo} />
       </section>
       <section>
-        <ContractForSale
-          itemInfoList={data.data.itemInfo}
-          fx={setForSaleInfo}
-        />
+        <ContractForSale itemInfoList={data.data.itemInfo} fx={setForSaleInfo} />
       </section>
       <section>
-        <ContractTenantInfo
-          userInfoList={data.data.userInfo}
-          fx={setTeanatInfo}
-        />
+        <ContractTenantInfo userInfoList={data.data.userInfo} fx={setTeanatInfo} />
       </section>
       <section>
         <ContractRequireInfo fx={setRequireInfo} />

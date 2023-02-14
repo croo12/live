@@ -2,39 +2,27 @@ import classes from "./RealtorCardContent.module.scss";
 import sample from "../assets/image/sample.jpg";
 import { BsTelephone } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
-/* 사진, 사무소 이름, 중개사 이름 리뷰 별점평균? */
 
-// 중개사 여러 명
-const RealtorCardContent = ({
-  idx,
-  image, //프로필사진
-  corpName, //사무소 이름
-  name, //중개사 이름
-  starNum, //별점 평균
-  contactCnt,
-}) => {
+const RealtorCardContent = ({ idx, name, total, corp, imageSrc, review, starScore }) => {
   return (
     <div
-      className={`${classes.realtorCard} ${
-        idx === 0 ? classes.isActive0 : ""
-      } ${idx === 1 ? classes.isActive1 : ""} ${
+      className={`${classes.realtorCard} ${idx === 0 ? classes.isActive0 : ""} ${idx === 1 ? classes.isActive1 : ""} ${
         idx === 2 ? classes.isActive2 : ""
       } ${idx === 3 ? classes.isActive3 : ""}`}
     >
       <div className={classes.upCard}>
         <div className={classes.leftImg}>
-          <img src={image} alt="realtor-profile" />
+          <img src={imageSrc} alt="realtor-profile" />
         </div>
         <div className={classes.rightDesc}>
-          <p>{corpName} 공인중개사</p>
-          <p>
-            <strong> {name} </strong>
-          </p>
+          {/* <p>{corp}</p> */}
+          <strong>{name} </strong>
+          공인중개사
         </div>
       </div>
       <div className={classes.downCard}>
         <p>
-          ★{starNum} | 체결 계약 {contactCnt}건 | 경력 10년
+          ★{starScore} | 보유 매물 {total}개 | 리뷰 {review}건
         </p>
       </div>
     </div>
@@ -116,9 +104,7 @@ export const ReservationRealtorCardContent = ({
   // console.log(idx, realtorNo, imageSrc);
   return (
     <div
-      className={`${classes.realtorReservationCard} ${
-        highlight === idx ? classes.isActive : ""
-      }`}
+      className={`${classes.realtorReservationCard} ${highlight === idx ? classes.isActive : ""}`}
       onClick={() => {
         clickEventHandler(realtorNo);
         setHighlight(idx);
