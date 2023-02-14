@@ -89,4 +89,9 @@ public class ConsultingController {
         @RequestPart List<MultipartFile> records) {
         return consultingService.saveRec(consultingNo, records);
     }
+
+    @GetMapping("/{consultingNo}/records")
+    public ResponseEntity<?> getRecList(@PathVariable Long consultingNo) {
+        return consultingService.getRecList(consultingNo);
+    }
 }
