@@ -15,13 +15,12 @@ public enum ConsultingStatus {
     CONSULTING_CANCLED(5); // 거절, 취소
     private final int value;
 
-    public static ConsultingStatus[] setStatus(int status){
-        if(status == 0) {
+    public static ConsultingStatus[] setStatus(int status) {
+        if (status == 0) {
             return new ConsultingStatus[]{RESERVERVATION_PROCESSING, REALTOR_RESPONSE_COMPLETE};
-        }
-        else if(status == 1) {
+        } else if (status == 1) {
             return new ConsultingStatus[]{CONSULTING_CONFIRMED, CONSULTING_RPOCESSING};
-        }else {
+        } else {
             return new ConsultingStatus[]{CONSULTING_PAST, CONSULTING_CANCLED};
         }
     }
@@ -32,8 +31,9 @@ public enum ConsultingStatus {
 
     public static ConsultingStatus ofValue(int value) {
         return Arrays.stream(ConsultingStatus.values())
-                .filter(v-> v.getValue() == value)
-                .findAny()
-                .orElseThrow(() -> new NotFoundException(String.format("상태코드에 [%s]가 존재하지 않습니다.", value)));
+            .filter(v -> v.getValue() == value)
+            .findAny()
+            .orElseThrow(
+                () -> new NotFoundException(String.format("상태코드에 [%s]가 존재하지 않습니다.", value)));
     }
 }

@@ -9,9 +9,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,7 +26,8 @@ public class ContractController {
     private final ContractService contractService;
 
     @PostMapping
-    public ResponseEntity<?> regist(@Validated @RequestBody ContractRequest.Regist regist, Errors errors)  {
+    public ResponseEntity<?> regist(@Validated @RequestBody ContractRequest.Regist regist,
+        Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -29,28 +35,29 @@ public class ContractController {
     }
 
     @GetMapping
-    public ResponseEntity<?> contractList(Authentication authentication, @RequestParam int status)  {
+    public ResponseEntity<?> contractList(Authentication authentication, @RequestParam int status) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         return contractService.contractList(principal, status);
     }
 
     @GetMapping("/{contractNo}")
-    public ResponseEntity<?> contractDetail(@PathVariable("contractNo") Long contractNo)  {
+    public ResponseEntity<?> contractDetail(@PathVariable("contractNo") Long contractNo) {
         return contractService.contractDetail(contractNo);
     }
 
     @PatchMapping("/{contractNo}")
-    public ResponseEntity<?> contractUpdate(@RequestBody ContractRequest.Update update,  @PathVariable("contractNo") Long contractNo)  {
+    public ResponseEntity<?> contractUpdate(@RequestBody ContractRequest.Update update,
+        @PathVariable("contractNo") Long contractNo) {
         return contractService.contractUpdate(update, contractNo);
     }
 
     @PatchMapping("/{contractNo}/confirm")
-    public ResponseEntity<?> contractApprove(@PathVariable("contractNo") Long contractNo)  {
+    public ResponseEntity<?> contractApprove(@PathVariable("contractNo") Long contractNo) {
         return contractService.contractApprove(contractNo);
     }
 
     @PatchMapping("/{contractNo}/complete")
-    public ResponseEntity<?> contractComplete(@PathVariable("contractNo") Long contractNo)  {
+    public ResponseEntity<?> contractComplete(@PathVariable("contractNo") Long contractNo) {
         return contractService.contractComplete(contractNo);
     }
 }

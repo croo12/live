@@ -3,14 +3,13 @@ package com.ssafy.live.common.service;
 import com.ssafy.live.common.controller.dto.RegionResponse;
 import com.ssafy.live.common.domain.Response;
 import com.ssafy.live.common.domain.repository.RegionRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -22,19 +21,24 @@ public class RegionService {
 
     public ResponseEntity<?> findRegionList(String regionCode) {
         String end = "";
-        switch (regionCode.length()){
-            case 0: end = "00000000"; break;
-            case 2: end = "00000"; break;
+        switch (regionCode.length()) {
+            case 0:
+                end = "00000000";
+                break;
+            case 2:
+                end = "00000";
+                break;
         }
 
         log.debug(regionCode);
 
-        List<RegionResponse> regionList = regionRepository.findAllByRegionCodeStartingWithAndRegionCodeEndingWith(regionCode, end)
-                .stream()
-                .map(RegionResponse::toDto)
-                .collect(Collectors.toList());
+        List<RegionResponse> regionList = regionRepository.findAllByRegionCodeStartingWithAndRegionCodeEndingWith(
+                regionCode, end)
+            .stream()
+            .map(RegionResponse::toDto)
+            .collect(Collectors.toList());
 
-        return response.success(regionList,"지역 정보가 조회되었습니다.", HttpStatus.OK);
+        return response.success(regionList, "지역 정보가 조회되었습니다.", HttpStatus.OK);
     }
 }
 

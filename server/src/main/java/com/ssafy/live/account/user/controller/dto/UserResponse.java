@@ -1,7 +1,11 @@
 package com.ssafy.live.account.user.controller.dto;
 
 import com.ssafy.live.account.user.domain.entity.Users;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class UserResponse {
 
@@ -14,13 +18,14 @@ public class UserResponse {
         private String email;
         private String imageSrc;
         private String region;
+
         public static UserResponse.Update toDto(Users user) {
             return Update.builder()
-                    .phone(user.getPhone())
-                    .email(user.getEmail())
-                    .imageSrc(user.getImageSrc())
-                    .region(user.getRegion())
-                    .build();
+                .phone(user.getPhone())
+                .email(user.getEmail())
+                .imageSrc(user.getImageSrc())
+                .region(user.getRegion())
+                .build();
         }
     }
 
@@ -29,6 +34,7 @@ public class UserResponse {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class FindDetail {
+
         private String id;
         private String name;
         private String email;
@@ -40,15 +46,15 @@ public class UserResponse {
 
         public static UserResponse.FindDetail toDto(Users user) {
             return FindDetail.builder()
-                    .id(user.getId())
-                    .name(user.getName())
-                    .email(user.getEmail())
-                    .phone(user.getPhone())
-                    .region(user.getRegion())
-                    .gender(user.getGender())
-                    .score(user.getScore())
-                    .imageSrc(user.getImageSrc())
-                    .build();
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .region(user.getRegion())
+                .gender(user.getGender())
+                .score(user.getScore())
+                .imageSrc(user.getImageSrc())
+                .build();
         }
     }
 }

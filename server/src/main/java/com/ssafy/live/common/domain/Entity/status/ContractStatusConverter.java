@@ -5,6 +5,7 @@ import javax.persistence.Converter;
 
 @Converter
 public class ContractStatusConverter implements AttributeConverter<ContractStatus, Integer> {
+
     @Override
     public Integer convertToDatabaseColumn(ContractStatus attribute) {
         return attribute.getValue();

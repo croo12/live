@@ -8,16 +8,14 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import java.io.IOException;
+import java.util.UUID;
+import javax.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.util.UUID;
 
 @Service
 @NoArgsConstructor
@@ -43,17 +41,18 @@ public class S3Service {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
 
         s3Client = AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(this.region)
-                .build();
+            .withCredentials(new AWSStaticCredentialsProvider(credentials))
+            .withRegion(this.region)
+            .build();
     }
 
     public String upload(MultipartFile file) throws IOException {
         if (file != null && !file.isEmpty()) {
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename().replaceAll("[~!@#$%^&*()_+ ]", "_");
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename()
+                .replaceAll("[~!@#$%^&*()_+ ]", "_");
             System.out.println("file " + file.getOriginalFilename());
             s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
-                    .withCannedAcl(CannedAccessControlList.PublicRead));
+                .withCannedAcl(CannedAccessControlList.PublicRead));
             return s3Client.getUrl(bucket, fileName).toString();
         } else {
             return null;
@@ -65,7 +64,9 @@ public class S3Service {
             String key = imageSrc; // 폴더/파일.확장자
             System.out.println("기존 파일명 :" + imageSrc);
             try {
-                if (imageSrc == null) return;
+                if (imageSrc == null) {
+                    return;
+                }
                 s3Client.deleteObject(bucket, (key).substring(54));
                 System.out.printf("[%s] deletion complete%n", (key).substring(54));
             } catch (AmazonServiceException e) {

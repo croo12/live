@@ -9,17 +9,18 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class RegionResponse {
+
     private String regionCode;
     private String sidoName;
     private String gugunName;
     private String dongName;
 
-    public static RegionResponse toDto(Region region){
+    public static RegionResponse toDto(Region region) {
         return RegionResponse.builder()
-                .regionCode(region.getRegionCode())
-                .sidoName(region.getSidoName())
-                .gugunName(region.getGugunName())
-                .dongName(region.getDongName())
-                .build();
+            .regionCode(region.getRegionCode())
+            .sidoName(region.getSidoName())
+            .gugunName(region.getGugunName())
+            .dongName(region.getDongName())
+            .build();
     }
 }

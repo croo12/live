@@ -15,6 +15,6 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
     protected ResponseEntity<?> handleCustomException(CustomException e) {
-        return response.fail(e.getError().getMessage(),e.getError().getHttpStatus());
+        return response.fail(e.getError().getMessage(), e.getError().getHttpStatus());
     }
 }

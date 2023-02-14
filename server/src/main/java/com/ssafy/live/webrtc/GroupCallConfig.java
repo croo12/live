@@ -48,7 +48,7 @@ public class GroupCallConfig implements WebSocketConfigurer {
     public KurentoClient kurentoClient() {
         return KurentoClient.create();
     }
-    
+
     @Bean
     public ServletServerContainerFactoryBean createServletServerContainerFactoryBean() {
         ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();

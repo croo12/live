@@ -18,13 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-
-import java.util.Arrays;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -47,17 +41,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin().disable()
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-            .antMatchers("/users", "/users/login", "/users/reissue", "/users/id", "/realtors", "/realtors/login", "/realtors/id", "/realtors/reissue", "/consultings").permitAll()
+            .antMatchers("/users", "/users/login", "/users/reissue", "/users/id", "/realtors",
+                "/realtors/login", "/realtors/id", "/realtors/reissue", "/consultings").permitAll()
 //            .antMatchers("/users/info", "/users/passcheck", "/users/").hasAuthority("USER")
-                .antMatchers("/users/**", "/realtors/**").permitAll()
-           // .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()
-           // .antMatchers("/realtors/region", "/realtors/{realtorNo}", "/realtors/info", "/realtors/passcheck", "/realtors/{realtorNo}/consultings").hasAuthority("REALTOR")
+            .antMatchers("/users/**", "/realtors/**").permitAll()
+            // .antMatchers("/users/info", "/users/passcheck", "/users/").permitAll()
+            // .antMatchers("/realtors/region", "/realtors/{realtorNo}", "/realtors/info", "/realtors/passcheck", "/realtors/{realtorNo}/consultings").hasAuthority("REALTOR")
             .antMatchers("/consultings/**").permitAll()
             .antMatchers("/contracts/**").permitAll()
-                .antMatchers("/items/**").permitAll()
-                .antMatchers("/items").permitAll()
+            .antMatchers("/items/**").permitAll()
+            .antMatchers("/items").permitAll()
             .and()
-            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate),
+                UsernamePasswordAuthenticationFilter.class);
 
     }
 

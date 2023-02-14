@@ -3,18 +3,13 @@ package com.ssafy.live.consulting.controller.dto;
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.consulting.domain.entity.Consulting;
-import com.ssafy.live.contract.controller.dto.ContractResponse.ContractDetail;
-import com.ssafy.live.contract.controller.dto.ContractResponse.ContractDetail.UserInfo;
-import com.ssafy.live.contract.controller.dto.ContractResponse.ContractList;
-import com.ssafy.live.contract.controller.dto.ContractResponse.ContractList.ItemInfo;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class ConsultingResponse {
 
@@ -34,34 +29,36 @@ public class ConsultingResponse {
         private String representativeItem;
         private int itemCount;
 
-        public static ReservationInfo toResponse(Consulting consulting, Realtor realtor, String buildingName, int count) {
+        public static ReservationInfo toResponse(Consulting consulting, Realtor realtor,
+            String buildingName, int count) {
             return ReservationInfo.builder()
-                    .consultingNo(consulting.getNo())
-                    .realtorNo(realtor.getNo())
-                    .userNo(consulting.getUsers().getNo())
-                    .name(realtor.getName())
-                    .personalInfo(realtor.getCorp())
-                    .image(realtor.getImageSrc())
-                    .consultingDate(consulting.getConsultingDate())
-                    .status(consulting.getStatus().getValue())
-                    .representativeItem(buildingName)
-                    .itemCount(count)
-                    .build();
+                .consultingNo(consulting.getNo())
+                .realtorNo(realtor.getNo())
+                .userNo(consulting.getUsers().getNo())
+                .name(realtor.getName())
+                .personalInfo(realtor.getCorp())
+                .image(realtor.getImageSrc())
+                .consultingDate(consulting.getConsultingDate())
+                .status(consulting.getStatus().getValue())
+                .representativeItem(buildingName)
+                .itemCount(count)
+                .build();
         }
 
-        public static ReservationInfo toResponse(Consulting consulting, Users user, String buildingName, int count) {
+        public static ReservationInfo toResponse(Consulting consulting, Users user,
+            String buildingName, int count) {
             return ReservationInfo.builder()
-                    .consultingNo(consulting.getNo())
-                    .realtorNo(user.getNo())
-                    .userNo(consulting.getUsers().getNo())
-                    .name(user.getName())
-                    .personalInfo(user.getPhone())
-                    .image(user.getImageSrc())
-                    .consultingDate(consulting.getConsultingDate())
-                    .status(consulting.getStatus().getValue())
-                    .representativeItem(buildingName)
-                    .itemCount(count)
-                    .build();
+                .consultingNo(consulting.getNo())
+                .realtorNo(user.getNo())
+                .userNo(consulting.getUsers().getNo())
+                .name(user.getName())
+                .personalInfo(user.getPhone())
+                .image(user.getImageSrc())
+                .consultingDate(consulting.getConsultingDate())
+                .status(consulting.getStatus().getValue())
+                .representativeItem(buildingName)
+                .itemCount(count)
+                .build();
         }
     }
 
@@ -78,6 +75,7 @@ public class ConsultingResponse {
         @Builder
         @Getter
         public static class MyConsultingItem {
+
             private Long itemNo;
             private int deposit;
             private int rent;
@@ -91,28 +89,29 @@ public class ConsultingResponse {
 
             public static MyConsultingItem toEntity(Item item, House house, String imageSrc) {
                 return ConsultingResponse.ReservationDetail.MyConsultingItem.builder()
-                        .itemNo(item.getNo())
-                        .deposit(item.getDeposit())
-                        .rent(item.getRent())
-                        .maintenanceFee(item.getMaintenanceFee())
-                        .description(item.getDescription())
-                        .buildingName(item.getHouse().getBuildingName())
-                        .address(house.getAddress())
-                        .addressDetail(house.getAddressDetail())
-                        .imageSrc(imageSrc)
-                        .exclusivePrivateArea(house.getExclusivePrivateArea())
-                        .build();
+                    .itemNo(item.getNo())
+                    .deposit(item.getDeposit())
+                    .rent(item.getRent())
+                    .maintenanceFee(item.getMaintenanceFee())
+                    .description(item.getDescription())
+                    .buildingName(item.getHouse().getBuildingName())
+                    .address(house.getAddress())
+                    .addressDetail(house.getAddressDetail())
+                    .imageSrc(imageSrc)
+                    .exclusivePrivateArea(house.getExclusivePrivateArea())
+                    .build();
             }
         }
 
         @Builder
-        public static ReservationDetail toEntity(Long consultingNo, Consulting consulting,List<ConsultingResponse.ReservationDetail.MyConsultingItem> items) {
+        public static ReservationDetail toEntity(Long consultingNo, Consulting consulting,
+            List<ConsultingResponse.ReservationDetail.MyConsultingItem> items) {
             return ReservationDetail.builder()
-                    .consultingNo(consultingNo)
-                    .consultingDate(consulting.getConsultingDate())
-                    .requirement(consulting.getRequirement())
-                    .itemList(items)
-                    .build();
+                .consultingNo(consultingNo)
+                .consultingDate(consulting.getConsultingDate())
+                .requirement(consulting.getRequirement())
+                .itemList(items)
+                .build();
         }
     }
 
@@ -125,7 +124,8 @@ public class ConsultingResponse {
         private UserInfo userInfo;
         private ItemInfo itemInfo;
 
-        public static ItemForContract toEntity(RealtorInfo realtorInfo, UserInfo userInfo, ItemInfo itemInfo) {
+        public static ItemForContract toEntity(RealtorInfo realtorInfo, UserInfo userInfo,
+            ItemInfo itemInfo) {
             return ItemForContract.builder()
                 .realtorInfo(realtorInfo)
                 .userInfo(userInfo)
@@ -136,6 +136,7 @@ public class ConsultingResponse {
         @Builder
         @Getter
         public static class RealtorInfo {
+
             private Long realtorNo;
             private String corp;
             private String name;
@@ -158,10 +159,12 @@ public class ConsultingResponse {
         @Getter
         @Builder
         public static class UserInfo {
+
             private Long userNo;
             private String name;
             private String phone;
             private String gender;
+
             public static ConsultingResponse.ItemForContract.UserInfo toEntity(Users user) {
                 return ConsultingResponse.ItemForContract.UserInfo.builder()
                     .userNo(user.getNo())
@@ -175,6 +178,7 @@ public class ConsultingResponse {
         @Getter
         @Builder
         public static class ItemInfo {
+
             private Long itemNo;
             private String address;
             private String buildingName;
@@ -183,6 +187,7 @@ public class ConsultingResponse {
             private int maintenanceFee;
             private float area;
             private List<String> images;
+
             public static ItemForContract.ItemInfo toEntity(Item item, List<String> images) {
                 return ItemForContract.ItemInfo.builder()
                     .itemNo(item.getNo())

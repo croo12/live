@@ -7,13 +7,21 @@ import com.ssafy.live.common.domain.Entity.BaseEntity;
 import com.ssafy.live.common.domain.Entity.status.ContractStatus;
 import com.ssafy.live.common.domain.Entity.status.ContractStatusConverter;
 import com.ssafy.live.house.domain.entity.Item;
+import java.time.LocalDate;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @SuperBuilder
@@ -77,14 +85,15 @@ public class Contract extends BaseEntity {
     @Column(name = "term_of_contract")
     private int termOfContract;
 
-    public void updateInfo(LocalDate moveOnDate, int termOfContract, String specialContract, int commission,
+    public void updateInfo(LocalDate moveOnDate, int termOfContract, String specialContract,
+        int commission,
         int deposit) {
         this.moveOnDate = moveOnDate;
         this.termOfContract = termOfContract;
         this.specialContract = specialContract;
         this.commission = commission;
-        this.downPayment = (deposit/100)*10;
-        this.balance = (deposit/100)*90;
+        this.downPayment = (deposit / 100) * 10;
+        this.balance = (deposit / 100) * 90;
     }
 
     public void approve() {
