@@ -54,7 +54,7 @@ const MyPageUser = () => {
                 <p>
                   안녕하세요, <strong>{userInfo.name}</strong>님<br />
                   <span>일반 회원</span>
-                  <button onClick={onClickHandler}>개인정보 조회</button>
+                  <button className={classes.goDetail} onClick={onClickHandler}>개인정보 조회</button>
                 </p>
                 <div className={classes.temperature}>온도그래프</div>
                 <progress className={classes.progress} value={userInfo.score} min="0" max="100"></progress>

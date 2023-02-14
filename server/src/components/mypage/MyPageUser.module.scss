@@ -44,11 +44,17 @@
                         font-size: 1.3vh;
                     }
 
+                    .goDetail {
+                        background-color: #42d395;
+                        color: white;
+                        padding: 0.3%;
+                        margin-left: 3%;
+                        font-size: 1.3vh;
+                        border:none;
+                    }
+
                     .temperature {
                         padding: 1% 0;
-
-                        .progress {}
-
                     }
                 }
             }

@@ -13,7 +13,7 @@ const MyPageRealtor = () => {
     navigate("/mypage/realtor-detail-info");
   };
 
-  const { userInfo, doLogout } = useAuth();
+  const { userInfo } = useAuth();
 
   // console.log(userInfo);
 
@@ -38,15 +38,15 @@ const MyPageRealtor = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-                <img src={sample}></img>
+              <img alt="프로필" src={userInfo.profile !== null ? userInfo.profile : sample}></img>
               </div>
               <div className={classes.rightDesc}>
                 <p>
                   안녕하세요, <strong>{userInfo.name}</strong>님<br />
                   <span>중개사 회원</span>
-                  <button onClick={onClickHandler}>개인정보 조회</button>
+                  <button className={classes.goDetail} onClick={onClickHandler}>개인정보 조회</button>
                 </p>
-                <div className={classes.temperature}>별점 ★ 4.5</div>
+                <div className={classes.temperature}>별점 ★ {userInfo.score}</div>
               </div>
             </div>
           </div>

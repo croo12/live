@@ -67,8 +67,7 @@ const MyPageRealtorModify = () => {
       });
 
       if (result) {
-        alert("중개사 정보 수정");
-        navigate("/");
+        navigate("/mypage/realtor-detail-info");
       }
     } catch (error) {
       console.error("중개사 정보 수정 과정에서 에러가 발생하였습니다.");

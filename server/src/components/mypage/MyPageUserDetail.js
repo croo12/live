@@ -1,13 +1,18 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import classes from "./MyPageUserDetail.module.scss";
+import { useEffect } from "react";
 import MyPageUser from "./MyPageUser";
 import { getUserInfo } from "../../apis/MemberService";
 import axiosInstance, { getAuthHeader } from "../../util/axios";
 import { useAuth } from "../common/AuthProtector";
+import { useDispatch } from "react-redux";
+import { userAction } from "../../store/user-slice";
+import sample from "../../assets/image/sample.jpg";
 
 const MyPageUserDetail = () => {
   const navigate = useNavigate();
   const { doLogout } = useAuth();
+  const dispatch = useDispatch();
   const onQuitHandler = async () => {
     alert("정말로 탈퇴하시겠습니까?");
     try {
@@ -24,7 +29,18 @@ const MyPageUserDetail = () => {
   };
 
   const userDetail = useLoaderData();
-  console.log("유저디테일:",userDetail);
+    
+  useEffect(()=>{
+    const data = {
+      id: userDetail.id,
+      name: userDetail.name,
+      isRealtor: false,
+      profile: userDetail.imageSrc,
+      score: userDetail.score,
+    };
+    dispatch(userAction.setInfo(data));
+  }, []);
+  
 
   const onClickHandler = () => {
     navigate("/mypage/user-modify-info");
@@ -39,7 +55,8 @@ const MyPageUserDetail = () => {
             <div className={classes.privacyContent}>
               <div className={classes.privacyInfo}>
                 <div className={classes.privacyImg}>
-                  <img alt="이미지" src={userDetail.imageSrc}></img>
+                  {/* <img alt="이미지" src={userDetail.imageSrc}></img> */}
+                  <img alt="프로필" src={userDetail.imageSrc !== null ? userDetail.imageSrc : sample}></img>
                 </div>
                 <div className={classes.privacyDetail}>
                   <div>
@@ -82,9 +99,8 @@ const MyPageUserDetail = () => {
 };
 
 export const userDetailInfoLoader = async () => {
-  const response = await getUserInfo();
+  const response = await getUserInfo(getAuthHeader());
   return response;
-
 };
 
 export default MyPageUserDetail;

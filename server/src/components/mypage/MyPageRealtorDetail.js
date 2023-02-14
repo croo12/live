@@ -1,12 +1,17 @@
 import { useLoaderData,useNavigate } from "react-router-dom";
 import classes from "./MyPageRealtorDetail.module.scss";
+import { useEffect } from "react";
 import { getRealtorInfo } from "../../apis/MemberService";
 import axiosInstance, { getAuthHeader } from "../../util/axios";
 import { useAuth } from "../common/AuthProtector";
+import { useDispatch } from "react-redux";
+import { userAction } from "../../store/user-slice";
+import sample from "../../assets/image/sample.jpg";
 
 const MyPageRealtorDetail = () => {
   const navigate = useNavigate();
   const { doLogout } = useAuth();
+  const dispatch = useDispatch();
   const onQuitHandler = async () => {
     alert("정말로 탈퇴하시겠습니까?");
     try {
@@ -23,8 +28,18 @@ const MyPageRealtorDetail = () => {
   };
 
   const realtorDetail = useLoaderData();
-  console.log("중개사디테일:",realtorDetail);
 
+  useEffect(()=>{
+    const data = {
+      id: realtorDetail.id,
+      name: realtorDetail.name,
+      isRealtor: true,
+      profile: realtorDetail.imageSrc,
+      score: realtorDetail.ratingScore,
+    };
+    dispatch(userAction.setInfo(data));
+  }, []);
+  
   const onChangeHandler = () => {
     navigate("/mypage/realtor-modify-info");
   };
@@ -37,7 +52,7 @@ const MyPageRealtorDetail = () => {
             <div className={classes.privacyContent}>
               <div className={classes.privacyInfo}>
                 <div className={classes.privacyImg}>
-                  <img alt="이미지" src={realtorDetail.imageSrc}></img>
+                <img alt="프로필" src={realtorDetail.imageSrc !== null ? realtorDetail.imageSrc : sample}></img>
                 </div>
                 <div className={classes.privacyDetail}>
                   <div>
