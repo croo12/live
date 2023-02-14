@@ -2,7 +2,7 @@ import classes from "./MyPageUserReservationDetail.module.scss";
 import ListBox from "../../UI/ListBox";
 import HouseCardContent2 from "../HouseCardContent2";
 import { getReservationDetail } from "../../apis/reservationApis"
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 const MyPageUserReservationDetail = (props) => {
   const navigation = useNavigate();
