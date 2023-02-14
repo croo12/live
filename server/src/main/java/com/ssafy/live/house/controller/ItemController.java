@@ -58,10 +58,9 @@ public class ItemController {
 
     @GetMapping("/realtor")
     public ResponseEntity<?> findItemsByRealtor(
-        Authentication authentication,
-        @RequestParam String regionCode
+        Authentication authentication
     ) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
-        return itemService.findItemsByRealtor(principal, regionCode);
+        return itemService.findItemsByRealtor(principal);
     }
 }
