@@ -547,9 +547,61 @@
         width: 5vw;
         margin-bottom: 5%;
 
-        img {
-          width: 100%;
-        }
+          box-sizing: border-box;
+            height: 100%;
+            width: 100%;
+            font-size: 16px;
+          
+            @media (max-width: 1024px) {
+              font-size: calc(15.6 * 0.1vw);
+            }
+          
+            .imageContent {
+              display: flex;
+          
+              .imageBox {
+                width: 100%;
+                display: flex;
+                box-sizing: border-box;
+                border: 1px solid rgb(218, 218, 218);
+                border-radius: 6px;
+          
+                .mainImage {
+                  display: inline-flex;
+                  width: 50%;
+          
+                  img {
+                    box-sizing: border-box;
+                    // 1400 기준
+                    // width: 43.25em;
+                    // height: 31.5em;
+                    width: 31.4em;
+                    height: 23em;
+                    margin: 0.25em;
+                    border: 1px solid rgb(218, 218, 218);
+                    border-radius: 6px;
+                  }
+                }
+          
+                .subImage {
+                  display: inline-flex;
+                  flex-wrap: wrap;
+                  width: 50%;
+          
+                  img {
+                    box-sizing: border-box;
+                    // 1400 기준
+                    // width: 21.375em;
+                    // height: 15.5em;
+                    width: 15.45em;
+                    height: 11.25em;
+                    margin: 0.25em;
+                    border: 1px solid rgb(218, 218, 218);
+                    border-radius: 6px;
+                  }
+                }
+              }
+            }
       }
     }
   }

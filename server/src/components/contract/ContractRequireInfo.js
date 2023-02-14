@@ -12,7 +12,7 @@ const ContractRequireInfo = (props) => {
     props.fx(requireInfo);
   };
   return (
-    <form ref={formData} onSubmit={insertRequireInfo}>
+    <form ref={formData}>
       <div className={classes.requireInfo}>
         <div className={classes.inner}>
           <div className={classes.requireInfoContent}>
@@ -20,9 +20,11 @@ const ContractRequireInfo = (props) => {
             <div className={classes.resident}>
               <strong>거주인원</strong>{" "}
               <input
+                type="number"
                 placeholder="거주 인원을 선택해주세요."
                 id="usernumberOfResidents"
                 name="usernumberOfResidents"
+                onChange={insertRequireInfo}
               />
             </div>
             <div className={classes.requirement}>
@@ -31,13 +33,13 @@ const ContractRequireInfo = (props) => {
                 placeholder="위의 조건 외 특약사항으로 요청하고 싶으신 내용을 입력해주세요.&#13;요청하고 싶으신 내용이 없을 시, '없음'으로 입력해주세요."
                 id="userSpecialContract"
                 name="userSpecialContract"
+                onChange={insertRequireInfo}
               />
             </div>
           </div>
           <hr />
         </div>
       </div>
-      <button type="submit">입력</button>
     </form>
   );
 };
