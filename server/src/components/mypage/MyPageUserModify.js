@@ -21,6 +21,7 @@ const MyPageUserModify = () => {
   };
 
   const userDetail = useLoaderData();
+  console.log("유저수정:",userDetail)
 
   useEffect(() => {
     if (!profile) {
@@ -183,9 +184,7 @@ const MyPageUserModify = () => {
 
 export const userInfoLoader = async () => {
   const response = await getUserInfo();
-
-  if (response?.data) return response.data.data;
-  else return null;
+  return response;
 };
 
 export default MyPageUserModify;

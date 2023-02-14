@@ -24,7 +24,7 @@ const MyPageUserDetail = () => {
   };
 
   const userDetail = useLoaderData();
-  console.log(userDetail);
+  console.log("유저디테일:",userDetail);
 
   const onClickHandler = () => {
     navigate("/mypage/user-modify-info");
@@ -42,10 +42,6 @@ const MyPageUserDetail = () => {
                   <img alt="이미지" src={userDetail.imageSrc}></img>
                 </div>
                 <div className={classes.privacyDetail}>
-                  <div>
-                    <strong>아이디</strong>
-                    <span>{userDetail.id}</span>
-                  </div>
                   <div>
                     <strong>이름</strong>
                     <span>{userDetail.name}</span>
@@ -87,9 +83,8 @@ const MyPageUserDetail = () => {
 
 export const userDetailInfoLoader = async () => {
   const response = await getUserInfo();
+  return response;
 
-  if (response?.data) return response.data.data;
-  else return null;
 };
 
 export default MyPageUserDetail;

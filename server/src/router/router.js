@@ -22,8 +22,8 @@ import MyPageRealtorReservation from "../components/mypage/MyPageRealtorReservat
 import MyPageRealtorReservationDetail, {
   realtorReservationLoader,
 } from "../components/mypage/MyPageRealtorReservationDetail";
-import MyPageRealtorDetail from "../components/mypage/MyPageRealtorDetail";
-import MyPageRealtorModify from "../components/mypage/MyPageRealtorModify";
+import MyPageRealtorDetail, { realtorDetailInfoLoader } from "../components/mypage/MyPageRealtorDetail";
+import MyPageRealtorModify, { realtorInfoLoader } from "../components/mypage/MyPageRealtorModify";
 import ConsultingPage from "../pages/ConsultingPage";
 import ErrorCommonPage from "../pages/ErrorCommonPage";
 import HousePage from "../pages/HousePage";
@@ -119,8 +119,16 @@ const router = createBrowserRouter(
             loader={realtorReservationLoader}
           ></Route>
         </Route>
-        <Route path="realtor-detail-info" element={<MyPageRealtorDetail />}></Route>
-        <Route path="realtor-modify-info" element={<MyPageRealtorModify />}></Route>
+        <Route 
+          path="realtor-detail-info" 
+          element={<MyPageRealtorDetail />}
+          loader={realtorDetailInfoLoader}
+        ></Route>
+        <Route 
+        path="realtor-modify-info" 
+        element={<MyPageRealtorModify />}
+        loader={realtorInfoLoader}
+        ></Route>
       </Route>
 
       <Route
