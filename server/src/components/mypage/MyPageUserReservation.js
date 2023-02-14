@@ -51,7 +51,6 @@ const MyPageUserReservation = () => {
                 <div className={classes.consultingList}>
                   {tabActive === 0 && (
                     <div>
-                      <p>신청된 상담</p>
                       <ListBox dataArray={reservationUser} direction={false}>
                         <ReservationCardContent2 tabActive={tabActive} />
                       </ListBox>
@@ -59,7 +58,6 @@ const MyPageUserReservation = () => {
                   )}
                   {tabActive === 1 && (
                     <div>
-                      <p>확정된 상담</p>
                       <ListBox dataArray={reservationUser} direction={false}>
                         <ReservationCardContent2 tabActive={tabActive} />
                       </ListBox>
@@ -67,7 +65,6 @@ const MyPageUserReservation = () => {
                   )}
                   {tabActive === 2 && (
                     <div>
-                      <p>종료된 상담</p>
                       <ListBox dataArray={reservationUser} direction={false}>
                         <ReservationCardContent2 tabActive={tabActive} />
                       </ListBox>
