@@ -24,6 +24,7 @@ public class ConsultingResponse {
         private String name;
         private String personalInfo;
         private String image;
+        private String link;
         private LocalDateTime consultingDate;
         private int status;
         private String representativeItem;
@@ -38,6 +39,7 @@ public class ConsultingResponse {
                 .name(realtor.getName())
                 .personalInfo(realtor.getCorp())
                 .image(realtor.getImageSrc())
+                .link(consulting.getLink())
                 .consultingDate(consulting.getConsultingDate())
                 .status(consulting.getStatus().getValue())
                 .representativeItem(buildingName)
