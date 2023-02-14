@@ -246,7 +246,9 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?> saveRec(Long consultingNo, List<MultipartFile> records) {
-        Consulting consulting = consultingRepository.findById(consultingNo).get();
+        Consulting consulting = consultingRepository.findById(consultingNo)
+            .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
+
         for (MultipartFile rec : records) {
             if (!rec.isEmpty()) {
                 try {
@@ -280,5 +282,16 @@ public class ConsultingService {
             }
         }
         return response.success("녹화영상이 저장되었습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getRecList(Long consultingNo) {
+        consultingRepository.findById(consultingNo).orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
+
+        List<String> recordPathList = recordRepository.findByConsultingNo(consultingNo)
+            .stream()
+            .map(record -> record.getPath())
+            .collect(Collectors.toList());
+
+        return response.success(recordPathList,"녹화영상 경로가 조회되었습니다.", HttpStatus.OK);
     }
 }
