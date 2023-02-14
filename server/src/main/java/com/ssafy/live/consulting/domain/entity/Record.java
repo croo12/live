@@ -34,4 +34,8 @@ public class Record extends BaseEntity {
 
     @Column(name = "save_file")
     private String saveFile;
+
+    public String getPath(){
+        return saveFolder+"/"+saveFile;
+    }
 }
