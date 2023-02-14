@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import ConsultingMeetPage from "../components/consulting/ConsultingMeetPage";
@@ -6,6 +6,7 @@ import ConsultingRightBox from "../components/consulting/ConsultingRightBox";
 
 import classes from "./ConsultingPage.module.scss";
 import { useAuth } from "../components/common/AuthProtector";
+import axiosInstance from "../util/axios";
 
 export const STATUS = {
   REALTOR_ENTER: 100,
@@ -41,70 +42,25 @@ const ConsultingPage = (props) => {
         }
         break;
     }
-
-    // console.log(status);
-
-    // if (isRealtor) {
-    //   switch (status) {
-    //     case REALTOR_STATUS.BEFORE_START:
-    //       console.log(`처음으로 돌아가기`);
-    //       //예약목록 보기
-    //       //현재 접속 중이 아니지롱 표시
-    //       //webrtc Peer 초기화
-    //       break;
-
-    //     case REALTOR_STATUS.START_BUT_NOT_CONNECT:
-    //       const confirm = window.confirm;
-
-    //       if (confirm(`상담을 시작합니다`)) {
-    //         setStatus(REALTOR_STATUS.START_BUT_NOT_CONNECT);
-    //         return;
-    //       } else {
-    //         setStatus(REALTOR_STATUS.BEFORE_START);
-    //       }
-
-    //       break;
-
-    //     case REALTOR_STATUS.CONNECTING:
-    //       //webrtc통신하기
-    //       break;
-
-    //     default:
-    //       console.log(`없는 상태임 ${status}`);
-    //       break;
-    //   }
-    // } else {
-    //   switch (status) {
-    //     case USER_STATUS.ENTER_SESSION:
-    //       //중개사에게 연락 요청 보내기
-    //       //응답을 기다리는 중 띄우기
-    //       break;
-
-    //     case USER_STATUS.CONNECTING:
-    //       //반갑연결하기
-    //       //통화 진행하기
-    //       //내 오디오를 상대에게 보내면서
-    //       //상대 영상과 오디오 받아오기
-
-    //       //녹화버튼 활성화하기
-    //       break;
-
-    //     case USER_STATUS.END:
-    //       //끗, webrtc초기화
-    //       //리뷰 활성화하기
-    //       //신고 활성화하기
-    //       break;
-
-    //     default:
-    //       break;
-    //   }
-    // }
-    // setStatus(status);
   };
 
   const toggleListInMobile = () => {
     toggleList(!viewList);
   };
+
+  useEffect(() => {
+    if (recordingFiles.length !== 0) {
+      axiosInstance
+        .post(
+          `consultings/${consultingNo}/records`,
+          recordingFiles[recordingFiles.length - 1]
+        )
+        .then((res) =>
+          console.log("Successfully sent recording to server", res)
+        )
+        .catch((error) => console.error(error));
+    }
+  }, [recordingFiles]);
 
   return (
     <>
