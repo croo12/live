@@ -15,11 +15,14 @@ import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.common.service.SMSService;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest.AddItem;
+import com.ssafy.live.consulting.controller.dto.ConsultingRequest.SaveRec;
 import com.ssafy.live.consulting.controller.dto.ConsultingResponse;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import com.ssafy.live.consulting.domain.entity.ConsultingItem;
+import com.ssafy.live.consulting.domain.entity.Record;
 import com.ssafy.live.consulting.domain.repository.ConsultingItemRepository;
 import com.ssafy.live.consulting.domain.repository.ConsultingRepository;
+import com.ssafy.live.consulting.domain.repository.RecordRepository;
 import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.entity.ItemImage;
@@ -27,9 +30,12 @@ import com.ssafy.live.house.domain.repository.ItemImageRepository;
 import com.ssafy.live.house.domain.repository.ItemRepository;
 import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +44,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ConsultingService {
+
+    private final RecordRepository recordRepository;
 
     private final Response response;
     private final ConsultingRepository consultingRepository;
@@ -59,25 +68,17 @@ public class ConsultingService {
             .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         Realtor realtor = realtorRepository.findById(reserve.getRealtorNo())
             .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
-        Consulting consulting = Consulting.builder()
-            .realtor(realtor)
-            .users(users)
-            .consultingDate(reserve.getConsultingDate())
-            .requirement(reserve.getRequirement())
-            .status(ConsultingStatus.RESERVERVATION_PROCESSING)
-            .build();
+        Consulting consulting = Consulting.builder().realtor(realtor).users(users)
+            .consultingDate(reserve.getConsultingDate()).requirement(reserve.getRequirement())
+            .status(ConsultingStatus.RESERVERVATION_PROCESSING).build();
         consultingRepository.save(consulting);
 
-        reserve.getItemList()
-            .stream()
-            .forEach(no -> {
-                Item item = itemRepository.findById(no).get();
-                ConsultingItem consultingItem = ConsultingItem.builder()
-                    .consulting(consulting)
-                    .item(item)
-                    .build();
-                consultingItemRepository.save(consultingItem);
-            });
+        reserve.getItemList().stream().forEach(no -> {
+            Item item = itemRepository.findById(no).get();
+            ConsultingItem consultingItem = ConsultingItem.builder().consulting(consulting)
+                .item(item).build();
+            consultingItemRepository.save(consultingItem);
+        });
 
         //smsService.sendSMS(consulting.getNo(), SMSContent.NEW_CONSULTING, consulting.getUsers());
         return response.success("예약이 완료되었습니다.", HttpStatus.OK);
@@ -104,25 +105,26 @@ public class ConsultingService {
         if (consultingsList.isEmpty()) {
             listNotFound();
         }
-        consultingsList.stream()
-            .forEach(consulting -> {
-                List<ConsultingItem> consultingItems = consulting.getConsultingItems();
-                int count = 0;
-                String buildingName = "";
-                if (consultingItems.size() > 0) {
-                    count = consultingItems.size() - 1;
-                    buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
-                }
-                if (target.equals("USER")) {
-                    Realtor realtor = consulting.getRealtor();
-                    list.add(ConsultingResponse.ReservationInfo.toResponse(consulting, realtor,
-                        buildingName, count));
-                } else {
-                    Users user = consulting.getUsers();
-                    list.add(ConsultingResponse.ReservationInfo.toResponse(consulting, user,
-                        buildingName, count));
-                }
-            });
+        consultingsList.stream().forEach(consulting -> {
+            List<ConsultingItem> consultingItems = consulting.getConsultingItems();
+            int count = 0;
+            String buildingName = "";
+            if (consultingItems.size() > 0) {
+                count = consultingItems.size() - 1;
+                buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
+            }
+            if (target.equals("USER")) {
+                Realtor realtor = consulting.getRealtor();
+                list.add(
+                    ConsultingResponse.ReservationInfo.toResponse(consulting, realtor, buildingName,
+                        count));
+            } else {
+                Users user = consulting.getUsers();
+                list.add(
+                    ConsultingResponse.ReservationInfo.toResponse(consulting, user, buildingName,
+                        count));
+            }
+        });
         if (list.isEmpty()) {
             listNotFound();
         }
@@ -150,12 +152,8 @@ public class ConsultingService {
             info = "예약이 취소되었습니다.";
             smsContent = SMSContent.CONSULTING_CANCEL;
         }
-        Notice notice = Notice.builder()
-            .users(consulting.getUsers())
-            .realtor(consulting.getRealtor())
-            .noticeInfo(info)
-            .noticeWriter(writer)
-            .build();
+        Notice notice = Notice.builder().users(consulting.getUsers())
+            .realtor(consulting.getRealtor()).noticeInfo(info).noticeWriter(writer).build();
         noticeRepository.save(notice);
 
         //smsService.sendSMS(consulting.getNo(), smsContent, consulting.getUsers());
@@ -175,15 +173,13 @@ public class ConsultingService {
         List<ConsultingItem> consultingItems = consultingItemRepository.findByConsultingNo(
             consultingNo);
         List<ConsultingResponse.ReservationDetail.MyConsultingItem> items = new ArrayList<>();
-        consultingItems.stream()
-            .forEach(consultingItem -> {
-                Item item = consultingItem.getItem();
-                House house = consultingItem.getItem().getHouse();
-                List<ItemImage> itemImages = itemImageRepository.findByItem(item);
-                items.add(
-                    ConsultingResponse.ReservationDetail.MyConsultingItem.toEntity(item, house,
-                        itemImages.get(0).getImageSrc()));
-            });
+        consultingItems.stream().forEach(consultingItem -> {
+            Item item = consultingItem.getItem();
+            House house = consultingItem.getItem().getHouse();
+            List<ItemImage> itemImages = itemImageRepository.findByItem(item);
+            items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.toEntity(item, house,
+                itemImages.get(0).getImageSrc()));
+        });
         ConsultingResponse.ReservationDetail detail = ConsultingResponse.ReservationDetail.toEntity(
             consultingNo, consulting, items);
         return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
@@ -198,28 +194,22 @@ public class ConsultingService {
         if (consultingItems.isEmpty()) {
             return response.fail("해당하는 상담 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
         }
-        consultingItems.stream()
-            .forEach(consultingItem -> {
-                if (noList.contains(consultingItem.getItem().getNo())) {
-                    noList.remove(consultingItem.getItem().getNo());
-                } else {
-                    consultingItemRepository.delete(consultingItem);
-                }
-            });
-        noList.stream()
-            .forEach(index -> {
-                Item item = itemRepository.findById(index).get();
-                ConsultingItem consultingItem = ConsultingItem.builder()
-                    .consulting(consulting)
-                    .item(item).build();
-                consultingItemRepository.save(consultingItem);
-            });
-        Notice notice = Notice.builder()
-            .users(consulting.getUsers())
-            .realtor(consulting.getRealtor())
-            .noticeInfo("상담 매물이 변경되었습니다.")
-            .noticeWriter(consulting.getRealtor().getName())
-            .build();
+        consultingItems.stream().forEach(consultingItem -> {
+            if (noList.contains(consultingItem.getItem().getNo())) {
+                noList.remove(consultingItem.getItem().getNo());
+            } else {
+                consultingItemRepository.delete(consultingItem);
+            }
+        });
+        noList.stream().forEach(index -> {
+            Item item = itemRepository.findById(index).get();
+            ConsultingItem consultingItem = ConsultingItem.builder().consulting(consulting)
+                .item(item).build();
+            consultingItemRepository.save(consultingItem);
+        });
+        Notice notice = Notice.builder().users(consulting.getUsers())
+            .realtor(consulting.getRealtor()).noticeInfo("상담 매물이 변경되었습니다.")
+            .noticeWriter(consulting.getRealtor().getName()).build();
         noticeRepository.save(notice);
 
         //smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers());
@@ -229,17 +219,17 @@ public class ConsultingService {
 
     public ResponseEntity<?> infoForContact(UserDetails user, Long itemNo) {
         Item item = itemRepository.findById(itemNo).get();
-        ConsultingResponse.ItemForContract.RealtorInfo realtor = ConsultingResponse.ItemForContract.RealtorInfo
-            .toEntity(item.getRealtor());
-        ConsultingResponse.ItemForContract.UserInfo users = ConsultingResponse.ItemForContract.UserInfo
-            .toEntity(usersRepository.findById(user.getUsername()).get());
+        ConsultingResponse.ItemForContract.RealtorInfo realtor = ConsultingResponse.ItemForContract.RealtorInfo.toEntity(
+            item.getRealtor());
+        ConsultingResponse.ItemForContract.UserInfo users = ConsultingResponse.ItemForContract.UserInfo.toEntity(
+            usersRepository.findById(user.getUsername()).get());
 
         List<ItemImage> itemImages = itemImageRepository.findByItem(item);
         List<String> images = itemImages.stream().map((i) -> i.getImageSrc())
             .collect(Collectors.toList());
 
-        ConsultingResponse.ItemForContract.ItemInfo itemInfo = ConsultingResponse.ItemForContract.ItemInfo
-            .toEntity(item, images);
+        ConsultingResponse.ItemForContract.ItemInfo itemInfo = ConsultingResponse.ItemForContract.ItemInfo.toEntity(
+            item, images);
         ConsultingResponse.ItemForContract contractInfo = ConsultingResponse.ItemForContract.toEntity(
             realtor, users, itemInfo);
         return response.success(contractInfo, "계약 할 매물 정보를 조회하였습니다.", HttpStatus.OK);
@@ -255,8 +245,40 @@ public class ConsultingService {
         return response.success("상담링크가 전송되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> saveVideo(ConsultingRequest.SaveVideo video) {
+    public ResponseEntity<?> saveRec(Long consultingNo, List<MultipartFile> records) {
+        Consulting consulting = consultingRepository.findById(consultingNo).get();
+        for (MultipartFile rec : records) {
+            if (!rec.isEmpty()) {
+                try {
+                    String originalFile = rec.getOriginalFilename();
 
+                    int pos = originalFile.lastIndexOf(".");
+                    String type = originalFile.substring(pos + 1);
+
+                    //String saveFolder = "C:\\live\\records\\"+consultingNo.toString();        //window
+                    String saveFolder = "/live/records/"+consultingNo.toString();
+                    String saveFile = UUID.randomUUID() + "." + type;
+
+                    File file = new File(saveFolder+"/"+saveFile);
+                    file.getParentFile().mkdirs();
+                    rec.transferTo(file);
+
+                    log.info(file.getPath());
+
+                    Record record = Record.builder()
+                        .saveFolder(saveFolder)
+                        .saveFile(saveFile)
+                        .originalFile(originalFile)
+                        .consulting(consulting)
+                        .build();
+
+                    recordRepository.save(record);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return response.fail("녹화영상 저장에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        }
         return response.success("녹화영상이 저장되었습니다.", HttpStatus.OK);
     }
 }

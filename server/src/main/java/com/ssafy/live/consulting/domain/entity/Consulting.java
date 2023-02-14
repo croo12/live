@@ -66,6 +66,10 @@ public class Consulting extends BaseEntity {
     @Enumerated(EnumType.ORDINAL)
     private ConsultingStatus status;
 
+    @OneToMany(mappedBy = "consulting", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<Record> records = new ArrayList<>();
+
     public void updateStatus(int status) {
         if (status == 2) {
             this.status = ConsultingStatus.CONSULTING_CONFIRMED;
