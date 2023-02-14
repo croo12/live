@@ -23,7 +23,12 @@ const MyPageUserReservationDetail = (props) => {
         <ListBox dataArray={getLoaderData.itemList} direction={false}>
           <HouseCardContent2 />
         </ListBox>
-        <button onClick={onReservationChangeHandler}>되돌아가기</button>
+        <button
+          style={{ cursor: "pointer" }}
+          onClick={onReservationChangeHandler}
+        >
+          되돌아가기
+        </button>
       </div>
     </div>
   );

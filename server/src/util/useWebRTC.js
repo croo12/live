@@ -64,12 +64,12 @@ const useWebRTC = ({
       constraints = {
         audio: true,
         video: {
-          mandatory: {
-            width: 1920,
-            height: 1080,
-            maxFrameRate: 30,
-            minFrameRate: 10,
-          },
+          // mandatory: {
+          //   width: 1920,
+          //   height: 1080,
+          //   maxFrameRate: 30,
+          //   minFrameRate: 10,
+          // },
         },
       };
     }
@@ -94,9 +94,8 @@ const useWebRTC = ({
   return {
     //상대가 연결되었습니다
     onNewParticipant(request) {
-      console.log('누가 왔고 무슨 요청인가요 이게', request);
-      if(! request.data)
-        receiveVideo(request.name);
+      console.log("누가 왔고 무슨 요청인가요 이게", request);
+      if (!request.data) receiveVideo(request.name);
     },
 
     //비디오가 온다네
@@ -117,16 +116,16 @@ const useWebRTC = ({
 
       const constraints = {
         audio: true,
-        video: isRealtor
-          ? {
-              mandatory: {
-                width: 1920,
-                height: 1080,
-                maxFrameRate: 30,
-                minFrameRate: 10,
-              },
-            }
-          : false,
+        video: isRealtor,
+        // ? {
+        //     mandatory: {
+        //       width: 1920,
+        //       height: 1080,
+        //       maxFrameRate: 30,
+        //       minFrameRate: 10,
+        //     },
+        //   }
+        // : false,
       };
 
       const participant = new Participant(name, sendMessage);
