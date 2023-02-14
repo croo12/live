@@ -1,22 +1,33 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import classes from "./MyPageRealtorContract.module.scss";
 import ListBox from "../../UI/ListBox";
 import ContractCardContent from "../ContractCardContent";
+import { getContractList } from "../../apis/ContractApis";
+import { useAuth } from "../common/AuthProtector";
 
-const data = [
-  "전체 계약",
-  "대기중 계약",
-  "진행중 계약",
-  "완료된 계약",
-  "취소된 계약",
-];
+const data = ["대기중 계약", "진행중 계약", "완료된 계약"];
 
 const MyPageRealtorContract = () => {
-  const [tabActive, setTabActive] = useState(0);
+  const [contractItem, setContractItem] = useState([]);
+  const [currentTab, setCurrentTab] = useState(0);
+  const { userInfo } = useAuth();
 
-  const toggleActive = (e) => {
-    setTabActive(Number.parseInt(e.target.value));
+  useEffect(() => {
+    const response = async () => {
+      const contractList = await getContractList(currentTab);
+
+      const result = contractList.data.map((item) => {
+        return { ...item, status: currentTab, isRealtor: userInfo.isRealtor };
+      });
+
+      setContractItem(result);
+    };
+
+    response();
+  }, [currentTab]);
+
+  const tabChangeHandler = (e) => {
+    setCurrentTab(Number.parseInt(e.target.value));
   };
 
   return (
@@ -27,63 +38,28 @@ const MyPageRealtorContract = () => {
             <div className={classes.inner}>
               <div>
                 <h3>계약 관리</h3>
+
                 <span>
-                  {data.map((item, idx) => {
+                  {data.map((title, index) => {
                     return (
                       <button
-                        key={idx}
-                        value={idx}
-                        className={`${classes.btn} ${
-                          idx === tabActive ? classes.active : ""
-                        }`}
-                        onClick={toggleActive}
+                        key={index}
+                        value={index}
+                        className={`${classes.btn} ${index === currentTab ? classes.active : ""}`}
+                        onClick={tabChangeHandler}
                       >
-                        {item}
+                        {title}
                       </button>
                     );
                   })}
                 </span>
+
                 <div className={classes.consultingList}>
-                  {tabActive === 0 && (
-                    <div>
-                      <p>전체 계약</p>
-                      <ListBox dataArray={[0, 1]} direction={false}>
-                        <ContractCardContent tabActive={tabActive} />
-                      </ListBox>
-                    </div>
-                  )}
-                  {tabActive === 1 && (
-                    <div>
-                      <p>대기중 계약</p>
-                      <ListBox dataArray={[0, 1]} direction={false}>
-                        <ContractCardContent tabActive={tabActive} />
-                      </ListBox>
-                    </div>
-                  )}
-                  {tabActive === 2 && (
-                    <div>
-                      <p>진행중 계약</p>
-                      <ListBox dataArray={[0, 1]} direction={false}>
-                        <ContractCardContent tabActive={tabActive} />
-                      </ListBox>
-                    </div>
-                  )}
-                  {tabActive === 3 && (
-                    <div>
-                      <p>완료된 계약</p>
-                      <ListBox dataArray={[0, 1]} direction={false}>
-                        <ContractCardContent tabActive={tabActive} />
-                      </ListBox>
-                    </div>
-                  )}
-                  {tabActive === 4 && (
-                    <div>
-                      <p>취소된 계약</p>
-                      <ListBox dataArray={[0, 1]} direction={false}>
-                        <ContractCardContent tabActive={tabActive} />
-                      </ListBox>
-                    </div>
-                  )}
+                  <div>
+                    <ListBox dataArray={contractItem} direction={false}>
+                      <ContractCardContent />
+                    </ListBox>
+                  </div>
                 </div>
               </div>
             </div>

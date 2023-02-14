@@ -15,7 +15,7 @@ const HouseModify = () => {
   const [entrance, setEntrance] = useState(getLoaderData.entrance);
   const [heating, setHeating] = useState(getLoaderData.heating);
 
-  const realtorNo = useRef();
+  // const realtorNo = useRef();
   const buildingName = useRef();
   const deposit = useRef();
   const description = useRef();
@@ -165,10 +165,13 @@ const HouseModify = () => {
       files: [...images], // 새로 추가되는 사진 목록
     });
 
-    if (response === "success") {
-      alert("등록이 완료되었습니다.");
-      navigate("/house");
+    if (response.result === "fail") {
+      alert(response.message);
+    } else {
+      alert("수정이 완료되었습니다.");
     }
+
+    navigate("/house");
   };
 
   const inputNumBlurHandler = (event) => {
@@ -252,27 +255,45 @@ const HouseModify = () => {
   console.log(getLoaderData);
 
   useEffect(() => {
-    realtorNo.value = getLoaderData.realtorNo;
+    // realtorNo.value = getLoaderData.realtorNo;
     buildingName.current.value = getLoaderData.house.buildingName;
-    deposit.current.value = getLoaderData.deposit;
+    deposit.current.value = getLoaderData.deposit
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     description.current.value = getLoaderData.description;
     itemNo.value = getLoaderData.itemNo;
-    maintenanceFee.current.value = getLoaderData.maintenanceFee;
+    maintenanceFee.current.value = getLoaderData.maintenanceFee
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     moveInDate.current.value = getLoaderData.moveInDate;
-    rent.current.value = getLoaderData.rent;
+    rent.current.value = getLoaderData.rent
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     address.current.value = getLoaderData.house.address;
     addressDetail.current.value = getLoaderData.house.addressDetail;
-    bathroom.current.value = getLoaderData.house.bathroom;
+    bathroom.current.value = getLoaderData.house.bathroom
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     completionYear.current.value = getLoaderData.house.completionYear;
     exclusivePrivateArea.current.value =
-      getLoaderData.house.exclusivePrivateArea;
-    floor.current.value = getLoaderData.house.floor;
+      getLoaderData.house.exclusivePrivateArea
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    floor.current.value = getLoaderData.house.floor
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     contracted.current.value = getLoaderData.house.contracted;
     purpose.current.value = getLoaderData.house.purpose;
-    room.current.value = getLoaderData.house.room;
-    supplyArea.current.value = getLoaderData.house.supplyArea;
-    totalFloor.current.value = getLoaderData.house.totalFloor;
+    room.current.value = getLoaderData.house.room
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    supplyArea.current.value = getLoaderData.house.supplyArea
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    totalFloor.current.value = getLoaderData.house.totalFloor
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     dong.value = getLoaderData.house.dong;
     gugun.value = getLoaderData.house.gugun;
     houseNo.value = getLoaderData.house.houseNo;

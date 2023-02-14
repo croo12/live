@@ -1,17 +1,21 @@
-import sample from "../assets/image/sample.jpg";
 import classes from "./CarouselData.module.scss";
 
-const CarouselData = ({ data }) => {
-  // console.log(data);
+const CarouselData = ({ data, image, room, name, area, deposit, rent }) => {
   return (
     <div className={classes.carouseldata}>
-      <img src={sample} alt="test" className={classes.upImg}></img>
+      <img src={image} alt="test" className={classes.upImg}></img>
       <div className={classes.downDesc}>
         <p>
-          <strong>월세 200/30</strong>
+          <strong>
+            월세 {deposit}/{rent}
+          </strong>
         </p>
-        <p>분리형 원룸</p>
-        <p>한마을 주택</p>
+        <div className={classes.downDescInfo}>
+          <p>
+            {room} {area}
+          </p>
+          <p>{name}</p>
+        </div>
       </div>
     </div>
   );

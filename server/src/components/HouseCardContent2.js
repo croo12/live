@@ -1,21 +1,42 @@
 import classes from "./HouseCardContent2.module.scss";
-import sample from "../assets/image/sample.jpg";
+import { useNavigate } from "react-router-dom";
 
-const HouseCardContent2 = () => {
+const HouseCardContent2 = ({
+  address,
+  addressDetail,
+  buildingName,
+  deposit,
+  description,
+  imageSrc,
+  maintenanceFee,
+  rent,
+  consultingNo,
+  exclusivePrivateArea,
+  itemNo
+}) => {
+  const navigation = useNavigate();
+  const onContractHandler = () => {
+    navigation(`/contract/user-contract/${itemNo}`);
+  };
   return (
     <>
       <div className={classes.HouseCardContent2}>
         <div className={classes.houseContent}>
           <div className={classes.leftContent}>
-            <img src={sample}></img>
+            <img src={imageSrc}></img>
+            <button onClick={onContractHandler}>계약하기</button>
           </div>
           <div className={classes.rightContent}>
             <p>원룸</p>
-            <h2>월세 1,000/49</h2>
+            <p>{buildingName}</p>
+            <h2>월세 {deposit}/{rent}</h2>
             <p>
-              방 1.29㎡ . 관리비 없음
-              <br /> 대전 서구 도산로 253
-              <br /> 여유있는 면적 오픈형/ 반려동물과 함께...
+              방 {exclusivePrivateArea}㎡ . 관리비 {
+                maintenanceFee === 0 ? ("없음") : (maintenanceFee)
+              }
+              <br /> {address} 
+              <br /> {addressDetail}
+              <br /> {description}
             </p>
           </div>
         </div>

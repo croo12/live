@@ -54,8 +54,10 @@ export const findHouseByAddress = async (data) => {
 };
 
 export const getHouseByItemNo = async (data) => {
+  const headers = getAuthHeader();
+
   const getData = async () => {
-    const response = await axiosInstance.get(`/items/${data}`);
+    const response = await axiosInstance.get(`/items/${data}`, { headers });
 
     return response.data;
   };
@@ -70,14 +72,10 @@ export const getHouseByItemNo = async (data) => {
 export const modifyHouseData = async (data) => {
   const formData = new FormData();
 
-  console.log(data.files, data.jsonData.itemImages);
-
   formData.append(
     "itemUpdateRequest",
     new Blob([JSON.stringify(data.jsonData)], { type: "application/json" })
   );
-
-  console.log(data);
 
   data.files.forEach((element) => {
     formData.append("files", element);
@@ -86,7 +84,6 @@ export const modifyHouseData = async (data) => {
   const headers = getAuthHeader();
 
   const sendRequest = async () => {
-    // 요청보낼 떄 URI {itemNo} 굳이 넘겨줘야 되나? 필요가 있음?????
     const response = await axiosInstance.put(
       `/items/${data.jsonData.itemNo}`,
       formData,
@@ -98,14 +95,39 @@ export const modifyHouseData = async (data) => {
       }
     );
 
-    console.log(response);
-
-    return response.data.result;
+    return response.data;
   };
 
   try {
     const response = await sendRequest();
+
+    return response;
   } catch (error) {
     alert("수정에 실패했습니다.");
   }
+};
+
+export const getHouseListByRealtorNo = () => {
+  // items/realtors/
+};
+
+
+
+export const getItemListBySearch = async (data) => {
+  let response = [];
+
+  const headers = getAuthHeader();
+
+  await axiosInstance
+    .post(`items/regions`, data, {
+      headers,
+    })
+    .then((res) => {
+      console.log(res);
+      if (res) {
+        response = res.data.data;
+      }
+    });
+
+  return response;
 };

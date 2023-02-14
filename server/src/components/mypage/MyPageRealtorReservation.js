@@ -1,19 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import classes from "./MyPageRealtorReservation.module.scss";
 import ListBox from "../../UI/ListBox";
-import { DUMMY6 } from "../ReservationCardContent3";
+import { getReservationList } from "../../apis/reservationApis"
 import ReservationCardContent3 from "../ReservationCardContent3";
 import { Outlet } from "react-router-dom";
 
 const data = ["신청된 상담", "확정된 상담", "종료된 상담"];
 
 const MyPageRealtorReservation = () => {
-  const [reservationRealtor, setReservationRealtor] = useState(DUMMY6);
+  const [reservationRealtor, setReservationRealtor] = useState([]);
   const [tabActive, setTabActive] = useState(0);
 
-  const toggleActive = (e) => {
-    setTabActive(Number.parseInt(e.target.value));
+  useEffect(()=>{
+    async function fetchData() {
+      const result = await getReservationList(0);
+      setReservationRealtor(result.data);
+    }
+    fetchData();
+  }, []);
+
+
+  const toggleActive = async (e) => {
+    let num = Number.parseInt(e.target.value);
+    setTabActive(num);
+    const result = await getReservationList(num);
+    setReservationRealtor(result.data);
   };
 
   return (

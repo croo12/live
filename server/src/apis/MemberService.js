@@ -38,11 +38,9 @@ export const userLogout = async (dispatch) => {
 
   const headers = getAuthHeader();
 
-  await axiosInstance
-    .post("users/logout", undefined, { headers })
-    .then((res) => {
-      dispatch(userAction.logout());
-    });
+  await axiosInstance.post("users/logout", undefined, { headers }).then((res) => {
+    dispatch(userAction.logout());
+  });
 };
 
 //내 정보 줘
@@ -81,7 +79,7 @@ export const getUserInfo = async (accessToken) => {
 
         if (data.state === 200) {
           userInfo = data.data;
-          return userInfo
+          return userInfo;
         }
       });
   }
@@ -95,12 +93,13 @@ export const realtorLogin = async (data, dispatch) => {
     refreshToken: null,
   };
 
-  await axiosInstance.post(`realtors/login`, data).then(({ data }) => {
+  await axiosInstance.post(`realtors/login`, data).then((res) => {
+    const data = res.data;
     if (data.state === 200) {
       result = { ...result, ...data.data };
       dispatch(userAction.login(result));
     } else {
-      console.log(data);
+      console.log(res);
     }
   });
 
@@ -152,11 +151,9 @@ export const realtorLogout = async (dispatch) => {
 
   const headers = getAuthHeader();
 
-  await axiosInstance
-    .post("realtors/logout", undefined, { headers })
-    .then((res) => {
-      dispatch(userAction.logout());
-    });
+  await axiosInstance.post("realtors/logout", undefined, { headers }).then((res) => {
+    dispatch(userAction.logout());
+  });
 };
 
 // export const logout = async () => {
@@ -176,3 +173,14 @@ export const realtorLogout = async (dispatch) => {
 //     });
 //   }
 // };
+
+export const realtorRank = async (orderBy) => {
+  let rankInfo = {};
+  await axiosInstance.get(`realtors/popular?orderBy=${orderBy}`).then(({ data }) => {
+    if (data.state === 200) {
+      rankInfo = data.data;
+      console.log(rankInfo);
+    }
+  });
+  return rankInfo;
+};

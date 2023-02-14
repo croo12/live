@@ -20,9 +20,7 @@ const MainContentLeftBox = () => {
       </p>
       <br />
       <div className={classes.searchBox}>
-        <strong style={{ textAlign: "left", fontSize: "1.3rem" }}>
-          매물 평균가
-        </strong>
+        <strong style={{ textAlign: "left", fontSize: "1.1rem" }}>매물 평균가</strong>
         <MainContentInputBox />
         <MainContentResult />
       </div>

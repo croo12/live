@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { getHouseByItemNo } from "../apis/houseApis";
 import { houseActions } from "../store/house-slice";
 import Modal from "../UI/Modal";
+import { useAuth } from "./common/AuthProtector";
 
 const HouseDetailCom = (props) => {
   const [houseInfo, setHouseInfo] = useState();
@@ -20,6 +21,8 @@ const HouseDetailCom = (props) => {
   const [errMessage, setErrMessage] = useState("Loading...");
 
   const navigate = useNavigate();
+
+  const { userInfo } = useAuth();
 
   //예약 아이템 추가하기
   const dispatch = useDispatch();
@@ -109,6 +112,7 @@ const HouseDetailCom = (props) => {
                 </div>
 
                 <div className={classes.imageButtonBox}>
+                  <div>.</div>
                   <button onClick={previewModalHandler}>
                     <div>
                       <svg fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -160,25 +164,43 @@ const HouseDetailCom = (props) => {
                       만원
                     </p>
                   </div>
-                  {/* <div className={classes.description}>
-              <pre>
-              {`😀 행복한 집 😀
-              
-              안녕하세요 .
-              
-              꿀 매물 해피하우스 소개드립니당.
-              
-              상담신청해주세용!`}
-              </pre>
-            </div> */}
                 </div>
                 <div className={classes.controlButtonBox}>
-                  유저면
-                  <button onClick={()=>{dispatch(reservedItemAction.addItem(houseInfo))}}>담기</button>
-                  <button>계약</button>
-                  중개사면
-                  <button>수정</button>
-                  <button>삭제</button>
+                  {userInfo.isRealtor === true ? (
+                    <>
+                      <button
+                        className={classes.modifyButton}
+                        onClick={() => {
+                          navigate(`/house/modify/${houseInfo.itemNo}`);
+                        }}
+                      >
+                        수 정
+                      </button>
+                    </>
+                  ) : userInfo.isRealtor === false ? (
+                    <>
+                      <button
+                        className={classes.pickButton}
+                        onClick={() =>
+                          dispatch(reservedItemAction.addItem(houseInfo))
+                        }
+                      >
+                        담 기
+                      </button>
+                      <button
+                        className={classes.contractButton}
+                        onClick={() => {
+                          navigate(
+                            `/contract/user-contract/${houseInfo.itemNo}`
+                          );
+                        }}
+                      >
+                        계 약
+                      </button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
 
@@ -323,9 +345,8 @@ const HouseDetailCom = (props) => {
               <div className={classes.optionInfo}>
                 <h3>옵션 정보</h3>
                 <div>
-                  {/* 4개만 우선적으로 보여주고... 그담 나머지 보여주는데... 어떻게 아이콘이랑 이름이랑 매칭시키지..?
-                   */}
                   {options.slice(0, 6).map((option) => {
+                    console.log(option);
                     if (option[0] === "bed") {
                       return (
                         <div className={classes.optionBox} key={option[0]}>
@@ -690,16 +711,7 @@ const HouseDetailCom = (props) => {
               <div className={classes.detailDesc}>
                 <h3>상세 설명</h3>
                 <div>
-                  <pre>
-                    {`😀 행복한 집 😀
-
-안녕하세요 .
-
-꿀 매물 해피하우스 소개드립니당.
-
-상담신청해주세용!`}
-                    {houseInfo.description}
-                  </pre>
+                  <pre>{houseInfo.description}</pre>
                 </div>
               </div>
 

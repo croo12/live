@@ -6,8 +6,8 @@ import { TfiWrite } from "react-icons/tfi";
 
 import classes from "./MyPageUser.module.scss";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { useAuth } from "../common/AuthProtector";
 import { getUserInfo } from "../../apis/MemberService";
-
 import sample from "../../assets/image/sample.jpg";
 
 const MyPageUser = () => {
@@ -18,6 +18,7 @@ const MyPageUser = () => {
   };
 
   const [btnActive, setBtnActive] = useState(0);
+  const { userInfo } = useAuth();
 
   const recordOnClickHandler = () => {
     setBtnActive(1);
@@ -36,14 +37,9 @@ const MyPageUser = () => {
     navigate("/mypage/user/user-reservation");
   };
 
-  const [num, setNum] = useState(0);
-  const userInfo = useLoaderData();
-
   console.log(userInfo);
 
-  if (!userInfo) {
-    return <div> 아 시발 뭐임 </div>;
-  }
+  const [num, setNum] = useState(0);
 
   return (
     <>
@@ -140,15 +136,6 @@ const MyPageUser = () => {
       <Outlet />
     </>
   );
-};
-
-export const myPageUserLoader = async () => {
-  const response = await getUserInfo();
-
-  console.log(response);
-
-  if (response) return response;
-  else return null;
 };
 
 export default MyPageUser;

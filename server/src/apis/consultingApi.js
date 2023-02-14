@@ -30,3 +30,24 @@ export const getConsultingDetail = async (consultingNo) => {
 
   return result;
 };
+
+export const registConsultingItems = (consultingNo, data) => {
+  const headers = getAuthHeader();
+
+  console.log(consultingNo, data);
+  axiosInstance.post(`consultings/${consultingNo}/items`, data, {
+    headers,
+  });
+};
+
+export const registConsultingRoomLink = async (consultingNo, link) => {
+  const headers = getAuthHeader();
+  axiosInstance
+    .post(`/consultings/${consultingNo}`, { link }, { headers })
+    .then((res) => {
+      console.log(`가 임마`, res);
+    })
+    .catch((err) => {
+      err;
+    });
+};
