@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ContractInfo from "./ContractInfo";
 import ContractForSale from "./ContractForSale";
 import ContractTenantInfo from "./ContractTenantInfo";
@@ -20,14 +20,28 @@ const ContractPageUser = () => {
   const [tenantInfo, setTeanatInfo] = useState({
     address: "",
     addressDetail: "",
-    age: "",
+    age: 0,
   });
 
-  const [requireInfo, setRequireInfo] = useState({});
+  const [requireInfo, setRequireInfo] = useState({
+    numberOfResidents: "",
+    specialContract: "",
+  });
 
-  // console.log(data);
-  // console.log(forSaleInfo);
-  console.log(tenantInfo);
+  const passInfo = {
+    userTermOfContract: Number(forSaleInfo.userTermOfContract),
+    userMoveOnDate: forSaleInfo.userMoveOnDate,
+    address: tenantInfo.address,
+    addressDetail: tenantInfo.addressDetail,
+    age: Number(tenantInfo.age),
+    numberOfResidents: Number(requireInfo.numberOfResidents),
+    specialContract: requireInfo.specialContract,
+    deposit: data.data.itemInfo.deposit,
+    rent: data.data.itemInfo.rent,
+    realtorNo: data.data.realtorInfo.realtorNo,
+    userNo: data.data.userInfo.userNo,
+    itemNo: data.data.itemInfo.itemNo,
+  };
 
   return (
     <>
@@ -47,17 +61,17 @@ const ContractPageUser = () => {
         />
       </section>
       <section>
-        <ContractRequireInfo />
+        <ContractRequireInfo fx={setRequireInfo} />
       </section>
       <section>
-        <ContractExpectedCost />
+        <ContractExpectedCost passInfo={passInfo} />
       </section>
     </>
   );
 };
 
-export const loader = async () => {
-  const itemNo = 1;
+export const loader = async ({ params }) => {
+  const itemNo = params.itemNo;
   const result = await getContractInfoByItemNo(itemNo);
 
   return result;

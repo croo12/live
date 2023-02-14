@@ -43,7 +43,6 @@ const ContractTenantInfo = (props) => {
     };
 
     props.fx(tenantInfo);
-    console.log(tenantInfo);
   };
 
   return (
@@ -56,7 +55,7 @@ const ContractTenantInfo = (props) => {
           />
         </Modal>
       )}
-      <form ref={formData} onSubmit={insertTenantInfo}>
+      <form ref={formData}>
         <div className={classes.tenantInfo}>
           <div className={classes.inner}>
             <div className={classes.tenantInfoContent}>
@@ -73,23 +72,22 @@ const ContractTenantInfo = (props) => {
                 </div>
                 <div className={classes.contractorGender}>
                   <strong>성별</strong>{" "}
-                  <div className={classes.genderBox}>
-                    <input defaultValue={UserInfo.userGender} />
-                  </div>
-                </div>
-                <div className={classes.contractorAge}>
-                  <label htmlFor="age">나이</label>{" "}
-                  <input type="text" id="age" name="age"></input>
+                  <input defaultValue={UserInfo.userGender} />
                 </div>
                 <div className={classes.contractorAddress}>
-                  <label htmlFor="address">실거주주소</label>{" "}
+                  <strong>실거주주소</strong>{" "}
                   <div className={classes.searchAddressBox}>
                     <div className={classes.searchAddress}>
-                      <input type="text" id="address" name="address"></input>
+                      <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        onChange={insertTenantInfo}
+                      ></input>
+                      <button type="button" onClick={searchAddressHandler}>
+                        주소 검색
+                      </button>
                     </div>
-                    <button type="button" onClick={searchAddressHandler}>
-                      주소 검색
-                    </button>
                     <div className={classes.detailAdress}>
                       <label htmlFor="detailAddress"></label>
                       <input
@@ -97,16 +95,25 @@ const ContractTenantInfo = (props) => {
                         type="text"
                         id="addressDetail"
                         name="addressDetail"
+                        onChange={insertTenantInfo}
                       ></input>
                     </div>
                   </div>
+                </div>
+                <div className={classes.contractorAge}>
+                  <strong>나이</strong>{" "}
+                  <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    onChange={insertTenantInfo}
+                  ></input>
                 </div>
               </div>
             </div>
             <hr />
           </div>
         </div>
-        <button type="submit">입력</button>
       </form>
     </>
   );
