@@ -7,8 +7,6 @@ export const getConsultingList = async (situation) => {
   await axiosInstance
     .get("consultings", { params: { situation }, headers })
     .then((res) => {
-      console.log(res);
-
       result = res;
     })
     .catch((err) => console.error(err));
@@ -23,7 +21,6 @@ export const getConsultingDetail = async (consultingNo) => {
   await axiosInstance
     .get(`consultings/${consultingNo}`, { headers })
     .then((res) => {
-      console.log(res);
       result = res.data;
     })
     .catch((err) => console.error(err));
@@ -33,8 +30,6 @@ export const getConsultingDetail = async (consultingNo) => {
 
 export const registConsultingItems = (consultingNo, data) => {
   const headers = getAuthHeader();
-
-  console.log(consultingNo, data);
   axiosInstance.post(`consultings/${consultingNo}/items`, data, {
     headers,
   });
