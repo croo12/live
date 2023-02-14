@@ -15,7 +15,7 @@ export const getAuthHeader = () => {
 };
 
 const axiosInstance = _axios.create({
-  baseURL: `http://localhost:8080/`,
+  baseURL: `https://live-live.store:8080/`,
   "Content-Type": "application/json",
   headers: { timeout: 2000 },
 });
