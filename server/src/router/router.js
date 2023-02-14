@@ -43,7 +43,7 @@ import ReservationPage, { sidoLoader } from "../pages/ReservationPage";
 import SignUpPageRealtor from "../components/SignUpPageRealtor";
 import SignUpPageUser from "../components/SignUpPageUser";
 import SignUpPage from "../pages/SignUpPage";
-import AlertPage, { alertLoader } from "../pages/AlertPage";
+import AlertPage from "../pages/AlertPage";
 import ContractPage from "../pages/ContractPage";
 import { loader as houseModifyLoader } from "../components/house/HouseModify";
 import { ProtectedRouter } from "../components/common/AuthProtector";
@@ -165,7 +165,6 @@ const router = createBrowserRouter(
             <AlertPage />
           </ProtectedRouter>
         }
-        loader={alertLoader}
       ></Route>
       <Route path="contract" element={<ContractPage />}>
         <Route path="" element={<Navigate replace to="user-contract" />} />
