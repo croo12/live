@@ -30,14 +30,14 @@ public class NoticeService {
         List<NoticeResponse.Notices> list;
         List<Notice> notices;
         if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            notices = noticeRepository.findByUsers(
+            notices = noticeRepository.findByUsersOrderByCreatedDate(
                 usersRepository.findById(user.getUsername()).get());
         } else {
-            notices = noticeRepository.findByRealtor(
+            notices = noticeRepository.findByRealtorOrderByCreatedDate(
                 realtorRepository.findByBusinessNumber(user.getUsername()).get());
         }
         list = notices.stream().map(NoticeResponse.Notices::toEntity)
             .collect(Collectors.toList());
-        return response.success(list, "메인페이지의 공인중개사 목록을 조회하였습니다.", HttpStatus.OK);
+        return response.success(list, "알람 목록을 조회하였습니다.", HttpStatus.OK);
     }
 }
