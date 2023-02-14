@@ -1,15 +1,22 @@
 import classes from "./AlertPage.module.scss";
-import { DUMMY3 } from "../components/AlarmCardContent";
 import { getAlertList } from "../apis/noticeApis";
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
 const AlertPage = () => {
-  const alertList = useLoaderData();
+  const [notice, setNotice] = useState([]);
   const userInfo = useSelector((state) => state.user.userInfo);
   const navi = useNavigate();
 
-  console.log(userInfo);
+  useEffect(()=>{
+    async function fetchData() {
+      const alertList = await getAlertList();
+      setNotice(alertList);
+    }
+    fetchData();
+  }, []);
+  
 
   if (!userInfo.auth)
     return (
@@ -29,16 +36,15 @@ const AlertPage = () => {
                     </tr>
                   </thead>
                   <tbody className={classes.tableBody}>
-                    {DUMMY3.map((item, idx) => {
+                    {notice.map((item, idx) => {
                       return (
                         <tr key={idx}>
                           <td>
-                            <img src={item.image} />
-                            <span>{item.writer}</span>
+                            <span>{item.noticeWriter}</span>
                           </td>
-                          <td>{item.date}</td>
-                          <td>{item.time}</td>
-                          <td>{item.content}</td>
+                          <td>{item.noticeDate.substring(0, 10)}</td>
+                          <td>{item.noticeDate.substring(11)}</td>
+                          <td>{item.noticeInfo}</td>
                         </tr>
                       );
                     })}
@@ -53,20 +59,3 @@ const AlertPage = () => {
 };
 
 export default AlertPage;
-
-export const alertLoader = async () => {
-  try {
-    const alertList = await getAlertList();
-    console.log(alertList);
-
-    if (alertList.data) {
-      return alertList;
-    } else {
-      console.log("야 나 여기야");
-      return null;
-    }
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
