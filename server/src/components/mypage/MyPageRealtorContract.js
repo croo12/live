@@ -45,7 +45,9 @@ const MyPageRealtorContract = () => {
                       <button
                         key={index}
                         value={index}
-                        className={`${classes.btn} ${index === currentTab ? classes.active : ""}`}
+                        className={`${classes.btn} ${
+                          index === currentTab ? classes.active : ""
+                        }`}
                         onClick={tabChangeHandler}
                       >
                         {title}
@@ -56,9 +58,15 @@ const MyPageRealtorContract = () => {
 
                 <div className={classes.consultingList}>
                   <div>
-                    <ListBox dataArray={contractItem} direction={false}>
-                      <ContractCardContent />
-                    </ListBox>
+                    {contractItem.length !== 0 ? (
+                      <ListBox dataArray={contractItem} direction={false}>
+                        <ContractCardContent />
+                      </ListBox>
+                    ) : (
+                      <li>
+                        <p> 해당 내역은 존재하지 않습니다.</p>
+                      </li>
+                    )}
                   </div>
                 </div>
               </div>
