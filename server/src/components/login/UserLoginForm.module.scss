@@ -6,6 +6,10 @@
     width: 100%;
   }
 
+  @media (max-width: 480px) {
+    padding: 28px 40px;
+  }
+
   .formInner {
     .inputBox {
       margin-bottom: 22px;
@@ -25,6 +29,19 @@
         border: 1px solid #d9d9d9;
         padding: 4px 20px;
         border-radius: 6px;
+      }
+
+      @media (max-width: 480px) {
+        margin-bottom: 12px;
+        label {
+          font-size: 16px;
+          height: 32px;
+        }
+        input {
+          height: 36px;
+          font-size: 13px;
+          padding: 4px 12px;
+        }
       }
     }
   }
@@ -60,6 +77,26 @@
         color: #555555;
       }
     }
+
+    @media (max-width: 480px) {
+      height: 48px;
+
+      .keepLogin {
+        input {
+          margin-right: 8px;
+          width: 12px;
+          height: 16px;
+        }
+
+        label {
+          font-size: 11px;
+        }
+      }
+
+      .connList {
+        font-size: 11px;
+      }
+    }
   }
 
   .formBtn {
@@ -77,6 +114,11 @@
       color: #fafafa;
       transition: all 0.2s ease;
       cursor: pointer;
+
+      @media (max-width: 480px) {
+        height: 36px;
+        font-size: 16px;
+      }
     }
   }
 }
