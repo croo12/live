@@ -93,6 +93,7 @@ public class RealtorRequest {
         private String password;
         private String description;
         private String email;
+        private String imageSrc;
     }
 
     @Getter

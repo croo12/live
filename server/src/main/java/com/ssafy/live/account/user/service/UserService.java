@@ -130,10 +130,16 @@ public class UserService {
         Users users = usersRepository.findById(user.getUsername())
             .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         String preImg = users.getImageSrc();
-        if (file != null) {
+        String imgSrc = null;
+        System.out.println(file+" "+request.getImageSrc());
+        if (file != null) { // 등록할 파일이 있으면
             s3Service.deleteFile(preImg);
+            imgSrc = s3Service.upload(file);
+        } else if(request.getImageSrc() == null){ // 다 삭제
+            s3Service.deleteFile(preImg);
+        } else { // 그대로
+            imgSrc = request.getImageSrc();
         }
-        String imgSrc = s3Service.upload(file);
         users.updateUser(request, passwordEncoder.encode(request.getPassword()), imgSrc);
         usersRepository.save(users);
         UserResponse.Update updateUser = UserResponse.Update.toDto(users);

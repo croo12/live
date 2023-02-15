@@ -35,7 +35,7 @@ public class RealtorResponse {
         private String description;
         private String imageSrc;
 
-        public static RealtorResponse.UpdateRealtor toEntity(Realtor realtor) {
+        public static RealtorResponse.UpdateRealtor toDTO(Realtor realtor) {
             return UpdateRealtor.builder()
                 .name(realtor.getName())
                 .email(realtor.getEmail())
