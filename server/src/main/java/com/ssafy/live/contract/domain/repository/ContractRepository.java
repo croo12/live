@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Long> {
 
-    List<Contract> findByContractStateAndUsers(ContractStatus status, Users users);
+    List<Contract> findByContractStateAndUsersOrderByCreatedDateDesc(ContractStatus status, Users users);
 
-    List<Contract> findByContractStateAndRealtor(ContractStatus contractStatus, Realtor realtor);
+    List<Contract> findByContractStateAndRealtorOrderByCreatedDateDesc(ContractStatus contractStatus, Realtor realtor);
 }
