@@ -1,5 +1,7 @@
 package com.ssafy.live.consulting.service;
 
+import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_CONFIRMED;
+import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_PAST;
 import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_PROCESSING;
 import static com.ssafy.live.common.exception.ErrorCode.CONSULTING_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
@@ -156,7 +158,7 @@ public class ConsultingService {
         } else {
             writer = consulting.getUsers().getName();
         }
-        if (request.getStatus() == ConsultingStatus.CONSULTING_CONFIRMED.getValue()) {
+        if (request.getStatus() == CONSULTING_CONFIRMED.getValue()) {
             info = "예약이 확정되었습니다.";
             smsContent = SMSContent.CONSULTING_CONFIRMED;
         } else {
@@ -356,8 +358,8 @@ public class ConsultingService {
         LocalDateTime end = LocalDateTime.of(LocalDate.now(),
             LocalTime.of(23, 59, 59)); //오늘 23:59:59
 
-        List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusAndConsultingDateBetween(realtor.getNo(),
-            CONSULTING_PROCESSING.getValue(), start, end);
+        List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusBetweenAndConsultingDateBetween(realtor.getNo(),
+            CONSULTING_CONFIRMED, CONSULTING_PAST, start, end);
         List<ConsultingResponse.TodayConsulting> list = new ArrayList<>();
         consultingsList.stream().forEach(consulting -> {
             List<ConsultingItem> consultingItems = consulting.getConsultingItems();
