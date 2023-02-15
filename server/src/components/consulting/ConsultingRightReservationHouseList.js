@@ -29,7 +29,7 @@ const ConsultingRightReservationHouseList = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ maxHeight: "100%", overflow: "scroll" }}>
       <ListBox toStart={true} dataArray={dataArray}>
         <ConsultingHouseCardContent
           clickHandler={clickHandler}
@@ -38,6 +38,12 @@ const ConsultingRightReservationHouseList = () => {
       </ListBox>
       {userInfo.isRealtor && (
         <button
+          style={{
+            width: "100%",
+            height: "2rem",
+            backgroundColor: "green",
+            borderRadius: "8px",
+          }}
           onClick={() => {
             statusChangeHandler(STATUS.REALTOR_END_CALL);
           }}

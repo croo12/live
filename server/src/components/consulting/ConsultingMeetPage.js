@@ -80,9 +80,8 @@ const ConsultingMeetPage = ({
         break;
 
       case STATUS.REALTOR_END_CALL:
-        socket.current.send(
-          JSON.stringify({ id: "closeRoom", room: sessionId })
-        );
+        console.log(socket);
+        socket.current.send(JSON.stringify({ id: "closeRoom" }));
         break;
 
       case STATUS.USER_ENTER:
