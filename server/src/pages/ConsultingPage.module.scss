@@ -62,18 +62,18 @@
       position: fixed;
       border-top-right-radius: 4vw;
       border-top-left-radius: 4vw;
-      top: 0;
+      bottom: 0;
       left: 0;
       right: 0;
       z-index: 3;
       width: 100%;
       max-width: 100%;
       color: white;
-      transform: translateY(90%);
+      // transform: translateY(90%);
 
       &.isActive {
         overflow-y: auto;
-        transform: translateY(40%);
+        transform: translateY(-70%);
       }
     }
   }
