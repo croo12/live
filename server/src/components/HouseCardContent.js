@@ -254,15 +254,6 @@ export const ContractHouseCardContent = (props) => {
     props.fx2(info);
   };
 
-  const [previewModal, setPreviewModal] = useState(false);
-
-  const previewModalHandler = (e) => {
-    e.preventDefault();
-    setPreviewModal(!previewModal);
-  };
-
-  console.log(forSale.houseImage.length);
-
   const carouselSettings = {
     dots: true,
     infinite: true,
@@ -359,5 +350,218 @@ export const ContractHouseCardContent = (props) => {
         </div>
       </form>
     </>
+  );
+};
+
+// 계약 정보 - 일반 회원
+
+export const ContractDetailUserCardContent = (props) => {
+  const forSale = props.ContractInfo;
+
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+    autoplay: false,
+    autoplaySpeed: 0,
+    draggable: false,
+    fade: true,
+    arrows: true,
+    customArrow: true,
+    vertical: false,
+    initialSlide: 0,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+    appendDots: true,
+  };
+
+  return (
+    <form>
+      <div className={classes.contractForSaleContent}>
+        <div className={classes.inner}>
+          <h2>매물 정보</h2>
+          <br />
+          <div className={classes.contractContent}>
+            <div className={classes.leftDesc}>
+              <p>매물번호 {forSale.houseNumber}</p>
+              <h4>{forSale.houseAddress}</h4>
+              <h4>{forSale.houseName}</h4>
+              <p>{forSale.houseArea}</p>
+              <p> {forSale.houseSupplyArea}㎡(전용 면적)</p>
+              <div className={classes.infoBoxList}>
+                <div className={classes.forSale}>
+                  <strong>매물가격</strong>{" "}
+                  <input
+                    type="text"
+                    value={
+                      "월세 " +
+                      forSale.houseDeposit +
+                      "/" +
+                      forSale.houseMonthlyFee
+                    }
+                    readOnly
+                  />
+                </div>
+                <div className={classes.extraFee}>
+                  <strong>추가 비용</strong>{" "}
+                  <input
+                    value={"관리비 " + forSale.houseExtraFee}
+                    readOnly
+                  ></input>
+                </div>
+                <div className={classes.term}>
+                  <strong>계약 기간</strong>
+                  <input value={forSale.termOfContract} readOnly></input>
+                </div>
+                <div className={classes.moveDate}>
+                  <strong>입주 희망일</strong>
+                  <input value={forSale.termOfContract} readOnly></input>
+                </div>
+              </div>
+            </div>
+            <div className={classes.rightImg}>
+              <div className={classes.imageContent}>
+                <div className={classes.imageBox}>
+                  <div className={classes.mainImage}>
+                    <img src={forSale.houseImage[0]}></img>
+                  </div>
+                  <div className={classes.subImage}>
+                    {forSale.houseImage.slice(1, 3).map((image, idx) => {
+                      return <img src={image} key={idx}></img>;
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </form>
+  );
+};
+
+// 계약 상세 정보(중개사 회원)
+
+export const ContractDetailRealtorCardContent = (props) => {
+  const forSale = props.ContractInfo;
+
+  const formData = useRef();
+
+  const insertInfo = (e) => {
+    e.preventDefault();
+    const info = {
+      deposit: formData.current.deposit.value,
+      rent: formData.current.rent.value,
+      mainteneceFee: formData.current.maintenanceFee.value,
+      termOfContract: formData.current.termOfContract.value,
+      moveOnDate: formData.current.moveOnDate.value,
+    };
+    props.fx2(info);
+  };
+
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+    autoplay: false,
+    autoplaySpeed: 0,
+    draggable: false,
+    fade: true,
+    arrows: true,
+    customArrow: true,
+    vertical: false,
+    initialSlide: 0,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+    appendDots: true,
+  };
+
+  return (
+    <form ref={formData}>
+      <div className={classes.contractForSaleContent}>
+        <div className={classes.inner}>
+          <h2>매물 정보</h2>
+          <br />
+          <div className={classes.contractContent}>
+            <div className={classes.leftDesc}>
+              <p>매물번호 {forSale.houseNumber}</p>
+              <h4>{forSale.houseAddress}</h4>
+              <h4>{forSale.houseName}</h4>
+              <p>{forSale.houseArea}</p>
+              <p> {forSale.houseSupplyArea}㎡(전용 면적)</p>
+              <div className={classes.infoBoxList}>
+                <div className={classes.forSale}>
+                  <strong>보증금</strong>{" "}
+                  <input
+                    placeholder="500(만원)"
+                    id="deposit"
+                    name="deposit"
+                    onChange={insertInfo}
+                  ></input>
+                  <strong>월세</strong>{" "}
+                  <input
+                    placeholder="30(만원)"
+                    id="rent"
+                    name="rent"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+                <div className={classes.extraFee}>
+                  <strong>관리비</strong>{" "}
+                  <input
+                    placeholder="10(만원)"
+                    id="rent"
+                    name="rent"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+                <div className={classes.term}>
+                  <strong>계약 기간</strong>
+                  <input
+                    placeholder="10(만원)"
+                    id="termOfContract"
+                    name="termOfContract"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+                <div className={classes.moveDate}>
+                  <strong>입주 희망일</strong>
+                  <input
+                    placeholder="2023-01-23"
+                    id="moveOnDate"
+                    name="moveOnDate"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+              </div>
+            </div>
+            <div className={classes.rightImg}>
+              <div className={classes.imageContent}>
+                <div className={classes.imageBox}>
+                  <div className={classes.mainImage}>
+                    <img src={forSale.houseImage[0]}></img>
+                  </div>
+                  <div className={classes.subImage}>
+                    {forSale.houseImage.slice(1, 3).map((image, idx) => {
+                      return <img src={image} key={idx}></img>;
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </form>
   );
 };

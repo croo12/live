@@ -1,4 +1,9 @@
-import { createBrowserRouter, createRoutesFromElements, Navigate, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Navigate,
+  Route,
+} from "react-router-dom";
 import App from "../App";
 import HouseDetail from "../components/HouseDetail";
 import HouseRegist from "../components/house/HouseRegist";
@@ -6,8 +11,12 @@ import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
 import MyPageUser from "../components/mypage/MyPageUser";
 //import { myReservationLoader } from "../components/mypage/MyReservation";
-import MyPageUserDetail, { userDetailInfoLoader } from "../components/mypage/MyPageUserDetail";
-import MyPageUserModify, { userInfoLoader } from "../components/mypage/MyPageUserModify";
+import MyPageUserDetail, {
+  userDetailInfoLoader,
+} from "../components/mypage/MyPageUserDetail";
+import MyPageUserModify, {
+  userInfoLoader,
+} from "../components/mypage/MyPageUserModify";
 import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
 import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
 import { loader as consultingUserLoader } from "../components/mypage/MyPageUserReservationDetail";
@@ -45,13 +54,14 @@ import ContractPage from "../pages/ContractPage";
 import { loader as houseModifyLoader } from "../components/house/HouseModify";
 import { ProtectedRouter } from "../components/common/AuthProtector";
 import ContractPageUser from "../components/contract/ContractPageUser";
-import ContractPageRealtor from "../components/contract/ContractPageRealtor";
+import ContractPageDetail from "../components/contract/ContractPageDetail";
 import ConsultingRightReservationList from "../components/consulting/ConsultingRightReservationList";
 import ConsultingRightReservationHouseList, {
   consultingDetailLoader,
 } from "../components/consulting/ConsultingRightReservationHouseList";
 import { loader as ContractUserLoader } from "../components/contract/ContractPageUser";
 import { realtorRank } from "../apis/MemberService";
+import { loader as ContractDetailLoader } from "../components/contract/ContractPageDetail";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -171,15 +181,15 @@ const router = createBrowserRouter(
         }
       ></Route>
       <Route path="contract" element={<ContractPage />}>
-        <Route path="" element={<Navigate replace to="user-contract" />} />
         <Route
           path="user-contract/:itemNo"
           element={<ContractPageUser />}
           loader={ContractUserLoader}
         ></Route>
         <Route
-          path="realtor-contract"
-          element={<ContractPageRealtor />}
+          path="contract-detail/:contractNo"
+          element={<ContractPageDetail />}
+          loader={ContractDetailLoader}
         ></Route>
       </Route>
     </Route>
