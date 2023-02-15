@@ -1,28 +1,27 @@
-.HouseCardContent2{
-    background-color: #FAFAFA;
+.HouseCardContent2 {
+  background-color: #fafafa;
 
-    .houseContent{
-        display: flex;
+  .houseContent {
+    display: flex;
 
-        .leftContent{
-            flex:1;
-            
-            img{
-                width:100%;
-                padding:3.5%;
-            }
-        }
+    .leftContent {
+      flex: 1;
 
-        .rightContent{
-            flex:1;
-            padding:5% 2% 2% 2%;
-            p{
-                padding:3% 0;
-            }
-
-            h2{
-            }
-        }
+      img {
+        width: 100%;
+        padding: 3.5%;
+      }
     }
 
+    .rightContent {
+      flex: 1;
+      padding: 5% 2% 2% 2%;
+      p {
+        padding: 3% 0;
+      }
+
+      h2 {
+      }
+    }
+  }
 }

@@ -3,7 +3,7 @@
   padding: 2em 1.5em 1em 1.5em;
   font-size: 0.8vw;
   text-align: right;
-  color: #FAFAFA;
+  color: #fafafa;
 
   &.isActive0 {
     background: linear-gradient(
@@ -180,7 +180,6 @@
       flex: 2.5;
 
       h3 {
-        
       }
 
       .realtorName {
@@ -225,14 +224,13 @@
   cursor: pointer;
 
   &.isActive {
-    border-width: 2px   ;
+    border-width: 2px;
     border-color: #30d08b;
   }
 
   display: flex;
 
   .leftImg {
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -249,23 +247,20 @@
   }
 
   .rightBox {
-
     flex: auto;
     width: calc(66%);
 
     h4 {
       > span {
         color: #ffcd1d;
-
       }
     }
 
-    .upCard{
-
+    .upCard {
       p {
         font-size: 1vw;
         color: rgba(112, 112, 112, 1);
-        
+
         > span {
           font-size: 1.4vw;
           font-weight: 700;
@@ -284,6 +279,4 @@
       }
     }
   }
-
-
 }
