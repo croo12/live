@@ -80,7 +80,7 @@ const ConsultingMeetPage = ({
         break;
 
       case STATUS.REALTOR_END_CALL:
-        console.log(socket);
+        console.log(`연결은 종료되었다....`);
         socket.current.send(JSON.stringify({ id: "closeRoom" }));
         break;
 

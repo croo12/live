@@ -5,12 +5,14 @@ import {
   getConsultingDetail,
   registConsultingRoomLink,
 } from "../../apis/consultingApi";
+import { useNavigate } from "react-router-dom";
 import { STATUS } from "../../pages/ConsultingPage";
 import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
 
 const ConsultingRightReservationHouseList = () => {
   const { clickHandler, detail, statusChangeHandler } = useOutletContext();
+  const navigation = useNavigate();
 
   const datas = useLoaderData();
   const params = useParams();
@@ -46,6 +48,7 @@ const ConsultingRightReservationHouseList = () => {
           }}
           onClick={() => {
             statusChangeHandler(STATUS.REALTOR_END_CALL);
+            navigation(`/consulting/${params.sessionId}`);
           }}
         >
           상담종료
