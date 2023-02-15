@@ -14,9 +14,6 @@ const MyPageRealtor = () => {
   };
 
   const { userInfo } = useAuth();
-
-  // console.log(userInfo);
-
   const [btnActive, setBtnActive] = useState(0);
 
   const reviewonClickHandler = () => {
@@ -31,6 +28,7 @@ const MyPageRealtor = () => {
     setBtnActive(3);
     navigate("/mypage/realtor/realtor-reservation");
   };
+
   return (
     <>
       <div className={classes.intro}>

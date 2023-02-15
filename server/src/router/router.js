@@ -11,12 +11,7 @@ import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
 import MyPageUser from "../components/mypage/MyPageUser";
 //import { myReservationLoader } from "../components/mypage/MyReservation";
-import MyPageUserDetail, {
-  userDetailInfoLoader,
-} from "../components/mypage/MyPageUserDetail";
-import MyPageUserModify, {
-  userInfoLoader,
-} from "../components/mypage/MyPageUserModify";
+import MyPageUserDetail, { userDetailInfoLoader } from "../components/mypage/MyPageUserDetail";
 import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
 import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
 import { loader as consultingUserLoader } from "../components/mypage/MyPageUserReservationDetail";
@@ -33,12 +28,7 @@ import MyPageRealtorReservation from "../components/mypage/MyPageRealtorReservat
 import MyPageRealtorReservationDetail, {
   realtorReservationLoader,
 } from "../components/mypage/MyPageRealtorReservationDetail";
-import MyPageRealtorDetail, {
-  realtorDetailInfoLoader,
-} from "../components/mypage/MyPageRealtorDetail";
-import MyPageRealtorModify, {
-  realtorInfoLoader,
-} from "../components/mypage/MyPageRealtorModify";
+import MyPageRealtorDetail, { realtorDetailInfoLoader } from "../components/mypage/MyPageRealtorDetail";
 import ConsultingPage from "../pages/ConsultingPage";
 import ErrorCommonPage from "../pages/ErrorCommonPage";
 import HousePage from "../pages/HousePage";
@@ -136,11 +126,6 @@ const router = createBrowserRouter(
           element={<MyPageUserDetail />}
           loader={userDetailInfoLoader}
         ></Route>
-        <Route
-          path="user-modify-info"
-          element={<MyPageUserModify />}
-          loader={userInfoLoader}
-        ></Route>
         <Route path="realtor" element={<MyPageRealtor />}>
           <Route
             path="realtor-review"
@@ -164,11 +149,6 @@ const router = createBrowserRouter(
           path="realtor-detail-info"
           element={<MyPageRealtorDetail />}
           loader={realtorDetailInfoLoader}
-        ></Route>
-        <Route
-          path="realtor-modify-info"
-          element={<MyPageRealtorModify />}
-          loader={realtorInfoLoader}
         ></Route>
       </Route>
 

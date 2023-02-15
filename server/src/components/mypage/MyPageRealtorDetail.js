@@ -1,17 +1,23 @@
-import { useLoaderData,useNavigate } from "react-router-dom";
-import classes from "./MyPageRealtorDetail.module.scss";
-import { useEffect } from "react";
-import { getRealtorInfo } from "../../apis/MemberService";
+import { useNavigate } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
 import axiosInstance, { getAuthHeader } from "../../util/axios";
+import { getRealtorInfo } from "../../apis/MemberService";
 import { useAuth } from "../common/AuthProtector";
 import { useDispatch } from "react-redux";
 import { userAction } from "../../store/user-slice";
+import ImageInput from "../common/ImageInput";
 import sample from "../../assets/image/sample.jpg";
+import classes from "./MyPageUserDetail.module.scss";
 
 const MyPageRealtorDetail = () => {
+  const formData = useRef();
   const navigate = useNavigate();
   const { doLogout } = useAuth();
   const dispatch = useDispatch();
+  const [realtorDetail, setRealtorDetail] = useState("");
+  const [profile, setProfile] = useState("");
+  const [previewProfile, setPreviewProfile] = useState("");
+  const [imageSrc, setImageSrc] = useState(null);
   const onQuitHandler = async () => {
     alert("정말로 탈퇴하시겠습니까?");
     try {
@@ -27,69 +33,198 @@ const MyPageRealtorDetail = () => {
     }
   };
 
-  const realtorDetail = useLoaderData();
-
+  //const realtorDetail = useLoaderData();
+  
   useEffect(()=>{
-    const data = {
-      id: realtorDetail.id,
-      name: realtorDetail.name,
-      isRealtor: true,
-      profile: realtorDetail.imageSrc,
-      score: realtorDetail.ratingScore,
-    };
-    dispatch(userAction.setInfo(data));
+    async function fetchData() {
+      const result = await getRealtorInfo(getAuthHeader());
+      setRealtorDetail(result);
+      if(result.imageSrc !== null) {
+        setPreviewProfile(result.imageSrc);
+        setImageSrc(result.imageSrc);
+      }
+    }
+    fetchData();
   }, []);
   
-  const onChangeHandler = () => {
-    navigate("/mypage/realtor-modify-info");
+
+  const profileImgHandler = (data) => {
+    setProfile(data);
   };
+  const deleteHandler = (data) => {
+    setProfile(data);
+    setImageSrc(null);
+  };
+
+  useEffect(() => {
+    if (!profile) {
+      setPreviewProfile(null);
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(profile);
+
+    reader.onload = () => {
+      const preview = reader.result;
+
+      setPreviewProfile(preview);
+    };
+  }, [profile]);
+
+  const onChangeUser = async (e) => {
+    e.preventDefault();
+
+    if(formData.current.realtorPass.value === "") {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+
+    const changeData = {
+      password: formData.current.realtorPass.value,
+      email: formData.current.realtorEmail.value,
+      phone: formData.current.realtorPhone.value,
+      description: formData.current.realtorDescription.value,
+      imageSrc : imageSrc
+    };
+
+    const frm = new FormData();
+
+    frm.append("file", profile);
+    frm.append(
+      "Update",
+      new Blob([JSON.stringify(changeData)], { type: "application/json" })
+    );
+
+    try {
+      const result = await axiosInstance.post("realtors/info", frm, {
+        headers: {
+          Authorization: getAuthHeader().Authorization,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (result) {
+        const data = {
+          id: realtorDetail.id,
+          name: realtorDetail.name,
+          isRealtor: true,
+          profile: result.data.data.imageSrc,
+          score: realtorDetail.score,
+        };
+        dispatch(userAction.setInfo(data));
+        navigate("/mypage/realtor");
+      }
+    } catch (error) {
+      console.error("중개사 정보 수정 과정에서 에러가 발생하였습니다.");
+      console.log(error);
+    }
+  };
+  
   return (
     <>
       {/* <MyPageRealtor /> */}
-      <div>
-        <div className={classes.viewPrivacy}>
-          <div className={classes.inner}>
-            <div className={classes.privacyContent}>
-              <div className={classes.privacyInfo}>
-                <div className={classes.privacyImg}>
-                <img alt="프로필" src={realtorDetail.imageSrc !== null ? realtorDetail.imageSrc : sample}></img>
-                </div>
-                <div className={classes.privacyDetail}>
-                  <div>
-                    <strong>이름</strong>
-                    <span>{realtorDetail.name}</span>
-                  </div>
-                  <div>
-                    <strong>사무소 주소</strong>
-                    <span>{realtorDetail.business_address}</span>
-                  </div>
-                  <div>
-                    <strong>이메일</strong>
-                    <span>{realtorDetail.email}</span>
-                  </div>
-                  <div>
-                    <strong>휴대폰 번호</strong>
-                    <span>{realtorDetail.phone}</span>
-                  </div>
-                  <div>
-                    <strong>소개글</strong>
-                    <span>{realtorDetail.description}</span>
-                  </div>
-                  <div>
-                    <strong>평가점수</strong>
-                    <span>{realtorDetail.ratingScore}</span>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <div className={classes.buttonItem}>
-                <button onClick={onQuitHandler}>회원탈퇴</button>
-                <button onClick={onChangeHandler}>정보수정</button>
-              </div>
+      <form onSubmit={onChangeUser} ref={formData}>
+      <div className={classes.detailUser} >
+      <div className={classes.detailFieldSet}>
+        <div className={classes.formInner}>
+          <div className={classes.profile}>
+          {previewProfile ? (
+                <img src={previewProfile} alt="User Profile" />
+              ) : (
+                <img src={sample} alt="Blank Profile" />
+              )}
+            <div>
+            <div className={classes.profileBtn}>
+            <ImageInput
+              setImage={profileImgHandler}
+              addButton={
+                previewProfile ? (
+                  <div className={classes.modBtn}>변경</div>
+                ) : (
+                  <div className={classes.modBtn}>프로필 등록</div>
+                )
+              }
+              delButton={
+                previewProfile ? (
+                  <div className={classes.delBtn} onClick={deleteHandler}>삭제</div>
+                ) : (
+                  ""
+                )
+              }
+            ></ImageInput>
+          </div>       
+            </div>
+          </div>
+          <div className={classes.inputBox}>
+            <label>이름</label>
+            <div className={classes.inputButton}>
+              <span>{realtorDetail.name}</span>
+            </div>
+          </div>
+          <div className={classes.inputBox}>
+            <label>중개사무소 주소</label>
+            <div className={classes.inputButton}>
+              <span>{realtorDetail.businessAddress}</span>
+            </div>
+          </div>
+          <div className={classes.inputBox}>
+            <label>비밀번호</label>
+            <div className={classes.inputButton}>
+              <input
+                type="text"
+                id="realtorPass"
+                name="realtorPass"
+                defaultValue={realtorDetail.password || ""}
+              ></input>
+            </div>
+          </div>
+          <div className={classes.inputBox}>
+            <label>이메일</label>
+            <div className={classes.inputButton}>
+              <input
+                type="text"
+                id="realtorEmail"
+                name="realtorEmail"
+                defaultValue={realtorDetail.email || ""}
+              ></input>
+            </div>
+          </div>
+          <div className={classes.inputBox}>
+            <label>전화번호 </label>
+            <div className={classes.inputButton}>
+              <input
+                type="text"
+                id="realtorPhone"
+                name="realtorPhone"
+                defaultValue={realtorDetail.phone || ""}
+              ></input>
+            </div>
+          </div>
+          <div className={classes.inputBox}>
+            <label>소개글</label>
+            <div className={classes.inputButton}>
+            <input
+                type="text"
+                id="realtorDescription"
+                name="realtorDescription"
+                defaultValue={realtorDetail.description || ""}
+              ></input>
             </div>
           </div>
         </div>
+        
+        <br />
+        <div>
+          <span className={classes.delBtn}>
+            <button onClick={onQuitHandler}>회원탈퇴</button>
+          </span>
+          <span className={classes.modifyBtn}>
+            <button onClick={onChangeUser}>정보수정</button>
+          </span>
+        </div>
       </div>
+    </div>
+    </form>
     </>
   );
 };
