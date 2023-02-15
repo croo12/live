@@ -6,19 +6,16 @@
   box-sizing: border-box;
   list-style: none;
 
-  font-family: 'Roboto';
+  font-family: "Roboto";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  
-  
-  
   ::-webkit-scrollbar {
     display: none;
   }
 }
 
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   src: url("./assets/font/Roboto.ttf");
 }

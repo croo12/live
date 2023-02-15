@@ -1,8 +1,6 @@
 .login {
   width: 100%;
-  height: calc(
-    100vh - 72px - 120px
-  ); // 전체 - 헤더높이 - 푸터높이 ( 스크롤 없애고 딱 맞추기위해 )
+  height: calc(100vh - 72px - 120px); // 전체 - 헤더높이 - 푸터높이 ( 스크롤 없애고 딱 맞추기위해 )
   min-height: 680px;
 
   .section {
@@ -59,7 +57,7 @@
             border: 1px solid #eaeaea;
             border-radius: 6px 6px 0px 0px;
             transition: all 0.3s ease;
-            color: #BBBBBB;
+            color: #bbbbbb;
             cursor: pointer;
 
             :hover {

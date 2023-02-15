@@ -3,47 +3,30 @@
   padding: 2em 1.5em 1em 1.5em;
   font-size: 0.8vw;
   text-align: right;
-  color: #FAFAFA;
+  color: #fafafa;
 
   &.isActive0 {
-    background: linear-gradient(
-        115.11deg,
-        rgba(255, 255, 255, 0.5) -3.35%,
-        rgba(255, 255, 255, 0) 107.02%
-      ),
-      #30d08b;
+    background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30d08b;
     box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive1 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #2896e6 -4.52%, #31d5f9 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive2 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #f9b32a -4.52%, #f52ea6 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive3 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #7e18ff -4.52%, #d885ff 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
@@ -83,44 +66,27 @@
     padding: 15px 0;
 
     &.isActive0 {
-      background: linear-gradient(
-          115.11deg,
-          rgba(255, 255, 255, 0.5) -3.35%,
-          rgba(255, 255, 255, 0) 107.02%
-        ),
-        #30d08b;
+      background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30d08b;
       box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive1 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #2896e6 -4.52%, #31d5f9 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive2 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #f9b32a -4.52%, #f52ea6 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive3 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #7e18ff -4.52%, #d885ff 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
@@ -180,7 +146,6 @@
       flex: 2.5;
 
       h3 {
-        
       }
 
       .realtorName {
@@ -225,14 +190,13 @@
   cursor: pointer;
 
   &.isActive {
-    border-width: 2px   ;
+    border-width: 2px;
     border-color: #30d08b;
   }
 
   display: flex;
 
   .leftImg {
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -249,23 +213,20 @@
   }
 
   .rightBox {
-
     flex: auto;
     width: calc(66%);
 
     h4 {
       > span {
         color: #ffcd1d;
-
       }
     }
 
-    .upCard{
-
+    .upCard {
       p {
         font-size: 1vw;
         color: rgba(112, 112, 112, 1);
-        
+
         > span {
           font-size: 1.4vw;
           font-weight: 700;
@@ -284,6 +245,4 @@
       }
     }
   }
-
-
 }
