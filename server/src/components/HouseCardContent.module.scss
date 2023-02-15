@@ -302,33 +302,40 @@
   display: flex;
   flex-direction: column;
 
-  padding: 12px;
-
-  width: 24vw;
-
-  background: linear-gradient(0deg, #f3f0f0, #fafafa), linear-gradient(0deg, #fafafa, #fafafa);
+  padding: 15px;
+  background: #FAFAFA;
+  border-radius: 4px;
 
   text-align: left;
 
   cursor: pointer;
-
-  img {
-    display: block;
-    width: 100%;
-    padding-bottom: 8px;
+  .image {
+    border-radius: 4px;
+    width: 280px;
+    height: 180px;
+    img {
+      border-radius: 4px;
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding-bottom: 8px;
+      object-fit: fill;
+    }
   }
 
   h3 {
     margin-top: 8px;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     font-size: 1.5rem;
 
     font-weight: 700;
   }
 
   p {
+    margin: 4px 0;
     font-size: 0.9rem;
     font-weight: 400;
+    white-space: pre-wrap;
   }
 
   button:last-child {
@@ -340,9 +347,9 @@
 
     border: 0;
 
-    text-decoration: underline;
+    text-decoration: none;
     text-align: left;
-
+    color: #707070;
     cursor: pointer;
   }
 }
@@ -415,19 +422,35 @@
 
   button:last-child {
     display: block;
-    font-size: 0.8rem;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 400;
 
     padding: 4px;
-    padding-top: 2vw;
-
     border: 0;
 
     background-color: #ffffff;
 
-    text-decoration: underline;
+    text-decoration: none;
     text-align: left;
 
+    color: #707070;
     cursor: pointer;
+    &::after {
+      content: "\25BC";
+      position: absolute;
+      top: 35%;
+      transform: translateY(-50%);
+      transform: rotate(-90deg);
+      pointer-events: none;
+      color: #707070;
+      font-size: 0.8em;
+      padding-left: 8px;
+    }
+    &:hover {
+      font-size: 1rem;
+      font-weight: 700;
+    }
   }
 }
 

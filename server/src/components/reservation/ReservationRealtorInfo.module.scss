@@ -1,7 +1,8 @@
 .realtorInfoContainer {
   border: 2px solid rgba(66, 211, 149, 1);
-
+  border-radius: 4px;
   padding: 24px;
+  margin-top: 15px;
 
   overflow: scroll;
   max-height: 700px;
@@ -10,22 +11,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    padding: 1em;
     > div:first-child {
-      width: calc(38%);
+      width: calc(32%);
 
       img {
         width: 100%;
         height: 100%;
       }
 
-      margin-right: calc(2%);
+      margin-right: calc(8%);
     }
 
     > div:last-child {
       width: calc(60%);
       text-align: left;
-      // padding-inline-start: 30px;
       padding: 1rem;
 
       display: flex;
@@ -34,7 +34,7 @@
       justify-content: space-evenly;
 
       h3 {
-        margin-bottom: 36px;
+        margin-bottom: 0.8em;
         font-size: 2rem;
       }
 
@@ -42,17 +42,26 @@
         font-size: 1.2rem;
         font-weight: 480;
 
-        padding-left: 20px;
         > span {
-          font-size: 0.6rem;
+          font-size: 0.8rem;
           color: rgba(112, 112, 112, 1);
         }
       }
 
+      p {
+        margin-bottom: 0.5em;
+        > span {
+          margin-left: 0.5em;
+        }
+      }
+
       .description {
-        padding-left: 20px;
         margin-top: 8px;
         margin-bottom: 24px;
+      }
+
+      .businessAddress.phone {
+        margin-left: 5px;
       }
     }
 
@@ -60,23 +69,27 @@
   }
 
   .realtorItems {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
     > h3 {
       text-align: left;
       margin-bottom: 0.7rem;
     }
 
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 1rem;
+
   }
 
   .reviewLists {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
     > h3 {
       text-align: left;
       margin-bottom: 0.7rem;
     }
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 1rem;
+    p {
+      color: rgb(187, 187, 187);
+    }
   }
 }
