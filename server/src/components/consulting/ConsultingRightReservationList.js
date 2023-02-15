@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import { getReservationList } from "../../apis/reservationApis";
+import { getTodayReservationList } from "../../apis/reservationApis";
 import ListBox from "../../UI/ListBox";
 import { ConsultingReservationCardContent } from "../ReservationCardContent";
+import classes from "./ConsultingRightReservationList.module.scss";
 
 const ConsultingRightReservationList = () => {
-  const { sessionId, statusChangeHandler, consultingNoSetter } =
-    useOutletContext();
+  const { sessionId, statusChangeHandler } = useOutletContext();
 
   const [reservationRealtor, setReservationRealtor] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await getReservationList(1);
+      const result = await getTodayReservationList();
+      console.log(result);
       setReservationRealtor(result.data);
     }
     fetchData();
@@ -20,17 +21,21 @@ const ConsultingRightReservationList = () => {
 
   return (
     <>
-      {reservationRealtor.length !== 0 ? (
-        <ListBox toStart={true} dataArray={reservationRealtor}>
-          <ConsultingReservationCardContent
-            isConsulting={true}
-            sessionId={sessionId}
-            statusChangeHandler={statusChangeHandler}
-          />
-        </ListBox>
-      ) : (
-        <div>현재 상담일정이 없습니다</div>
-      )}
+      <div className={classes.consultingList}>
+        {reservationRealtor.length !== 0 ? (
+          <ListBox toStart={true} dataArray={reservationRealtor}>
+            <ConsultingReservationCardContent
+              isConsulting={true}
+              sessionId={sessionId}
+              statusChangeHandler={statusChangeHandler}
+            />
+          </ListBox>
+        ) : (
+          <div style={{ color: "white", textAlign: "center", fontWeight: 700 }}>
+            현재 상담일정이 없습니다
+          </div>
+        )}
+      </div>
     </>
   );
 };

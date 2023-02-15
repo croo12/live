@@ -5,6 +5,7 @@ import classes from "./ConsultingMeetPage.module.scss";
 import { STATUS } from "../../pages/ConsultingPage";
 import { BsRecordCircle } from "react-icons/bs";
 import { AiOutlineSound } from "react-icons/ai";
+import { FiMaximize } from "react-icons/fi";
 import { IoExitOutline, IoVolumeMuteOutline } from "react-icons/io5";
 import useWebSocket from "../../util/useWebSocket";
 import useWebRTC from "../../util/useWebRTC";
@@ -165,6 +166,14 @@ const ConsultingMeetPage = ({
     }
   }, [responseMsg]);
 
+  const toFullScreen = () => {
+    if (window.screen.orientation.type === "portrait-primary") {
+      window.screen.orientation.lock("landscape");
+    } else {
+      window.screen.orientation.unlock();
+    }
+  };
+
   return (
     <>
       <video autoPlay={true} ref={localVideo}></video>
@@ -173,42 +182,52 @@ const ConsultingMeetPage = ({
         <h1>{info}</h1>
       </div>
 
-      {!isRealtor && (
-        <div className={classes.controllerBox}>
-          <div className={classes.controllerBox_inner}>
-            <div>
-              <Button clickEvent={toggleAudio}>
-                {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
-              </Button>
-            </div>
-            <div className={"recordBtn"}>
-              <Button
-                clickEvent={() => {
-                  if (recording) {
-                    console.log("recording stop");
-                    stopRecording();
-                    return;
-                  } else {
-                    console.log("recording start");
-                    startRecording();
-                  }
-                }}
-              >
-                <BsRecordCircle />
-              </Button>
-            </div>
-            <div>
-              <Button
-                clickEvent={() => {
-                  navi("/");
-                }}
-              >
-                <IoExitOutline />
-              </Button>
-            </div>
-          </div>
+      <div className={classes.controllerBox}>
+        <div className={classes.controllerBox_inner}>
+          {!isRealtor ? (
+            <>
+              <div>
+                <Button clickEvent={toggleAudio}>
+                  {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
+                </Button>
+              </div>
+              <div className={"recordBtn"}>
+                <Button
+                  clickEvent={() => {
+                    if (recording) {
+                      console.log("recording stop");
+                      stopRecording();
+                      return;
+                    } else {
+                      console.log("recording start");
+                      startRecording();
+                    }
+                  }}
+                >
+                  <BsRecordCircle />
+                </Button>
+              </div>
+              <div>
+                <Button
+                  clickEvent={() => {
+                    navi("/");
+                  }}
+                >
+                  <IoExitOutline />
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <Button clickEvent={toFullScreen}>
+                  <FiMaximize />
+                </Button>
+              </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
       {viewReview && (
         <Modal>
           <div>리뷰임</div>
