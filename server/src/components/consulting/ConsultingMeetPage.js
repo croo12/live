@@ -62,8 +62,6 @@ const ConsultingMeetPage = ({
     sessionId,
   });
 
-  const isMounted = useRef(true);
-
   useEffect(() => {
     switch (status) {
       case STATUS.REALTOR_ENTER:
@@ -106,11 +104,6 @@ const ConsultingMeetPage = ({
   });
 
   useEffect(() => {
-    if (isMounted.current) {
-      isMounted.current = false;
-      return;
-    }
-
     console.log(`Received message: `, responseMsg);
 
     switch (responseMsg.id) {
@@ -165,40 +158,42 @@ const ConsultingMeetPage = ({
         <h1>{info}</h1>
       </div>
 
-      <div className={classes.controllerBox}>
-        <div className={classes.controllerBox_inner}>
-          <div>
-            <Button clickEvent={toggleAudio}>
-              {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
-            </Button>
-          </div>
-          <div className={"recordBtn"}>
-            <Button
-              clickEvent={() => {
-                if (recording) {
-                  console.log("recording stop");
-                  stopRecording();
-                  return;
-                } else {
-                  console.log("recording start");
-                  startRecording();
-                }
-              }}
-            >
-              <BsRecordCircle />
-            </Button>
-          </div>
-          <div>
-            <Button
-              clickEvent={() => {
-                navi("/");
-              }}
-            >
-              <IoExitOutline />
-            </Button>
+      {!isRealtor && (
+        <div className={classes.controllerBox}>
+          <div className={classes.controllerBox_inner}>
+            <div>
+              <Button clickEvent={toggleAudio}>
+                {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
+              </Button>
+            </div>
+            <div className={"recordBtn"}>
+              <Button
+                clickEvent={() => {
+                  if (recording) {
+                    console.log("recording stop");
+                    stopRecording();
+                    return;
+                  } else {
+                    console.log("recording start");
+                    startRecording();
+                  }
+                }}
+              >
+                <BsRecordCircle />
+              </Button>
+            </div>
+            <div>
+              <Button
+                clickEvent={() => {
+                  navi("/");
+                }}
+              >
+                <IoExitOutline />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
