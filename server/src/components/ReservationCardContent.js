@@ -61,27 +61,27 @@ export const ConsultingReservationCardContent = (props) => {
   return (
     <div className={classes.consultingCardBox}>
       <div className={classes.imageContainer}>
-        <img src={props.image ? props.image : totoro} alt="totoro"></img>
+        <img
+          src={props.userImage ? props.userImage : totoro}
+          alt="totoro"
+        ></img>
       </div>
       <div className={classes.consultingDetail}>
         <div className={classes.detailContainer}>
           <p>
-            <MdOutlineDriveFileRenameOutline /> {props.name}
+            <MdOutlineDriveFileRenameOutline /> {props.userName}
           </p>
           <p>
             <BsCalendar2WeekFill /> {props.consultingDate.substring(0, 10)}
           </p>
           <p>
             <BsFillPhoneFill />{" "}
-            {props.personalInfo.length <= 11
-              ? `${props.personalInfo.substring(
-                  0,
-                  3
-                )}-${props.personalInfo.substring(
+            {props.userPhone.length <= 11
+              ? `${props.userPhone.substring(0, 3)}-${props.userPhone.substring(
                   3,
                   7
-                )}-${props.personalInfo.substring(7, 11)}`
-              : props.personalInfo}
+                )}-${props.userPhone.substring(7, 11)}`
+              : props.userPhone}
           </p>
         </div>
         <div className={classes.buttonContainer}>
