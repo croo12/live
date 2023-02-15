@@ -24,7 +24,7 @@ const useWebSocket = (sessionId) => {
         console.log("유저도 등록시도합니다...", isRealtor);
         const message = {
           id: "joinRoom",
-          name: "고객",
+          name: "user",
           room: sessionId,
         };
         socket.current.send(JSON.stringify(message));
