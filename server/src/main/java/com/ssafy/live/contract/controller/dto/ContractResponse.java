@@ -184,6 +184,7 @@ public class ContractResponse {
             private LocalDate moveOnDate;
             private int numberOfResidents;
             private String specialContract;
+            private int status;
             private int downPayment;
             private int balance;
             private int commission;
@@ -198,6 +199,7 @@ public class ContractResponse {
                     .moveOnDate(contract.getMoveOnDate())
                     .numberOfResidents(contract.getNumberOfResidents())
                     .specialContract(contract.getSpecialContract())
+                    .status(contract.getContractState().getValue())
                     .downPayment(contract.getDownPayment())
                     .balance(contract.getBalance())
                     .commission(contract.getCommission())
