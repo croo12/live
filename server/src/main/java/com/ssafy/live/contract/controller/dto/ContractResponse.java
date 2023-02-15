@@ -153,6 +153,7 @@ public class ContractResponse {
         @Builder
         public static class ItemInfo {
 
+            private Long ItemNo;
             private String address;
             private String buildingName;
             private int deposit;
@@ -163,6 +164,7 @@ public class ContractResponse {
 
             public static ItemInfo toEntity(Item item, List<String> images) {
                 return ItemInfo.builder()
+                    .ItemNo(item.getNo())
                     .address(item.getHouse().getAddress())
                     .buildingName(item.getHouse().getBuildingName())
                     .deposit(item.getDeposit())
