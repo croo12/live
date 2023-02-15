@@ -32,14 +32,24 @@ import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.support.ResourceRegion;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -293,13 +303,45 @@ public class ConsultingService {
     }
 
     public ResponseEntity<?> getRecList(Long consultingNo) {
-        consultingRepository.findById(consultingNo).orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
+        consultingRepository.findById(consultingNo)
+            .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
-        List<String> recordPathList = recordRepository.findByConsultingNo(consultingNo)
+        List<Long> recordPathList = recordRepository.findByConsultingNo(consultingNo)
             .stream()
-            .map(record -> record.getPath())
+            .map(record -> record.getNo())
             .collect(Collectors.toList());
 
-        return response.success(recordPathList,"녹화영상 경로가 조회되었습니다.", HttpStatus.OK);
+        return response.success(recordPathList, "녹화영상 목록이 조회되었습니다.", HttpStatus.OK);
+    }
+
+    public ResponseEntity<ResourceRegion> streamRecord(HttpHeaders headers, Long recordNo) throws IOException {
+        Record record = recordRepository.findById(recordNo).get();
+
+        Resource resource = new FileSystemResource(record.getPath());
+        ResourceRegion resourceRegion;
+
+        final long chunkSize = 1000000L;
+        long contentLength = resource.contentLength();
+
+        Optional<HttpRange> optional = headers.getRange().stream().findFirst();
+        HttpRange httpRange;
+
+        if (optional.isPresent()) {
+            httpRange = optional.get();
+            long start = httpRange.getRangeStart(contentLength);
+            long end = httpRange.getRangeEnd(contentLength);
+            long rangeLength = Long.min(chunkSize, end - start + 1);
+            resourceRegion = new ResourceRegion(resource, start, rangeLength);
+        } else {
+            long rangeLength = Long.min(chunkSize, contentLength);
+            resourceRegion = new ResourceRegion(resource, 0, rangeLength);
+        }
+
+        return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+            .contentType(
+                MediaTypeFactory.getMediaType(resource)
+                    .orElse(MediaType.APPLICATION_OCTET_STREAM))
+            .body(resourceRegion);
+
     }
 }
