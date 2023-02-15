@@ -105,6 +105,11 @@ const HouseList = () => {
                 type="text"
                 ref={searchInputRef}
                 placeholder="지역명을 입력해주세요"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    searchEventHandler();
+                  }
+                }}
               />
               <button onClick={searchEventHandler}>검 색</button>
             </div>
