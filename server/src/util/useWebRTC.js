@@ -58,7 +58,7 @@ const useWebRTC = ({
 
     constraints = {
       audio: true,
-      video: !isRealtor,
+      video: true,
     };
 
     const options = {
