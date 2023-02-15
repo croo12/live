@@ -1,5 +1,6 @@
 package com.ssafy.live.consulting.service;
 
+import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_RPOCESSING;
 import static com.ssafy.live.common.exception.ErrorCode.CONSULTING_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
@@ -32,7 +33,6 @@ import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +43,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRange;
@@ -100,17 +99,16 @@ public class ConsultingService {
             Long no = usersRepository.findById(user.getUsername()).get().getNo();
             List<Consulting> consultingsList = consultingRepository.findByUsersAndStatusOrStatusOrderByConsultingDate(
                 usersRepository.findById(no).get(), statuses[0], statuses[1]);
-            return listByUserOrRealtor(consultingsList, statuses, "USER");
+            return listByUserOrRealtor(consultingsList, "USER");
         } else {
             Long no = realtorRepository.findByBusinessNumber(user.getUsername()).get().getNo();
             List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatusOrStatusOrderByConsultingDate(
                 realtorRepository.findById(no).get(), statuses[0], statuses[1]);
-            return listByUserOrRealtor(consultingsList, statuses, "REALTOR");
+            return listByUserOrRealtor(consultingsList, "REALTOR");
         }
     }
 
-    private ResponseEntity<?> listByUserOrRealtor(List<Consulting> consultingsList,
-        ConsultingStatus[] statuses, String target) {
+    private ResponseEntity<?> listByUserOrRealtor(List<Consulting> consultingsList, String target) {
         List<ConsultingResponse.ReservationInfo> list = new ArrayList<>();
         if (consultingsList.isEmpty()) {
             listNotFound();
@@ -314,7 +312,8 @@ public class ConsultingService {
         return response.success(recordPathList, "녹화영상 목록이 조회되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<ResourceRegion> streamRecord(HttpHeaders headers, Long recordNo) throws IOException {
+    public ResponseEntity<ResourceRegion> streamRecord(HttpHeaders headers, Long recordNo)
+        throws IOException {
         Record record = recordRepository.findById(recordNo).get();
 
         Resource resource = new FileSystemResource(record.getPath());
@@ -343,5 +342,31 @@ public class ConsultingService {
                     .orElse(MediaType.APPLICATION_OCTET_STREAM))
             .body(resourceRegion);
 
+    }
+
+    public ResponseEntity<?> todayList(UserDetails user) {
+        Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
+            .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
+        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatus(realtor,
+            CONSULTING_RPOCESSING);
+        List<ConsultingResponse.TodayConsulting> list = new ArrayList<>();
+        consultingsList.stream().forEach(consulting -> {
+            List<ConsultingItem> consultingItems = consulting.getConsultingItems();
+            int count = 0;
+            String buildingName = "";
+            if (consultingItems.size() > 0) {
+                count = consultingItems.size() - 1;
+                buildingName = consultingItems.get(0).getItem().getHouse().getBuildingName();
+            }
+            Users users = consulting.getUsers();
+            list.add(
+                ConsultingResponse.TodayConsulting.toResponse(consulting, users, buildingName,
+                    count));
+
+        });
+        if (list.isEmpty()) {
+            listNotFound();
+        }
+        return response.success(list, "오늘의 상담 목록이 조회되었습니다.", HttpStatus.OK);
     }
 }

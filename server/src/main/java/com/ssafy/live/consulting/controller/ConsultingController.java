@@ -61,6 +61,12 @@ public class ConsultingController {
         return consultingService.reservationListByRealtor(principal, situation);
     }
 
+    @GetMapping("/today")
+    public ResponseEntity<?> todayList(Authentication authentication) {
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return consultingService.todayList(principal);
+    }
+
     @PatchMapping
     public ResponseEntity<?> changeStatus(Authentication authentication,
         @RequestBody ConsultingRequest.ChangeStatus request) {
