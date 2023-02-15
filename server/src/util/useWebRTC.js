@@ -74,6 +74,7 @@ const useWebRTC = ({
           return console.error(error);
         }
         this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+        console.log("receiveVideo is Work!!!!!!");
       }
     );
   };
