@@ -44,13 +44,13 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class RealtorService {
 
-    private final S3Service s3Service;
-    private final RealtorRepository realtorRepository;
-    private final PasswordEncoder passwordEncoder;
     private final Response response;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final RedisTemplate redisTemplate;
+    private final S3Service s3Service;
     private final EmailService emailService;
+    private final RedisTemplate redisTemplate;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final RealtorRepository realtorRepository;
     private final AuthenticationManager authenticationManager;
 
     public ResponseEntity<?> signUp(RealtorRequest.SignUp signUp, MultipartFile file)
@@ -130,19 +130,22 @@ public class RealtorService {
     @Transactional
     public ResponseEntity<?> updateRealtor(UserDetails realtors, RealtorRequest.Update request,
         MultipartFile file) throws IOException {
-        Realtor realtor = realtorRepository.findByBusinessNumber(realtors.getUsername()).get();
-        if (realtor == null) {
-            return response.fail("해당하는 공인중개사를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
-        }
+        Realtor realtor = realtorRepository.findByBusinessNumber(realtors.getUsername())
+            .orElseThrow(() -> new BadRequestException(REALTOR_NOT_FOUND));
         String preImg = realtor.getImageSrc();
+        String imgSrc = null;
         if (file != null) {
             s3Service.deleteFile(preImg);
+            imgSrc = s3Service.upload(file);
+        } else if(request.getImageSrc() == null){
+            s3Service.deleteFile(preImg);
+        } else {
+            imgSrc = request.getImageSrc();
         }
-        String imgSrc = s3Service.upload(file);
         realtor.updateRealtor(request, passwordEncoder.encode(request.getPassword()), imgSrc);
         realtorRepository.save(realtor);
 
-        return response.success(RealtorResponse.UpdateRealtor.toEntity(realtor),
+        return response.success(RealtorResponse.UpdateRealtor.toDTO(realtor),
             "공인중개사 정보 수정을 완료했습니다.", HttpStatus.OK);
     }
 
