@@ -56,17 +56,10 @@ const useWebRTC = ({
     //상대가 중개사라면 -> 화면과 소리 다 받기
     let constraints;
 
-    if (isRealtor) {
-      constraints = {
-        audio: true,
-        video: true,
-      };
-    } else {
-      constraints = {
-        audio: true,
-        video: true,
-      };
-    }
+    constraints = {
+      audio: true,
+      video: !isRealtor,
+    };
 
     const options = {
       remoteVideo: isRealtor ? remoteVideo.current : localVideo.current,

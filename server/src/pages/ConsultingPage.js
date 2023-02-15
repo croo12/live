@@ -61,10 +61,16 @@ const ConsultingPage = (props) => {
 
   useEffect(() => {
     if (recordingFiles.length !== 0) {
+      // const frm = new FormData();
+      // frm.append()
+
       axiosInstance
         .post(
-          `consultings/${consultingNo}/records`,
-          recordingFiles[recordingFiles.length - 1]
+          `consultings/${params.consultingNo}/records`,
+          { records: recordingFiles },
+          {
+            // type
+          }
         )
         .then((res) =>
           console.log("Successfully sent recording to server", res)
