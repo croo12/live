@@ -1,10 +1,8 @@
 import SelectBox from "../../UI/SelectBox";
 import React, { useRef, useState, useEffect } from "react";
 import axiosInstance from "../../util/axios";
-
 import classes from "./MyReservationSearchBox.module.scss";
 import { getItemListBySearch } from "../../apis/houseApis";
-import ListBox from "../../UI/ListBox";
 import HouseCardContent from "../HouseCardContent";
 
 const MyReservationSearchBox = (props) => {
@@ -12,10 +10,8 @@ const MyReservationSearchBox = (props) => {
   const [gugun, setGugun] = useState("");
   const [dong, setDong] = useState("");
   const buildingName = useRef();
-
   const [gugunList, setGugunList] = useState([]);
   const [dongList, setDongList] = useState([]);
-
   const [searchedList, setSearchedList] = useState([]);
 
   const changeEventHandler = (e, setter) => {
@@ -126,12 +122,8 @@ const MyReservationSearchBox = (props) => {
       data["regionCode"] = dong;
     }
 
-    // console.log(data);
     const response = await getItemListBySearch(data);
-    const list = response;
-
-    console.log(list);
-    setSearchedList(list);
+    setSearchedList(response);
   };
 
   const clickSearchedListHandler = (data) => {
@@ -181,25 +173,18 @@ const MyReservationSearchBox = (props) => {
       </div>
       <div className={classes.searchInput}>
         <div className={classes.inputText}>
-          <input
-            placeholder="건물명을 입력해주세요."
-            id="buildingName"
-            ref={buildingName}
-          />
+          <input placeholder="건물명을 입력해주세요." id="buildingName" ref={buildingName} />
           <button onClick={() => searchEventHandler()}>검색</button>
         </div>
         {searchedList.length !== 0 && (
           <ul className={classes.badge}>
             {searchedList.map((item, idx) => {
-              console.log(item, idx);
               return (
-                <li>
-                  {React.cloneElement(
-                    <HouseCardContent
-                      searchedListClickHandler={clickSearchedListHandler}
-                    />,
-                    { ...item, idx }
-                  )}
+                <li key={idx}>
+                  {React.cloneElement(<HouseCardContent searchedListClickHandler={clickSearchedListHandler} />, {
+                    ...item,
+                    idx,
+                  })}
                 </li>
               );
             })}

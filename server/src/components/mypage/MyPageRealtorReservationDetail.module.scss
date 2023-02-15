@@ -1,17 +1,11 @@
 .reservationdetailrealtor {
-  font-family: "Roboto";
-  font-style: normal;
-  margin: 1em 0;
-  width: 100%;
+  width: 66.7%;
+  margin: 0 auto;
   text-align: left;
 
   .date {
-    width: 66.7%;
-    margin: 1em 16.25%;
-
     @media (max-width: 768px) {
       width: calc(100% - 2em);
-      margin: 1em;
       font-size: 13px;
     }
 
@@ -21,6 +15,7 @@
 
     p {
       line-height: 1.5;
+      margin-bottom: 1em;
 
       strong {
         color: rgba(112, 112, 112, 1);
@@ -29,8 +24,6 @@
   }
 
   .require {
-    width: 66.7%;
-    margin: 1em 16.25%;
     padding: 0 0 3% 0;
 
     @media (max-width: 768px) {
@@ -38,6 +31,10 @@
       margin: 1em;
       font-size: 13px;
     }
+    p {
+      margin-bottom: 0.5em;
+    }
+
     strong {
       color: rgba(112, 112, 112, 1);
     }
@@ -65,9 +62,6 @@
     flex-direction: column;
 
     .saleHeader {
-      width: 66.7%;
-      margin: 0 16.25%;
-
       @media (max-width: 768px) {
         width: calc(100% - 2em);
         margin: 1em;
@@ -87,7 +81,7 @@
     }
 
     .selectlocation {
-      padding: 2em 16.25%;
+      padding: 2em 10%;
       background-color: #0f4e33;
       margin-top: 1%;
       margin-bottom: 1%;
@@ -170,17 +164,21 @@
         }
       }
     }
+    .buttonContainer {
+      margin-bottom: 2.5em;
+      .btn2 {
+        width: 200px;
+        display: block;
+        margin: auto;
+        background: #42d395;
+        border-radius: 4px;
+        padding: 2% 2%;
+        color: white;
+        font-weight: 700;
+        border: none;
 
-    .btn2 {
-      background: #42d395;
-      border-radius: 4px;
-      text-align: center;
-      padding: 1% 4%;
-      color: white;
-      font-weight: 700;
-      border: none;
-
-      cursor: pointer;
+        cursor: pointer;
+      }
     }
   }
 }

@@ -2,7 +2,7 @@ import classes from "./MyPageRealtorReservationDetail.module.scss";
 
 import ListBox from "../../UI/ListBox";
 import MyReservationSearchBox from "./MyReservationSearchBox";
-import HouseCardContent from "../HouseCardContent";
+import HouseCardContent2 from "../HouseCardContent2";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { getReservationDetail } from "../../apis/reservationApis";
 import axiosInstance from "../../util/axios";
@@ -17,6 +17,7 @@ const MyPageRealtorReservationDetail = () => {
   const navigation = useNavigate();
 
   const searchedListClickHander = (data) => {
+    console.log(data);
     setWantAddList([...wantAddList, data]);
   };
 
@@ -37,13 +38,9 @@ const MyPageRealtorReservationDetail = () => {
     const newArray = [...selectedList, ...wantAddList];
     const itemList = [];
 
-    console.log(newArray);
-
     newArray.forEach((element) => {
       itemList.push(element.itemNo);
     });
-
-    console.log(itemList);
 
     const data = { itemList };
 
@@ -78,8 +75,6 @@ const MyPageRealtorReservationDetail = () => {
           <div className={classes.requestbox}>
             <pre>{reservationDetail.requirement}</pre>
           </div>
-          <br />
-          <hr />
         </div>
         <div className={classes.forsale}>
           <div className={classes.saleHeader}>
@@ -89,10 +84,7 @@ const MyPageRealtorReservationDetail = () => {
           <div className={classes.selectlocation}>
             <h4>어떤 매물을 원하세요?</h4>
             <div className={classes.searchBox}>
-              <MyReservationSearchBox
-                sidoList={sidoList}
-                searchedListClickHander={searchedListClickHander}
-              />
+              <MyReservationSearchBox sidoList={sidoList} searchedListClickHander={searchedListClickHander} />
             </div>
           </div>
           <div className={classes.forsalelist}>
@@ -100,26 +92,24 @@ const MyPageRealtorReservationDetail = () => {
               <p>
                 <strong>현재 요청된 매물</strong>
               </p>
-              <ListBox dataArray={selectedList} direction={false}>
-                <HouseCardContent
-                  searchedListClickHandler={removeSelectedItemClickHandler}
-                />
+              <ListBox dataArray={selectedList} direction={false} toStart={true}>
+                <HouseCardContent2 searchedListClickHandler={removeSelectedItemClickHandler} />
               </ListBox>
             </div>
             <div className={classes.addedforsale}>
               <p>
                 <strong>추가한 매물</strong>
               </p>
-              <ListBox dataArray={wantAddList} direction={false}>
-                <HouseCardContent
-                  searchedListClickHandler={removeItemClickHandler}
-                />
+              <ListBox dataArray={wantAddList} direction={false} toStart={true}>
+                <HouseCardContent2 searchedListClickHandler={removeItemClickHandler} />
               </ListBox>
             </div>
           </div>
-          <button className={classes.btn2} onClick={adjustConsulting}>
-            적용하기
-          </button>
+          <div className={classes.buttonContainer}>
+            <button className={classes.btn2} onClick={adjustConsulting}>
+              적용하기
+            </button>
+          </div>
         </div>
       </div>
     </>
