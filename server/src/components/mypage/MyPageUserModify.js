@@ -21,6 +21,7 @@ const MyPageUserModify = () => {
   };
 
   const userDetail = useLoaderData();
+  console.log("유저수정:",userDetail)
 
   useEffect(() => {
     if (!profile) {
@@ -68,8 +69,7 @@ const MyPageUserModify = () => {
       });
 
       if (result) {
-        alert("회원 정보 수정");
-        navigate("/");
+        navigate("/mypage/user-detail-info");
       }
     } catch (error) {
       console.error("회원 정보 수정 과정에서 에러가 발생하였습니다.");
@@ -182,10 +182,8 @@ const MyPageUserModify = () => {
 };
 
 export const userInfoLoader = async () => {
-  const response = await getUserInfo();
-
-  if (response?.data) return response.data.data;
-  else return null;
+  const response = await getUserInfo(getAuthHeader());
+  return response;
 };
 
 export default MyPageUserModify;

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "../util/axios";
 
 const useRecording = ({ stream, recordingFiles, setRecordingFiles }) => {
   const [recording, setRecording] = useState(false);
@@ -30,12 +29,6 @@ const useRecording = ({ stream, recordingFiles, setRecordingFiles }) => {
       const blob = new Blob(chunks, { type: "video/webm" });
 
       setRecordingFiles([...recordingFiles, blob]);
-      // axios
-      //   .post("recordings", blob)
-      //   .then((res) =>
-      //     console.log("Successfully sent recording to server", res)
-      //   )
-      //   .catch((error) => console.error(error));
     };
 
     return () => {

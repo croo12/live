@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ContractInfo from "./ContractInfo";
 import ContractForSale from "./ContractForSale";
 import ContractTenantInfo from "./ContractTenantInfo";
@@ -18,7 +18,7 @@ const ContractPageUser = () => {
   const [tenantInfo, setTeanatInfo] = useState({
     address: "",
     addressDetail: "",
-    age: "",
+    age: 0,
   });
 
   const [requireInfo, setRequireInfo] = useState({
@@ -27,15 +27,18 @@ const ContractPageUser = () => {
   });
 
   const passInfo = {
-    userTermOfContract: forSaleInfo.userTermOfContract,
+    userTermOfContract: Number(forSaleInfo.userTermOfContract),
     userMoveOnDate: forSaleInfo.userMoveOnDate,
     address: tenantInfo.address,
     addressDetail: tenantInfo.addressDetail,
-    age: tenantInfo.age,
-    numberOfResidents: requireInfo.numberOfResidents,
+    age: Number(tenantInfo.age),
+    numberOfResidents: Number(requireInfo.numberOfResidents),
     specialContract: requireInfo.specialContract,
     deposit: data.data.itemInfo.deposit,
     rent: data.data.itemInfo.rent,
+    realtorNo: data.data.realtorInfo.realtorNo,
+    userNo: data.data.userInfo.userNo,
+    itemNo: data.data.itemInfo.itemNo,
   };
 
   return (

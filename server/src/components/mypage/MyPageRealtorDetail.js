@@ -1,54 +1,83 @@
-import { useNavigate } from "react-router-dom";
+import { useLoaderData,useNavigate } from "react-router-dom";
 import classes from "./MyPageRealtorDetail.module.scss";
+import { useEffect } from "react";
+import { getRealtorInfo } from "../../apis/MemberService";
+import axiosInstance, { getAuthHeader } from "../../util/axios";
+import { useAuth } from "../common/AuthProtector";
+import { useDispatch } from "react-redux";
+import { userAction } from "../../store/user-slice";
+import sample from "../../assets/image/sample.jpg";
 
 const MyPageRealtorDetail = () => {
   const navigate = useNavigate();
-  const onQuitHandler = () => {
-    alert("정말 탈퇴하시겠습니까?");
+  const { doLogout } = useAuth();
+  const dispatch = useDispatch();
+  const onQuitHandler = async () => {
+    alert("정말로 탈퇴하시겠습니까?");
+    try {
+      const result = await axiosInstance.delete("realtors", {
+        headers: getAuthHeader(),
+      });
+      if (result) {
+        alert("탈퇴되었습니다!");
+        doLogout();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  const realtorDetail = useLoaderData();
+
+  useEffect(()=>{
+    const data = {
+      id: realtorDetail.id,
+      name: realtorDetail.name,
+      isRealtor: true,
+      profile: realtorDetail.imageSrc,
+      score: realtorDetail.ratingScore,
+    };
+    dispatch(userAction.setInfo(data));
+  }, []);
+  
   const onChangeHandler = () => {
     navigate("/mypage/realtor-modify-info");
   };
   return (
     <>
-      {" "}
+      {/* <MyPageRealtor /> */}
       <div>
         <div className={classes.viewPrivacy}>
           <div className={classes.inner}>
             <div className={classes.privacyContent}>
               <div className={classes.privacyInfo}>
                 <div className={classes.privacyImg}>
-                  <img alt="이미지"></img>
+                <img alt="프로필" src={realtorDetail.imageSrc !== null ? realtorDetail.imageSrc : sample}></img>
                 </div>
                 <div className={classes.privacyDetail}>
                   <div>
-                    <strong>아이디</strong>
-                    <span>dfdfdfdf</span>
+                    <strong>이름</strong>
+                    <span>{realtorDetail.name}</span>
                   </div>
                   <div>
-                    <strong>이름</strong>
-                    <span>ddfdfdfdf</span>
+                    <strong>사무소 주소</strong>
+                    <span>{realtorDetail.business_address}</span>
                   </div>
                   <div>
                     <strong>이메일</strong>
-                    <span>dfdfdfdf</span>
+                    <span>{realtorDetail.email}</span>
                   </div>
                   <div>
                     <strong>휴대폰 번호</strong>
-                    <span>dfdfdfdfdf</span>
+                    <span>{realtorDetail.phone}</span>
                   </div>
                   <div>
-                    <strong>지역</strong>
-                    <span>dfdfdfdf</span>
-                  </div>
-                  <div>
-                    <strong>성별</strong>
-                    <span>dfdfdfdfdf</span>
+                    <strong>소개글</strong>
+                    <span>{realtorDetail.description}</span>
                   </div>
                   <div>
                     <strong>평가점수</strong>
-                    <span>dfdfd</span>
+                    <span>{realtorDetail.ratingScore}</span>
                   </div>
                 </div>
               </div>
@@ -63,6 +92,12 @@ const MyPageRealtorDetail = () => {
       </div>
     </>
   );
+};
+
+
+export const realtorDetailInfoLoader = async () => {
+  const response = await getRealtorInfo();
+  return response;
 };
 
 export default MyPageRealtorDetail;

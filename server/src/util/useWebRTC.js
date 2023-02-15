@@ -1,9 +1,44 @@
 import kurentoUtils from "kurento-utils";
 
+//============================================================================
+//==============Participant 객체 생성기========================================
+//============================================================================
+class Participant {
+  constructor(name, sendMessage) {
+    this.name = name;
+
+    this.offerToReceiveVideo = function (error, offerSdp, wp) {
+      if (error) return console.error("sdp offer error");
+
+      console.log(`Invoking SDP offer callback function`);
+
+      sendMessage({
+        id: "receiveVideoFrom",
+        sender: name,
+        sdpOffer: offerSdp,
+      });
+    };
+
+    this.onIceCandidate = function (candidate, wp) {
+      console.log("Local candidate" + JSON.stringify(candidate));
+
+      sendMessage({
+        id: "onIceCandidate",
+        candidate: candidate,
+        name,
+      });
+    };
+    this.rtcPeer = null;
+    this.dispose = function () {
+      console.log("Disposing participant " + this.name);
+      this.rtcPeer.dispose();
+    };
+  }
+}
+
 const useWebRTC = ({
   isRealtor,
   participants,
-  socket,
   sendMessage,
   localVideo,
   remoteVideo,
@@ -11,42 +46,8 @@ const useWebRTC = ({
   audio, //오디오 보낼지말지 정하기
   sessionId,
 }) => {
-  //============================================================================
-  //==============Participant 객체 생성기========================================
-  //============================================================================
-  const Participant = ({ name, sendMessage }) => {
-    return {
-      name,
-      offerToReceiveVideo(error, offerSdp, wp) {
-        if (error) return console.error("sdp offer error");
-
-        console.log(`Invoking SDP offer callback function`);
-
-        sendMessage({
-          id: "receiveVideoFrom",
-          sender: name,
-          sdpOffer: offerSdp,
-        });
-      },
-      onIceCandidate(candidate, wp) {
-        console.log("Local candidate" + JSON.stringify(candidate));
-
-        sendMessage({
-          id: "onIceCandidate",
-          candidate: candidate,
-          name,
-        });
-      },
-      rtcPeer: null,
-      dispose() {
-        console.log("Disposing participant " + this.name);
-        this.rtcPeer.dispose();
-      },
-    };
-  };
-
   const receiveVideo = (sender) => {
-    const participant = Participant({ name: sender, sendMessage });
+    const participant = new Participant(sender, sendMessage);
     participants.current[sender] = participant;
 
     //상대가 고객이라면 -> 소리만 받음
@@ -56,19 +57,12 @@ const useWebRTC = ({
     if (isRealtor) {
       constraints = {
         audio: true,
-        video: false,
+        video: true,
       };
     } else {
       constraints = {
         audio: true,
-        video: {
-          mandatory: {
-            width: 1920,
-            height: 1080,
-            maxFrameRate: 30,
-            minFrameRate: 10,
-          },
-        },
+        video: true,
       };
     }
 
@@ -92,7 +86,8 @@ const useWebRTC = ({
   return {
     //상대가 연결되었습니다
     onNewParticipant(request) {
-      receiveVideo(request.name);
+      console.log("누가 왔고 무슨 요청인가요 이게", request);
+      if (!request.data) receiveVideo(request.name);
     },
 
     //비디오가 온다네
@@ -109,23 +104,14 @@ const useWebRTC = ({
 
     //나 자신과의 연결임 이거
     onExistingParticipants(msg) {
-      console.log(`onExistingParticipants 작동중...`);
+      console.log(`onExistingParticipants 작동중...`, isRealtor);
 
       const constraints = {
         audio: true,
-        video: isRealtor
-          ? {
-              mandatory: {
-                width: 1920,
-                height: 1080,
-                maxFrameRate: 30,
-                minFrameRate: 10,
-              },
-            }
-          : false,
+        video: true,
       };
 
-      const participant = Participant({ name, sendMessage });
+      const participant = new Participant(name, sendMessage);
       participants.current[name] = participant;
 
       var options = {
@@ -170,8 +156,6 @@ const useWebRTC = ({
       for (let key in participants.current) {
         participants.current[key].dispose();
       }
-
-      socket.current.close();
     },
   };
 };

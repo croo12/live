@@ -16,6 +16,13 @@
         span {
           display: flex;
           width: 30%;
+                        &.active {
+                            background-color: rgba(66, 211, 149, 1);
+                            color: white;
+                            font-weight: bold;
+                        }
+                    }
+                }
 
           .btn {
             background-color: white;
@@ -60,6 +67,13 @@
           span {
             display: flex;
             width: 100%;
+                            &.active {
+                                background-color: rgba(66, 211, 149, 1);
+                                color: white;
+                                font-weight: bold;
+                            }
+                        }
+                    }
 
             .btn {
               background-color: white;

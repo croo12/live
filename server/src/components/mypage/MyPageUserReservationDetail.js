@@ -2,15 +2,12 @@ import classes from "./MyPageUserReservationDetail.module.scss";
 import ListBox from "../../UI/ListBox";
 import HouseCardContent2 from "../HouseCardContent2";
 import { getReservationDetail } from "../../apis/reservationApis"
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
-const MyPageUserReservationDetail = ({
-  props
-}) => {
-  // const {state} = useLocation();
-  // console.log(state);
+const MyPageUserReservationDetail = (props) => {
+  const navigation = useNavigate();
   const onReservationChangeHandler = () => {
-    props.onDetailReservationHandler(true);
+    navigation("/mypage/user/user-reservation");
   };
   const getLoaderData = useLoaderData().data;
 
@@ -26,7 +23,12 @@ const MyPageUserReservationDetail = ({
         <ListBox dataArray={getLoaderData.itemList} direction={false}>
           <HouseCardContent2 />
         </ListBox>
-        <button onClick={onReservationChangeHandler}>되돌아가기</button>
+        <button
+          style={{ cursor: "pointer" }}
+          onClick={onReservationChangeHandler}
+        >
+          되돌아가기
+        </button>
       </div>
     </div>
   );

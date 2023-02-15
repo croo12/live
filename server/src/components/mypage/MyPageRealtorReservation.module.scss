@@ -16,6 +16,13 @@
         span {
           display: flex;
           width: 30%;
+                        &.active {
+                            background-color: rgba(66, 211, 149, 1);
+                            color: white;
+                            font-weight: bold;
+                        }
+                    }
+                }
 
           .btn {
             background-color: white;
@@ -57,9 +64,19 @@
             text-align: left;
           }
 
+<<<<<<< server/src/components/mypage/MyPageRealtorReservation.module.scss
           span {
             display: flex;
             width: 100%;
+=======
+                            &.active {
+                                background-color: rgba(66, 211, 149, 1);
+                                color: white;
+                                font-weight: bold;
+                            }
+                        }
+                    }
+>>>>>>> server/src/components/mypage/MyPageRealtorReservation.module.scss
 
             .btn {
               background-color: white;
