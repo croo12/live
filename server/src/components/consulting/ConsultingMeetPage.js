@@ -94,7 +94,7 @@ const ConsultingMeetPage = ({
 
         socket.current.send(JSON.stringify({ id: "closeRoom" }));
         setInfo("상담을 종료합니다...");
-        setTimeOut(setInfo(""), 2000);
+        setTimeout(setInfo(""), 2000);
         setBlock(false);
         break;
 
