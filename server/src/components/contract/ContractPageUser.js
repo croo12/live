@@ -15,6 +15,8 @@ const ContractPageUser = () => {
     userMoveOnDate: "",
   });
 
+  console.log(forSaleInfo);
+
   const [tenantInfo, setTeanatInfo] = useState({
     address: "",
     addressDetail: "",
@@ -47,10 +49,16 @@ const ContractPageUser = () => {
         <ContractInfo realtorInfoList={data.data.realtorInfo} />
       </section>
       <section>
-        <ContractForSale itemInfoList={data.data.itemInfo} fx={setForSaleInfo} />
+        <ContractForSale
+          itemInfoList={data.data.itemInfo}
+          fx={setForSaleInfo}
+        />
       </section>
       <section>
-        <ContractTenantInfo userInfoList={data.data.userInfo} fx={setTeanatInfo} />
+        <ContractTenantInfo
+          userInfoList={data.data.userInfo}
+          fx={setTeanatInfo}
+        />
       </section>
       <section>
         <ContractRequireInfo fx={setRequireInfo} />

@@ -3,6 +3,7 @@ import { BsFillBellFill, BsSearch } from "react-icons/bs";
 import { TfiWrite } from "react-icons/tfi";
 import classes from "./MyPageRealtor.module.scss";
 import sample from "../../assets/image/sample.jpg";
+import star from "../../assets/image/star.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../common/AuthProtector";
 
@@ -44,7 +45,9 @@ const MyPageRealtor = () => {
                   <span>중개사 회원</span>
                   <button className={classes.goDetail} onClick={onClickHandler}>개인정보 조회</button>
                 </p>
-                <div className={classes.temperature}>별점 ★ {userInfo.score}</div>
+                <div className={classes.temperature}> 
+                <img alt="★" src={star} className={classes.star}></img> 
+                {userInfo.score}</div>
               </div>
             </div>
           </div>

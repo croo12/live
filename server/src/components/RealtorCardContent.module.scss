@@ -49,6 +49,7 @@
     .rightDesc {
       flex: 2;
       margin: 6% 0 8% 0;
+
       .realtorName {
         font-size: 1rem;
       }
@@ -57,6 +58,12 @@
 
   .downCard {
     padding: 8% 0;
+    .star {
+      flex: 5;
+      width: 6%;
+      padding: 0;
+      margin-right: 2%;
+    }
   }
 }
 
@@ -138,6 +145,7 @@
 
   .rightDesc {
     flex: 4;
+    padding: 2%;
     display: flex;
     margin-top: 3%;
     font-size: 1.1rem;
@@ -145,10 +153,11 @@
     .realtorOfficeInfo {
       flex: 2.5;
 
-      h3 {
-      }
+      h3 {}
 
       .realtorName {
+        padding: 0 0 5% 0;
+
         span {
           font-size: 0.8rem;
           color: rgba(112, 112, 112, 1);
@@ -179,6 +188,63 @@
   }
 }
 
+@media(max-width:768px) {
+  .realtorContractContent {
+    padding: 5% 0;
+    // display: flex;
+    border: 1px solid #42d395;
+    border-radius: 8px;
+
+    .leftImg {
+      display: none;
+    }
+
+    .rightDesc {
+      // flex: 4;
+      padding: 3%;
+      display: flex;
+      margin-top: 3%;
+      font-size: 1.1rem;
+
+      .realtorOfficeInfo {
+        flex: 2.5;
+
+        h3 {}
+
+        .realtorName {
+          padding: 0 0 2% 0;
+
+          span {
+            font-size: 0.8rem;
+            color: rgba(112, 112, 112, 1);
+          }
+        }
+
+        .realtorInfo {
+          padding: 2% 0 0 0;
+          font-size: 0.9rem;
+          color: rgba(112, 112, 112, 1);
+        }
+
+        .realtorAddress {
+          padding: 2% 0 0 0;
+          font-size: 1rem;
+        }
+
+        .realtorPhone {
+          padding: 2% 0 0 0;
+          font-size: 1rem;
+        }
+      }
+
+      .realtorNum {
+        flex: 1;
+        color: #ffcd1d;
+      }
+    }
+  }
+}
+
 //reservation card content
 .realtorReservationCard {
   border: 1px solid rgba(187, 187, 187, 1);
@@ -203,7 +269,7 @@
     width: calc(30%);
     margin-right: (4%);
 
-    > img {
+    >img {
       width: 72px;
       height: 72px;
 
@@ -218,7 +284,8 @@
     h4 {
       font-size: 0.9em;
       margin-bottom: 5px;
-      > span {
+
+      >span {
         color: #ffcd1d;
       }
     }
@@ -228,7 +295,7 @@
         font-size: 14px;
         color: rgba(112, 112, 112, 1);
 
-        > span {
+        >span {
           font-size: 1.2vw;
           font-weight: 700;
 
