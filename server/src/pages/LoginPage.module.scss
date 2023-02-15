@@ -1,8 +1,6 @@
 .login {
   width: 100%;
-  height: calc(
-    100vh - 72px - 120px
-  ); // 전체 - 헤더높이 - 푸터높이 ( 스크롤 없애고 딱 맞추기위해 )
+  height: calc(100vh - 72px - 120px); // 전체 - 헤더높이 - 푸터높이 ( 스크롤 없애고 딱 맞추기위해 )
   min-height: 680px;
 
   .section {

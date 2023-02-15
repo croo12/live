@@ -6,44 +6,27 @@
   color: #fafafa;
 
   &.isActive0 {
-    background: linear-gradient(
-        115.11deg,
-        rgba(255, 255, 255, 0.5) -3.35%,
-        rgba(255, 255, 255, 0) 107.02%
-      ),
-      #30d08b;
+    background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30d08b;
     box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive1 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #2896e6 -4.52%, #31d5f9 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive2 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #f9b32a -4.52%, #f52ea6 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive3 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #7e18ff -4.52%, #d885ff 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
@@ -83,44 +66,27 @@
     padding: 15px 0;
 
     &.isActive0 {
-      background: linear-gradient(
-          115.11deg,
-          rgba(255, 255, 255, 0.5) -3.35%,
-          rgba(255, 255, 255, 0) 107.02%
-        ),
-        #30d08b;
+      background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30d08b;
       box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive1 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #2896e6 -4.52%, #31d5f9 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive2 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #f9b32a -4.52%, #f52ea6 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive3 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #7e18ff -4.52%, #d885ff 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;

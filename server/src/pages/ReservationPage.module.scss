@@ -1,96 +1,87 @@
-.reserveHeader {
+.reservationContainer {
   background-color: #0f4e33;
-  height: 20vw;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  h1 {
-    display: inline-block;
-
-    text-align: left;
-    color: #fafafa;
-
+  .reserveHeader {
     width: 80%;
-    margin: 4vw auto;
-  }
-
-  .reservationSearchBoxContainer {
-    padding-bottom: 2vw;
-
-    > h3 {
+    margin: auto;
+    height: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    h1 {
       display: inline-block;
-
-      margin: 0 auto;
-      padding: 0;
-      color: #fafafa;
-      width: 80%;
-
-      padding: 1vw;
-
       text-align: left;
+      color: #fafafa;
+      width: 100%;
+      padding-top: 2vw;
+      margin: 4vw auto;
+    }
+    .reservationSearchBoxContainer {
+      width: 100%;
+      padding-bottom: 2vw;
+      > h3 {
+        display: inline-block;
+        margin: 0 auto;
+        padding: 0;
+        color: #fafafa;
+        width: 100%;
+        padding: 1vw 1vw 1vw 0;
+        text-align: left;
+      }
     }
   }
 }
 
-.content {
+.contentContainer {
   display: flex;
-
   margin: 0 auto;
-
-  width: 90%;
+  width: 80%;
   padding-top: 32px;
-  justify-content: center;
+  min-height: 400px;
 }
 
-.listBox {
-  padding: 32px;
-
-  h2 {
-    text-align: left;
-    margin-bottom: 16px;
-  }
-
-  .list {
-    min-height: 300px;
-  }
-}
-
-.nullCard {
-  padding: 12px;
-  width: 24vw;
-  height: 50vh;
-
-  color: rgba(187, 187, 187, 1);
-
+.listBoxContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: rgba(250, 250, 250, 1);
+  margin: 0 auto;
+  width: 80%;
+  padding-top: 32px;
+  min-height: 200px;
+  .listItemContainer {
+    h2 {
+      text-align: left;
+      margin: 2em 0 1em 0;
+    }
+    .list {
+      li {
+        margin: 0;
+      }
+      min-height: 200px;
+      .listEmptyContainer {
+        width: 100vw;
+        height: 50vh;
+        color: rgba(187, 187, 187, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(250, 250, 250, 1);
+      }
+    }
+  }
 }
 
 .infomationBox {
   display: flex;
-
   border: 1px solid rgba(66, 211, 149, 1);
   border-radius: 12px;
-
   padding: 32px;
   width: 80%;
-
   margin: 0 auto;
   font-weight: 500;
-
   line-height: 190%;
-
   background-color: (250, 250, 250, 1);
 
   .iconContainer {
     width: 6vw;
     height: 6vw;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,16 +89,13 @@
     svg {
       width: 5vw;
       height: 5vw;
-
       color: rgba(66, 211, 149, 1);
-
       margin-right: 2vw;
     }
   }
 
   .ulContainer {
     display: flex;
-
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -136,7 +124,6 @@
     font-size: 18px;
     height: 24px;
     color: #050505;
-
     margin-bottom: 32px;
   }
 
@@ -148,7 +135,6 @@
     border: 1px solid #d9d9d9;
     padding: 4px 12px;
     border-radius: 6px;
-
     margin-bottom: 12px;
     resize: none;
   }
@@ -160,23 +146,18 @@
 
 .reserveBtnContainer {
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   padding: 4vw;
 
   button {
     width: 16vw;
     height: 4vw;
-
     background-color: #42d395;
     border: 0;
     border-radius: 8px;
-
     color: #fafafa;
     font-weight: 700;
-
     cursor: pointer;
   }
 }

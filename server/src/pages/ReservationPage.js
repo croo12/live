@@ -1,7 +1,6 @@
-import { ReservationHouseCardContent } from "../components/HouseCardContent";
 import ReservationLeftDiv from "../components/reservation/ReservationLeftDiv";
 import ReservationRightDiv from "../components/reservation/ReservationRightDiv";
-import ListBox from "../UI/ListBox";
+import ReservationNullCard from "../components/reservation/ReservationNullCard";
 import ReservationSearchBox from "../components/reservation/ReservationSearchBox";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,14 +8,11 @@ import classes from "./ReservationPage.module.scss";
 import { FiAlertCircle } from "react-icons/fi";
 import { useLoaderData } from "react-router-dom";
 import axiosInstance from "../util/axios";
-import {
-  registResevation,
-  searchRealtorList,
-  searchReservationRealtorDetail,
-} from "../apis/reservationApis";
+import { registResevation, searchRealtorList, searchReservationRealtorDetail } from "../apis/reservationApis";
 import Modal from "../UI/Modal";
 import { reservedItemAction } from "../store/reserved-item-slice";
 import CustomAlert from "../UI/Alert";
+import ListBox from "../UI/ListBox";
 
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
@@ -143,40 +139,35 @@ const ReservationPage = () => {
 
   return (
     <>
-      <div className={classes.reserveHeader}>
-        <h1>예약하기</h1>
+      <div className={classes.reservationContainer}>
+        <div className={classes.reserveHeader}>
+          <h1>예약하기</h1>
 
-        <div className={classes.reservationSearchBoxContainer}>
-          <h3>어느 지역을 원하세요?</h3>
-          <ReservationSearchBox
-            clickSearchEventHandler={clickSearchEventHandler}
-            sidos={sidos}
-          />
+          <div className={classes.reservationSearchBoxContainer}>
+            <h3>어느 지역을 원하세요?</h3>
+            <ReservationSearchBox
+              clickSearchEventHandler={clickSearchEventHandler}
+              sidos={sidos}
+            />
+          </div>
         </div>
       </div>
-      <div className={classes.content}>
+      <div className={classes.contentContainer}>
         <ReservationLeftDiv
           realtors={realtorList}
           clickEventHandler={clickRealtorEventHandler}
         />
         <ReservationRightDiv realtorDetail={realtorDetail} />
       </div>
-      <div className={classes.listBox}>
-        <h2>내가 선택한 매물</h2>
-        <div className={classes.list}>
-          <ListBox
-            dataArray={selectedItems.length === 0 ? [1] : selectedItems}
-            direction={true}
-            toStart={true}
-          >
-            {selectedItems.length === 0 ? (
-              <NullCard />
-            ) : (
-              <ReservationHouseCardContent
-                removeItemHandler={removeItemHandler}
-              />
-            )}
-          </ListBox>
+      <div className={classes.listBoxContainer}>
+        <div className={classes.listItemContainer}>
+          <h2>내가 선택한 매물</h2>
+          <div className={classes.list}>
+            <ReservationNullCard
+              selectedItems={selectedItems}
+              removeItemHandler={removeItemHandler}
+            />
+          </div>
         </div>
       </div>
       <div>
@@ -229,10 +220,7 @@ const DoReserve = (props) => {
   return (
     <div className={classes.doReserve}>
       <label>요청사항</label>
-      <textarea
-        ref={detail}
-        placeholder={`세부적인 요청사항이 있다면 입력해주세요.`}
-      ></textarea>
+      <textarea ref={detail} placeholder={`세부적인 요청사항이 있다면 입력해주세요.`}></textarea>
       <div className={classes.reserveBtnContainer}>
         <button
           onClick={() => {
@@ -246,10 +234,6 @@ const DoReserve = (props) => {
       </div>
     </div>
   );
-};
-
-const NullCard = () => {
-  return <div className={classes.nullCard}>선택한 매물이 없어요</div>;
 };
 
 export const sidoLoader = async () => {

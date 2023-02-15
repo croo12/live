@@ -7,15 +7,7 @@ import classes from "./SelectBox.module.scss";
  * @param { onChange Function } changeEventHandler
  * @returns { conponent : SelectBox }
  */
-const SelectBox = ({
-  dataArray,
-  id,
-  defaultValue,
-  value,
-  name,
-  first,
-  changeEventHandler,
-}) => {
+const SelectBox = ({ dataArray, id, defaultValue, value, name, first, changeEventHandler }) => {
   return (
     <div className={classes.customSelector}>
       <select
@@ -23,6 +15,7 @@ const SelectBox = ({
         id={id}
         onChange={changeEventHandler}
         value={defaultValue}
+        style={id === "sidoSelector" ? { borderTopLeftRadius: "4px", borderBottomLeftRadius: "4px" } : {}}
       >
         {first && <option value=""> {first} </option>}
         {dataArray?.map((el, idx) => {

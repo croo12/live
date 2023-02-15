@@ -163,13 +163,7 @@
           border-radius: 6px;
 
           &:read-only {
-            background: repeating-linear-gradient(
-              -45deg,
-              #ebebeb,
-              #ebebeb 2px,
-              #fafafa 0,
-              #fafafa 12px
-            ) !important;
+            background: repeating-linear-gradient(-45deg, #ebebeb, #ebebeb 2px, #fafafa 0, #fafafa 12px) !important;
           }
         }
         textarea {
