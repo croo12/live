@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import PreviewCarousel from "./house/PreviewCarousel";
 import HouseDetailCom from "./HouseDetailCom";
-//import classes from "./HouseCardContent.module.scss";
-import classes from "./HouseCardContent2.module.scss";
+import classes from "./HouseCardContent.module.scss";
+import classes2 from "./HouseCardContent2.module.scss";
 import sample from "../assets/image/sample.jpg";
 
 const HouseCardContent = ({
@@ -57,7 +57,7 @@ const HouseCardContent = ({
         onClick={() => {
           searchedListClickHandler(itemData);
         }}
-        className={classes.HouseCardContent2}
+        className={classes2.HouseCardContent2}
         style={{ cursor: "pointer" }}
       >
         <div className={classes.houseContent}>

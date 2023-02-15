@@ -108,6 +108,8 @@
   background-color: rgba(2, 47, 28, 1);
   border-radius: 12px;
 
+  max-width: 300px;
+
   &::after {
     content: "";
     background: linear-gradient(
