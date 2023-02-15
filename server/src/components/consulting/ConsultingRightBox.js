@@ -32,7 +32,12 @@ const ConsultingRightBox = ({
         }`}
       >
         <Outlet
-          context={{ sessionId, statusChangeHandler, clickHandler, detail }}
+          context={{
+            sessionId,
+            statusChangeHandler,
+            clickHandler,
+            detail,
+          }}
         />
       </div>
     </>

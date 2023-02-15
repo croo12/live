@@ -58,9 +58,15 @@ const MyPageUserContract = () => {
 
                 <div className={classes.consultingList}>
                   <div>
-                    <ListBox dataArray={contractItem} direction={false}>
-                      <ContractCardContent />
-                    </ListBox>
+                    {contractItem.length !== 0 ? (
+                      <ListBox dataArray={contractItem} direction={false}>
+                        <ContractCardContent />
+                      </ListBox>
+                    ) : (
+                      <li>
+                        <p> 해당 내역은 존재하지 않습니다.</p>
+                      </li>
+                    )}
                   </div>
                 </div>
               </div>

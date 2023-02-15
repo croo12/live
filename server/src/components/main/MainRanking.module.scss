@@ -3,7 +3,7 @@
     margin: auto;
     padding: 10% 0 0 0;
     border: 0;
-    width: 67.7%;
+    width: 80%;
 
     h2 {
       text-align: left;
@@ -11,19 +11,19 @@
       margin-bottom: 5%;
     }
 
-    .popularity{
-      background: linear-gradient(142.52deg, #FFB291 14.78%, #F40909 71.78%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .popularity {
+      background: linear-gradient(142.52deg, #ffb291 14.78%, #f40909 71.78%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .realtor{
-      font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 700;
-      
-        color: #42D395;
+    .realtor {
+      font-family: "Roboto";
+      font-style: normal;
+      font-weight: 700;
+
+      color: #42d395;
     }
 
     .buttonBox {
@@ -44,10 +44,9 @@
         &.active {
           background-color: #42d395;
           color: white;
-          border: 0.3px solid #008A4F;
+          border: 0.3px solid #008a4f;
         }
       }
     }
   }
 }
-

@@ -28,17 +28,38 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
         >
           &lt;
         </p>
-        {pageNumbers.map((number) => (
-          <li
-            key={number}
-            className={currentPage === number ? classes.active : undefined}
-            onClick={() => {
-              setCurrentPage(number);
-            }}
-          >
-            <p>{number}</p>
-          </li>
-        ))}
+        {pageNumbers.length !== 0
+          ? pageNumbers
+              .slice(
+                currentPage - 3 <= 0 ? 0 : currentPage - 3,
+                pageNumbers.length < currentPage + 2
+                  ? pageNumbers.length
+                  : currentPage + 2
+              )
+              .map((number) => (
+                <li
+                  key={number}
+                  className={
+                    currentPage === number ? classes.active : undefined
+                  }
+                  onClick={() => {
+                    setCurrentPage(number);
+                  }}
+                >
+                  <p>{number}</p>
+                </li>
+              ))
+          : [1].map((number) => (
+              <li
+                key={number}
+                className={currentPage === number ? classes.active : undefined}
+                onClick={() => {
+                  setCurrentPage(number);
+                }}
+              >
+                <p>{number}</p>
+              </li>
+            ))}
         <p
           className={classes.moveBtn}
           onClick={

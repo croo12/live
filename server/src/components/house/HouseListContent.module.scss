@@ -17,6 +17,10 @@
       border-radius: 6px;
       border: 1px solid white;
     }
+
+    @media (max-width: 1024px) {
+      font-size: calc(16 * 0.1vw);
+    }
   }
 
   :hover {

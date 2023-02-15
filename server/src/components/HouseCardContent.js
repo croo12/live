@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import PreviewCarousel from "./house/PreviewCarousel";
 import HouseDetailCom from "./HouseDetailCom";
-//import classes from "./HouseCardContent.module.scss";
-import classes from "./HouseCardContent2.module.scss";
+import classes from "./HouseCardContent.module.scss";
+// import classes2 from "./HouseCardContent2.module.scss";
 import sample from "../assets/image/sample.jpg";
 
 const HouseCardContent = ({
@@ -57,7 +57,7 @@ const HouseCardContent = ({
         onClick={() => {
           searchedListClickHandler(itemData);
         }}
-        className={classes.HouseCardContent2}
+        className={classes2.HouseCardContent2}
         style={{ cursor: "pointer" }}
       >
         <div className={classes.houseContent}>
@@ -93,8 +93,6 @@ export const ConsultingHouseCardContent = (props) => {
   const [isModal, setModal] = useState(false);
 
   const clickEventHandler = () => {
-    console.log(location);
-
     if (props.clickHandler) {
       props.clickHandler(props.idx);
       return;
@@ -106,8 +104,6 @@ export const ConsultingHouseCardContent = (props) => {
       navigate("/house/detail/대충 번호");
     }
   };
-
-  console.log(props);
 
   return (
     <>
@@ -184,7 +180,10 @@ export const ReservationHouseCardContent = (props) => {
       className={`${classes.reservationItem} `}
     >
       <div className={classes.image}>
-        <img src={sample} alt="선택한 매물 목록" />
+        <img
+          src={props.itemImages?.length !== 0 ? props.itemImages[0] : sample}
+          alt="선택한 매물 목록"
+        />
       </div>
       <div>
         <h3>
@@ -196,7 +195,7 @@ export const ReservationHouseCardContent = (props) => {
       {/* <button onClick={clickEventHandler}>상세 정보 보기</button> */}
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom itemNo={props.itemNo} />
+          <HouseDetailCom itemNo={props.itemNo} isModal={true} />
         </Modal>
       )}
     </div>
@@ -232,7 +231,7 @@ export const RealtorHousesCardContent = ({
       </div>
       {isModal && (
         <Modal onConfirm={onConfirm}>
-          <HouseDetailCom itemNo={itemNo} />
+          <HouseDetailCom itemNo={itemNo} isModal={true} />
         </Modal>
       )}
     </div>

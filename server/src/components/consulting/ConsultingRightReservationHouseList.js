@@ -5,11 +5,12 @@ import {
   getConsultingDetail,
   registConsultingRoomLink,
 } from "../../apis/consultingApi";
+import { STATUS } from "../../pages/ConsultingPage";
 import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
 
 const ConsultingRightReservationHouseList = () => {
-  const { clickHandler, detail } = useOutletContext();
+  const { clickHandler, detail, statusChangeHandler } = useOutletContext();
 
   const datas = useLoaderData();
   const params = useParams();
@@ -17,6 +18,7 @@ const ConsultingRightReservationHouseList = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const dataArray = datas.itemList;
+  console.log(userInfo);
 
   useEffect(() => {
     if (userInfo.isRealtor) {
@@ -28,9 +30,23 @@ const ConsultingRightReservationHouseList = () => {
   }, []);
 
   return (
-    <ListBox toStart={true} dataArray={dataArray}>
-      <ConsultingHouseCardContent clickHandler={clickHandler} detail={detail} />
-    </ListBox>
+    <div>
+      <ListBox toStart={true} dataArray={dataArray}>
+        <ConsultingHouseCardContent
+          clickHandler={clickHandler}
+          detail={detail}
+        />
+      </ListBox>
+      {userInfo.isRealtor && (
+        <button
+          onClick={() => {
+            statusChangeHandler(STATUS.REALTOR_END_CALL);
+          }}
+        >
+          상담종료
+        </button>
+      )}
+    </div>
   );
 };
 

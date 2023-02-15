@@ -1,18 +1,22 @@
 .rightContainer {
-  flex: 2;
-
+  flex-grow: 3;
   h2 {
     text-align: left;
-    padding-inline-start: 1rem;
-
-    margin-bottom: 8px;
+    margin-bottom: 1em;
   }
-
-  > div {
-    > span {
-      display: block;
-      margin: auto;
+  .rightListContainer {
+    height: 100%;
+    text-align: left;
+    .rightEmptyContainer {
+      height: 100%;
+      color: rgba(187, 187, 187, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(250, 250, 250, 1);
+      box-sizing: border-box;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 26%);
+      border-radius: 4px;
     }
-    min-height: 400px;
   }
 }

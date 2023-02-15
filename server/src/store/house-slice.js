@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const houseSlice = createSlice({
   name: "house",
   initialState: {
-    houseInfo: null,
+    houseList: [],
   },
   reducers: {
-    setHouseInfo(state, action) {
-      state.houseInfo = action.payload;
+    setHouseList(state, action) {
+      state.houseList = action.payload;
     },
   },
 });

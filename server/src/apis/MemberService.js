@@ -28,19 +28,13 @@ export const userLogin = async (data, dispatch) => {
 };
 
 export const userLogout = async (dispatch) => {
-  // const { accessToken, refreshToken } = store.getState().user;
-  // console.log(accessToken, refreshToken);
-
-  // const data = {
-  //   accessToken: accessToken,
-  //   refreshToken: refreshToken,
-  // };
-
   const headers = getAuthHeader();
 
-  await axiosInstance.post("users/logout", undefined, { headers }).then((res) => {
-    dispatch(userAction.logout());
-  });
+  await axiosInstance
+    .post("users/logout", undefined, { headers })
+    .then((res) => {
+      dispatch(userAction.logout());
+    });
 };
 
 //내 정보 줘
@@ -51,16 +45,13 @@ export const getUserInfo = async (accessToken) => {
   console.log(myAccessToken);
 
   if (accessToken) {
-    console.log(`매개변수 있음 `, accessToken);
     await axiosInstance
       .get("users", {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: getAuthHeader(),
       })
       .then((res) => {
-        console.log(res);
-        const data = res.data;
-        if (data.state === 200) {
-          userInfo = data.data;
+        if (res.data.state === 200) {
+          userInfo = res.data.data;
           return userInfo;
         }
       });

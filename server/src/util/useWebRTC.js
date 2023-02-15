@@ -20,7 +20,7 @@ class Participant {
     };
 
     this.onIceCandidate = function (candidate, wp) {
-      console.log("Local candidate" + JSON.stringify(candidate));
+      // console.log("Local candidate" + JSON.stringify(candidate));
 
       sendMessage({
         id: "onIceCandidate",
@@ -39,7 +39,6 @@ class Participant {
 const useWebRTC = ({
   isRealtor,
   participants,
-  socket,
   sendMessage,
   localVideo,
   remoteVideo,
@@ -48,6 +47,8 @@ const useWebRTC = ({
   sessionId,
 }) => {
   const receiveVideo = (sender) => {
+    console.log(`비디오 받았습니다 ${sender}님`);
+
     const participant = new Participant(sender, sendMessage);
     participants.current[sender] = participant;
 
@@ -58,19 +59,12 @@ const useWebRTC = ({
     if (isRealtor) {
       constraints = {
         audio: true,
-        video: false,
+        video: true,
       };
     } else {
       constraints = {
         audio: true,
-        video: {
-          // mandatory: {
-          //   width: 1920,
-          //   height: 1080,
-          //   maxFrameRate: 30,
-          //   minFrameRate: 10,
-          // },
-        },
+        video: true,
       };
     }
 
@@ -95,7 +89,7 @@ const useWebRTC = ({
     //상대가 연결되었습니다
     onNewParticipant(request) {
       console.log("누가 왔고 무슨 요청인가요 이게", request);
-      if (!request.data) receiveVideo(request.name);
+      receiveVideo(request.name);
     },
 
     //비디오가 온다네
@@ -110,22 +104,12 @@ const useWebRTC = ({
       );
     },
 
-    //나 자신과의 연결임 이거
     onExistingParticipants(msg) {
-      console.log(`onExistingParticipants 작동중...`);
+      console.log(`onExistingParticipants 작동중...`, isRealtor);
 
       const constraints = {
         audio: true,
-        video: isRealtor,
-        // ? {
-        //     mandatory: {
-        //       width: 1920,
-        //       height: 1080,
-        //       maxFrameRate: 30,
-        //       minFrameRate: 10,
-        //     },
-        //   }
-        // : false,
+        video: true,
       };
 
       const participant = new Participant(name, sendMessage);
@@ -173,8 +157,6 @@ const useWebRTC = ({
       for (let key in participants.current) {
         participants.current[key].dispose();
       }
-
-      socket.current.close();
     },
   };
 };

@@ -8,7 +8,7 @@ import { AiOutlineSound } from "react-icons/ai";
 import { IoExitOutline, IoVolumeMuteOutline } from "react-icons/io5";
 import useWebSocket from "../../util/useWebSocket";
 import useWebRTC from "../../util/useWebRTC";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useRecording from "../../util/useRecording";
 import { usePrompt } from "../../util/usePrompt";
 
@@ -28,7 +28,6 @@ const ConsultingMeetPage = ({
 
   //비디오 가운데에 나오는 문구 세팅용
   const [info, setInfo] = useState("준비중...");
-  const params = useParams();
 
   //이름 만들기용
   const name = useRef(isRealtor ? "중개사" : "고객");
@@ -43,7 +42,7 @@ const ConsultingMeetPage = ({
   const [audio, setAudio] = useState(true);
 
   const participants = useRef({});
-  const { socket, responseMsg, sendMessage } = useWebSocket();
+  const { socket, responseMsg, sendMessage } = useWebSocket(sessionId);
   const {
     onNewParticipant,
     receiveVideoResponse,
@@ -63,12 +62,7 @@ const ConsultingMeetPage = ({
     sessionId,
   });
 
-  useEffect(() => {
-    return () => {
-      console.log(`헤헷, 들켰네요....`);
-      leaveRoom();
-    };
-  }, []);
+  const isMounted = useRef(true);
 
   useEffect(() => {
     switch (status) {
@@ -80,36 +74,21 @@ const ConsultingMeetPage = ({
         //유저에게 알람을 보낸다
 
         //로딩 돌리기?
-        setInfo(`유저의 접속을 기다리고 있습니다...`);
+        setInfo(`유저의 접속을 기다리기`);
 
         //방에 들어아고 내 화면 틀기
+        console.log("중개사 접속 시도...");
         register();
         break;
 
-      // case REALTOR_STATUS.CONNECTING:
-      //   break;
-
-      // case USER_STATUS.ENTER_SESSION:
-      //   setInfo(`중개사에게 연결 중입니다...`);
-
-      //   break;
-
-      // case USER_STATUS.CONNECTING:
-      //   setInfo(``);
-      //   break;
-
-      // case USER_STATUS.END:
-      //   setInfo(`통화 종료`);
-      //   localVideo.current.pause();
-      //   break;
+      case STATUS.REALTOR_END_CALL:
+        socket.current.send(
+          JSON.stringify({ id: "closeRoom", room: sessionId })
+        );
+        break;
 
       case STATUS.USER_ENTER:
-        while (socket.readyState !== 0) {
-          //do nothing
-        }
-
-        register();
-
+        //들어왔져염
         break;
 
       default:
@@ -127,13 +106,19 @@ const ConsultingMeetPage = ({
   });
 
   useEffect(() => {
-    console.info(`Received message: `, responseMsg);
+    if (isMounted.current) {
+      isMounted.current = false;
+      return;
+    }
+
+    console.log(`Received message: `, responseMsg);
 
     switch (responseMsg.id) {
       //나 연결하면서 원래 있던놈 죄다 연결하기
       case "existingParticipants":
         setInfo(`내 기기 연결 중...`);
         onExistingParticipants(responseMsg);
+        break;
 
       //상대가 왔다.
       case "newParticipantArrived":

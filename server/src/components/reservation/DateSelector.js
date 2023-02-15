@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import Button from "../../UI/Button";
 import Calendar from "../../UI/Calendar";
 import Modal from "../../UI/Modal";
-
 import classes from "./DateSelector.module.scss";
 
 const DateSelector = (props) => {

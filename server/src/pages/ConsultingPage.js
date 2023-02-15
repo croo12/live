@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import ConsultingMeetPage from "../components/consulting/ConsultingMeetPage";
@@ -11,6 +11,7 @@ import axiosInstance from "../util/axios";
 export const STATUS = {
   REALTOR_ENTER: 100,
   REALTOR_START_CONSULTING: 111,
+  REALTOR_END_CALL: 122,
 
   USER_ENTER: 200,
 };
@@ -20,7 +21,7 @@ const ConsultingPage = (props) => {
   const { sessionId } = useParams();
 
   const { userInfo } = useAuth();
-  const [isRealtor, toggleRealtor] = useState(userInfo.isRealtor);
+  const isRealtor = userInfo.isRealtor;
 
   const [status, setStatus] = useState(
     isRealtor ? STATUS.REALTOR_ENTER : STATUS.USER_ENTER
@@ -41,8 +42,18 @@ const ConsultingPage = (props) => {
           console.log(`연결 안함 ㅇㅋ...`);
         }
         break;
+
+      case STATUS.REALTOR_END_CALL:
+        if (confirm("정말로 종료하시겠습니까? \n 상담이 완전히 종료됩니다.")) {
+          setStatus(STATUS.REALTOR_END_CALL);
+        } else {
+          console.log("종료안함");
+        }
+        break;
     }
   };
+
+  const params = useParams();
 
   const toggleListInMobile = () => {
     toggleList(!viewList);

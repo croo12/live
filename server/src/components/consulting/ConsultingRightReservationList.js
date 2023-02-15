@@ -5,7 +5,8 @@ import ListBox from "../../UI/ListBox";
 import { ConsultingReservationCardContent } from "../ReservationCardContent";
 
 const ConsultingRightReservationList = () => {
-  const { sessionId, statusChangeHandler } = useOutletContext();
+  const { sessionId, statusChangeHandler, consultingNoSetter } =
+    useOutletContext();
 
   const [reservationRealtor, setReservationRealtor] = useState([]);
 

@@ -1,14 +1,13 @@
 import PreviewCarousel from "./house/PreviewCarousel";
 import Map from "./common/Map";
 import Icons from "../assets/Icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { reservedItemAction } from "../store/reserved-item-slice";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import classes from "./HouseDetailCom.module.scss";
 import { useEffect } from "react";
 import { getHouseByItemNo } from "../apis/houseApis";
-import { houseActions } from "../store/house-slice";
 import Modal from "../UI/Modal";
 import { useAuth } from "./common/AuthProtector";
 
@@ -94,7 +93,11 @@ const HouseDetailCom = (props) => {
         </Modal>
       )}
       {houseInfo ? (
-        <div className={classes.houseDetailCom}>
+        <div
+          className={`${classes.houseDetailCom} ${
+            props.isModal && classes.isModal
+          } `}
+        >
           {houseInfo && (
             <>
               <div className={classes.imageContent}>
