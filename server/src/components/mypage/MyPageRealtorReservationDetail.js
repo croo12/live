@@ -56,12 +56,19 @@ const MyPageRealtorReservationDetail = () => {
   return (
     <>
       <div className={classes.reservationdetailrealtor}>
-        <h2>예약 내역</h2>
         <div className={classes.date}>
+          <h2>예약 내역</h2>
           <p>
             <strong>일시</strong>
             <br />
-            {reservationDetail.consultingDate.substring(0, 10)}
+            {reservationDetail.consultingDate.substring(0, 4) +
+              "년 " +
+              (reservationDetail.consultingDate.substring(5, 6) === "0"
+                ? reservationDetail.consultingDate.substring(6, 7)
+                : reservationDetail.consultingDate.substring(5, 7)) +
+              "월 " +
+              reservationDetail.consultingDate.substring(8, 10) +
+              "일"}
           </p>
         </div>
         <div className={classes.require}>
@@ -69,17 +76,19 @@ const MyPageRealtorReservationDetail = () => {
             <strong>요청사항</strong>
           </p>
           <div className={classes.requestbox}>
-            <p>{reservationDetail.requirement}</p>
+            <pre>{reservationDetail.requirement}</pre>
           </div>
           <br />
           <hr />
         </div>
         <div className={classes.forsale}>
-          <h3>상담 매물</h3>
-          <button className={classes.btn1}>매물등록</button>
+          <div className={classes.saleHeader}>
+            <h2>상담 매물</h2>
+            <button className={classes.btn1}>매물등록</button>
+          </div>
           <div className={classes.selectlocation}>
             <h4>어떤 매물을 원하세요?</h4>
-            <div>
+            <div className={classes.searchBox}>
               <MyReservationSearchBox
                 sidoList={sidoList}
                 searchedListClickHander={searchedListClickHander}

@@ -87,13 +87,14 @@
 
       transform: translateY(100%);
 
-      border: 1px solid black;
-      border-radius: 1rem;
-      padding: 1rem;
+      border: 1px solid #bbbbbb;
+      border-radius: 8px;
+      padding: 1em;
 
       background-color: #fafafa;
 
-      ul li {
+      li {
+        width: 100%;
         cursor: pointer;
       }
     }
