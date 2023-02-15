@@ -4,7 +4,7 @@ import Modal from "../../UI/Modal";
 import SearchAddress from "../common/SearchAddress";
 import classes from "./HouseRegist.module.scss";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { findHouseByAddress, registHouseData } from "../../apis/houseApis";
 import { useNavigate } from "react-router-dom";
 
@@ -74,6 +74,10 @@ const HouseRegist = () => {
   const terrace = useRef();
   const veranda = useRef();
   const washingMachine = useRef();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   const setImageHandler = (data) => {
     setImages(data);

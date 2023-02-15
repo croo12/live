@@ -72,11 +72,16 @@
         width: 13em;
         height: 2.5em;
         float: right;
-        color: #42d395;
         font-weight: 700;
+        color: #42d395;
         background-color: white;
         border: 1px solid #42d395;
         border-radius: 4px;
+        cursor: pointer;
+      }
+      .btn1:hover {
+        color: white;
+        background-color: #42d395;
       }
     }
 
