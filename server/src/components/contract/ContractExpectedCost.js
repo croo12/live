@@ -71,7 +71,7 @@ const ContractExpectedCost = (props) => {
             "Content-Type": "application/json",
           },
         });
-        console.log(result);
+        alert("계약 요청이 완료되었습니다!");
       } else {
         alert("필수 약관에 모두 동의해주세요!");
       }
@@ -156,7 +156,7 @@ const ContractExpectedCost = (props) => {
                   onChange={allBtnCheck}
                 />{" "}
                 <strong>약관에 모두 동의합니다.</strong>
-                <hr />
+                <hr className={classes.costLine} />
                 <div className={classes.agreeCheck}>
                   <div className={classes.serviceAgree}>
                     <input
@@ -189,10 +189,11 @@ export default ContractExpectedCost;
 
 export const ContractExpectedCostDetailUser = (props) => {
   const expectedCost = {
-    balance: props.contractInfoList.balance,
-    commission: props.contractInfoList.commission,
-    downPayment: props.contractInfoList.downPayment,
+    balance: props.contractInfoList.balance * 10000,
+    commission: props.contractInfoList.commission * 10000,
+    downPayment: props.contractInfoList.downPayment * 10000,
   };
+
   return (
     <>
       <div className={classes.expectedCost}>
@@ -236,17 +237,46 @@ export const ContractExpectedCostDetailUser = (props) => {
 };
 
 export const ContractExpectedCostDetailRealtor = (props) => {
-  const commissionRef = useRef();
+  const formData = useRef();
   const data = useLoaderData();
 
+  const deposit = props.forSaleInfo.deposit;
+  const rent = props.forSaleInfo.rent;
+
+  let balance = deposit * 0.9;
+  let downPayment = deposit * 0.1;
+
+  let commission = 0;
+  let transactionAmount = deposit + rent * 100;
+  transactionAmount = deposit + rent * 100;
+  if (transactionAmount < 50000000) {
+    transactionAmount = deposit + rent * 70;
+  }
+
+  if (transactionAmount < 50000000) {
+    commission = transactionAmount * 0.005;
+    if (commission > 200000) {
+      commission = 200000;
+    }
+  } else if (transactionAmount < 100000000) {
+    commission = transactionAmount * 0.004;
+    if (commission > 300000) {
+      commission = 300000;
+    }
+  } else if (transactionAmount < 600000000) {
+    commission = transactionAmount * 0.003;
+  } else if (transactionAmount < 1200000000) {
+    commission = transactionAmount * 0.004;
+  } else if (transactionAmount < 1500000000) {
+    commission = transactionAmount * 0.005;
+  } else {
+    commission = transactionAmount * 0.006;
+  }
+
+  balance *= 10000;
+  downPayment *= 10000;
+
   const statusNum = data.data.contractInfo.status;
-
-  console.log(data);
-
-  const expectedCost = {
-    balance: props.contractInfoList.balance,
-    downPayment: props.contractInfoList.downPayment,
-  };
 
   const [allCheck, setAllCheck] = useState(false);
   const [nonContactContract, setnonContactContract] = useState(false);
@@ -255,17 +285,12 @@ export const ContractExpectedCostDetailRealtor = (props) => {
   const onChangeHandler = async () => {
     const totInfoData = {
       contractNo: props.passInfo.itemNo,
-      deposit: props.passInfo.deposit,
-      rent: props.passInfo.rent,
       mainteneceFee: props.passInfo.mainteneceFee,
       termOfContract: props.passInfo.termOfContract,
       moveOnDate: props.passInfo.moveOnDate,
       specialContract: props.passInfo.specialContract,
       commission: commission,
     };
-
-    // alert(totInfoData.contractNo);
-    // alert(props.passInfo.itemNo);
 
     try {
       if (
@@ -282,7 +307,6 @@ export const ContractExpectedCostDetailRealtor = (props) => {
             },
           }
         );
-        console.log(result.data + "!!");
       } else {
         alert("필수 약관에 모두 동의해주세요!");
       }
@@ -291,8 +315,7 @@ export const ContractExpectedCostDetailRealtor = (props) => {
     }
   };
 
-  // alert(props.passInfo.itemNo);
-
+  const url = "https://irts.molit.go.kr/";
   const onApproveHandler = async (e) => {
     e.preventDefault();
     try {
@@ -305,7 +328,10 @@ export const ContractExpectedCostDetailRealtor = (props) => {
           },
         }
       );
-      alert(result + "!!");
+      alert(
+        "계약이 승인되었습니다. 부동산 거래 전자 계약 시스템으로 이동합니다!"
+      );
+      alert(window.open(url));
     } catch (error) {
       console.log(error);
     }
@@ -313,19 +339,21 @@ export const ContractExpectedCostDetailRealtor = (props) => {
 
   const onConfirmHandler = async (e) => {
     e.preventDefault();
-    try {
-      const result = await axiosInstance.patch(
-        `contracts/${props.passInfo.itemNo}/${2}`,
-        {
-          headers: {
-            Authorization: getAuthHeader().Authorization,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      alert(result.data + "!!");
-    } catch (error) {
-      console.log(error);
+    if (window.confirm("정말로 계약을 진행하시겠습니까?")) {
+      try {
+        const result = await axiosInstance.patch(
+          `contracts/${props.passInfo.itemNo}/${2}`,
+          {
+            headers: {
+              Authorization: getAuthHeader().Authorization,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        alert("계약이 완료되었습니다!");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -341,10 +369,16 @@ export const ContractExpectedCostDetailRealtor = (props) => {
           },
         }
       );
-      alert(result.data + "!!");
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const [value, setValue] = useState(0);
+
+  const onCommissionChangeHandler = (e) => {
+    e.preventDefault();
+    setValue(formData.current.commission.value);
   };
 
   const allBtnCheck = () => {
@@ -384,35 +418,35 @@ export const ContractExpectedCostDetailRealtor = (props) => {
   }, [nonContactContract, privacy]);
 
   return (
-    <form>
-      <div className={classes.expectedCost}>
+    <form ref={formData}>
+      <div className={classes.expectedCostRealtor}>
         <div className={classes.inner}>
           <div className={classes.expectedCostContent}>
             <h2>예상 비용 안내</h2>
             <div className={classes.costBox}>
               <div className={classes.downPayment}>
                 <p>계약금</p>
-                <input
-                  defaultValue={expectedCost.downPayment + "원"}
-                  readOnly
-                />
+                <strong>{downPayment + "원"}</strong>
               </div>
               <div className={classes.balance}>
                 <p>잔금</p>
-                <input defaultValue={expectedCost.balance + "원"} readOnly />
+                <strong>{balance + "원"}</strong>
               </div>
               <div className={classes.brokerageFee}>
                 <p>중개보수</p>
-                <input id="commission" name="commission" ref={commissionRef} />
+                <input
+                  id="commission"
+                  name="commission"
+                  onChange={onCommissionChangeHandler}
+                  ref={formData}
+                />
               </div>
             </div>
             <hr className={classes.costLine} />
             <div className={classes.cost}>
               <div className={classes.totalEstimatedCost}>
                 <h5>총 예상 비용</h5>
-                <strong>
-                  {expectedCost.downPayment + expectedCost.balance}원
-                </strong>
+                <strong>{downPayment + balance + Number(value)}원</strong>
               </div>
             </div>
             <br />
@@ -445,14 +479,24 @@ export const ContractExpectedCostDetailRealtor = (props) => {
                 </div>
               </div>
             </div>
-            <button onClick={onChangeHandler}>계약 조건 수정</button>
-            {statusNum === 0 && (
-              <button onClick={onApproveHandler}>승인</button>
-            )}
-            {statusNum === 1 && (
-              <button onClick={onConfirmHandler}>완료</button>
-            )}
-            <button onClick={onQuitHandler}>거절</button>
+            <div className={classes.buttonList}>
+              <button onClick={onChangeHandler} className={classes.btn1}>
+                정보 수정
+              </button>
+              {statusNum === 0 && (
+                <button onClick={onApproveHandler} className={classes.btn2}>
+                  승인
+                </button>
+              )}
+              {statusNum === 1 && (
+                <button onClick={onConfirmHandler} className={classes.btn3}>
+                  계약 완료
+                </button>
+              )}
+              <button onClick={onQuitHandler} className={classes.btn4}>
+                계약 취소
+              </button>
+            </div>
           </div>
         </div>
       </div>

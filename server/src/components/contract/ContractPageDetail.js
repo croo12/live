@@ -14,6 +14,7 @@ import { useAuth } from "../common/AuthProtector";
 
 const ContractPageDetail = () => {
   const data = useLoaderData();
+  console.log(data);
 
   const { userInfo } = useAuth();
 
@@ -47,7 +48,7 @@ const ContractPageDetail = () => {
     commission: expectedCostInfo.commission,
   };
 
-  console.log(data.data.contractInfo.contractNo);
+  console.log(data);
 
   return (
     <>
@@ -94,6 +95,7 @@ const ContractPageDetail = () => {
         ) : (
           <ContractExpectedCostDetailRealtor
             contractInfoList={data.data.contractInfo}
+            forSaleInfo={forSaleInfo}
             passInfo={passInfo}
           />
         )}
