@@ -1,7 +1,6 @@
 package com.ssafy.live.consulting.service;
 
 import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_CONFIRMED;
-import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_PAST;
 import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_PROCESSING;
 import static com.ssafy.live.common.exception.ErrorCode.CONSULTING_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
@@ -35,10 +34,9 @@ import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -353,13 +351,13 @@ public class ConsultingService {
         Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
             .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
-        LocalDateTime start = LocalDateTime.of(java.time.LocalDate.now(),
-            LocalTime.of(9, 0, 0)); //오늘 00:00:00
-        LocalDateTime end = LocalDateTime.of(LocalDate.now().plusDays(1),
-            LocalTime.of(8, 59, 59)); //오늘 23:59:59
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
+        String now_dt = format.format(now);
 
-        List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusBetweenAndConsultingDateBetween(realtor.getNo(),
-            CONSULTING_CONFIRMED, CONSULTING_PROCESSING, start, end);
+
+        List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusBetweenAndConsultingDateStartigWith(realtor.getNo(),
+            CONSULTING_CONFIRMED.getValue(), CONSULTING_PROCESSING.getValue(), now_dt);
         List<ConsultingResponse.TodayConsulting> list = new ArrayList<>();
         consultingsList.stream().forEach(consulting -> {
             List<ConsultingItem> consultingItems = consulting.getConsultingItems();

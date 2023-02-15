@@ -6,7 +6,6 @@ import com.ssafy.live.common.domain.Entity.status.ConsultingStatus;
 import com.ssafy.live.consulting.domain.entity.Consulting;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.joda.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -29,5 +28,11 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
         ConsultingStatus status, ConsultingStatus status1);
 
     List<Consulting> findByConsultingDateBetween(LocalDateTime start, LocalDateTime end);
-    List<Consulting> findByRealtorNoAndStatusBetweenAndConsultingDateBetween(Long no, ConsultingStatus status1, ConsultingStatus status2, LocalDateTime start, LocalDateTime end);
+
+    @Query(value = "SELECT * FROM consulting "
+        + "where realtor_no = :realtorNo "
+        + "and status between :status1 and :status2 "
+        + "and consulting_date "
+        + "LIKE :date%", nativeQuery = true)
+    List<Consulting> findByRealtorNoAndStatusBetweenAndConsultingDateStartigWith(Long realtorNo, int status1, int status2, String date);
 }
