@@ -11,6 +11,7 @@ import axiosInstance from "../util/axios";
 export const STATUS = {
   REALTOR_ENTER: 100,
   REALTOR_START_CONSULTING: 111,
+  REALTOR_END_CALL: 122,
 
   USER_ENTER: 200,
 };
@@ -39,6 +40,14 @@ const ConsultingPage = (props) => {
           setStatus(STATUS.REALTOR_START_CONSULTING);
         } else {
           console.log(`연결 안함 ㅇㅋ...`);
+        }
+        break;
+
+      case STATUS.REALTOR_END_CALL:
+        if (confirm("정말로 종료하시겠습니까? \n 상담이 완전히 종료됩니다.")) {
+          setStatus(STATUS.REALTOR_END_CALL);
+        } else {
+          console.log("종료안함");
         }
         break;
     }

@@ -85,6 +85,12 @@ const ConsultingMeetPage = ({
         register();
         break;
 
+      case STATUS.REALTOR_END_CALL:
+        socket.current.send(
+          JSON.stringify({ id: "closeRoom", room: sessionId })
+        );
+        break;
+
       case STATUS.USER_ENTER:
         //들어왔져염
         break;

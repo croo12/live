@@ -10,7 +10,6 @@ const initialState = {
     profile: null,
     score: 0,
   },
-  websocket: null,
 };
 
 const userSlice = createSlice({

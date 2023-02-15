@@ -5,17 +5,17 @@ import {
   getConsultingDetail,
   registConsultingRoomLink,
 } from "../../apis/consultingApi";
+import { STATUS } from "../../pages/ConsultingPage";
 import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
 
 const ConsultingRightReservationHouseList = () => {
-  const { clickHandler, detail } = useOutletContext();
+  const { clickHandler, detail, statusChangeHandler } = useOutletContext();
 
   const datas = useLoaderData();
   const params = useParams();
 
   const userInfo = useSelector((state) => state.user.userInfo);
-  const websocket = useSelector((state) => state.user.websocket);
 
   const dataArray = datas.itemList;
 
@@ -39,9 +39,7 @@ const ConsultingRightReservationHouseList = () => {
       {userInfo.isRealtor && (
         <button
           onClick={() => {
-            websocket.send(
-              JSON.stringify({ id: "closeRoom", room: params.sessionId })
-            );
+            statusChangeHandler(STATUS.REALTOR_END_CALL);
           }}
         >
           상담종료
