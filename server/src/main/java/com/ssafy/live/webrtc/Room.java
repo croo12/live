@@ -160,6 +160,9 @@ public class Room implements Closeable {
     public void close() {
         for (final UserSession user : participants.values()) {
             try {
+                final JsonObject closeRoomMsg = new JsonObject();
+                closeRoomMsg.addProperty("id", "closeRoom");
+                user.sendMessage(closeRoomMsg);
                 user.close();
             } catch (IOException e) {
                 log.debug("ROOM {}: Could not invoke close on participant {}", this.name,
