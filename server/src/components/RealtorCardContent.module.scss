@@ -58,6 +58,12 @@
 
   .downCard {
     padding: 8% 0;
+    .star {
+      flex: 5;
+      width: 6%;
+      padding: 0;
+      margin-right: 2%;
+    }
   }
 }
 
