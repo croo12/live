@@ -18,7 +18,7 @@ const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
       <h2>공인 중개사 목록</h2>
       <div className={classes.leftListContainer}>
         {realtors?.length ? (
-          <ListBox dataArray={realtors}>
+          <ListBox dataArray={realtors} toStart={true}>
             <ReservationRealtorCardContent
               clickEventHandler={clickEventHandler}
               highlight={highlight}
@@ -26,7 +26,9 @@ const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
             />
           </ListBox>
         ) : (
-          <div className={classes.leftEmptyContainer}>현재 조회된 공인중개사가 없습니다</div>
+          <div className={classes.leftEmptyContainer}>
+            현재 조회된 공인중개사가 없습니다
+          </div>
         )}
       </div>
     </div>

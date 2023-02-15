@@ -11,6 +11,7 @@ import axiosInstance from "../util/axios";
 export const STATUS = {
   REALTOR_ENTER: 100,
   REALTOR_START_CONSULTING: 111,
+  REALTOR_END_CALL: 122,
 
   USER_ENTER: 200,
 };
@@ -20,15 +21,12 @@ const ConsultingPage = (props) => {
   const { sessionId } = useParams();
 
   const { userInfo } = useAuth();
-  const isRealtor = userInfo.isRealtor;
 
   const [status, setStatus] = useState(
-    isRealtor ? STATUS.REALTOR_ENTER : STATUS.USER_ENTER
+    userInfo.isRealtor ? STATUS.REALTOR_ENTER : STATUS.USER_ENTER
   );
   const [viewList, toggleList] = useState(false, true);
   const [recordingFiles, setRecordingFiles] = useState([]);
-
-  const consultingNoRef = useRef(-1);
 
   const orderHandler = (status) => {
     switch (status) {
@@ -43,6 +41,14 @@ const ConsultingPage = (props) => {
           console.log(`연결 안함 ㅇㅋ...`);
         }
         break;
+
+      case STATUS.REALTOR_END_CALL:
+        if (confirm("정말로 종료하시겠습니까? \n 상담이 완전히 종료됩니다.")) {
+          setStatus(STATUS.REALTOR_END_CALL);
+        } else {
+          console.log("종료안함");
+        }
+        break;
     }
   };
 
@@ -54,11 +60,17 @@ const ConsultingPage = (props) => {
 
   useEffect(() => {
     if (recordingFiles.length !== 0) {
+      const frm = new FormData();
+      frm.append(
+        "records",
+        recordingFiles[recordingFiles.length - 1],
+        "duckduck2.mp4"
+      );
+
       axiosInstance
-        .post(
-          `consultings/${consultingNo}/records`,
-          recordingFiles[recordingFiles.length - 1]
-        )
+        .post(`consultings/${params.consultingNo}/records`, frm, {
+          // type
+        })
         .then((res) =>
           console.log("Successfully sent recording to server", res)
         )
@@ -72,7 +84,7 @@ const ConsultingPage = (props) => {
         <div className={classes.video_box}>
           <ConsultingMeetPage
             userInfo={userInfo}
-            isRealtor={isRealtor}
+            isRealtor={userInfo.isRealtor}
             status={status}
             sessionId={sessionId}
             recordingFiles={recordingFiles}
@@ -82,7 +94,7 @@ const ConsultingPage = (props) => {
         </div>
         <div className={`${classes.lists} ${viewList ? classes.isActive : ""}`}>
           <ConsultingRightBox
-            isRealtor={isRealtor}
+            isRealtor={userInfo.isRealtor}
             statusChangeHandler={orderHandler}
             toggleListInMobile={toggleListInMobile}
             status={status}

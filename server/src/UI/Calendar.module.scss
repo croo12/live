@@ -59,7 +59,7 @@ $radius: 12px;
 
   &__days {
     font-size: 0;
-    
+
     span {
       width: 14.28571%;
       display: inline-block;
@@ -83,7 +83,6 @@ $radius: 12px;
         font-weight: 700;
         background-color: transparentize($primary, 0.95);
         border-radius: $radius;
-        
       }
 
       &.muted {
@@ -99,7 +98,9 @@ $radius: 12px;
         border-radius: 0;
       }
 
-      &.start, &.between, &.end {
+      &.start,
+      &.between,
+      &.end {
         background-color: $main_green;
         color: #fff;
       }
@@ -116,7 +117,8 @@ $radius: 12px;
         border-radius: $radius;
       }
 
-      &.between:nth-child(7n):after, &.start:nth-child(7n):after {
+      &.between:nth-child(7n):after,
+      &.start:nth-child(7n):after {
         content: "";
         position: absolute;
         top: 0;
@@ -126,7 +128,8 @@ $radius: 12px;
         width: 20px;
       }
 
-      &.between:nth-child(7n + 1):after, &.end:nth-child(7n + 1):after {
+      &.between:nth-child(7n + 1):after,
+      &.end:nth-child(7n + 1):after {
         content: "";
         position: absolute;
         top: 0;

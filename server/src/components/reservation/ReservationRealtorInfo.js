@@ -24,11 +24,13 @@ const ReservationRealtorInfo = ({ realtorDetail, addItemHandler }) => {
               {realtorInfo.name} <span>공인중개사</span>
             </p>
             <p className={classes.description}>{realtorInfo.description}</p>
-            <p>
-              <FiMapPin /> {realtorInfo.businessAddress}
+            <p className={classes.businessAddress}>
+              <FiMapPin />
+              <span>{realtorInfo.businessAddress}</span>
             </p>
-            <p>
-              <BsTelephone /> {realtorInfo.phone}
+            <p className={classes.phone}>
+              <BsTelephone />
+              <span>{realtorInfo.phone}</span>
             </p>
           </div>
         </div>
@@ -39,11 +41,11 @@ const ReservationRealtorInfo = ({ realtorDetail, addItemHandler }) => {
               <RealtorHousesCardContent addItemHandler={addItemHandler} />
             </ListBox>
           ) : (
-            <p>이 중개사는 현재 거래 가능한 매물이 없습니다!</p>
+            <p>현재 거래 가능한 매물이 없습니다!</p>
           )}
         </div>
         <div className={classes.reviewLists}>
-          <h3>리뷰 수 ㅣ{reviewsList.length}</h3>
+          <h3>리뷰 수 {reviewsList.length}건</h3>
           {reviewsList?.length ? (
             <>
               <ListBox dataArray={reviewsList}>
@@ -51,7 +53,7 @@ const ReservationRealtorInfo = ({ realtorDetail, addItemHandler }) => {
               </ListBox>
             </>
           ) : (
-            <p>이 중개사는 현재 조회 가능한 리뷰가 없습니다!</p>
+            <p>현재 조회 가능한 리뷰가 없습니다!</p>
           )}
         </div>
       </div>

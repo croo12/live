@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import axiosInstance, { getAuthHeader } from "../../util/axios";
 import classes from "./ContractExpectedCost.module.scss";
 
@@ -6,8 +9,8 @@ const ContractExpectedCost = (props) => {
   const deposit = props.passInfo.deposit;
   const rent = props.passInfo.rent;
 
-  const balance = deposit * 0.9;
-  const downPayment = deposit * 0.1;
+  let balance = deposit * 0.9;
+  let downPayment = deposit * 0.1;
 
   let transactionAmount = deposit + rent * 100;
   let commission = 0;
@@ -105,6 +108,18 @@ const ContractExpectedCost = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (nonContactContract === true && privacy === true) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  }, [nonContactContract, privacy]);
+
+  downPayment *= 10000;
+  balance *= 10000;
+  commission *= 10000;
+
   return (
     <>
       <div className={classes.expectedCost}>
@@ -125,7 +140,7 @@ const ContractExpectedCost = (props) => {
                 <input defaultValue={commission + "원"} readOnly />
               </div>
             </div>
-            <hr />
+            <hr className={classes.costLine} />
             <div className={classes.cost}>
               <div className={classes.totalEstimatedCost}>
                 <h5>총 예상 비용</h5>
@@ -135,16 +150,28 @@ const ContractExpectedCost = (props) => {
             <br />
             <div className={classes.agreeCondition}>
               <div className={classes.checkBox}>
-                <input type="checkbox" onChange={allBtnCheck} />{" "}
+                <input
+                  type="checkbox"
+                  checked={allCheck}
+                  onChange={allBtnCheck}
+                />{" "}
                 <strong>약관에 모두 동의합니다.</strong>
                 <hr />
                 <div className={classes.agreeCheck}>
                   <div className={classes.serviceAgree}>
-                    <input type="checkbox" onChange={nonContactCheck} />{" "}
+                    <input
+                      type="checkbox"
+                      checked={nonContactContract}
+                      onChange={nonContactCheck}
+                    />{" "}
                     <p> [필수] 비대면 계약 서비스 이용 약관 동의</p>
                   </div>
                   <div className={classes.personalInfoAgree}>
-                    <input type="checkbox" onChange={privacyCheck} />{" "}
+                    <input
+                      type="checkbox"
+                      checked={privacy}
+                      onChange={privacyCheck}
+                    />{" "}
                     <p> [필수] 개인정보 수집 및 이용동의 </p>
                   </div>
                 </div>
@@ -159,3 +186,276 @@ const ContractExpectedCost = (props) => {
 };
 
 export default ContractExpectedCost;
+
+export const ContractExpectedCostDetailUser = (props) => {
+  const expectedCost = {
+    balance: props.contractInfoList.balance,
+    commission: props.contractInfoList.commission,
+    downPayment: props.contractInfoList.downPayment,
+  };
+  return (
+    <>
+      <div className={classes.expectedCost}>
+        <div className={classes.inner}>
+          <div className={classes.expectedCostContent}>
+            <h2>예상 비용 안내</h2>
+            <div className={classes.costBox}>
+              <div className={classes.downPayment}>
+                <p>계약금</p>
+                <input
+                  defaultValue={expectedCost.downPayment + "원"}
+                  readOnly
+                />
+              </div>
+              <div className={classes.balance}>
+                <p>잔금</p>
+                <input defaultValue={expectedCost.balance + "원"} readOnly />
+              </div>
+              <div className={classes.brokerageFee}>
+                <p>중개보수</p>
+                <input defaultValue={expectedCost.commission + "원"} readOnly />
+              </div>
+            </div>
+            <hr className={classes.costLine} />
+            <div className={classes.cost}>
+              <div className={classes.totalEstimatedCost}>
+                <h5>총 예상 비용</h5>
+                <strong>
+                  {expectedCost.downPayment +
+                    expectedCost.balance +
+                    expectedCost.commission}
+                  원
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export const ContractExpectedCostDetailRealtor = (props) => {
+  const commissionRef = useRef();
+  const data = useLoaderData();
+
+  const statusNum = data.data.contractInfo.status;
+
+  console.log(data);
+
+  const expectedCost = {
+    balance: props.contractInfoList.balance,
+    downPayment: props.contractInfoList.downPayment,
+  };
+
+  const [allCheck, setAllCheck] = useState(false);
+  const [nonContactContract, setnonContactContract] = useState(false);
+  const [privacy, setPrivacy] = useState(false);
+
+  const onChangeHandler = async () => {
+    const totInfoData = {
+      contractNo: props.passInfo.itemNo,
+      deposit: props.passInfo.deposit,
+      rent: props.passInfo.rent,
+      mainteneceFee: props.passInfo.mainteneceFee,
+      termOfContract: props.passInfo.termOfContract,
+      moveOnDate: props.passInfo.moveOnDate,
+      specialContract: props.passInfo.specialContract,
+      commission: commission,
+    };
+
+    // alert(totInfoData.contractNo);
+    // alert(props.passInfo.itemNo);
+
+    try {
+      if (
+        allCheck === true ||
+        (nonContactContract === true && privacy === true)
+      ) {
+        const result = await axiosInstance.patch(
+          `contracts/${totInfoData.contractNo}`,
+          totInfoData,
+          {
+            headers: {
+              Authorization: getAuthHeader().Authorization,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(result.data + "!!");
+      } else {
+        alert("필수 약관에 모두 동의해주세요!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // alert(props.passInfo.itemNo);
+
+  const onApproveHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axiosInstance.patch(
+        `contracts/${props.passInfo.itemNo}/${1}`,
+        {
+          headers: {
+            Authorization: getAuthHeader().Authorization,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      alert(result + "!!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onConfirmHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axiosInstance.patch(
+        `contracts/${props.passInfo.itemNo}/${2}`,
+        {
+          headers: {
+            Authorization: getAuthHeader().Authorization,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      alert(result.data + "!!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onQuitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axiosInstance.patch(
+        `contracts/${props.passInfo.itemNo}/${3}`,
+        {
+          headers: {
+            Authorization: getAuthHeader().Authorization,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      alert(result.data + "!!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const allBtnCheck = () => {
+    if (allCheck === false) {
+      setAllCheck(true);
+      setnonContactContract(true);
+      setPrivacy(true);
+    } else {
+      setAllCheck(false);
+      setnonContactContract(false);
+      setPrivacy(false);
+    }
+  };
+
+  const nonContactCheck = () => {
+    if (nonContactContract === false) {
+      setnonContactContract(true);
+    } else {
+      setnonContactContract(false);
+    }
+  };
+
+  const privacyCheck = () => {
+    if (privacy === false) {
+      setPrivacy(true);
+    } else {
+      setPrivacy(false);
+    }
+  };
+
+  useEffect(() => {
+    if (nonContactContract === true && privacy === true) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  }, [nonContactContract, privacy]);
+
+  return (
+    <form>
+      <div className={classes.expectedCost}>
+        <div className={classes.inner}>
+          <div className={classes.expectedCostContent}>
+            <h2>예상 비용 안내</h2>
+            <div className={classes.costBox}>
+              <div className={classes.downPayment}>
+                <p>계약금</p>
+                <input
+                  defaultValue={expectedCost.downPayment + "원"}
+                  readOnly
+                />
+              </div>
+              <div className={classes.balance}>
+                <p>잔금</p>
+                <input defaultValue={expectedCost.balance + "원"} readOnly />
+              </div>
+              <div className={classes.brokerageFee}>
+                <p>중개보수</p>
+                <input id="commission" name="commission" ref={commissionRef} />
+              </div>
+            </div>
+            <hr className={classes.costLine} />
+            <div className={classes.cost}>
+              <div className={classes.totalEstimatedCost}>
+                <h5>총 예상 비용</h5>
+                <strong>
+                  {expectedCost.downPayment + expectedCost.balance}원
+                </strong>
+              </div>
+            </div>
+            <br />
+            <div className={classes.agreeCondition}>
+              <div className={classes.checkBox}>
+                <input
+                  type="checkbox"
+                  checked={allCheck}
+                  onChange={allBtnCheck}
+                />{" "}
+                <strong>약관에 모두 동의합니다.</strong>
+                <hr />
+                <div className={classes.agreeCheck}>
+                  <div className={classes.serviceAgree}>
+                    <input
+                      type="checkbox"
+                      checked={nonContactContract}
+                      onChange={nonContactCheck}
+                    />{" "}
+                    <p> [필수] 비대면 계약 서비스 이용 약관 동의</p>
+                  </div>
+                  <div className={classes.personalInfoAgree}>
+                    <input
+                      type="checkbox"
+                      checked={privacy}
+                      onChange={privacyCheck}
+                    />{" "}
+                    <p> [필수] 개인정보 수집 및 이용동의 </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button onClick={onChangeHandler}>계약 조건 수정</button>
+            {statusNum === 0 && (
+              <button onClick={onApproveHandler}>승인</button>
+            )}
+            {statusNum === 1 && (
+              <button onClick={onConfirmHandler}>완료</button>
+            )}
+            <button onClick={onQuitHandler}>거절</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  );
+};

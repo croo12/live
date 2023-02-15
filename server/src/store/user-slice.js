@@ -18,7 +18,6 @@ const userSlice = createSlice({
   reducers: {
     login(state, { payload }) {
       const { accessToken, refreshToken } = payload;
-      console.log(accessToken, refreshToken);
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
     },
@@ -34,9 +33,7 @@ const userSlice = createSlice({
       state.refreshToken = null;
     },
     setInfo(state, { payload }) {
-      console.log(payload);
       const newInfo = { ...state.userInfo, ...payload };
-      console.log(newInfo);
       state.userInfo = newInfo;
     },
     setIsRealtor(state, { payload }) {

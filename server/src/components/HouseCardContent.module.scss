@@ -1,28 +1,21 @@
-
 .houseCardContent {
   border: 1px solid;
 
-  border-image-source: linear-gradient(
-    237.31deg,
-    rgba(255, 255, 255, 0.6) -7.89%,
-    rgba(243, 243, 243, 0) 48.19%,
-    rgba(255, 255, 255, 0.446875) 110.44%
-  );
+  border-image-source: linear-gradient(237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%);
 
-  background: linear-gradient(
-    237.31deg,
-    rgba(255, 255, 255, 0.6) -7.89%,
-    rgba(243, 243, 243, 0) 48.19%,
-    rgba(255, 255, 255, 0.446875) 110.44%
-  );
+  background: linear-gradient(237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%);
 
-  background: linear-gradient(
-      45.74deg,
+  background: linear-gradient(45.74deg,
       rgba(232, 232, 232, 0.15) -0.5%,
       rgba(246, 246, 246, 0.00445545) 33.81%,
       rgba(246, 246, 246, 0) 70.76%,
-      rgba(250, 250, 250, 0.15) 100.85%
-    ),
+      rgba(250, 250, 250, 0.15) 100.85%),
     linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
 
   border-radius: 12px;
@@ -77,47 +70,42 @@
 
 .consulting_inner {
   // position: relative;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
 
   border: 1px solid;
 
-  border-image-source: linear-gradient(
-    237.31deg,
-    rgba(255, 255, 255, 0.6) -7.89%,
-    rgba(243, 243, 243, 0) 48.19%,
-    rgba(255, 255, 255, 0.446875) 110.44%
-  );
+  border-image-source: linear-gradient(237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%);
 
-  background: linear-gradient(
-    237.31deg,
-    rgba(255, 255, 255, 0.6) -7.89%,
-    rgba(243, 243, 243, 0) 48.19%,
-    rgba(255, 255, 255, 0.446875) 110.44%
-  );
+  background: linear-gradient(237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%);
 
-  background: linear-gradient(
-      45.74deg,
+  background: linear-gradient(45.74deg,
       rgba(232, 232, 232, 0.15) -0.5%,
       rgba(246, 246, 246, 0.00445545) 33.81%,
       rgba(246, 246, 246, 0) 70.76%,
-      rgba(250, 250, 250, 0.15) 100.85%
-    ),
+      rgba(250, 250, 250, 0.15) 100.85%),
     linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
 
   background-color: rgba(2, 47, 28, 1);
   border-radius: 12px;
 
+  max-width: 440px;
+
   &::after {
     content: "";
-    background: linear-gradient(
-      237.31deg,
-      rgba(255, 255, 255, 0.6) -7.89%,
-      rgba(243, 243, 243, 0) 48.19%,
-      rgba(255, 255, 255, 0.446875) 110.44%
-    );
-    
+    background: linear-gradient(237.31deg,
+        rgba(255, 255, 255, 0.6) -7.89%,
+        rgba(243, 243, 243, 0) 48.19%,
+        rgba(255, 255, 255, 0.446875) 110.44%);
+
     border-radius: 10px;
     z-index: 999;
   }
@@ -131,7 +119,7 @@
       flex: 1;
       color: aliceblue;
 
-      > div {
+      >div {
         text-align: left;
         padding: 4px;
         padding-left: 8px;
@@ -147,7 +135,7 @@
 
         padding: 0.4rem;
 
-        > span {
+        >span {
           font-size: 1rem;
         }
       }
@@ -161,6 +149,7 @@
       border-radius: 0.1rem;
 
       flex: 1;
+
       img {
         width: 100%;
         height: auto;
@@ -235,13 +224,13 @@
       // transform: translate(0, 100%);
     }
 
-    > div {
+    >div {
       &:first-child {
         border-top-left-radius: 0.6rem;
         border-top-right-radius: 0.6rem;
       }
 
-      > button {
+      >button {
         width: 100%;
         padding: 0.7rem;
 
@@ -254,32 +243,22 @@
         font-weight: 550;
       }
 
-      border-image-source: linear-gradient(
-        237.31deg,
+      border-image-source: linear-gradient(237.31deg,
         rgba(255, 255, 255, 0.6) -7.89%,
         rgba(243, 243, 243, 0) 48.19%,
-        rgba(255, 255, 255, 0.446875) 110.44%
-      );
+        rgba(255, 255, 255, 0.446875) 110.44%);
 
-      background: linear-gradient(
-        237.31deg,
+      background: linear-gradient(237.31deg,
         rgba(255, 255, 255, 0.6) -7.89%,
         rgba(243, 243, 243, 0) 48.19%,
-        rgba(255, 255, 255, 0.446875) 110.44%
-      );
+        rgba(255, 255, 255, 0.446875) 110.44%);
 
-      background: linear-gradient(
-          45.74deg,
-          rgba(232, 232, 232, 0.15) -0.5%,
-          rgba(246, 246, 246, 0.00445545) 33.81%,
-          rgba(246, 246, 246, 0) 70.76%,
-          rgba(250, 250, 250, 0.15) 100.85%
-        ),
-        linear-gradient(
-          0deg,
-          rgba(250, 250, 250, 0.3),
-          rgba(250, 250, 250, 0.3)
-        );
+      background: linear-gradient(45.74deg,
+        rgba(232, 232, 232, 0.15) -0.5%,
+        rgba(246, 246, 246, 0.00445545) 33.81%,
+        rgba(246, 246, 246, 0) 70.76%,
+        rgba(250, 250, 250, 0.15) 100.85%),
+      linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
     }
 
     span {
@@ -294,6 +273,7 @@
   0% {
     top: 10vw;
   }
+
   100% {
     top: 14vw;
   }
@@ -305,34 +285,40 @@
   display: flex;
   flex-direction: column;
 
-  padding: 12px;
-
-  width: 24vw;
-
-  background: linear-gradient(0deg, #f3f0f0, #fafafa),
-    linear-gradient(0deg, #fafafa, #fafafa);
+  padding: 15px;
+  background: #FAFAFA;
+  border-radius: 4px;
 
   text-align: left;
 
   cursor: pointer;
-
-  img {
-    display: block;
-    width: 100%;
-    padding-bottom: 8px;
+  .image {
+    border-radius: 4px;
+    width: 280px;
+    height: 180px;
+    img {
+      border-radius: 4px;
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding-bottom: 8px;
+      object-fit: fill;
+    }
   }
 
   h3 {
     margin-top: 8px;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     font-size: 1.5rem;
 
     font-weight: 700;
   }
 
   p {
+    margin: 4px 0;
     font-size: 0.9rem;
     font-weight: 400;
+    white-space: pre-wrap;
   }
 
   button:last-child {
@@ -344,9 +330,9 @@
 
     border: 0;
 
-    text-decoration: underline;
+    text-decoration: none;
     text-align: left;
-
+    color: #707070;
     cursor: pointer;
   }
 }
@@ -411,6 +397,7 @@
     .desc {
       color: #767676;
       margin-top: 6px;
+
       @media (max-width: 1024px) {
         margin-top: 2px;
       }
@@ -419,40 +406,54 @@
 
   button:last-child {
     display: block;
-    font-size: 0.8rem;
+    position: relative;
+    font-size: 0.9rem;
+    font-weight: 400;
 
     padding: 4px;
-    padding-top: 2vw;
-
     border: 0;
 
     background-color: #ffffff;
 
-    text-decoration: underline;
+    text-decoration: none;
     text-align: left;
 
+    color: #707070;
     cursor: pointer;
+    &::after {
+      content: "\25BC";
+      position: absolute;
+      top: 35%;
+      transform: translateY(-50%);
+      transform: rotate(-90deg);
+      pointer-events: none;
+      color: #707070;
+      font-size: 0.8em;
+      padding-left: 8px;
+    }
+    &:hover {
+      font-size: 1rem;
+      font-weight: 700;
+    }
   }
 }
 
-.contractForSale {
-  margin: 3% 0;
+.contractForSaleContent {
 
   .inner {
     width: 67.7%;
     margin-left: 15%;
     text-align: left;
 
+    h2 {}
+
     .contractContent {
       display: flex;
-
-      h3 {
-        margin-left: 2%;
-        margin-bottom: 2%;
-      }
+      margin-top: 2%;
 
       .leftDesc {
         flex: 3;
+        margin-top: 3%;
 
         p {
           color: rgba(112, 112, 112, 1);
@@ -461,8 +462,8 @@
         }
 
         .infoBoxList {
-          width: 50%;
-          margin-top: 2%;
+          width: 100%;
+          margin-top: 7%;
 
           .forSale {
             display: flex;
@@ -543,65 +544,173 @@
       }
 
       .rightImg {
-        flex: 1;
-        width: 5vw;
-        margin-bottom: 5%;
+        flex: 3.5;
+        width: 10vw;
+        margin: 0 5% 5% 5%;
 
-          box-sizing: border-box;
-            height: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+
+        .imageContent {
+          display: flex;
+
+          .imageBox {
             width: 100%;
-            font-size: 16px;
-          
-            @media (max-width: 1024px) {
-              font-size: calc(15.6 * 0.1vw);
-            }
-          
-            .imageContent {
-              display: flex;
-          
-              .imageBox {
-                width: 100%;
-                display: flex;
+            display: flex;
+            box-sizing: border-box;
+            border: 1px solid rgb(218, 218, 218);
+            border-radius: 6px;
+
+            .mainImage {
+              display: inline-flex;
+              width: 70%;
+
+              img {
                 box-sizing: border-box;
+                // 1400 기준
+                // width: 43.25em;
+                // height: 31.5em;
+                width: 31.4em;
+                height: 23em;
+                margin: 0.25em;
                 border: 1px solid rgb(218, 218, 218);
                 border-radius: 6px;
-          
-                .mainImage {
-                  display: inline-flex;
-                  width: 50%;
-          
-                  img {
-                    box-sizing: border-box;
-                    // 1400 기준
-                    // width: 43.25em;
-                    // height: 31.5em;
-                    width: 31.4em;
-                    height: 23em;
-                    margin: 0.25em;
-                    border: 1px solid rgb(218, 218, 218);
-                    border-radius: 6px;
-                  }
-                }
-          
-                .subImage {
-                  display: inline-flex;
-                  flex-wrap: wrap;
-                  width: 50%;
-          
-                  img {
-                    box-sizing: border-box;
-                    // 1400 기준
-                    // width: 21.375em;
-                    // height: 15.5em;
-                    width: 15.45em;
-                    height: 11.25em;
-                    margin: 0.25em;
-                    border: 1px solid rgb(218, 218, 218);
-                    border-radius: 6px;
-                  }
-                }
               }
             }
+
+            .subImage {
+              display: inline-flex;
+              flex-wrap: wrap;
+              width: 50%;
+
+              img {
+                box-sizing: border-box;
+                // 1400 기준
+                // width: 21.375em;
+                // height: 15.5em;
+                width: 15.45em;
+                height: 11.25em;
+                margin: 0.25em;
+                border: 1px solid rgb(218, 218, 218);
+                border-radius: 6px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media(max-width:768px) {
+  .contractForSaleContent {
+    margin: 1%;
+
+    .inner {
+      width: 100%;
+      margin-left: 0%;
+      text-align: left;
+
+      h2 {}
+
+      .contractContent {
+        margin-top: 2%;
+
+        .leftDesc {
+          margin-top: 3%;
+
+          p {
+            color: rgba(112, 112, 112, 1);
+            font-weight: 400;
+            font-family: Roboto;
+          }
+
+          .infoBoxList {
+            width: 100%;
+            margin-top: 7%;
+
+            .forSale {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .extraFee {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .term {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .moveDate {
+              display: flex;
+              margin-bottom: 5%;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+          }
+        }
+
+        .rightImg {
+          display: none;
+        }
       }
     }
   }

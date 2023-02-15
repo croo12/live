@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
       const isRealtor = userInfo.isRealtor;
 
       console.log(accessToken, refeshToken);
-      const data = { accessToken, refeshToken };
+      const data = { accessToken };
 
       if (isRealtor === null) return;
       else if (isRealtor === false) {

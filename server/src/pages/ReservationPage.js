@@ -11,6 +11,8 @@ import axiosInstance from "../util/axios";
 import { registResevation, searchRealtorList, searchReservationRealtorDetail } from "../apis/reservationApis";
 import Modal from "../UI/Modal";
 import { reservedItemAction } from "../store/reserved-item-slice";
+import CustomAlert from "../UI/Alert";
+import ListBox from "../UI/ListBox";
 
 const ReservationPage = () => {
   const [reserveData, setReserveData] = useState({
@@ -28,6 +30,7 @@ const ReservationPage = () => {
   const [realtorDetail, setRealtorDetail] = useState(null);
 
   const [modalActive, setModalActive] = useState(false);
+  const [viewAlert, setViewAlert] = useState(false);
   const dispatch = useDispatch();
 
   const modalToggleHandler = () => {
@@ -79,7 +82,6 @@ const ReservationPage = () => {
       return;
     }
 
-    // 뭐 보낼래?
     const params = {};
 
     if (!reserveData.sido) {
@@ -96,6 +98,7 @@ const ReservationPage = () => {
     }
 
     (async () => {
+      setRealtorDetail(null);
       try {
         const result = await searchRealtorList(params);
         console.log(result.data.data);
@@ -146,12 +149,10 @@ const ReservationPage = () => {
           </div>
         </div>
       </div>
-
       <div className={classes.contentContainer}>
         <ReservationLeftDiv realtors={realtorList} clickEventHandler={clickRealtorEventHandler} />
         <ReservationRightDiv realtorDetail={realtorDetail} />
       </div>
-
       <div className={classes.listBoxContainer}>
         <div className={classes.listItemContainer}>
           <h2>내가 선택한 매물</h2>
@@ -160,7 +161,6 @@ const ReservationPage = () => {
           </div>
         </div>
       </div>
-
       <div>
         <div className={classes.infomationBox}>
           <div className={classes.iconContainer}>
@@ -179,9 +179,14 @@ const ReservationPage = () => {
       </div>
       {modalActive && (
         <Modal onConfirm={modalToggleHandler}>
-          <DoReserve registHandler={registReservationHandler} modalToggleHandler={modalToggleHandler}></DoReserve>
+          <DoReserve
+            registHandler={registReservationHandler}
+            modalToggleHandler={modalToggleHandler}
+            setter={setViewAlert}
+          ></DoReserve>
         </Modal>
       )}
+      {viewAlert && <CustomAlert title={"알림"} content={"예약이 완료되었습니다"} setter={setViewAlert} />}
     </>
   );
 };
@@ -200,6 +205,7 @@ const DoReserve = (props) => {
           onClick={() => {
             props.registHandler(detail.current.value);
             props.modalToggleHandler();
+            props.setter(true);
           }}
         >
           예약 요청하기
