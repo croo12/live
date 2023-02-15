@@ -121,6 +121,7 @@ const useWebRTC = ({
             return console.error(error);
           }
           this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+          console.log("야 이것좀 받아봐라");
         }
       );
 
