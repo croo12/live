@@ -186,4 +186,17 @@ public class Room implements Closeable {
         log.debug("Room {} closed", this.name);
     }
 
+    public void selectItem(Long itemNo) {
+        final JsonObject selectItemMsg = new JsonObject();
+        selectItemMsg.addProperty("id", "itemSelected");
+        selectItemMsg.addProperty("itemNo", itemNo);
+
+        for (final UserSession participant : participants.values()) {
+            try {
+                participant.sendMessage(selectItemMsg);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
