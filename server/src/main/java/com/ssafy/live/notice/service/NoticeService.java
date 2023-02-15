@@ -30,10 +30,10 @@ public class NoticeService {
         List<NoticeResponse.Notices> list;
         List<Notice> notices;
         if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            notices = noticeRepository.findByUsersOrderByCreatedDate(
+            notices = noticeRepository.findByUsersOrderByCreatedDateDesc(
                 usersRepository.findById(user.getUsername()).get());
         } else {
-            notices = noticeRepository.findByRealtorOrderByCreatedDate(
+            notices = noticeRepository.findByRealtorOrderByCreatedDateDesc(
                 realtorRepository.findByBusinessNumber(user.getUsername()).get());
         }
         list = notices.stream().map(NoticeResponse.Notices::toEntity)

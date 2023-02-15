@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
-    List<Notice> findByUsersOrderByCreatedDate(Users users);
+    List<Notice> findByUsersOrderByCreatedDateDesc(Users users);
 
-    List<Notice> findByRealtorOrderByCreatedDate(Realtor realtor);
+    List<Notice> findByRealtorOrderByCreatedDateDesc(Realtor realtor);
 }
