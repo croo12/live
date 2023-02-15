@@ -53,13 +53,13 @@ public class ReviewService {
         List<ReviewResponse.Reviews> list;
         List<Review> reviews;
         if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            reviews = reviewRepository.findByUsers(
+            reviews = reviewRepository.findByUsersOrderByCreatedDateDesc(
                 usersRepository.findById(user.getUsername()).get());
             list = reviews.stream()
                 .map((review) -> ReviewResponse.Reviews.toEntity(review.getRealtor(), review))
                 .collect(Collectors.toList());
         } else {
-            reviews = reviewRepository.findByRealtor(
+            reviews = reviewRepository.findByRealtorOrderByCreatedDateDesc(
                 realtorRepository.findByBusinessNumber(user.getUsername()).get());
             list = reviews.stream()
                 .map((review) -> ReviewResponse.Reviews.toEntity(review.getUsers(), review))

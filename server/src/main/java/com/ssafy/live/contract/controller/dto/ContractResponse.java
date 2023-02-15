@@ -193,7 +193,7 @@ public class ContractResponse {
             private String tenantAddress;
             private String tenantDetailAddress;
 
-            public static ContractInfo toEntity(Contract contract) {
+            public static ContractInfo toDto(Contract contract) {
                 return ContractInfo.builder()
                     .contractNo(contract.getNo())
                     .moveOnDate(contract.getMoveOnDate())
@@ -205,6 +205,7 @@ public class ContractResponse {
                     .commission(contract.getCommission())
                     .termOfContract(contract.getTermOfContract())
                     .tenantAge(contract.getTenantAge())
+                    .tenantAddress(contract.getTenantAddress())
                     .tenantDetailAddress(contract.getTenantDetailAddress())
                     .build();
             }

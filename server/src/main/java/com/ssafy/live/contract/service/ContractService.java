@@ -106,7 +106,7 @@ public class ContractService {
                 ContractResponse.ContractDetail.RealtorInfo.toEntity(contract.getRealtor()),
                 ContractResponse.ContractDetail.UserInfo.toEntity(contract.getUsers()),
                 ContractResponse.ContractDetail.ItemInfo.toEntity(contract.getItem(), images),
-                ContractResponse.ContractDetail.ContractInfo.toEntity(contract)
+                ContractResponse.ContractDetail.ContractInfo.toDto(contract)
             );
 
         return response.success(contractDetail, "계약 상세를 조회하였습니다.", HttpStatus.OK);

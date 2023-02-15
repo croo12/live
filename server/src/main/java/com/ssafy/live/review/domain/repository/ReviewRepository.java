@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    List<Review> findByUsers(Users users);
+    List<Review> findByUsersOrderByCreatedDateDesc(Users users);
 
-    List<Review> findByRealtor(Realtor realtor);
+    List<Review> findByRealtorOrderByCreatedDateDesc(Realtor realtor);
 
     @Query(value = "SELECT COUNT(*) FROM Review r WHERE r.realtor=:realtor", nativeQuery = true)
     Long countBy(Realtor realtor);
