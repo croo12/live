@@ -1,5 +1,6 @@
 package com.ssafy.live.contract.service;
 
+import static com.ssafy.live.common.exception.ErrorCode.CONTRACT_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.USER_NOT_FOUND;
@@ -18,7 +19,6 @@ import com.ssafy.live.contract.controller.dto.ContractRequest.Update;
 import com.ssafy.live.contract.controller.dto.ContractResponse;
 import com.ssafy.live.contract.domain.entity.Contract;
 import com.ssafy.live.contract.domain.repository.ContractRepository;
-import com.ssafy.live.house.domain.entity.House;
 import com.ssafy.live.house.domain.entity.Item;
 import com.ssafy.live.house.domain.entity.ItemImage;
 import com.ssafy.live.house.domain.repository.ItemImageRepository;
@@ -125,25 +125,14 @@ public class ContractService {
         return response.success("계약 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> contractApprove(Long contractNo) {
-        Contract contract = contractRepository.findById(contractNo).get();
-        contract.approve();
+    public ResponseEntity<?> contractChangeStatus(Long contractNo, int status) {
+        Contract contract = contractRepository.findById(contractNo)
+            .orElseThrow(() -> new BadRequestException(CONTRACT_NOT_FOUND));
+        contract.changeStatus(status);
         contractRepository.save(contract);
 
         //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
 
-        return response.success("계약이 승인되었습니다.", HttpStatus.OK);
-    }
-
-    public ResponseEntity<?> contractComplete(Long contractNo) {
-        Contract contract = contractRepository.findById(contractNo).get();
-        contract.complete();
-        House house = contract.getItem().getHouse();
-        house.setContracted(true);
-        contractRepository.save(contract);
-
-        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getUsers());
-        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_SIGN, contract.getRealtor());
-        return response.success("계약 체결이 완료되었습니다.", HttpStatus.OK);
+        return response.success("계약이 상태가 변경되었습니다.", HttpStatus.OK);
     }
 }

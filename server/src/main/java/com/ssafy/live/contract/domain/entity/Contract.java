@@ -96,11 +96,13 @@ public class Contract extends BaseEntity {
         this.balance = (deposit / 100) * 90;
     }
 
-    public void approve() {
-        this.contractState = ContractStatus.CONTRACT_PROCESSING;
-    }
-
-    public void complete() {
-        this.contractState = ContractStatus.CONTRACT_COMPLETE;
+    public void changeStatus(int status) {
+        if (status == 1) {
+            this.contractState = ContractStatus.CONTRACT_PROCESSING;
+        } else if (status == 2) {
+            this.contractState = ContractStatus.CONTRACT_COMPLETE;
+        } else if (status == 3) {
+            this.contractState = ContractStatus.CONTRACT_CANCEL;
+        }
     }
 }

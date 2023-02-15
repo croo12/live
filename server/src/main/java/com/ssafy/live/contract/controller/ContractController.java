@@ -51,13 +51,9 @@ public class ContractController {
         return contractService.contractUpdate(update, contractNo);
     }
 
-    @PatchMapping("/{contractNo}/confirm")
-    public ResponseEntity<?> contractApprove(@PathVariable("contractNo") Long contractNo) {
-        return contractService.contractApprove(contractNo);
-    }
-
-    @PatchMapping("/{contractNo}/complete")
-    public ResponseEntity<?> contractComplete(@PathVariable("contractNo") Long contractNo) {
-        return contractService.contractComplete(contractNo);
+    @PatchMapping("/{contractNo}/{status}")
+    public ResponseEntity<?> contractChangeStatus(@PathVariable("contractNo") Long contractNo,
+        @PathVariable("status") int status) {
+        return contractService.contractChangeStatus(contractNo, status);
     }
 }
