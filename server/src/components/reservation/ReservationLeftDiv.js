@@ -26,9 +26,7 @@ const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
             />
           </ListBox>
         ) : (
-          <ul>
-            <li>현재 조회된 공인중개사가 없습니다</li>
-          </ul>
+          <div className={classes.leftEmptyContainer}>현재 조회된 공인중개사가 없습니다</div>
         )}
       </div>
     </div>
