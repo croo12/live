@@ -88,7 +88,7 @@ const useWebRTC = ({
 
     //비디오가 온다네
     receiveVideoResponse(result) {
-      console.log("난 뭘까...");
+      console.log("난 뭘까...", result);
 
       participants.current[result.name].rtcPeer.processAnswer(
         result.sdpAnswer,
