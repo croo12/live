@@ -62,12 +62,7 @@ const ConsultingMeetPage = ({
     sessionId,
   });
 
-  useEffect(() => {
-    return () => {
-      console.log(`헤헷, 들켰네요....`);
-      leaveRoom();
-    };
-  }, []);
+  const isMounted = useRef(true);
 
   useEffect(() => {
     switch (status) {
@@ -82,6 +77,7 @@ const ConsultingMeetPage = ({
         setInfo(`유저의 접속을 기다리기`);
 
         //방에 들어아고 내 화면 틀기
+        console.log("중개사 접속 시도...");
         register();
         break;
 
@@ -110,13 +106,19 @@ const ConsultingMeetPage = ({
   });
 
   useEffect(() => {
-    console.info(`Received message: `, responseMsg);
+    if (isMounted.current) {
+      isMounted.current = false;
+      return;
+    }
+
+    console.log(`Received message: `, responseMsg);
 
     switch (responseMsg.id) {
       //나 연결하면서 원래 있던놈 죄다 연결하기
       case "existingParticipants":
         setInfo(`내 기기 연결 중...`);
         onExistingParticipants(responseMsg);
+        break;
 
       //상대가 왔다.
       case "newParticipantArrived":
