@@ -6,6 +6,7 @@ import HouseDetailCom from "./HouseDetailCom";
 import classes from "./HouseCardContent.module.scss";
 import classes2 from "./HouseCardContent2.module.scss";
 import sample from "../assets/image/sample.jpg";
+import ResponsiveText from "./common/ResponsiveText";
 
 const HouseCardContent = ({
   props,
@@ -27,16 +28,6 @@ const HouseCardContent = ({
   const navigate = useNavigate();
   const [isModal, setModal] = useState(false);
 
-  const clickEventHandler = () => {
-    console.log(location);
-
-    if (location.pathname !== "/house") {
-      setModal(!isModal);
-    } else {
-      navigate("/house/detail/대충 번호");
-    }
-  };
-
   const itemData = {
     idx,
     itemNo,
@@ -54,30 +45,37 @@ const HouseCardContent = ({
   return (
     <>
       <div
+        className={classes.reserveCard}
         onClick={() => {
           searchedListClickHandler(itemData);
         }}
-        className={classes2.HouseCardContent2}
-        style={{ cursor: "pointer" }}
       >
-        <div className={classes.houseContent}>
-          <div className={classes.leftContent}>
-            <img src={imageSrc}></img>
-          </div>
-          <div className={classes.rightContent}>
-            <p>원룸</p>
-            <p>{buildingName}</p>
-            <h2>
-              월세 {deposit}/{rent}
-            </h2>
-            <p>
-              방 {exclusivePrivateArea}㎡ . 관리비{" "}
-              {maintenanceFee === 0 ? "없음" : maintenanceFee}
-              <br /> {address}
-              <br /> {addressDetail}
-              <br /> {description}
-            </p>
-          </div>
+        <div className={classes.leftContent}>
+          <img src={imageSrc}></img>
+        </div>
+        <div className={classes.rightContent}>
+          <h2>
+            월세 {deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+            만원/ {rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원
+          </h2>
+          <p>
+            전용{" "}
+            {exclusivePrivateArea
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            ㎡ (
+            {Math.round(exclusivePrivateArea / 3.3)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            평) ㆍ 관리비 {maintenanceFee} 만원
+          </p>
+          <p>{address + " " + addressDetail}</p>
+          <p className={classes.descText}>
+            <ResponsiveText
+              text={description}
+              textLength={[30, 40, 50, 70, 80]}
+            />
+          </p>
         </div>
       </div>
     </>

@@ -79,12 +79,22 @@ const MyPageRealtorReservationDetail = () => {
         <div className={classes.forsale}>
           <div className={classes.saleHeader}>
             <h2>상담 매물</h2>
-            <button className={classes.btn1}>매물등록</button>
+            <button
+              className={classes.btn1}
+              onClick={() => {
+                navigation("/house/regist");
+              }}
+            >
+              매물등록
+            </button>
           </div>
           <div className={classes.selectlocation}>
             <h4>어떤 매물을 원하세요?</h4>
             <div className={classes.searchBox}>
-              <MyReservationSearchBox sidoList={sidoList} searchedListClickHander={searchedListClickHander} />
+              <MyReservationSearchBox
+                sidoList={sidoList}
+                searchedListClickHander={searchedListClickHander}
+              />
             </div>
           </div>
           <div className={classes.forsalelist}>
@@ -92,8 +102,14 @@ const MyPageRealtorReservationDetail = () => {
               <p>
                 <strong>현재 요청된 매물</strong>
               </p>
-              <ListBox dataArray={selectedList} direction={false} toStart={true}>
-                <HouseCardContent2 searchedListClickHandler={removeSelectedItemClickHandler} />
+              <ListBox
+                dataArray={selectedList}
+                direction={false}
+                toStart={true}
+              >
+                <HouseCardContent2
+                  searchedListClickHandler={removeSelectedItemClickHandler}
+                />
               </ListBox>
             </div>
             <div className={classes.addedforsale}>
@@ -101,7 +117,9 @@ const MyPageRealtorReservationDetail = () => {
                 <strong>추가한 매물</strong>
               </p>
               <ListBox dataArray={wantAddList} direction={false} toStart={true}>
-                <HouseCardContent2 searchedListClickHandler={removeItemClickHandler} />
+                <HouseCardContent2
+                  searchedListClickHandler={removeItemClickHandler}
+                />
               </ListBox>
             </div>
           </div>

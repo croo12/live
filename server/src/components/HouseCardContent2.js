@@ -1,5 +1,6 @@
 import classes from "./HouseCardContent2.module.scss";
 import { useNavigate } from "react-router-dom";
+import ResponsiveText from "./common/ResponsiveText";
 
 const HouseCardContent2 = ({
   address,
@@ -29,19 +30,28 @@ const HouseCardContent2 = ({
           </div>
           <div className={classes.rightContent}>
             <h3>
-              월세 {deposit}/{rent}
+              월세 {deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              만원/ {rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원
             </h3>
-            <p>{buildingName}</p>
+            <p className={classes.bName}>{buildingName}</p>
             <p>
-              방 {exclusivePrivateArea}㎡ . 관리비 {maintenanceFee === 0 ? "없음" : maintenanceFee}
+              전용{" "}
+              {exclusivePrivateArea
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              ㎡ (
+              {Math.round(exclusivePrivateArea / 3.3)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              평) ㆍ 관리비 {maintenanceFee} 만원
             </p>
-            <p>
-              {address} {addressDetail}
-            </p>
+            <p>{address + " " + addressDetail}</p>
           </div>
         </div>
       </div>
-      <button className={classes.consultBtn} onClick={onContractHandler}>계약하기</button>
+      <button className={classes.consultBtn} onClick={onContractHandler}>
+        계약하기
+      </button>
     </>
   );
 };

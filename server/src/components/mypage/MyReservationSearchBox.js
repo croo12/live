@@ -173,7 +173,11 @@ const MyReservationSearchBox = (props) => {
       </div>
       <div className={classes.searchInput}>
         <div className={classes.inputText}>
-          <input placeholder="건물명을 입력해주세요." id="buildingName" ref={buildingName} />
+          <input
+            placeholder="건물명을 입력해주세요."
+            id="buildingName"
+            ref={buildingName}
+          />
           <button onClick={() => searchEventHandler()}>검색</button>
         </div>
         {searchedList.length !== 0 && (
@@ -181,10 +185,15 @@ const MyReservationSearchBox = (props) => {
             {searchedList.map((item, idx) => {
               return (
                 <li key={idx}>
-                  {React.cloneElement(<HouseCardContent searchedListClickHandler={clickSearchedListHandler} />, {
-                    ...item,
-                    idx,
-                  })}
+                  {React.cloneElement(
+                    <HouseCardContent
+                      searchedListClickHandler={clickSearchedListHandler}
+                    />,
+                    {
+                      ...item,
+                      idx,
+                    }
+                  )}
                 </li>
               );
             })}

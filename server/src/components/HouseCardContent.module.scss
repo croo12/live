@@ -1,21 +1,27 @@
 .houseCardContent {
   border: 1px solid;
 
-  border-image-source: linear-gradient(237.31deg,
-      rgba(255, 255, 255, 0.6) -7.89%,
-      rgba(243, 243, 243, 0) 48.19%,
-      rgba(255, 255, 255, 0.446875) 110.44%);
+  border-image-source: linear-gradient(
+    237.31deg,
+    rgba(255, 255, 255, 0.6) -7.89%,
+    rgba(243, 243, 243, 0) 48.19%,
+    rgba(255, 255, 255, 0.446875) 110.44%
+  );
 
-  background: linear-gradient(237.31deg,
-      rgba(255, 255, 255, 0.6) -7.89%,
-      rgba(243, 243, 243, 0) 48.19%,
-      rgba(255, 255, 255, 0.446875) 110.44%);
+  background: linear-gradient(
+    237.31deg,
+    rgba(255, 255, 255, 0.6) -7.89%,
+    rgba(243, 243, 243, 0) 48.19%,
+    rgba(255, 255, 255, 0.446875) 110.44%
+  );
 
-  background: linear-gradient(45.74deg,
+  background: linear-gradient(
+      45.74deg,
       rgba(232, 232, 232, 0.15) -0.5%,
       rgba(246, 246, 246, 0.00445545) 33.81%,
       rgba(246, 246, 246, 0) 70.76%,
-      rgba(250, 250, 250, 0.15) 100.85%),
+      rgba(250, 250, 250, 0.15) 100.85%
+    ),
     linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
 
   border-radius: 12px;
@@ -68,6 +74,57 @@
   }
 }
 
+.reserveCard {
+  display: flex;
+  height: 142px !important;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+
+  @media (max-width: 1400px) {
+    font-size: 14px;
+  }
+  @media (max-width: 1024px) {
+    font-size: 13px;
+  }
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  .leftContent {
+    img {
+      padding: 4px;
+      width: 85%;
+      border-radius: 8px;
+      height: 148px;
+    }
+  }
+
+  .rightContent {
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-10%);
+
+    h2 {
+      width: 100%;
+      font-size: 1.1em;
+      margin: 4px 0;
+    }
+
+    p {
+      width: 100%;
+      font-size: 0.8em;
+      margin: 2px 0;
+    }
+
+    .descText {
+      width: 100%;
+      margin: 10px 0;
+      line-height: 2em;
+      font-size: 0.7em;
+    }
+  }
+}
 .consulting_inner {
   // position: relative;
   width: 100%;
@@ -77,21 +134,27 @@
 
   border: 1px solid;
 
-  border-image-source: linear-gradient(237.31deg,
-      rgba(255, 255, 255, 0.6) -7.89%,
-      rgba(243, 243, 243, 0) 48.19%,
-      rgba(255, 255, 255, 0.446875) 110.44%);
+  border-image-source: linear-gradient(
+    237.31deg,
+    rgba(255, 255, 255, 0.6) -7.89%,
+    rgba(243, 243, 243, 0) 48.19%,
+    rgba(255, 255, 255, 0.446875) 110.44%
+  );
 
-  background: linear-gradient(237.31deg,
-      rgba(255, 255, 255, 0.6) -7.89%,
-      rgba(243, 243, 243, 0) 48.19%,
-      rgba(255, 255, 255, 0.446875) 110.44%);
+  background: linear-gradient(
+    237.31deg,
+    rgba(255, 255, 255, 0.6) -7.89%,
+    rgba(243, 243, 243, 0) 48.19%,
+    rgba(255, 255, 255, 0.446875) 110.44%
+  );
 
-  background: linear-gradient(45.74deg,
+  background: linear-gradient(
+      45.74deg,
       rgba(232, 232, 232, 0.15) -0.5%,
       rgba(246, 246, 246, 0.00445545) 33.81%,
       rgba(246, 246, 246, 0) 70.76%,
-      rgba(250, 250, 250, 0.15) 100.85%),
+      rgba(250, 250, 250, 0.15) 100.85%
+    ),
     linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
 
   background-color: rgba(2, 47, 28, 1);
@@ -101,10 +164,12 @@
 
   &::after {
     content: "";
-    background: linear-gradient(237.31deg,
-        rgba(255, 255, 255, 0.6) -7.89%,
-        rgba(243, 243, 243, 0) 48.19%,
-        rgba(255, 255, 255, 0.446875) 110.44%);
+    background: linear-gradient(
+      237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%
+    );
 
     border-radius: 10px;
     z-index: 999;
@@ -119,7 +184,7 @@
       flex: 1;
       color: aliceblue;
 
-      >div {
+      > div {
         text-align: left;
         padding: 4px;
         padding-left: 8px;
@@ -135,7 +200,7 @@
 
         padding: 0.4rem;
 
-        >span {
+        > span {
           font-size: 1rem;
         }
       }
@@ -224,13 +289,13 @@
       // transform: translate(0, 100%);
     }
 
-    >div {
+    > div {
       &:first-child {
         border-top-left-radius: 0.6rem;
         border-top-right-radius: 0.6rem;
       }
 
-      >button {
+      > button {
         width: 100%;
         padding: 0.7rem;
 
@@ -243,22 +308,32 @@
         font-weight: 550;
       }
 
-      border-image-source: linear-gradient(237.31deg,
+      border-image-source: linear-gradient(
+        237.31deg,
         rgba(255, 255, 255, 0.6) -7.89%,
         rgba(243, 243, 243, 0) 48.19%,
-        rgba(255, 255, 255, 0.446875) 110.44%);
+        rgba(255, 255, 255, 0.446875) 110.44%
+      );
 
-      background: linear-gradient(237.31deg,
+      background: linear-gradient(
+        237.31deg,
         rgba(255, 255, 255, 0.6) -7.89%,
         rgba(243, 243, 243, 0) 48.19%,
-        rgba(255, 255, 255, 0.446875) 110.44%);
+        rgba(255, 255, 255, 0.446875) 110.44%
+      );
 
-      background: linear-gradient(45.74deg,
-        rgba(232, 232, 232, 0.15) -0.5%,
-        rgba(246, 246, 246, 0.00445545) 33.81%,
-        rgba(246, 246, 246, 0) 70.76%,
-        rgba(250, 250, 250, 0.15) 100.85%),
-      linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
+      background: linear-gradient(
+          45.74deg,
+          rgba(232, 232, 232, 0.15) -0.5%,
+          rgba(246, 246, 246, 0.00445545) 33.81%,
+          rgba(246, 246, 246, 0) 70.76%,
+          rgba(250, 250, 250, 0.15) 100.85%
+        ),
+        linear-gradient(
+          0deg,
+          rgba(250, 250, 250, 0.3),
+          rgba(250, 250, 250, 0.3)
+        );
     }
 
     span {
@@ -286,7 +361,7 @@
   flex-direction: column;
 
   padding: 15px;
-  background: #FAFAFA;
+  background: #fafafa;
   border-radius: 4px;
 
   text-align: left;
@@ -443,14 +518,14 @@
 }
 
 .contractForSale {
-
   .inner {
     width: 67.7%;
     margin-left: 15%;
     text-align: left;
     font-size: 1.05rem;
 
-    h2 {}
+    h2 {
+    }
 
     .contractContent {
       display: flex;
@@ -616,7 +691,7 @@
   }
 }
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
   .contractForSale {
     margin: 1%;
 
@@ -625,7 +700,8 @@
       margin-left: 0%;
       text-align: left;
 
-      h2 {}
+      h2 {
+      }
 
       .contractContent {
         margin-top: 2%;
@@ -731,14 +807,14 @@
 }
 
 .contractForSaleContent {
-
   .inner {
     width: 67.7%;
     margin-left: 15%;
     text-align: left;
     font-size: 1.05rem;
 
-    h2 {}
+    h2 {
+    }
 
     .contractContent {
       display: flex;
@@ -904,7 +980,7 @@
   }
 }
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
   .contractForSaleContent {
     margin: 1%;
 
@@ -913,7 +989,8 @@
       margin-left: 0%;
       text-align: left;
 
-      h2 {}
+      h2 {
+      }
 
       .contractContent {
         margin-top: 2%;
@@ -1019,14 +1096,14 @@
 }
 
 .contractForSaleContentRealtor {
-
   .inner {
     width: 67.7%;
     margin-left: 15%;
     text-align: left;
     font-size: 1.05rem;
 
-    h2 {}
+    h2 {
+    }
 
     .contractContent {
       display: flex;
@@ -1212,7 +1289,7 @@
   }
 }
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
   .contractForSaleContentRealtor {
     margin: 1%;
 
@@ -1221,7 +1298,8 @@
       margin-left: 0%;
       text-align: left;
 
-      h2 {}
+      h2 {
+      }
 
       .contractContent {
         margin-top: 2%;
