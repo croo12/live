@@ -79,11 +79,12 @@ public class CallHandler extends TextWebSocketHandler {
                     user.addCandidate(cand, jsonMessage.get("name").getAsString());
                 }
                 break;
-            case "close":
+            case "closeRoom":
                 closeRoom(user);
                 break;
             case "selectItem":
                 selectItem(jsonMessage, user);
+                break;
             default:
                 break;
         }
