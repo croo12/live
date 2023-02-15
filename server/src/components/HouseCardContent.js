@@ -199,7 +199,7 @@ export const ReservationHouseCardContent = (props) => {
       {/* <button onClick={clickEventHandler}>상세 정보 보기</button> */}
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom itemNo={props.itemNo} />
+          <HouseDetailCom itemNo={props.itemNo} isModal={true} />
         </Modal>
       )}
     </div>
@@ -235,7 +235,7 @@ export const RealtorHousesCardContent = ({
       </div>
       {isModal && (
         <Modal onConfirm={onConfirm}>
-          <HouseDetailCom itemNo={itemNo} />
+          <HouseDetailCom itemNo={itemNo} isModal={true} />
         </Modal>
       )}
     </div>
