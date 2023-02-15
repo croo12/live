@@ -118,7 +118,6 @@ const ContractExpectedCost = (props) => {
 
   downPayment *= 10000;
   balance *= 10000;
-  commission *= 10000;
 
   return (
     <>
@@ -129,22 +128,47 @@ const ContractExpectedCost = (props) => {
             <div className={classes.costBox}>
               <div className={classes.downPayment}>
                 <p>계약금</p>
-                <input defaultValue={downPayment + "원"} readOnly />
+                <input
+                  defaultValue={
+                    downPayment
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+                  }
+                  readOnly
+                />
               </div>
               <div className={classes.balance}>
                 <p>잔금</p>
-                <input defaultValue={balance + "원"} readOnly />
+                <input
+                  defaultValue={
+                    balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                    "원"
+                  }
+                  readOnly
+                />
               </div>
               <div className={classes.brokerageFee}>
                 <p>중개보수</p>
-                <input defaultValue={commission + "원"} readOnly />
+                <input
+                  defaultValue={
+                    commission
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+                  }
+                  readOnly
+                />
               </div>
             </div>
             <hr className={classes.costLine} />
             <div className={classes.cost}>
               <div className={classes.totalEstimatedCost}>
                 <h5>총 예상 비용</h5>
-                <strong>{downPayment + balance + commission}원</strong>
+                <strong>
+                  {(downPayment + balance + commission)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  원
+                </strong>
               </div>
             </div>
             <br />
@@ -204,17 +228,35 @@ export const ContractExpectedCostDetailUser = (props) => {
               <div className={classes.downPayment}>
                 <p>계약금</p>
                 <input
-                  defaultValue={expectedCost.downPayment + "원"}
+                  defaultValue={
+                    expectedCost.downPayment
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+                  }
                   readOnly
                 />
               </div>
               <div className={classes.balance}>
                 <p>잔금</p>
-                <input defaultValue={expectedCost.balance + "원"} readOnly />
+                <input
+                  defaultValue={
+                    expectedCost.balance
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+                  }
+                  readOnly
+                />
               </div>
               <div className={classes.brokerageFee}>
                 <p>중개보수</p>
-                <input defaultValue={expectedCost.commission + "원"} readOnly />
+                <input
+                  defaultValue={
+                    expectedCost.commission
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+                  }
+                  readOnly
+                />
               </div>
             </div>
             <hr className={classes.costLine} />
@@ -222,9 +264,13 @@ export const ContractExpectedCostDetailUser = (props) => {
               <div className={classes.totalEstimatedCost}>
                 <h5>총 예상 비용</h5>
                 <strong>
-                  {expectedCost.downPayment +
+                  {(
+                    expectedCost.downPayment +
                     expectedCost.balance +
-                    expectedCost.commission}
+                    expectedCost.commission
+                  )
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   원
                 </strong>
               </div>
@@ -240,38 +286,13 @@ export const ContractExpectedCostDetailRealtor = (props) => {
   const formData = useRef();
   const data = useLoaderData();
 
-  const deposit = props.forSaleInfo.deposit;
-  const rent = props.forSaleInfo.rent;
+  const [insertDeposit, setInsertDeposit] = useState(0);
 
-  let balance = deposit * 0.9;
-  let downPayment = deposit * 0.1;
+  let downPayment = props.contractInfoList.downPayment;
+  let balance = props.contractInfoList.balance;
 
-  let commission = 0;
-  let transactionAmount = deposit + rent * 100;
-  transactionAmount = deposit + rent * 100;
-  if (transactionAmount < 50000000) {
-    transactionAmount = deposit + rent * 70;
-  }
-
-  if (transactionAmount < 50000000) {
-    commission = transactionAmount * 0.005;
-    if (commission > 200000) {
-      commission = 200000;
-    }
-  } else if (transactionAmount < 100000000) {
-    commission = transactionAmount * 0.004;
-    if (commission > 300000) {
-      commission = 300000;
-    }
-  } else if (transactionAmount < 600000000) {
-    commission = transactionAmount * 0.003;
-  } else if (transactionAmount < 1200000000) {
-    commission = transactionAmount * 0.004;
-  } else if (transactionAmount < 1500000000) {
-    commission = transactionAmount * 0.005;
-  } else {
-    commission = transactionAmount * 0.006;
-  }
+  console.log(downPayment);
+  console.log(balance);
 
   balance *= 10000;
   downPayment *= 10000;
@@ -285,6 +306,7 @@ export const ContractExpectedCostDetailRealtor = (props) => {
   const onChangeHandler = async () => {
     const totInfoData = {
       contractNo: props.passInfo.itemNo,
+      deposit: props.passInfo.deposit,
       mainteneceFee: props.passInfo.mainteneceFee,
       termOfContract: props.passInfo.termOfContract,
       moveOnDate: props.passInfo.moveOnDate,
@@ -426,11 +448,26 @@ export const ContractExpectedCostDetailRealtor = (props) => {
             <div className={classes.costBox}>
               <div className={classes.downPayment}>
                 <p>계약금</p>
-                <strong>{downPayment + "원"}</strong>
+                <strong>
+                  {!props.passInfo.deposit
+                    ? downPayment
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"
+                    : (parseInt(props.passInfo.deposit * 0.1) * 10000)
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
+                </strong>
               </div>
               <div className={classes.balance}>
                 <p>잔금</p>
-                <strong>{balance + "원"}</strong>
+                <strong>
+                  {!props.passInfo.deposit
+                    ? balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                      "원"
+                    : (parseInt(props.passInfo.deposit * 0.9) * 10000)
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
+                </strong>
               </div>
               <div className={classes.brokerageFee}>
                 <p>중개보수</p>
@@ -446,7 +483,12 @@ export const ContractExpectedCostDetailRealtor = (props) => {
             <div className={classes.cost}>
               <div className={classes.totalEstimatedCost}>
                 <h5>총 예상 비용</h5>
-                <strong>{downPayment + balance + Number(value)}원</strong>
+                <strong>
+                  {(downPayment + balance + Number(value))
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  원
+                </strong>
               </div>
             </div>
             <br />

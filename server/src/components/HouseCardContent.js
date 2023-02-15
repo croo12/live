@@ -141,7 +141,7 @@ export const ConsultingHouseCardContent = (props) => {
 
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom houseId={123} isConsulting={true} />
+          <HouseDetailCom houseId={123} />
         </Modal>
       )}
     </>
@@ -235,7 +235,7 @@ export const RealtorHousesCardContent = ({
       </div>
       {isModal && (
         <Modal onConfirm={onConfirm}>
-          <HouseDetailCom itemNo={itemNo} isModal={true} onClose={onConfirm} />
+          <HouseDetailCom itemNo={itemNo} isModal={true} />
         </Modal>
       )}
     </div>
@@ -420,11 +420,11 @@ export const ContractDetailUserCardContent = (props) => {
                 </div>
                 <div className={classes.term}>
                   <strong>계약 기간</strong>
-                  <input value={forSale.termOfContract} readOnly></input>
+                  <input value={forSale.houseTermOfContract} readOnly></input>
                 </div>
                 <div className={classes.moveDate}>
                   <strong>입주 희망일</strong>
-                  <input value={forSale.termOfContract} readOnly></input>
+                  <input value={forSale.houseMoveOnDate} readOnly></input>
                 </div>
               </div>
             </div>

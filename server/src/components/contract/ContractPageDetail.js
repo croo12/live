@@ -16,6 +16,9 @@ const ContractPageDetail = () => {
   const data = useLoaderData();
   console.log(data);
 
+  const price = (10000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  console.log(price);
+
   const { userInfo } = useAuth();
 
   const [forSaleInfo, setForSaleInfo] = useState({
@@ -34,6 +37,8 @@ const ContractPageDetail = () => {
     commission: "",
   });
 
+  console.log(data.data);
+
   // console.log(forSaleInfo);
   // console.log(requireInfo);
 
@@ -47,8 +52,6 @@ const ContractPageDetail = () => {
     specialContract: requireInfo.specialContract,
     commission: expectedCostInfo.commission,
   };
-
-  console.log(data);
 
   return (
     <>
