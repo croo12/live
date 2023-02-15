@@ -104,7 +104,7 @@ public class ConsultingController {
         return consultingService.getRecList(consultingNo);
     }
 
-    @GetMapping(value = "/{consultingNo}/records/{recordNo}")
+    @GetMapping(value = "/records/{recordNo}")
     public ResponseEntity<ResourceRegion> streamRecord(@RequestHeader HttpHeaders headers, @PathVariable Long recordNo) throws IOException {
         return consultingService.streamRecord(headers, recordNo);
     }
