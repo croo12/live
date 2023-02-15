@@ -66,7 +66,7 @@ public class ContractService {
         ContractStatus contractStatus = ContractStatus.ofValue(status);
         List<ContractResponse.ContractList> list = null;
         if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            list = contractRepository.findByContractStateAndUsers(contractStatus,
+            list = contractRepository.findByContractStateAndUsersOrderByCreatedDateDesc(contractStatus,
                     usersRepository.findById(user.getUsername()).get()).stream()
                 .map((contract) ->
                     ContractResponse.ContractList.toEntity(
@@ -78,7 +78,7 @@ public class ContractService {
                 )
                 .collect(Collectors.toList());
         } else if (user.getAuthorities().contains(new SimpleGrantedAuthority("REALTOR"))) {
-            list = contractRepository.findByContractStateAndRealtor(contractStatus,
+            list = contractRepository.findByContractStateAndRealtorOrderByCreatedDateDesc(contractStatus,
                     realtorRepository.findByBusinessNumber(user.getUsername()).get()).stream()
                 .map((contract) ->
                     ContractResponse.ContractList.toEntity(
