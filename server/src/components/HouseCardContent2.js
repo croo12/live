@@ -12,7 +12,7 @@ const HouseCardContent2 = ({
   rent,
   consultingNo,
   exclusivePrivateArea,
-  itemNo
+  itemNo,
 }) => {
   const navigation = useNavigate();
   const onContractHandler = () => {
@@ -23,24 +23,25 @@ const HouseCardContent2 = ({
       <div className={classes.HouseCardContent2}>
         <div className={classes.houseContent}>
           <div className={classes.leftContent}>
-            <img src={imageSrc}></img>
-            <button onClick={onContractHandler}>계약하기</button>
+            <div className={classes.imgContainer}>
+              <img src={imageSrc}></img>
+            </div>
           </div>
           <div className={classes.rightContent}>
-            <p>원룸</p>
+            <h3>
+              월세 {deposit}/{rent}
+            </h3>
             <p>{buildingName}</p>
-            <h2>월세 {deposit}/{rent}</h2>
             <p>
-              방 {exclusivePrivateArea}㎡ . 관리비 {
-                maintenanceFee === 0 ? ("없음") : (maintenanceFee)
-              }
-              <br /> {address} 
-              <br /> {addressDetail}
-              <br /> {description}
+              방 {exclusivePrivateArea}㎡ . 관리비 {maintenanceFee === 0 ? "없음" : maintenanceFee}
+            </p>
+            <p>
+              {address} {addressDetail}
             </p>
           </div>
         </div>
       </div>
+      <button className={classes.consultBtn} onClick={onContractHandler}>계약하기</button>
     </>
   );
 };
