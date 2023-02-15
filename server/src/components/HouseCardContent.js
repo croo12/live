@@ -93,8 +93,6 @@ export const ConsultingHouseCardContent = (props) => {
   const [isModal, setModal] = useState(false);
 
   const clickEventHandler = () => {
-    console.log(location);
-
     if (props.clickHandler) {
       props.clickHandler(props.idx);
       return;
@@ -106,8 +104,6 @@ export const ConsultingHouseCardContent = (props) => {
       navigate("/house/detail/대충 번호");
     }
   };
-
-  console.log(props);
 
   return (
     <>
