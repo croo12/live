@@ -32,10 +32,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-/**
- * @author Ivan Gracia (izanmail@gmail.com)
- * @since 4.3.1
- */
 public class CallHandler extends TextWebSocketHandler {
 
     private static final Logger log = LoggerFactory.getLogger(CallHandler.class);
@@ -84,12 +80,15 @@ public class CallHandler extends TextWebSocketHandler {
                 }
                 break;
             case "close":
-                closeRoom(jsonMessage);
+                closeRoom(user);
                 break;
+            case "selectItem":
+                selectItem(jsonMessage, user);
             default:
                 break;
         }
     }
+
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status)
@@ -113,8 +112,16 @@ public class CallHandler extends TextWebSocketHandler {
         room.leave(user);
     }
 
-    private void closeRoom(JsonObject params){
-        final String roomName = params.get("room").getAsString();
-        roomManager.getRoom(roomName).close();
+    private void closeRoom(UserSession user){
+        final Room room = roomManager.getRoom(user.getRoomName());
+        room.close();
     }
+
+    private void selectItem(JsonObject params, UserSession user) {
+        final Room room = roomManager.getRoom(user.getRoomName());
+        final Long itemNo = params.get("itemNo").getAsLong();
+        log.info("select Item {}", itemNo);
+        room.selectItem(itemNo);
+    }
+
 }
