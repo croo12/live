@@ -42,6 +42,7 @@ const useWebSocket = (sessionId) => {
 
   const sendMessage = useCallback((message) => {
     const data = JSON.stringify(message);
+    console.log("나는 보낸다...",message)
     socket.current.send(data);
   }, []);
 
