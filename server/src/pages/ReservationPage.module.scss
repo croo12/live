@@ -48,7 +48,7 @@
   .listItemContainer {
     h2 {
       text-align: left;
-      margin: 2em 0 1em 0;
+      margin: 2em 0 calc(1em + 15px) 0;
     }
     .list {
       li {

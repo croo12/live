@@ -181,7 +181,7 @@ export const ReservationHouseCardContent = (props) => {
     >
       <div className={classes.image}>
         <img
-          src={props.itemImages?.length !== 0 ? props.itemImages[0] : sample}
+          src={props.itemImages?.length !== 0 ? props.itemImages[0].imageSrc : sample}
           alt="선택한 매물 목록"
         />
       </div>
