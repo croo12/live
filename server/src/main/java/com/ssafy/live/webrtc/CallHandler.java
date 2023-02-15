@@ -115,14 +115,15 @@ public class CallHandler extends TextWebSocketHandler {
 
     private void closeRoom(UserSession user){
         final Room room = roomManager.getRoom(user.getRoomName());
+        log.info("close room {}", room.getName());
         room.close();
     }
 
     private void selectItem(JsonObject params, UserSession user) {
         final Room room = roomManager.getRoom(user.getRoomName());
         final Long itemNo = params.get("itemNo").getAsLong();
-        log.info("select Item {}", itemNo);
         room.selectItem(itemNo);
+        log.info("select Item {}", itemNo);
     }
 
 }
