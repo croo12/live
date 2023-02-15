@@ -184,7 +184,10 @@ export const ReservationHouseCardContent = (props) => {
       className={`${classes.reservationItem} `}
     >
       <div className={classes.image}>
-        <img src={sample} alt="선택한 매물 목록" />
+        <img
+          src={props.itemImages?.length !== 0 ? props.itemImages[0] : sample}
+          alt="선택한 매물 목록"
+        />
       </div>
       <div>
         <h3>

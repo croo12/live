@@ -28,19 +28,13 @@ export const userLogin = async (data, dispatch) => {
 };
 
 export const userLogout = async (dispatch) => {
-  // const { accessToken, refreshToken } = store.getState().user;
-  // console.log(accessToken, refreshToken);
-
-  // const data = {
-  //   accessToken: accessToken,
-  //   refreshToken: refreshToken,
-  // };
-
   const headers = getAuthHeader();
 
-  await axiosInstance.post("users/logout", undefined, { headers }).then((res) => {
-    dispatch(userAction.logout());
-  });
+  await axiosInstance
+    .post("users/logout", undefined, { headers })
+    .then((res) => {
+      dispatch(userAction.logout());
+    });
 };
 
 //내 정보 줘

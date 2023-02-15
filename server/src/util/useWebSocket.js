@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userAction } from "../store/user-slice";
 
 const JAVA_SERVER_URL = `wss://live-live.store:8080/groupcall`;
 
 const useWebSocket = (sessionId) => {
   const [responseMsg, setResponseMsg] = useState("");
   const socket = useRef(null);
+  const dispatch = useDispatch();
   const isRealtor = useSelector((state) => state.user.userInfo.isRealtor);
 
   useEffect(() => {
@@ -18,6 +20,7 @@ const useWebSocket = (sessionId) => {
 
     socket.current.onopen = () => {
       console.log("WebSocket connection established");
+      dispatch(userAction.connectedWebsocket(socket.current));
 
       if (!isRealtor) {
         console.log("등록시도합니다...", isRealtor);
@@ -32,6 +35,7 @@ const useWebSocket = (sessionId) => {
 
     socket.current.onclose = () => {
       console.log("WebSocket connection closed");
+      dispatch(userAction.disconnectWebsocket());
     };
 
     return () => {

@@ -28,8 +28,6 @@ const ConsultingPage = (props) => {
   const [viewList, toggleList] = useState(false, true);
   const [recordingFiles, setRecordingFiles] = useState([]);
 
-  const consultingNoRef = useRef(-1);
-
   const orderHandler = (status) => {
     switch (status) {
       case STATUS.REALTOR_ENTER:

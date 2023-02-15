@@ -15,6 +15,7 @@ const ConsultingRightReservationHouseList = () => {
   const params = useParams();
 
   const userInfo = useSelector((state) => state.user.userInfo);
+  const websocket = useSelector((state) => state.user.websocket);
 
   const dataArray = datas.itemList;
 
@@ -28,9 +29,25 @@ const ConsultingRightReservationHouseList = () => {
   }, []);
 
   return (
-    <ListBox toStart={true} dataArray={dataArray}>
-      <ConsultingHouseCardContent clickHandler={clickHandler} detail={detail} />
-    </ListBox>
+    <div>
+      <ListBox toStart={true} dataArray={dataArray}>
+        <ConsultingHouseCardContent
+          clickHandler={clickHandler}
+          detail={detail}
+        />
+      </ListBox>
+      {userInfo.isRealtor && (
+        <button
+          onClick={() => {
+            websocket.send(
+              JSON.stringify({ id: "closeRoom", room: params.sessionId })
+            );
+          }}
+        >
+          상담종료
+        </button>
+      )}
+    </div>
   );
 };
 

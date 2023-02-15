@@ -10,6 +10,7 @@ const initialState = {
     profile: null,
     score: 0,
   },
+  websocket: null,
 };
 
 const userSlice = createSlice({
@@ -41,6 +42,12 @@ const userSlice = createSlice({
     },
     setIsRealtor(state, { payload }) {
       state.userInfo = { ...state.userInfo, isRealtor: payload };
+    },
+    connectedWebsocket(state, { payload }) {
+      state.websocket = payload;
+    },
+    disconnectWebsocket(state) {
+      state.websocket = null;
     },
   },
 });
