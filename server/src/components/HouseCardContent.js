@@ -4,7 +4,7 @@ import Modal from "../UI/Modal";
 import PreviewCarousel from "./house/PreviewCarousel";
 import HouseDetailCom from "./HouseDetailCom";
 import classes from "./HouseCardContent.module.scss";
-import classes2 from "./HouseCardContent2.module.scss";
+// import classes2 from "./HouseCardContent2.module.scss";
 import sample from "../assets/image/sample.jpg";
 
 const HouseCardContent = ({
