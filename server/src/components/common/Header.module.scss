@@ -9,7 +9,9 @@
   @media (max-width: 1024px) {
     margin: 0;
   }
-
+  @media (max-width: 768px) {
+    height: 56px;
+  }
   .headerInner {
     height: 72px;
     margin: 0 10%;
@@ -21,6 +23,10 @@
       display: block;
     }
 
+    @media (max-width: 768px) {
+      height: 56px;
+    }
+
     .item {
       height: 72px;
       display: flex;
@@ -30,9 +36,16 @@
       @media (max-width: 1024px) {
         margin: 0 2%;
       }
+      @media (max-width: 768px) {
+        height: 56px;
+      }
 
       img {
         height: 40px;
+
+        @media (max-width: 768px) {
+          height: 32px;
+        }
       }
 
       .toggleBtn {
@@ -57,6 +70,10 @@
           display: block;
           visibility: visible;
         }
+
+        @media (max-width: 768px) {
+          height: 56px;
+        }
       }
     }
 
@@ -74,6 +91,9 @@
         &.active {
           display: block;
         }
+      }
+      @media (max-width: 768px) {
+        height: 56px;
       }
 
       li {

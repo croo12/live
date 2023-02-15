@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import { houseActions } from "../store/house-slice";
 import axiosInstance, { getAuthHeader } from "../util/axios";
 
 export const registHouseData = async (data) => {
@@ -130,20 +132,16 @@ export const getItemListBySearch = async (data) => {
   return response;
 };
 
-export const getRealtorsHouseList = async () => {
+export const getRealtorsHouseList = async (dispatch) => {
   const headers = getAuthHeader();
 
   const getData = async () => {
     const response = await axiosInstance.get("/items/realtor", { headers });
 
-    console.log(response);
-
-    return response.data;
+    await dispatch(houseActions.setHouseList(response.data.data));
   };
 
   try {
-    const response = await getData();
-
-    return response;
+    await getData();
   } catch {}
 };

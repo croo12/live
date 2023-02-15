@@ -11,18 +11,21 @@
   }
 
   .listInner {
-    width: 80%;
+    width: 100%;
 
     h1 {
       font-size: 26px;
     }
 
     .listDescription {
-      background: rgba(90, 183, 191, 0.17);
+      background: #fafafa;
       line-height: 32px;
       display: flex;
+      border: 1px solid #42d395;
+      border-radius: 8px;
       padding: 16px;
-      margin: 12px 0;
+      margin: 12px 5%;
+      width: 90%;
 
       @media (max-width: 1024px) {
         font-size: calc(15 * 0.1vw);
@@ -54,8 +57,8 @@
         }
 
         p {
-          font-weight: 400;
-          color: #2f7d76;
+          font-weight: 600;
+          color: #4bad83;
         }
       }
     }
@@ -67,12 +70,8 @@
       display: flex;
       justify-content: flex-end;
 
-      :hover {
-        opacity: 0.8;
-      }
-
       button {
-        background: #5ab7bf;
+        background: #42d395;
         padding: 8px 12px;
         font-size: 16px;
         font-weight: 700;
@@ -80,10 +79,13 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
-
+        transition: all 0.2s ease;
         @media (max-width: 1024px) {
           font-size: calc(16 * 0.1vw);
         }
+      }
+      button:hover {
+        opacity: 0.75;
       }
     }
 
@@ -126,7 +128,7 @@
         width: 15%;
         float: left;
         border-radius: 6px;
-        background-color: #5ab7bf;
+        background-color: #42d395;
         border-style: none;
         font-size: 16px;
         font-weight: 700;
