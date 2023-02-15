@@ -1,4 +1,9 @@
-import { createBrowserRouter, createRoutesFromElements, Navigate, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Navigate,
+  Route,
+} from "react-router-dom";
 import App from "../App";
 import HouseDetail from "../components/HouseDetail";
 import HouseRegist from "../components/house/HouseRegist";
@@ -6,8 +11,12 @@ import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
 import MyPageUser from "../components/mypage/MyPageUser";
 //import { myReservationLoader } from "../components/mypage/MyReservation";
-import MyPageUserDetail, { userDetailInfoLoader } from "../components/mypage/MyPageUserDetail";
-import MyPageUserModify, { userInfoLoader } from "../components/mypage/MyPageUserModify";
+import MyPageUserDetail, {
+  userDetailInfoLoader,
+} from "../components/mypage/MyPageUserDetail";
+import MyPageUserModify, {
+  userInfoLoader,
+} from "../components/mypage/MyPageUserModify";
 import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
 import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
 import { loader as consultingUserLoader } from "../components/mypage/MyPageUserReservationDetail";
@@ -22,8 +31,12 @@ import MyPageRealtorReservation from "../components/mypage/MyPageRealtorReservat
 import MyPageRealtorReservationDetail, {
   realtorReservationLoader,
 } from "../components/mypage/MyPageRealtorReservationDetail";
-import MyPageRealtorDetail, { realtorDetailInfoLoader } from "../components/mypage/MyPageRealtorDetail";
-import MyPageRealtorModify, { realtorInfoLoader } from "../components/mypage/MyPageRealtorModify";
+import MyPageRealtorDetail, {
+  realtorDetailInfoLoader,
+} from "../components/mypage/MyPageRealtorDetail";
+import MyPageRealtorModify, {
+  realtorInfoLoader,
+} from "../components/mypage/MyPageRealtorModify";
 import ConsultingPage from "../pages/ConsultingPage";
 import ErrorCommonPage from "../pages/ErrorCommonPage";
 import HousePage from "../pages/HousePage";
@@ -39,13 +52,14 @@ import ContractPage from "../pages/ContractPage";
 import { loader as houseModifyLoader } from "../components/house/HouseModify";
 import { ProtectedRouter } from "../components/common/AuthProtector";
 import ContractPageUser from "../components/contract/ContractPageUser";
-import ContractPageRealtor from "../components/contract/ContractPageRealtor";
+import ContractPageDetail from "../components/contract/ContractPageDetail";
 import ConsultingRightReservationList from "../components/consulting/ConsultingRightReservationList";
 import ConsultingRightReservationHouseList, {
   consultingDetailLoader,
 } from "../components/consulting/ConsultingRightReservationHouseList";
 import { loader as ContractUserLoader } from "../components/contract/ContractPageUser";
 import { realtorRank } from "../apis/MemberService";
+import { loader as ContractDetailLoader } from "../components/contract/ContractPageDetail";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,7 +72,11 @@ const router = createBrowserRouter(
         <Route path="user" element={<SignUpPageUser />}></Route>
         <Route path="realtor" element={<SignUpPageRealtor />}></Route>
       </Route>
-      <Route path="reservation" element={<ReservationPage />} loader={sidoLoader}></Route>
+      <Route
+        path="reservation"
+        element={<ReservationPage />}
+        loader={sidoLoader}
+      ></Route>
       <Route path="consulting/:sessionId" element={<ConsultingPage />}>
         <Route
           index
@@ -82,21 +100,29 @@ const router = createBrowserRouter(
           path="modify/:itemNo"
           element={<HouseModify />}
           loader={houseModifyLoader}
-          errorElement={<ErrorCommonPage errorMsg="매물 정보를 읽어오는데 실패했습니다." />}
+          errorElement={
+            <ErrorCommonPage errorMsg="매물 정보를 읽어오는데 실패했습니다." />
+          }
         ></Route>
       </Route>
       <Route path="mypage" element={<MyPage />}>
         <Route path="user" element={<MyPageUser />}>
           <Route path="user-record" element={<MyPageUserRecord />}></Route>
           <Route path="user-review" element={<MyPageUserReview />}></Route>
-          <Route path="user-reservation" element={<MyPageUserReservation />}></Route>
+          <Route
+            path="user-reservation"
+            element={<MyPageUserReservation />}
+          ></Route>
           <Route
             path="user-reservation-detail/:consultingNo"
             element={<MyPageUserReservationDetail />}
             loader={consultingUserLoader}
           ></Route>
           <Route path="user-contract" element={<MyPageUserContract />}>
-            <Route path="user-contract-detail" element={<MyPageUserContractDetail />}></Route>
+            <Route
+              path="user-contract-detail"
+              element={<MyPageUserContractDetail />}
+            ></Route>
           </Route>
         </Route>
         <Route
@@ -110,24 +136,33 @@ const router = createBrowserRouter(
           loader={userInfoLoader}
         ></Route>
         <Route path="realtor" element={<MyPageRealtor />}>
-          <Route path="realtor-review" element={<MyPageRealtorReview />}></Route>
-          <Route path="realtor-contract" element={<MyPageRealtorContract />}></Route>
-          <Route path="realtor-reservation" element={<MyPageRealtorReservation />}></Route>
+          <Route
+            path="realtor-review"
+            element={<MyPageRealtorReview />}
+          ></Route>
+          <Route
+            path="realtor-contract"
+            element={<MyPageRealtorContract />}
+          ></Route>
+          <Route
+            path="realtor-reservation"
+            element={<MyPageRealtorReservation />}
+          ></Route>
           <Route
             path="realtor-reservation-detail/:consultingNo"
             element={<MyPageRealtorReservationDetail />}
             loader={realtorReservationLoader}
           ></Route>
         </Route>
-        <Route 
-          path="realtor-detail-info" 
+        <Route
+          path="realtor-detail-info"
           element={<MyPageRealtorDetail />}
           loader={realtorDetailInfoLoader}
         ></Route>
-        <Route 
-        path="realtor-modify-info" 
-        element={<MyPageRealtorModify />}
-        loader={realtorInfoLoader}
+        <Route
+          path="realtor-modify-info"
+          element={<MyPageRealtorModify />}
+          loader={realtorInfoLoader}
         ></Route>
       </Route>
 
@@ -140,9 +175,16 @@ const router = createBrowserRouter(
         }
       ></Route>
       <Route path="contract" element={<ContractPage />}>
-        <Route path="" element={<Navigate replace to="user-contract" />} />
-        <Route path="user-contract/:itemNo" element={<ContractPageUser />} loader={ContractUserLoader}></Route>
-        <Route path="realtor-contract" element={<ContractPageRealtor />}></Route>
+        <Route
+          path="user-contract/:itemNo"
+          element={<ContractPageUser />}
+          loader={ContractUserLoader}
+        ></Route>
+        <Route
+          path="contract-detail/:contractNo"
+          element={<ContractPageDetail />}
+          loader={ContractDetailLoader}
+        ></Route>
       </Route>
     </Route>
   )

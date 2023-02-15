@@ -1,27 +1,21 @@
 .houseCardContent {
   border: 1px solid;
 
-  border-image-source: linear-gradient(
-    237.31deg,
-    rgba(255, 255, 255, 0.6) -7.89%,
-    rgba(243, 243, 243, 0) 48.19%,
-    rgba(255, 255, 255, 0.446875) 110.44%
-  );
+  border-image-source: linear-gradient(237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%);
 
-  background: linear-gradient(
-    237.31deg,
-    rgba(255, 255, 255, 0.6) -7.89%,
-    rgba(243, 243, 243, 0) 48.19%,
-    rgba(255, 255, 255, 0.446875) 110.44%
-  );
+  background: linear-gradient(237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%);
 
-  background: linear-gradient(
-      45.74deg,
+  background: linear-gradient(45.74deg,
       rgba(232, 232, 232, 0.15) -0.5%,
       rgba(246, 246, 246, 0.00445545) 33.81%,
       rgba(246, 246, 246, 0) 70.76%,
-      rgba(250, 250, 250, 0.15) 100.85%
-    ),
+      rgba(250, 250, 250, 0.15) 100.85%),
     linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
 
   border-radius: 12px;
@@ -82,27 +76,21 @@
 
   border: 1px solid;
 
-  border-image-source: linear-gradient(
-    237.31deg,
-    rgba(255, 255, 255, 0.6) -7.89%,
-    rgba(243, 243, 243, 0) 48.19%,
-    rgba(255, 255, 255, 0.446875) 110.44%
-  );
+  border-image-source: linear-gradient(237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%);
 
-  background: linear-gradient(
-    237.31deg,
-    rgba(255, 255, 255, 0.6) -7.89%,
-    rgba(243, 243, 243, 0) 48.19%,
-    rgba(255, 255, 255, 0.446875) 110.44%
-  );
+  background: linear-gradient(237.31deg,
+      rgba(255, 255, 255, 0.6) -7.89%,
+      rgba(243, 243, 243, 0) 48.19%,
+      rgba(255, 255, 255, 0.446875) 110.44%);
 
-  background: linear-gradient(
-      45.74deg,
+  background: linear-gradient(45.74deg,
       rgba(232, 232, 232, 0.15) -0.5%,
       rgba(246, 246, 246, 0.00445545) 33.81%,
       rgba(246, 246, 246, 0) 70.76%,
-      rgba(250, 250, 250, 0.15) 100.85%
-    ),
+      rgba(250, 250, 250, 0.15) 100.85%),
     linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
 
   background-color: rgba(2, 47, 28, 1);
@@ -112,12 +100,10 @@
 
   &::after {
     content: "";
-    background: linear-gradient(
-      237.31deg,
-      rgba(255, 255, 255, 0.6) -7.89%,
-      rgba(243, 243, 243, 0) 48.19%,
-      rgba(255, 255, 255, 0.446875) 110.44%
-    );
+    background: linear-gradient(237.31deg,
+        rgba(255, 255, 255, 0.6) -7.89%,
+        rgba(243, 243, 243, 0) 48.19%,
+        rgba(255, 255, 255, 0.446875) 110.44%);
 
     border-radius: 10px;
     z-index: 999;
@@ -132,7 +118,7 @@
       flex: 1;
       color: aliceblue;
 
-      > div {
+      >div {
         text-align: left;
         padding: 4px;
         padding-left: 8px;
@@ -148,7 +134,7 @@
 
         padding: 0.4rem;
 
-        > span {
+        >span {
           font-size: 1rem;
         }
       }
@@ -162,6 +148,7 @@
       border-radius: 0.1rem;
 
       flex: 1;
+
       img {
         width: 100%;
         height: auto;
@@ -236,13 +223,13 @@
       // transform: translate(0, 100%);
     }
 
-    > div {
+    >div {
       &:first-child {
         border-top-left-radius: 0.6rem;
         border-top-right-radius: 0.6rem;
       }
 
-      > button {
+      >button {
         width: 100%;
         padding: 0.7rem;
 
@@ -255,28 +242,22 @@
         font-weight: 550;
       }
 
-      border-image-source: linear-gradient(
-        237.31deg,
+      border-image-source: linear-gradient(237.31deg,
         rgba(255, 255, 255, 0.6) -7.89%,
         rgba(243, 243, 243, 0) 48.19%,
-        rgba(255, 255, 255, 0.446875) 110.44%
-      );
+        rgba(255, 255, 255, 0.446875) 110.44%);
 
-      background: linear-gradient(
-        237.31deg,
+      background: linear-gradient(237.31deg,
         rgba(255, 255, 255, 0.6) -7.89%,
         rgba(243, 243, 243, 0) 48.19%,
-        rgba(255, 255, 255, 0.446875) 110.44%
-      );
+        rgba(255, 255, 255, 0.446875) 110.44%);
 
-      background: linear-gradient(
-          45.74deg,
-          rgba(232, 232, 232, 0.15) -0.5%,
-          rgba(246, 246, 246, 0.00445545) 33.81%,
-          rgba(246, 246, 246, 0) 70.76%,
-          rgba(250, 250, 250, 0.15) 100.85%
-        ),
-        linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
+      background: linear-gradient(45.74deg,
+        rgba(232, 232, 232, 0.15) -0.5%,
+        rgba(246, 246, 246, 0.00445545) 33.81%,
+        rgba(246, 246, 246, 0) 70.76%,
+        rgba(250, 250, 250, 0.15) 100.85%),
+      linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
     }
 
     span {
@@ -291,6 +272,7 @@
   0% {
     top: 10vw;
   }
+
   100% {
     top: 14vw;
   }
@@ -407,6 +389,7 @@
     .desc {
       color: #767676;
       margin-top: 6px;
+
       @media (max-width: 1024px) {
         margin-top: 2px;
       }
@@ -431,24 +414,22 @@
   }
 }
 
-.contractForSale {
-  margin: 3% 0;
+.contractForSaleContent {
 
   .inner {
     width: 67.7%;
     margin-left: 15%;
     text-align: left;
 
+    h2 {}
+
     .contractContent {
       display: flex;
-
-      h3 {
-        margin-left: 2%;
-        margin-bottom: 2%;
-      }
+      margin-top: 2%;
 
       .leftDesc {
         flex: 3;
+        margin-top: 3%;
 
         p {
           color: rgba(112, 112, 112, 1);
@@ -457,8 +438,8 @@
         }
 
         .infoBoxList {
-          width: 50%;
-          margin-top: 2%;
+          width: 100%;
+          margin-top: 7%;
 
           .forSale {
             display: flex;
@@ -539,18 +520,12 @@
       }
 
       .rightImg {
-        flex: 1;
-        width: 5vw;
-        margin-bottom: 5%;
+        flex: 3.5;
+        width: 10vw;
+        margin: 0 5% 5% 5%;
 
         box-sizing: border-box;
-        height: 100%;
-        width: 100%;
         font-size: 16px;
-
-        @media (max-width: 1024px) {
-          font-size: calc(15.6 * 0.1vw);
-        }
 
         .imageContent {
           display: flex;
@@ -564,7 +539,7 @@
 
             .mainImage {
               display: inline-flex;
-              width: 50%;
+              width: 70%;
 
               img {
                 box-sizing: border-box;
@@ -597,6 +572,120 @@
               }
             }
           }
+        }
+      }
+    }
+  }
+}
+
+@media(max-width:768px) {
+  .contractForSaleContent {
+    margin: 1%;
+
+    .inner {
+      width: 100%;
+      margin-left: 0%;
+      text-align: left;
+
+      h2 {}
+
+      .contractContent {
+        margin-top: 2%;
+
+        .leftDesc {
+          margin-top: 3%;
+
+          p {
+            color: rgba(112, 112, 112, 1);
+            font-weight: 400;
+            font-family: Roboto;
+          }
+
+          .infoBoxList {
+            width: 100%;
+            margin-top: 7%;
+
+            .forSale {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .extraFee {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .term {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .moveDate {
+              display: flex;
+              margin-bottom: 5%;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+          }
+        }
+
+        .rightImg {
+          display: none;
         }
       }
     }
