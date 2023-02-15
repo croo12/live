@@ -92,6 +92,8 @@ export const ConsultingHouseCardContent = (props) => {
   const navigate = useNavigate();
   const [isModal, setModal] = useState(false);
 
+  console.log(props);
+
   const clickEventHandler = () => {
     if (props.clickHandler) {
       props.clickHandler(props.idx);
@@ -141,7 +143,7 @@ export const ConsultingHouseCardContent = (props) => {
 
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom houseId={123} />
+          <HouseDetailCom houseId={123} isConsulting={true} />
         </Modal>
       )}
     </>
@@ -181,7 +183,11 @@ export const ReservationHouseCardContent = (props) => {
     >
       <div className={classes.image}>
         <img
-          src={props.itemImages?.length !== 0 ? props.itemImages[0].imageSrc : sample}
+          src={
+            props.itemImages?.length !== 0
+              ? props.itemImages[0].imageSrc
+              : sample
+          }
           alt="선택한 매물 목록"
         />
       </div>

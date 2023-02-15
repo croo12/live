@@ -96,7 +96,7 @@ const HouseDetailCom = (props) => {
         <div
           className={`${classes.houseDetailCom} ${
             props.isModal && classes.isModal
-          } `}
+          } ${props.isConsulting && classes.isConsulting}`}
         >
           {houseInfo && (
             <>
@@ -114,25 +114,27 @@ const HouseDetailCom = (props) => {
                   </div>
                 </div>
 
-                <div className={classes.imageButtonBox}>
-                  <div>.</div>
-                  <button onClick={previewModalHandler}>
-                    <div>
-                      <svg fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect />
-                        <rect y="0.375em" />
-                        <rect y="0.75em" />
-                        <rect x="0.375em" />
-                        <rect x="0.375em" y="0.375em" />
-                        <rect x="0.375em" y="0.75em" />
-                        <rect x="0.75em" />
-                        <rect x="0.75em" y="0.375em" />
-                        <rect x="0.75em" y="0.75em" />
-                      </svg>
-                      전체 보기
-                    </div>
-                  </button>
-                </div>
+                {!props.isConsulting && (
+                  <div className={classes.imageButtonBox}>
+                    <div>.</div>
+                    <button onClick={previewModalHandler}>
+                      <div>
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect />
+                          <rect y="0.375em" />
+                          <rect y="0.75em" />
+                          <rect x="0.375em" />
+                          <rect x="0.375em" y="0.375em" />
+                          <rect x="0.375em" y="0.75em" />
+                          <rect x="0.75em" />
+                          <rect x="0.75em" y="0.375em" />
+                          <rect x="0.75em" y="0.75em" />
+                        </svg>
+                        전체 보기
+                      </div>
+                    </button>
+                  </div>
+                )}
               </div>
             </>
           )}
@@ -168,43 +170,45 @@ const HouseDetailCom = (props) => {
                     </p>
                   </div>
                 </div>
-                <div className={classes.controlButtonBox}>
-                  {userInfo.isRealtor === true ? (
-                    <>
-                      <button
-                        className={classes.modifyButton}
-                        onClick={() => {
-                          navigate(`/house/modify/${houseInfo.itemNo}`);
-                        }}
-                      >
-                        수 정
-                      </button>
-                    </>
-                  ) : userInfo.isRealtor === false ? (
-                    <>
-                      <button
-                        className={classes.pickButton}
-                        onClick={() =>
-                          dispatch(reservedItemAction.addItem(houseInfo))
-                        }
-                      >
-                        담 기
-                      </button>
-                      <button
-                        className={classes.contractButton}
-                        onClick={() => {
-                          navigate(
-                            `/contract/user-contract/${houseInfo.itemNo}`
-                          );
-                        }}
-                      >
-                        계 약
-                      </button>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
+                {!props.isConsulting && (
+                  <div className={classes.controlButtonBox}>
+                    {userInfo.isRealtor === true ? (
+                      <>
+                        <button
+                          className={classes.modifyButton}
+                          onClick={() => {
+                            navigate(`/house/modify/${houseInfo.itemNo}`);
+                          }}
+                        >
+                          수 정
+                        </button>
+                      </>
+                    ) : userInfo.isRealtor === false ? (
+                      <>
+                        <button
+                          className={classes.pickButton}
+                          onClick={() =>
+                            dispatch(reservedItemAction.addItem(houseInfo))
+                          }
+                        >
+                          담 기
+                        </button>
+                        <button
+                          className={classes.contractButton}
+                          onClick={() => {
+                            navigate(
+                              `/contract/user-contract/${houseInfo.itemNo}`
+                            );
+                          }}
+                        >
+                          계 약
+                        </button>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className={classes.itemInfo}>
@@ -345,11 +349,14 @@ const HouseDetailCom = (props) => {
 
               <hr />
 
-              <div className={classes.optionInfo}>
+              <div
+                className={`${classes.optionInfo} ${
+                  props.isConsulting && classes.isConsulting
+                }`}
+              >
                 <h3>옵션 정보</h3>
                 <div>
                   {options.slice(0, 6).map((option) => {
-                    console.log(option);
                     if (option[0] === "bed") {
                       return (
                         <div className={classes.optionBox} key={option[0]}>
