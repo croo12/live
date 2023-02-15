@@ -48,7 +48,6 @@ export const getUserInfo = async (accessToken) => {
   let userInfo = null;
 
   const myAccessToken = store.getState().user.accessToken;
-  console.log(myAccessToken);
 
   if (accessToken) {
     await axiosInstance
@@ -64,14 +63,12 @@ export const getUserInfo = async (accessToken) => {
   } else {
     console.log(`매개변수 accessToken이 없음., ${myAccessToken}`);
     const headers = getAuthHeader();
-    console.log(headers);
 
     await axiosInstance
       .get("users", {
         headers,
       })
       .then((res) => {
-        console.log(res);
         const data = res.data;
 
         if (data.state === 200) {
@@ -107,33 +104,28 @@ export const getRealtorInfo = async (accessToken) => {
   let realtorInfo = null;
 
   const myAccessToken = store.getState().user.accessToken;
-  console.log(myAccessToken);
 
   if (accessToken) {
     console.log(`매개변수 있음 `, accessToken);
     await axiosInstance
       .get("realtors", {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: getAuthHeader(),
       })
       .then((res) => {
-        console.log(res);
-        const data = res.data;
-        if (data.state === 200) {
-          realtorInfo = data.data;
+        if (res.data.state === 200) {
+          realtorInfo = res.data.data;
           return realtorInfo;
         }
       });
   } else {
     console.log(`매개변수 accessToken 이 없습니다. ${accessToken}`);
     const headers = getAuthHeader();
-    console.log(headers);
 
     await axiosInstance
       .get("realtors", {
         headers,
       })
       .then((res) => {
-        console.log(res);
         const data = res.data;
 
         if (data.state === 200) {
@@ -185,7 +177,6 @@ export const realtorRank = async (orderBy) => {
   await axiosInstance.get(`realtors/popular?orderBy=${orderBy}`).then(({ data }) => {
     if (data.state === 200) {
       rankInfo = data.data;
-      console.log(rankInfo);
     }
   });
   return rankInfo;

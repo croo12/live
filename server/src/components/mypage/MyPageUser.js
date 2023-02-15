@@ -7,7 +7,6 @@ import { TfiWrite } from "react-icons/tfi";
 import classes from "./MyPageUser.module.scss";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { useAuth } from "../common/AuthProtector";
-import { getUserInfo } from "../../apis/MemberService";
 import sample from "../../assets/image/sample.jpg";
 
 const MyPageUser = () => {
@@ -36,8 +35,6 @@ const MyPageUser = () => {
     setBtnActive(4);
     navigate("/mypage/user/user-reservation");
   };
-
-  console.log(userInfo);
 
   const [num, setNum] = useState(0);
 
