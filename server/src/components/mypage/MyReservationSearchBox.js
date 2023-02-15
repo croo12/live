@@ -1,5 +1,5 @@
 import SelectBox from "../../UI/SelectBox";
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import axiosInstance from "../../util/axios";
 
 import classes from "./MyReservationSearchBox.module.scss";
@@ -189,13 +189,21 @@ const MyReservationSearchBox = (props) => {
           <button onClick={() => searchEventHandler()}>검색</button>
         </div>
         {searchedList.length !== 0 && (
-          <div className={classes.badge}>
-            <ListBox dataArray={searchedList}>
-              <HouseCardContent
-                searchedListClickHandler={clickSearchedListHandler}
-              />
-            </ListBox>
-          </div>
+          <ul className={classes.badge}>
+            {searchedList.map((item, idx) => {
+              console.log(item, idx);
+              return (
+                <li>
+                  {React.cloneElement(
+                    <HouseCardContent
+                      searchedListClickHandler={clickSearchedListHandler}
+                    />,
+                    { ...item, idx }
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         )}
       </div>
     </div>
