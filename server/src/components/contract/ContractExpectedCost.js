@@ -118,6 +118,7 @@ const ContractExpectedCost = (props) => {
 
   downPayment *= 10000;
   balance *= 10000;
+  commission *= 10000;
 
   return (
     <>
@@ -214,9 +215,11 @@ export default ContractExpectedCost;
 export const ContractExpectedCostDetailUser = (props) => {
   const expectedCost = {
     balance: props.contractInfoList.balance * 10000,
-    commission: props.contractInfoList.commission * 10000,
+    commission: props.contractInfoList.commission,
     downPayment: props.contractInfoList.downPayment * 10000,
   };
+
+  console.log(expectedCost);
 
   return (
     <>
@@ -286,16 +289,13 @@ export const ContractExpectedCostDetailRealtor = (props) => {
   const formData = useRef();
   const data = useLoaderData();
 
-  const [insertDeposit, setInsertDeposit] = useState(0);
-
   let downPayment = props.contractInfoList.downPayment;
   let balance = props.contractInfoList.balance;
-
-  console.log(downPayment);
-  console.log(balance);
+  let commission = props.contractInfoList.commission;
 
   balance *= 10000;
   downPayment *= 10000;
+  commission;
 
   const statusNum = data.data.contractInfo.status;
 
@@ -381,18 +381,20 @@ export const ContractExpectedCostDetailRealtor = (props) => {
 
   const onQuitHandler = async (e) => {
     e.preventDefault();
-    try {
-      const result = await axiosInstance.patch(
-        `contracts/${props.passInfo.itemNo}/${3}`,
-        {
-          headers: {
-            Authorization: getAuthHeader().Authorization,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
+    if (window.confirm("정말로 계약을 취소하시겠습니까?")) {
+      try {
+        const result = await axiosInstance.patch(
+          `contracts/${props.passInfo.itemNo}/${3}`,
+          {
+            headers: {
+              Authorization: getAuthHeader().Authorization,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -472,6 +474,7 @@ export const ContractExpectedCostDetailRealtor = (props) => {
               <div className={classes.brokerageFee}>
                 <p>중개보수</p>
                 <input
+                  defaultValue={commission + "원"}
                   id="commission"
                   name="commission"
                   onChange={onCommissionChangeHandler}
@@ -484,10 +487,21 @@ export const ContractExpectedCostDetailRealtor = (props) => {
               <div className={classes.totalEstimatedCost}>
                 <h5>총 예상 비용</h5>
                 <strong>
-                  {(downPayment + balance + Number(value))
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  원
+                  {!props.passInfo.deposit
+                    ? (
+                        downPayment +
+                        balance +
+                        (!value ? commission : Number(value))
+                      )
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"
+                    : (
+                        parseInt(props.passInfo.deposit * 0.1) * 10000 +
+                        parseInt(props.passInfo.deposit * 0.9) * 10000 +
+                        (!value ? commission : Number(value))
+                      )
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
                 </strong>
               </div>
             </div>
