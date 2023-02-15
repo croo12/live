@@ -27,7 +27,6 @@ const useRecording = ({ stream, recordingFiles, setRecordingFiles }) => {
     mediaRecorder.onstop = () => {
       // datas
       const blob = new Blob(chunks, { type: "video/mp4" });
-      console.log(URL.createObjecURL(blob));
       setRecordingFiles([...recordingFiles, blob]);
     };
 

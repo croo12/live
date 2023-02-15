@@ -5,12 +5,14 @@ import {
   getConsultingDetail,
   registConsultingRoomLink,
 } from "../../apis/consultingApi";
+import { useNavigate } from "react-router-dom";
 import { STATUS } from "../../pages/ConsultingPage";
 import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
 
 const ConsultingRightReservationHouseList = () => {
   const { clickHandler, detail, statusChangeHandler } = useOutletContext();
+  const navigation = useNavigate();
 
   const datas = useLoaderData();
   const params = useParams();
@@ -29,7 +31,7 @@ const ConsultingRightReservationHouseList = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ maxHeight: "100%", overflow: "scroll" }}>
       <ListBox toStart={true} dataArray={dataArray}>
         <ConsultingHouseCardContent
           clickHandler={clickHandler}
@@ -38,8 +40,15 @@ const ConsultingRightReservationHouseList = () => {
       </ListBox>
       {userInfo.isRealtor && (
         <button
+          style={{
+            width: "100%",
+            height: "2rem",
+            backgroundColor: "green",
+            borderRadius: "8px",
+          }}
           onClick={() => {
             statusChangeHandler(STATUS.REALTOR_END_CALL);
+            navigation(`/consulting/${params.sessionId}`);
           }}
         >
           상담종료
