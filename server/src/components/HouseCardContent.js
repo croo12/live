@@ -92,8 +92,6 @@ export const ConsultingHouseCardContent = (props) => {
   const navigate = useNavigate();
   const [isModal, setModal] = useState(false);
 
-  console.log(props);
-
   const clickEventHandler = () => {
     if (props.clickHandler) {
       props.clickHandler(props.idx);
@@ -237,7 +235,7 @@ export const RealtorHousesCardContent = ({
       </div>
       {isModal && (
         <Modal onConfirm={onConfirm}>
-          <HouseDetailCom itemNo={itemNo} isModal={true} />
+          <HouseDetailCom itemNo={itemNo} isModal={true} onClose={onConfirm} />
         </Modal>
       )}
     </div>

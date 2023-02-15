@@ -187,9 +187,10 @@ const HouseDetailCom = (props) => {
                       <>
                         <button
                           className={classes.pickButton}
-                          onClick={() =>
-                            dispatch(reservedItemAction.addItem(houseInfo))
-                          }
+                          onClick={() => {
+                            dispatch(reservedItemAction.addItem(houseInfo));
+                            props.onClose();
+                          }}
                         >
                           담 기
                         </button>
