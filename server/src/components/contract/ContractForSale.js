@@ -36,7 +36,7 @@ export const ContractForSaleDetailUser = (props) => {
     houseMonthlyFee: props.itemInfoList.rent, // 월세
     houseExtraFee: props.itemInfoList.mainteneceFee, // 관리비
     houseTermOfContract: props.contractInfoList.termOfContract, // 계약기간
-    houseMoveOnDate: props.contractInfoList.termOfContract, // 입주 희망일
+    houseMoveOnDate: props.contractInfoList.moveOnDate, // 입주 희망일
     houseImage: props.itemInfoList.images, // 매물 이미지
   };
 
@@ -57,7 +57,7 @@ export const ContractForSaleDetailRealtor = (props) => {
     houseMonthlyFee: props.itemInfoList.rent, // 월세
     houseExtraFee: props.itemInfoList.mainteneceFee, // 관리비
     houseTermOfContract: props.contractInfoList.termOfContract, // 계약기간
-    houseMoveOnDate: props.contractInfoList.termOfContract, // 입주 희망일
+    houseMoveOnDate: props.contractInfoList.moveOnDate, // 입주 희망일
     houseImage: props.itemInfoList.images,
   };
   return (
