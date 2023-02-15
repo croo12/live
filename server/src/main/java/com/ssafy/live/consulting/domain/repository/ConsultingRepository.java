@@ -30,9 +30,5 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
     List<Consulting> findByConsultingDateBetween(LocalDateTime start, LocalDateTime end);
 
-    @Query(value = "SELECT * FROM consulting "
-        + "where realtor_no = :realtor and status = :status and consulting_date "
-        + "LIKE :date%", nativeQuery = true)
-    List<Consulting> findByRealtorAndStatus(Long realtor, int status,
-        String date);
+    List<Consulting> findByRealtorNoAndStatusAndConsultingDateBetween(Long realtorNo, int status, LocalDateTime start, LocalDateTime end);
 }
