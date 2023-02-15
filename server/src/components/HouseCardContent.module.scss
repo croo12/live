@@ -1,4 +1,3 @@
-
 .houseCardContent {
   border: 1px solid;
 
@@ -117,7 +116,7 @@
       rgba(243, 243, 243, 0) 48.19%,
       rgba(255, 255, 255, 0.446875) 110.44%
     );
-    
+
     border-radius: 10px;
     z-index: 999;
   }
@@ -275,11 +274,7 @@
           rgba(246, 246, 246, 0) 70.76%,
           rgba(250, 250, 250, 0.15) 100.85%
         ),
-        linear-gradient(
-          0deg,
-          rgba(250, 250, 250, 0.3),
-          rgba(250, 250, 250, 0.3)
-        );
+        linear-gradient(0deg, rgba(250, 250, 250, 0.3), rgba(250, 250, 250, 0.3));
     }
 
     span {
@@ -309,8 +304,7 @@
 
   width: 24vw;
 
-  background: linear-gradient(0deg, #f3f0f0, #fafafa),
-    linear-gradient(0deg, #fafafa, #fafafa);
+  background: linear-gradient(0deg, #f3f0f0, #fafafa), linear-gradient(0deg, #fafafa, #fafafa);
 
   text-align: left;
 
