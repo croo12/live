@@ -5,7 +5,7 @@ import classes from "./ReviewForm.module.scss";
 
 // props => realtorNo, userNo, consultingNo, onClose()
 
-const ReviewForm = ({ realtorNo, userNo, consultingNo, onClose }) => {
+const ReviewForm = (props) => {
   const [rating, setRating] = useState(0.01);
   const reviewInfo = useRef();
 
