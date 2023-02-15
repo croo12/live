@@ -93,7 +93,8 @@ const ConsultingMeetPage = ({
         console.log(`연결을 종료하겠다....`);
 
         socket.current.send(JSON.stringify({ id: "closeRoom" }));
-        setTimeOut(setInfo("상담을 종료합니다..."), 2000);
+        setInfo("상담을 종료합니다...");
+        setTimeOut(setInfo(""), 2000);
         setBlock(false);
         break;
 
