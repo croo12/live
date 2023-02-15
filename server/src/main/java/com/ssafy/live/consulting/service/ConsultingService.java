@@ -354,9 +354,9 @@ public class ConsultingService {
             .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
         LocalDateTime start = LocalDateTime.of(java.time.LocalDate.now(),
-            LocalTime.of(0, 0, 0)); //오늘 00:00:00
-        LocalDateTime end = LocalDateTime.of(LocalDate.now(),
-            LocalTime.of(23, 59, 59)); //오늘 23:59:59
+            LocalTime.of(9, 0, 0)); //오늘 00:00:00
+        LocalDateTime end = LocalDateTime.of(LocalDate.now().plusDays(1),
+            LocalTime.of(8, 59, 59)); //오늘 23:59:59
 
         List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusBetweenAndConsultingDateBetween(realtor.getNo(),
             CONSULTING_CONFIRMED, CONSULTING_PROCESSING, start, end);
