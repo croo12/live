@@ -1,5 +1,5 @@
 .contractInfo {
-  margin: 3%;
+  margin: 2%;
 
   .inner {
     width: 67.7%;
@@ -8,6 +8,7 @@
 
     h2 {
       text-align: left;
+      padding: 0 0 2% 0;
     }
 
     .infoContent {
@@ -35,24 +36,22 @@
 
       h2 {
         margin-top: 3%;
-        margin-left: 2%;
+        margin-left: 0;
         margin-bottom: 2%;
       }
 
-      .contractContent {
-        .infoContent {
-          margin: 0%;
-          text-align: left;
-          padding: 3% 0;
-          position: relative;
-          right: 6%;
-          margin-left: 10%;
-        }
+      .infoContent {
+        margin: 0;
+        text-align: left;
+        padding: 3% 0;
+        position: relative;
+        right: 6%;
+        margin-left: 10%;
+      }
 
-        hr {
-          width: 92%;
-          margin-left: 3%;
-        }
+      hr {
+        width: 92%;
+        margin-left: 3%;
       }
     }
   }

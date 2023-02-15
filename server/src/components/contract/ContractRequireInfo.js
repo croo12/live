@@ -81,6 +81,7 @@ export const ContractRequireInfoDetailRealtor = (props) => {
   const formData = useRef();
   const contractInfo = {
     numberOfResidents: props.contractInfoList.numberOfResidents,
+    specialContract: props.contractInfoList.specialContract,
   };
 
   const insertRequireInfo = (e) => {
@@ -107,7 +108,7 @@ export const ContractRequireInfoDetailRealtor = (props) => {
             <div className={classes.requirement}>
               <strong>특약 요청사항</strong>{" "}
               <textarea
-                placeholder="위의 조건 외 특약사항으로 요청하고 싶으신 내용을 입력해주세요.&#13;요청하고 싶으신 내용이 없을 시, '없음'으로 입력해주세요."
+                defaultValue={contractInfo.specialContract}
                 id="userSpecialContract"
                 name="userSpecialContract"
                 onChange={insertRequireInfo}

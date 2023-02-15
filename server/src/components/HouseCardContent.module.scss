@@ -292,10 +292,12 @@
   text-align: left;
 
   cursor: pointer;
+
   .image {
     border-radius: 4px;
     width: 280px;
     height: 180px;
+
     img {
       border-radius: 4px;
       display: block;
@@ -420,6 +422,7 @@
 
     color: #707070;
     cursor: pointer;
+
     &::after {
       content: "\25BC";
       position: absolute;
@@ -431,6 +434,7 @@
       font-size: 0.8em;
       padding-left: 8px;
     }
+
     &:hover {
       font-size: 1rem;
       font-weight: 700;
@@ -438,12 +442,13 @@
   }
 }
 
-.contractForSaleContent {
+.contractForSale {
 
   .inner {
     width: 67.7%;
     margin-left: 15%;
     text-align: left;
+    font-size: 1.05rem;
 
     h2 {}
 
@@ -464,16 +469,18 @@
         .infoBoxList {
           width: 100%;
           margin-top: 7%;
+          margin-right: 5%;
 
           .forSale {
             display: flex;
 
             strong {
-              flex: 2;
-              padding: 1% 0 0 0;
+              flex: 1;
+              padding: 1.5% 0 0 0;
             }
 
             input {
+              flex: 1;
               background: #fafafa;
               border: 1px solid #bbbbbb;
               border-radius: 4px;
@@ -488,11 +495,12 @@
             display: flex;
 
             strong {
-              flex: 2;
-              padding: 1% 0 0 0;
+              flex: 1;
+              padding: 1.5% 0 0 0;
             }
 
             input {
+              flex: 1;
               background: #fafafa;
               border: 1px solid #bbbbbb;
               border-radius: 4px;
@@ -507,11 +515,12 @@
             display: flex;
 
             strong {
-              flex: 2;
-              padding: 1% 0 0 0;
+              flex: 1;
+              padding: 1.5% 0 0 0;
             }
 
             input {
+              flex: 1;
               background: #fafafa;
               border: 1px solid #bbbbbb;
               border-radius: 4px;
@@ -526,11 +535,12 @@
             display: flex;
 
             strong {
-              flex: 2;
-              padding: 1% 0 0 0;
+              flex: 1;
+              padding: 1.5% 0 0 0;
             }
 
             input {
+              flex: 1;
               background: #fafafa;
               border: 1px solid #bbbbbb;
               border-radius: 4px;
@@ -558,19 +568,19 @@
             width: 100%;
             display: flex;
             box-sizing: border-box;
-            border: 1px solid rgb(218, 218, 218);
+            // border: 1px solid rgb(218, 218, 218);
             border-radius: 6px;
 
             .mainImage {
               display: inline-flex;
-              width: 70%;
+              width: 80%;
 
               img {
                 box-sizing: border-box;
                 // 1400 기준
                 // width: 43.25em;
                 // height: 31.5em;
-                width: 31.4em;
+                width: 24em;
                 height: 23em;
                 margin: 0.25em;
                 border: 1px solid rgb(218, 218, 218);
@@ -599,11 +609,611 @@
         }
       }
     }
+
+    hr {
+      width: 100%;
+    }
+  }
+}
+
+@media(max-width:768px) {
+  .contractForSale {
+    margin: 1%;
+
+    .inner {
+      width: 100%;
+      margin-left: 0%;
+      text-align: left;
+
+      h2 {}
+
+      .contractContent {
+        margin-top: 2%;
+
+        .leftDesc {
+          margin-top: 3%;
+
+          p {
+            color: rgba(112, 112, 112, 1);
+            font-weight: 400;
+            font-family: Roboto;
+          }
+
+          .infoBoxList {
+            width: 100%;
+            margin-top: 7%;
+
+            .forSale {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .extraFee {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .term {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .moveDate {
+              display: flex;
+              margin-bottom: 5%;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+          }
+        }
+
+        .rightImg {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.contractForSaleContent {
+
+  .inner {
+    width: 67.7%;
+    margin-left: 15%;
+    text-align: left;
+    font-size: 1.05rem;
+
+    h2 {}
+
+    .contractContent {
+      display: flex;
+      margin-top: 2%;
+
+      .leftDesc {
+        flex: 3;
+        margin-top: 3%;
+
+        p {
+          color: rgba(112, 112, 112, 1);
+          font-weight: 400;
+          font-family: Roboto;
+        }
+
+        .infoBoxList {
+          width: 100%;
+          margin-top: 7%;
+          margin-right: 5%;
+
+          .forSale {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+
+          .extraFee {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+
+          .term {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+
+          .moveDate {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+        }
+      }
+
+      .rightImg {
+        flex: 3.5;
+        width: 10vw;
+        margin: 0 5% 5% 5%;
+
+        box-sizing: border-box;
+        font-size: 16px;
+
+        .imageContent {
+          display: flex;
+
+          .imageBox {
+            width: 100%;
+            display: flex;
+            box-sizing: border-box;
+            // border: 1px solid rgb(218, 218, 218);
+            border-radius: 6px;
+
+            .mainImage {
+              display: inline-flex;
+              width: 80%;
+
+              img {
+                box-sizing: border-box;
+                // 1400 기준
+                // width: 43.25em;
+                // height: 31.5em;
+                width: 24em;
+                height: 23em;
+                margin: 0.25em;
+                border: 1px solid rgb(218, 218, 218);
+                border-radius: 6px;
+              }
+            }
+
+            .subImage {
+              display: inline-flex;
+              flex-wrap: wrap;
+              width: 50%;
+
+              img {
+                box-sizing: border-box;
+                // 1400 기준
+                // width: 21.375em;
+                // height: 15.5em;
+                width: 15.45em;
+                height: 11.25em;
+                margin: 0.25em;
+                border: 1px solid rgb(218, 218, 218);
+                border-radius: 6px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    hr {
+      width: 100%;
+    }
   }
 }
 
 @media(max-width:768px) {
   .contractForSaleContent {
+    margin: 1%;
+
+    .inner {
+      width: 100%;
+      margin-left: 0%;
+      text-align: left;
+
+      h2 {}
+
+      .contractContent {
+        margin-top: 2%;
+
+        .leftDesc {
+          margin-top: 3%;
+
+          p {
+            color: rgba(112, 112, 112, 1);
+            font-weight: 400;
+            font-family: Roboto;
+          }
+
+          .infoBoxList {
+            width: 100%;
+            margin-top: 7%;
+
+            .forSale {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .extraFee {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .term {
+              display: flex;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+
+            .moveDate {
+              display: flex;
+              margin-bottom: 5%;
+
+              strong {
+                flex: 2;
+                padding: 1% 0 0 0;
+              }
+
+              input {
+                background: #fafafa;
+                border: 1px solid #bbbbbb;
+                border-radius: 4px;
+                color: #050505;
+                padding: 2%;
+                font-size: 400;
+                margin-bottom: 2%;
+              }
+            }
+          }
+        }
+
+        .rightImg {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.contractForSaleContentRealtor {
+
+  .inner {
+    width: 67.7%;
+    margin-left: 15%;
+    text-align: left;
+    font-size: 1.05rem;
+
+    h2 {}
+
+    .contractContent {
+      display: flex;
+      margin-top: 2%;
+
+      .leftDesc {
+        flex: 3;
+        margin-top: 1%;
+
+        p {
+          color: rgba(112, 112, 112, 1);
+          font-weight: 400;
+          font-family: Roboto;
+        }
+
+        .infoBoxList {
+          width: 100%;
+          margin-top: 7%;
+          margin-right: 5%;
+
+          .forSaleDeposit {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+
+          .forSaleRent {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+
+          .extraFee {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+
+          .term {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+
+          .moveDate {
+            display: flex;
+
+            strong {
+              flex: 1;
+              padding: 1.5% 0 0 0;
+            }
+
+            input {
+              flex: 1;
+              background: #fafafa;
+              border: 1px solid #bbbbbb;
+              border-radius: 4px;
+              color: #050505;
+              padding: 2%;
+              font-size: 400;
+              margin-bottom: 2%;
+            }
+          }
+        }
+      }
+
+      .rightImg {
+        flex: 3.5;
+        width: 10vw;
+        margin: 0 5% 5% 5%;
+
+        box-sizing: border-box;
+        font-size: 16px;
+
+        .imageContent {
+          display: flex;
+
+          .imageBox {
+            width: 100%;
+            display: flex;
+            box-sizing: border-box;
+            // border: 1px solid rgb(218, 218, 218);
+            border-radius: 6px;
+
+            .mainImage {
+              display: inline-flex;
+              width: 80%;
+
+              img {
+                box-sizing: border-box;
+                // 1400 기준
+                // width: 43.25em;
+                // height: 31.5em;
+                width: 24em;
+                height: 23em;
+                margin: 0.25em;
+                border: 1px solid rgb(218, 218, 218);
+                border-radius: 6px;
+              }
+            }
+
+            .subImage {
+              display: inline-flex;
+              flex-wrap: wrap;
+              width: 50%;
+
+              img {
+                box-sizing: border-box;
+                // 1400 기준
+                // width: 21.375em;
+                // height: 15.5em;
+                width: 15.45em;
+                height: 11.25em;
+                margin: 0.25em;
+                border: 1px solid rgb(218, 218, 218);
+                border-radius: 6px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    hr {
+      width: 100%;
+    }
+  }
+}
+
+@media(max-width:768px) {
+  .contractForSaleContentRealtor {
     margin: 1%;
 
     .inner {
