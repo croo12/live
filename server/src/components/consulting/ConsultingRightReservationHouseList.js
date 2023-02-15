@@ -18,6 +18,7 @@ const ConsultingRightReservationHouseList = () => {
   const userInfo = useSelector((state) => state.user.userInfo);
 
   const dataArray = datas.itemList;
+  console.log(userInfo);
 
   useEffect(() => {
     if (userInfo.isRealtor) {
