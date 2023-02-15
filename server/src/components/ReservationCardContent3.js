@@ -15,18 +15,19 @@ const ReservationCardContent3 = ({
   image,
   name,
   representativeItem,
+  isRecord,
   status,
 }) => {
   const navigate = useNavigate();
   const onChangeReservationHandler = async (status, e) => {
-    if(status === 5 && !confirm("예약을 거절하시겠습니까?")){ 
+    if (status === 5 && !confirm("예약을 거절하시겠습니까?")) {
       return;
     }
     const data = {};
     data["consultingNo"] = consultingNo;
     data["status"] = status;
     const result = await changeReservationStatus(data);
-    alert(result)
+    alert(result);
     e.preventDefault();
   };
   const onDetailHandler = () => {
@@ -72,17 +73,30 @@ const ReservationCardContent3 = ({
       </div>
       <div className={classes.rightContent}>
         <div>
-          <button className={classes.btn1} onClick={onDetailHandler}>
-            예약 상세보기
-          </button>
-          {tabActive === 0 && (
+          {!isRecord ? (
+            <>
+              <button className={classes.btn1} onClick={onDetailHandler}>
+                예약 상세보기
+              </button>
+              {tabActive === 0 && (
+                <button
+                  className={classes.btn0}
+                  onClick={(e) => {
+                    onChangeReservationHandler(5, e);
+                  }}
+                >
+                  예약 거절하기
+                </button>
+              )}
+            </>
+          ) : (
             <button
-              className={classes.btn0}
-              onClick={(e) => {
-                onChangeReservationHandler(5, e);
+              className={classes.btn1}
+              onClick={() => {
+                isRecord(consultingNo);
               }}
             >
-              예약 거절하기
+              녹화영상 보기
             </button>
           )}
         </div>
@@ -92,4 +106,3 @@ const ReservationCardContent3 = ({
 };
 
 export default ReservationCardContent3;
-
