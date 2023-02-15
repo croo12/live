@@ -28,4 +28,6 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
         ConsultingStatus status, ConsultingStatus status1);
 
     List<Consulting> findByConsultingDateBetween(LocalDateTime start, LocalDateTime end);
+
+    List<Consulting> findByRealtorAndStatus(Realtor realtor, ConsultingStatus status);
 }

@@ -67,6 +67,37 @@ public class ConsultingResponse {
     @Builder
     @Getter
     @AllArgsConstructor
+    public static class TodayConsulting {
+
+        private Long consultingNo;
+        private Long realtorNo;
+        private Long userNo;
+        private String userName;
+        private String userPhone;
+        private String userImage;
+        private LocalDateTime consultingDate;
+        private String representativeItem;
+        private int itemCount;
+
+        public static TodayConsulting toResponse(Consulting consulting, Users user,
+            String buildingName, int count) {
+            return TodayConsulting.builder()
+                .consultingNo(consulting.getNo())
+                .realtorNo(user.getNo())
+                .userNo(consulting.getUsers().getNo())
+                .userName(user.getName())
+                .userPhone(user.getPhone())
+                .userImage(user.getImageSrc())
+                .consultingDate(consulting.getConsultingDate())
+                .representativeItem(buildingName)
+                .itemCount(count)
+                .build();
+        }
+    }
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
     public static class ReservationDetail {
 
         private Long consultingNo;
