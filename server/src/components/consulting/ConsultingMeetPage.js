@@ -108,6 +108,7 @@ const ConsultingMeetPage = ({
       case STATUS.CONSULTING_IS_END:
         //리뷰 ON
         setBlock(false);
+        setViewReview(true);
         break;
 
       default:
