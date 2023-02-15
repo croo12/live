@@ -124,9 +124,7 @@ export const ReservationRealtorCardContent = ({
             <span> {name} </span> 공인중개사
           </p>
         </div>
-        <div className={classes.downCard}>
-          <p>체결 계약 {contactCnt}건 | 경력 10년</p>
-        </div>
+        <div className={classes.downCard}>{/* <p>체결 계약 {contactCnt}건 | 경력 10년</p> */}</div>
       </div>
     </div>
   );

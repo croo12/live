@@ -5,7 +5,6 @@ import { unstable_useBlocker as useBlocker } from "react-router-dom";
 //새로고침은 안막음
 export const usePrompt = ({ when, message }) => {
   let blocker = useBlocker(when);
-  console.log(blocker);
 
   useEffect(() => {
     if (blocker.state === "blocked" && !when) {

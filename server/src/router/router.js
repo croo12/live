@@ -21,7 +21,9 @@ import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
 import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
 import { loader as consultingUserLoader } from "../components/mypage/MyPageUserReservationDetail";
 import MyPageUserReview from "../components/mypage/MyPageUserReview";
-import MyPageUserRecord from "../components/mypage/MyPageUserRecord";
+import MyPageUserRecord, {
+  recordUrlsLoader,
+} from "../components/mypage/MyPageUserRecord";
 import MyPageUserContract from "../components/mypage/MyPageUserContract";
 import MyPageUserContractDetail from "../components/mypage/MyPageUserContractDetail";
 import MyPageRealtor from "../components/mypage/MyPageRealtor";
@@ -107,7 +109,11 @@ const router = createBrowserRouter(
       </Route>
       <Route path="mypage" element={<MyPage />}>
         <Route path="user" element={<MyPageUser />}>
-          <Route path="user-record" element={<MyPageUserRecord />}></Route>
+          <Route
+            path="user-record"
+            element={<MyPageUserRecord />}
+            loader={recordUrlsLoader}
+          ></Route>
           <Route path="user-review" element={<MyPageUserReview />}></Route>
           <Route
             path="user-reservation"

@@ -47,16 +47,15 @@ const Header = () => {
           </button>
         </div>
         <ul className={`${classes["menu"]} ${isToggled && classes.active}`}>
-          <li>
-            <NavLink to={"/alert"} onClick={isToggled && isToggledHandler}>
-              알람
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/contract"} onClick={isToggled && isToggledHandler}>
-              계약
-            </NavLink>
-          </li>
+          {accessToken ? (
+            <li>
+              <NavLink to={"/alert"} onClick={isToggled && isToggledHandler}>
+                알림
+              </NavLink>
+            </li>
+          ) : (
+              ""
+          )}
           {userInfo.isRealtor ? (
             <li>
               <NavLink to={"/house"} onClick={isToggled && isToggledHandler}>

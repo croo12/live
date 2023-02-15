@@ -1,10 +1,11 @@
 .rightContainer {
-  flex-grow: 3;
+  width: 60%;
   h2 {
     text-align: left;
     margin-bottom: 1em;
   }
   .rightListContainer {
+    padding: 30px;
     height: 100%;
     text-align: left;
     .rightEmptyContainer {
