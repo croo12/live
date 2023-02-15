@@ -1,0 +1,85 @@
+.reviewForm {
+  font-size: 16px;
+
+  .reviewInner {
+    text-align: center;
+
+    h3 {
+      font-size: 1.6em;
+      margin: 0.5em;
+    }
+
+    .ratingBox {
+      display: flex;
+      justify-content: center;
+      padding: 2em;
+
+      div {
+        button {
+          background: none;
+          border: none;
+          width: 3.5em;
+          height: 5em;
+          z-index: 100;
+          cursor: pointer;
+        }
+
+        // .superStar {
+        //   -webkit-text-fill-color: transparent;
+        //   -webkit-background-clip: text;
+        //   background-clip: text;
+        //   color: transparent;
+        // }
+        span {
+          border: none;
+          background: transparent;
+          font-size: 3em;
+          // 드래그 막기
+          -ms-user-select: none;
+          -moz-user-select: -moz-none;
+          -khtml-user-select: none;
+          -webkit-user-select: none;
+          user-select: none;
+        }
+      }
+      .starArea {
+        position: absolute;
+        z-index: -100;
+      }
+    }
+
+    .descBox {
+      margin-bottom: 2em;
+      font-size: 1.3em;
+    }
+
+    .reviewBox {
+      textarea {
+        width: 80%;
+        height: 12em;
+        padding: 1.5em;
+        font-size: 1.1em;
+        border-radius: 6px;
+      }
+    }
+
+    .registBtn {
+      margin: 32px;
+      button {
+        width: 10em;
+        height: 48px;
+        font-size: 1.1em;
+        color: white;
+        font-weight: 700;
+        background: #42d395;
+        border-radius: 6px;
+        border: none;
+        transition: all 0.2s ease;
+      }
+
+      button:hover {
+        opacity: 0.75;
+      }
+    }
+  }
+}
