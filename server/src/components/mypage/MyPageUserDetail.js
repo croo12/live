@@ -14,39 +14,41 @@ const MyPageUserDetail = () => {
   const navigate = useNavigate();
   const { doLogout } = useAuth();
   const dispatch = useDispatch();
-  const [userDetail,setUserDetail] = useState("");
+  const [userDetail, setUserDetail] = useState("");
   const [profile, setProfile] = useState("");
   const [previewProfile, setPreviewProfile] = useState("");
   const [imageSrc, setImageSrc] = useState(null);
+  const [userPassError, setUserPassError] = useState(false);
 
   const onQuitHandler = async () => {
-    alert("정말로 탈퇴하시겠습니까?");
-    try {
-      const result = await axiosInstance.delete("users", {
-        headers: getAuthHeader(),
-      });
-      if (result) {
-        alert("탈퇴되었습니다!");
-        doLogout();
+    if (confirm("정말로 탈퇴하시겠습니까?")) {
+      try {
+        const result = await axiosInstance.delete("users", {
+          headers: getAuthHeader(),
+        });
+        if (result) {
+          alert("탈퇴되었습니다!");
+          doLogout();
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
   //const userDetail = useLoaderData();
-    
-  useEffect(()=>{
+
+  useEffect(() => {
     async function fetchData() {
       const result = await getUserInfo(getAuthHeader());
       setUserDetail(result);
-      if(result.imageSrc !== null) {
+      if (result.imageSrc !== null) {
         setPreviewProfile(result.imageSrc);
         setImageSrc(result.imageSrc);
       }
     }
     fetchData();
-  }, []);    
+  }, []);
 
   const profileImgHandler = (data) => {
     setProfile(data);
@@ -74,9 +76,15 @@ const MyPageUserDetail = () => {
   const onChangeUser = async (e) => {
     e.preventDefault();
 
-    if(formData.current.userPass.value === "") {
-      alert("비밀번호를 입력해주세요.");
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$^*+=-])(?=.*[0-9]){9,16}/;
+    if (
+      !formData.current.userPass.value.trim ||
+      !passwordRegex.test(formData.current.userPass.value)
+    ) {
+      setUserPassError(true);
       return;
+    } else {
+      setUserPassError(false);
     }
 
     const changeData = {
@@ -84,7 +92,7 @@ const MyPageUserDetail = () => {
       email: formData.current.userEmail.value,
       phone: formData.current.userPhone.value,
       region: "봉명동",
-      imageSrc : imageSrc
+      imageSrc: imageSrc,
     };
 
     const frm = new FormData();
@@ -118,119 +126,129 @@ const MyPageUserDetail = () => {
     }
   };
 
-
   return (
     <>
-    <form onSubmit={onChangeUser} ref={formData}>
-      <div className={classes.detailUser} >
-      <div className={classes.detailFieldSet}>
-        <div className={classes.formInner}>
-          <div className={classes.profile}>
-          {previewProfile ? (
-                <img src={previewProfile} alt="User Profile" />
-              ) : (
-                <img src={sample} alt="Blank Profile" />
-              )}
+      <form onSubmit={onChangeUser} ref={formData}>
+        <div className={classes.detailUser}>
+          <div className={classes.detailFieldSet}>
+            <div className={classes.formInner}>
+              <div className={classes.profile}>
+                {previewProfile ? (
+                  <img src={previewProfile} alt="User Profile" />
+                ) : (
+                  <img src={sample} alt="Blank Profile" />
+                )}
+                <div>
+                  <div className={classes.profileBtn}>
+                    <ImageInput
+                      setImage={profileImgHandler}
+                      addButton={
+                        previewProfile ? (
+                          <div className={classes.modBtn}>변경</div>
+                        ) : (
+                          <div className={classes.modBtn}>프로필 등록</div>
+                        )
+                      }
+                      delButton={
+                        previewProfile ? (
+                          <div
+                            className={classes.delBtn}
+                            onClick={deleteHandler}
+                          >
+                            삭제
+                          </div>
+                        ) : (
+                          ""
+                        )
+                      }
+                    ></ImageInput>
+                  </div>
+                  {/*<!-- <img alt="프로필" src={userDetail.imageSrc !== null ? userDetail.imageSrc : sample}></img> -->*/}
+                </div>
+              </div>
+              <div className={classes.inputBox}>
+                <label>이름</label>
+                <div className={classes.inputButton}>
+                  <span>{userDetail.name}</span>
+                </div>
+              </div>
+              <div className={classes.inputBox}>
+                <label>아이디</label>
+                <div className={classes.inputButton}>
+                  <span>{userDetail.id}</span>
+                </div>
+              </div>
+              <div className={classes.inputBox}>
+                <label>비밀번호</label>
+                <div className={classes.inputButton}>
+                  <input
+                    type="password"
+                    id="userPass"
+                    name="userPass"
+                    defaultValue={userDetail.password || ""}
+                  ></input>
+                </div>
+                {userPassError && (
+                  <div style={{ color: "red" }}>
+                    비밀번호는 문자,숫자,특수문자를 조합하여 9자이상 16자
+                    이내이어야 합니다.
+                  </div>
+                )}
+              </div>
+              <div className={classes.inputBox}>
+                <label>이메일</label>
+                <div className={classes.inputButton}>
+                  <input
+                    type="text"
+                    id="userEmail"
+                    name="userEmail"
+                    defaultValue={userDetail.email || ""}
+                  ></input>
+                </div>
+              </div>
+              <div className={classes.inputBox}>
+                <label>전화번호 </label>
+                <div className={classes.inputButton}>
+                  <input
+                    type="text"
+                    id="userPhone"
+                    name="userPhone"
+                    defaultValue={userDetail.phone || ""}
+                  ></input>
+                </div>
+              </div>
+              <div className={classes.inputBox}>
+                <label>지역</label>
+                <div className={classes.inputButton}>
+                  <span>{userDetail.region}</span>
+                </div>
+              </div>
+              <div className={classes.inputBox}>
+                <label>성별 </label>
+                <div className={classes.inputButton}>
+                  <span>{userDetail.gender}</span>
+                </div>
+              </div>
+              <div className={classes.inputBox}>
+                <label>평가점수</label>
+                <div className={classes.inputButton}>
+                  <span>{userDetail.score}</span>
+                </div>
+              </div>
+            </div>
+
+            <br />
             <div>
-            <div className={classes.profileBtn}>
-            <ImageInput
-              setImage={profileImgHandler}
-              addButton={
-                previewProfile ? (
-                  <div className={classes.modBtn}>변경</div>
-                ) : (
-                  <div className={classes.modBtn}>프로필 등록</div>
-                )
-              }
-              delButton={
-                previewProfile ? (
-                  <div className={classes.delBtn} onClick={deleteHandler}>삭제</div>
-                ) : (
-                  ""
-                )
-              }
-            ></ImageInput>
-          </div>          
-          {/*<!-- <img alt="프로필" src={userDetail.imageSrc !== null ? userDetail.imageSrc : sample}></img> -->*/}
-            </div>
-          </div>
-          <div className={classes.inputBox}>
-            <label>이름</label>
-            <div className={classes.inputButton}>
-              <span>{userDetail.name}</span>
-            </div>
-          </div>
-          <div className={classes.inputBox}>
-            <label>아이디</label>
-            <div className={classes.inputButton}>
-              <span>{userDetail.id}</span>
-            </div>
-          </div>
-          <div className={classes.inputBox}>
-            <label>비밀번호</label>
-            <div className={classes.inputButton}>
-              <input
-                type="text"
-                id="userPass"
-                name="userPass"
-                defaultValue={userDetail.password || ""}
-              ></input>
-            </div>
-          </div>
-          <div className={classes.inputBox}>
-            <label>이메일</label>
-            <div className={classes.inputButton}>
-              <input
-                type="text"
-                id="userEmail"
-                name="userEmail"
-                defaultValue={userDetail.email || ""}
-              ></input>
-            </div>
-          </div>
-          <div className={classes.inputBox}>
-            <label>전화번호 </label>
-            <div className={classes.inputButton}>
-              <input
-                type="text"
-                id="userPhone"
-                name="userPhone"
-                defaultValue={userDetail.phone || ""}
-              ></input>
-            </div>
-          </div>
-          <div className={classes.inputBox}>
-            <label>지역</label>
-            <div className={classes.inputButton}>
-              <span>{userDetail.region}</span>
-            </div>
-          </div>
-          <div className={classes.inputBox}>
-            <label>성별 </label>
-            <div className={classes.inputButton}>
-              <span>{userDetail.gender}</span>
-            </div>
-          </div>
-          <div className={classes.inputBox}>
-            <label>평가점수</label>
-            <div className={classes.inputButton}>
-              <span>{userDetail.score}</span>
+              <span className={classes.delBtn}>
+                <button onClick={onQuitHandler}>회원탈퇴</button>
+              </span>
+              <span className={classes.modifyBtn}>
+                <button onClick={onChangeUser}>정보수정</button>
+              </span>
             </div>
           </div>
         </div>
-        
-        <br />
-        <div>
-          <span className={classes.delBtn}>
-            <button onClick={onQuitHandler}>회원탈퇴</button>
-          </span>
-          <span className={classes.modifyBtn}>
-            <button onClick={onChangeUser}>정보수정</button>
-          </span>
-        </div>
-      </div>
-    </div>
-    </form>
+      </form>
     </>
   );
 };
