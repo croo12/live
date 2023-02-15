@@ -14,6 +14,8 @@ export const STATUS = {
   REALTOR_END_CALL: 122,
 
   USER_ENTER: 200,
+
+  CONSULTING_IS_END: 999,
 };
 
 //화상통화
@@ -43,11 +45,20 @@ const ConsultingPage = (props) => {
         break;
 
       case STATUS.REALTOR_END_CALL:
-        if (confirm("정말로 종료하시겠습니까? \n 상담이 완전히 종료됩니다.")) {
+        if (confirm("정말로 종료하시겠습니까? \n상담이 완전히 종료됩니다.")) {
           setStatus(STATUS.REALTOR_END_CALL);
         } else {
           console.log("종료안함");
         }
+        break;
+
+      case STATUS.USER_ENTER:
+        setStatus(STATUS.USER_ENTER);
+        break;
+
+      case STATUS.CONSULTING_IS_END:
+        console.log("꺼져부렀다");
+        setStatus(STATUS.CONSULTING_IS_END);
         break;
     }
   };

@@ -9,10 +9,11 @@ import { FiMaximize } from "react-icons/fi";
 import { IoExitOutline, IoVolumeMuteOutline } from "react-icons/io5";
 import useWebSocket from "../../util/useWebSocket";
 import useWebRTC from "../../util/useWebRTC";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useRecording from "../../util/useRecording";
 import { usePrompt } from "../../util/usePrompt";
 import Modal from "../../UI/Modal";
+import ReviewForm from "../ReviewForm";
 
 const ConsultingMeetPage = ({
   userInfo,
@@ -89,12 +90,16 @@ const ConsultingMeetPage = ({
         break;
 
       case STATUS.REALTOR_END_CALL:
-        console.log(`연결은 종료되었다....`);
+        console.log(`연결을 종료하겠다....`);
+
         socket.current.send(JSON.stringify({ id: "closeRoom" }));
+        setTimeOut(setInfo("상담을 종료합니다..."), 2000);
         setBlock(false);
         break;
 
       case STATUS.USER_ENTER:
+        console.log(`유저 등장`);
+
         setBlock(true);
         //들어왔져염
         break;
@@ -102,7 +107,6 @@ const ConsultingMeetPage = ({
       case STATUS.CONSULTING_IS_END:
         //리뷰 ON
         setBlock(false);
-
         break;
 
       default:
@@ -112,6 +116,12 @@ const ConsultingMeetPage = ({
 
   const toggleAudio = () => {
     setAudio(!audio);
+  };
+
+  const params = useParams();
+  const onClose = () => {
+    closeReview();
+    navi("/mypage/user");
   };
 
   usePrompt({
@@ -158,6 +168,16 @@ const ConsultingMeetPage = ({
           }
         );
         break;
+
+      case "closeRoom":
+        if (isRealtor) {
+          navi(`/consulting/${sessionId}`);
+        } else {
+          setBlock(false);
+          statusChangeHandler(STATUS.CONSULTING_IS_END);
+        }
+        break;
+
       case undefined:
         console.log(`???`);
         break;
@@ -165,14 +185,6 @@ const ConsultingMeetPage = ({
         console.error("Unrecognized message", responseMsg);
     }
   }, [responseMsg]);
-
-  const toFullScreen = () => {
-    if (window.screen.orientation.type === "portrait-primary") {
-      window.screen.orientation.lock("landscape");
-    } else {
-      window.screen.orientation.unlock();
-    }
-  };
 
   return (
     <>
@@ -219,18 +231,23 @@ const ConsultingMeetPage = ({
             </>
           ) : (
             <>
-              <div>
-                <Button clickEvent={toFullScreen}>
+              {/* <div>
+                <Button clickEvent={}>
                   <FiMaximize />
                 </Button>
-              </div>
+              </div> */}
             </>
           )}
         </div>
       </div>
       {viewReview && (
         <Modal>
-          <div>리뷰임</div>
+          <ReviewForm
+            realtorNo={params.realtorNo}
+            userNo={params.userNo}
+            consultingNo={params.consultingNo}
+            onClose={onClose}
+          />
         </Modal>
       )}
     </>

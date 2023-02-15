@@ -48,7 +48,6 @@ const ConsultingRightReservationHouseList = () => {
           }}
           onClick={() => {
             statusChangeHandler(STATUS.REALTOR_END_CALL);
-            navigation(`/consulting/${params.sessionId}`);
           }}
         >
           상담종료
