@@ -180,6 +180,7 @@ public class ContractResponse {
         @Builder
         public static class ContractInfo {
 
+            private Long contractNo;
             private LocalDate moveOnDate;
             private int numberOfResidents;
             private String specialContract;
@@ -193,6 +194,7 @@ public class ContractResponse {
 
             public static ContractInfo toEntity(Contract contract) {
                 return ContractInfo.builder()
+                    .contractNo(contract.getNo())
                     .moveOnDate(contract.getMoveOnDate())
                     .numberOfResidents(contract.getNumberOfResidents())
                     .specialContract(contract.getSpecialContract())
