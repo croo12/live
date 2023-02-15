@@ -74,7 +74,7 @@ public class ItemResponse {
         private int maintenanceFee;
         private String description;
         private String buildingName;
-        private String image;
+        private String imageSrc;
         private String address;
         private String addressDetail;
         private float exclusivePrivateArea;
@@ -87,7 +87,7 @@ public class ItemResponse {
                 .rent(item.getRent())
                 .maintenanceFee(item.getMaintenanceFee())
                 .description(item.getDescription())
-                .image(item.getItemImages().get(0).getImageSrc())
+                .imageSrc(item.getItemImages().get(0).getImageSrc())
                 .address(item.getHouse().getAddress())
                 .addressDetail(item.getHouse().getAddressDetail())
                 .exclusivePrivateArea(item.getHouse().getExclusivePrivateArea())
