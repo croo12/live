@@ -21,6 +21,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 import org.kurento.client.IceCandidate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +83,9 @@ public class CallHandler extends TextWebSocketHandler {
                     user.addCandidate(cand, jsonMessage.get("name").getAsString());
                 }
                 break;
+            case "close":
+                closeRoom(jsonMessage);
+                break;
             default:
                 break;
         }
@@ -106,5 +111,10 @@ public class CallHandler extends TextWebSocketHandler {
     private void leaveRoom(UserSession user) throws IOException {
         final Room room = roomManager.getRoom(user.getRoomName());
         room.leave(user);
+    }
+
+    private void closeRoom(JsonObject params){
+        final String roomName = params.get("room").getAsString();
+        roomManager.getRoom(roomName).close();
     }
 }
