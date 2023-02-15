@@ -359,7 +359,7 @@ public class ConsultingService {
             LocalTime.of(23, 59, 59)); //오늘 23:59:59
 
         List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusBetweenAndConsultingDateBetween(realtor.getNo(),
-            CONSULTING_CONFIRMED, CONSULTING_PAST, start, end);
+            CONSULTING_CONFIRMED, CONSULTING_PROCESSING, start, end);
         List<ConsultingResponse.TodayConsulting> list = new ArrayList<>();
         consultingsList.stream().forEach(consulting -> {
             List<ConsultingItem> consultingItems = consulting.getConsultingItems();
