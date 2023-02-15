@@ -33,7 +33,6 @@ const useWebSocket = (sessionId) => {
 
     socket.current.onclose = () => {
       console.log("WebSocket connection closed");
-      dispatch(userAction.disconnectWebsocket());
     };
 
     return () => {
