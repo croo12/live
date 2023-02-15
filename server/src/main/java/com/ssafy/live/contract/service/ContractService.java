@@ -1,6 +1,5 @@
 package com.ssafy.live.contract.service;
 
-import static com.ssafy.live.common.exception.ErrorCode.CONSULTING_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.CONTRACT_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
@@ -127,7 +126,8 @@ public class ContractService {
     }
 
     public ResponseEntity<?> contractChangeStatus(Long contractNo, int status) {
-        Contract contract = contractRepository.findById(contractNo).orElseThrow(()->new BadRequestException(CONTRACT_NOT_FOUND));
+        Contract contract = contractRepository.findById(contractNo)
+            .orElseThrow(() -> new BadRequestException(CONTRACT_NOT_FOUND));
         contract.changeStatus(status);
         contractRepository.save(contract);
 

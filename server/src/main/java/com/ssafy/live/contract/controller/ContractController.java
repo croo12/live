@@ -52,7 +52,8 @@ public class ContractController {
     }
 
     @PatchMapping("/{contractNo}/{status}")
-    public ResponseEntity<?> contractChangeStatus(@PathVariable("contractNo") Long contractNo, @PathVariable("status") int status) {
+    public ResponseEntity<?> contractChangeStatus(@PathVariable("contractNo") Long contractNo,
+        @PathVariable("status") int status) {
         return contractService.contractChangeStatus(contractNo, status);
     }
 }
