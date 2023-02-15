@@ -1,6 +1,6 @@
 package com.ssafy.live.consulting.service;
 
-import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_RPOCESSING;
+import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_PROCESSING;
 import static com.ssafy.live.common.exception.ErrorCode.CONSULTING_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.ITEM_NOT_FOUND;
 import static com.ssafy.live.common.exception.ErrorCode.REALTOR_NOT_FOUND;
@@ -33,9 +33,10 @@ import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -43,7 +44,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.LocalDate;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourceRegion;
@@ -350,11 +350,14 @@ public class ConsultingService {
     public ResponseEntity<?> todayList(UserDetails user) {
         Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
             .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date();
-        String now_dt = format.format(now);
-        List<Consulting> consultingsList = consultingRepository.findByRealtorAndStatus(realtor.getNo(),
-            CONSULTING_RPOCESSING.getValue(), now_dt);
+
+        LocalDateTime start = LocalDateTime.of(java.time.LocalDate.now(),
+            LocalTime.of(0, 0, 0)); //오늘 00:00:00
+        LocalDateTime end = LocalDateTime.of(LocalDate.now(),
+            LocalTime.of(23, 59, 59)); //오늘 23:59:59
+
+        List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusAndConsultingDateBetween(realtor.getNo(),
+            CONSULTING_PROCESSING.getValue(), start, end);
         List<ConsultingResponse.TodayConsulting> list = new ArrayList<>();
         consultingsList.stream().forEach(consulting -> {
             List<ConsultingItem> consultingItems = consulting.getConsultingItems();
