@@ -21,10 +21,9 @@ const ConsultingPage = (props) => {
   const { sessionId } = useParams();
 
   const { userInfo } = useAuth();
-  const isRealtor = userInfo.isRealtor;
 
   const [status, setStatus] = useState(
-    isRealtor ? STATUS.REALTOR_ENTER : STATUS.USER_ENTER
+    userInfo.isRealtor ? STATUS.REALTOR_ENTER : STATUS.USER_ENTER
   );
   const [viewList, toggleList] = useState(false, true);
   const [recordingFiles, setRecordingFiles] = useState([]);
@@ -85,7 +84,7 @@ const ConsultingPage = (props) => {
         <div className={classes.video_box}>
           <ConsultingMeetPage
             userInfo={userInfo}
-            isRealtor={isRealtor}
+            isRealtor={userInfo.isRealtor}
             status={status}
             sessionId={sessionId}
             recordingFiles={recordingFiles}
@@ -95,7 +94,7 @@ const ConsultingPage = (props) => {
         </div>
         <div className={`${classes.lists} ${viewList ? classes.isActive : ""}`}>
           <ConsultingRightBox
-            isRealtor={isRealtor}
+            isRealtor={userInfo.isRealtor}
             statusChangeHandler={orderHandler}
             toggleListInMobile={toggleListInMobile}
             status={status}
