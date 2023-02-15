@@ -93,7 +93,11 @@ const HouseDetailCom = (props) => {
         </Modal>
       )}
       {houseInfo ? (
-        <div className={classes.houseDetailCom}>
+        <div
+          className={`${classes.houseDetailCom} ${
+            props.isModal && classes.isModal
+          } `}
+        >
           {houseInfo && (
             <>
               <div className={classes.imageContent}>
