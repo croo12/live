@@ -48,6 +48,18 @@ export const getReservationList = async (data) => {
     return result;
 };
 
+export const getTodayReservationList = async () => {
+  let result = null;
+  await axiosInstance
+    .get(`consultings/today`, {
+      headers: getAuthHeader(),
+    })
+    .then((data) => {
+      result = data.data;
+    });
+  return result;
+};
+
 export const getReservationDetail = async (data) => {
   let result = null;
   await axiosInstance.get(`consultings/${data}`, {

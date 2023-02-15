@@ -115,6 +115,7 @@
       }
 
       .btn4 {
+        flex: 1;
         margin-right: 2%;
         padding: 2% 3%;
         border: 0.3px solid rgba(112, 112, 112, 1);
@@ -122,8 +123,6 @@
         border-radius: 4px;
         width: 40%;
         font-weight: 700;
-        position: relative;
-        left: 55%;
         border: none;
       }
     }

@@ -5,6 +5,9 @@ import Button from "../UI/Button";
 import classes from "./ReservationCardContent.module.scss";
 import totoro from "../assets/image/sample.jpg";
 import { STATUS } from "../pages/ConsultingPage";
+import { BsCalendar2WeekFill, BsFillPhoneFill } from "react-icons/bs";
+import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
+import Modal from "../UI/Modal";
 
 const ReservationCardContent = (props) => {
   const [isConsulting, setConsulting] = useState(props.isConsulting);
@@ -38,15 +41,18 @@ export default ReservationCardContent;
 
 export const ConsultingReservationCardContent = (props) => {
   const [isConsulting, setConsulting] = useState(props.isConsulting);
+  const [viewModal, setViewModal] = useState(false);
   const realtor = useRef(props.isRealtor);
   const navigation = useNavigate();
 
+  const toggleModal = () => {
+    setViewModal(!viewModal);
+  };
+
   const clickEventHandler = () => {
     if (props.statusChangeHandler) {
-
       props.statusChangeHandler(STATUS.REALTOR_START_CONSULTING);
     }
-
     navigation(
       `/consulting/${props.sessionId}/${props.consultingNo}/${props.realtorNo}/${props.userNo}`
     );
@@ -54,55 +60,50 @@ export const ConsultingReservationCardContent = (props) => {
 
   return (
     <div className={classes.consultingCardBox}>
-      <div>
+      <div className={classes.imageContainer}>
         <img src={props.image ? props.image : totoro} alt="totoro"></img>
-        <p>{props.name} </p>
       </div>
-      <div>
-        <Link>예약 상세보기▶</Link>
-        <p>{props.consultingDate.substring(0, 10)}</p>
-        <p>예약 정보</p>
-        {!isConsulting && <button>상담 바로가기</button>}
-        {isConsulting && (
-          <Button clickEvent={clickEventHandler}>상담하기</Button>
-        )}
+      <div className={classes.consultingDetail}>
+        <div className={classes.detailContainer}>
+          <p>
+            <MdOutlineDriveFileRenameOutline /> {props.name}
+          </p>
+          <p>
+            <BsCalendar2WeekFill /> {props.consultingDate.substring(0, 10)}
+          </p>
+          <p>
+            <BsFillPhoneFill />{" "}
+            {props.personalInfo.length <= 11
+              ? `${props.personalInfo.substring(
+                  0,
+                  3
+                )}-${props.personalInfo.substring(
+                  3,
+                  7
+                )}-${props.personalInfo.substring(7, 11)}`
+              : props.personalInfo}
+          </p>
+        </div>
+        <div className={classes.buttonContainer}>
+          <button
+            onClick={() => {
+              toggleModal;
+            }}
+            className={classes.whiteBtn}
+          >
+            예약 상세보기
+          </button>
+          {!isConsulting && <button>상담 바로가기</button>}
+          {isConsulting && (
+            <button onClick={clickEventHandler}>상담하기</button>
+          )}
+        </div>
       </div>
+      {viewModal && (
+        <Modal onConfirm={toggleModal}>
+          <div>예약상세 나올 예정</div>
+        </Modal>
+      )}
     </div>
   );
 };
-
-export const DUMMY4 = [
-  {
-    image: totoro,
-    name: "김희연",
-    date: "2023-02-01",
-    time: "12:30",
-    location: "대전",
-    state: "종료",
-    detail: "상세보기",
-    cancel: "취소 불가",
-    confirm: "예약 확정",
-  },
-  {
-    image: totoro,
-    name: "김희연",
-    date: "2023-02-01",
-    time: "12:30",
-    location: "대전",
-    state: "종료",
-    detail: "상세보기",
-    cancel: "취소 불가",
-    confirm: "예약 확정",
-  },
-  {
-    image: totoro,
-    name: "김희연",
-    date: "2023-02-01",
-    time: "12:30",
-    location: "대전",
-    state: "종료",
-    detail: "상세보기",
-    cancel: "취소 불가",
-    confirm: "예약 확정",
-  },
-];
