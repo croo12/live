@@ -35,6 +35,7 @@ import com.ssafy.live.notice.domain.repository.NoticeRepository;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -351,13 +352,8 @@ public class ConsultingService {
         Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
             .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date();
-        String now_dt = format.format(now);
-
-
         List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusBetweenAndConsultingDateStartigWith(realtor.getNo(),
-            CONSULTING_CONFIRMED.getValue(), CONSULTING_PROCESSING.getValue(), now_dt);
+            CONSULTING_CONFIRMED.getValue(), CONSULTING_PROCESSING.getValue());
         List<ConsultingResponse.TodayConsulting> list = new ArrayList<>();
         consultingsList.stream().forEach(consulting -> {
             List<ConsultingItem> consultingItems = consulting.getConsultingItems();
