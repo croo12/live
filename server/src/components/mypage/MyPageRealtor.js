@@ -3,6 +3,7 @@ import { BsFillBellFill, BsSearch } from "react-icons/bs";
 import { TfiWrite } from "react-icons/tfi";
 import classes from "./MyPageRealtor.module.scss";
 import sample from "../../assets/image/sample.jpg";
+import star from "../../assets/image/star.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../common/AuthProtector";
 
@@ -13,10 +14,7 @@ const MyPageRealtor = () => {
     navigate("/mypage/realtor-detail-info");
   };
 
-  const { userInfo, doLogout } = useAuth();
-
-  // console.log(userInfo);
-
+  const { userInfo } = useAuth();
   const [btnActive, setBtnActive] = useState(0);
 
   const reviewonClickHandler = () => {
@@ -31,6 +29,7 @@ const MyPageRealtor = () => {
     setBtnActive(3);
     navigate("/mypage/realtor/realtor-reservation");
   };
+
   return (
     <>
       <div className={classes.intro}>
@@ -38,15 +37,17 @@ const MyPageRealtor = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-                <img src={sample}></img>
+              <img alt="프로필" src={userInfo.profile !== null ? userInfo.profile : sample}></img>
               </div>
               <div className={classes.rightDesc}>
                 <p>
                   안녕하세요, <strong>{userInfo.name}</strong>님<br />
                   <span>중개사 회원</span>
-                  <button onClick={onClickHandler}>개인정보 조회</button>
+                  <button className={classes.goDetail} onClick={onClickHandler}>개인정보 조회</button>
                 </p>
-                <div className={classes.temperature}>별점 ★ 4.5</div>
+                <div className={classes.temperature}> 
+                <img alt="★" src={star} className={classes.star}></img> 
+                {userInfo.score}</div>
               </div>
             </div>
           </div>

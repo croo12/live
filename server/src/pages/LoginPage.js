@@ -19,7 +19,6 @@ const LoginPage = () => {
   const { userInfo, doLogin, doLogout } = useAuth();
   const navigation = useNavigate();
 
-  const selector = useSelector;
   const dispatch = useDispatch();
 
   const loginModeHandler = (event) => {

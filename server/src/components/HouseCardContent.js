@@ -3,9 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import PreviewCarousel from "./house/PreviewCarousel";
 import HouseDetailCom from "./HouseDetailCom";
-//import classes from "./HouseCardContent.module.scss";
-import classes from "./HouseCardContent2.module.scss";
+import classes from "./HouseCardContent.module.scss";
+import classes2 from "./HouseCardContent2.module.scss";
 import sample from "../assets/image/sample.jpg";
+import ResponsiveText from "./common/ResponsiveText";
 
 const HouseCardContent = ({
   props,
@@ -27,16 +28,6 @@ const HouseCardContent = ({
   const navigate = useNavigate();
   const [isModal, setModal] = useState(false);
 
-  const clickEventHandler = () => {
-    console.log(location);
-
-    if (location.pathname !== "/house") {
-      setModal(!isModal);
-    } else {
-      navigate("/house/detail/대충 번호");
-    }
-  };
-
   const itemData = {
     idx,
     itemNo,
@@ -54,30 +45,37 @@ const HouseCardContent = ({
   return (
     <>
       <div
+        className={classes.reserveCard}
         onClick={() => {
           searchedListClickHandler(itemData);
         }}
-        className={classes.HouseCardContent2}
-        style={{ cursor: "pointer" }}
       >
-        <div className={classes.houseContent}>
-          <div className={classes.leftContent}>
-            <img src={imageSrc}></img>
-          </div>
-          <div className={classes.rightContent}>
-            <p>원룸</p>
-            <p>{buildingName}</p>
-            <h2>
-              월세 {deposit}/{rent}
-            </h2>
-            <p>
-              방 {exclusivePrivateArea}㎡ . 관리비{" "}
-              {maintenanceFee === 0 ? "없음" : maintenanceFee}
-              <br /> {address}
-              <br /> {addressDetail}
-              <br /> {description}
-            </p>
-          </div>
+        <div className={classes.leftContent}>
+          <img src={imageSrc}></img>
+        </div>
+        <div className={classes.rightContent}>
+          <h2>
+            월세 {deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+            만원/ {rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원
+          </h2>
+          <p>
+            전용{" "}
+            {exclusivePrivateArea
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            ㎡ (
+            {Math.round(exclusivePrivateArea / 3.3)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            평) ㆍ 관리비 {maintenanceFee} 만원
+          </p>
+          <p>{address + " " + addressDetail}</p>
+          <p className={classes.descText}>
+            <ResponsiveText
+              text={description}
+              textLength={[30, 40, 50, 70, 80]}
+            />
+          </p>
         </div>
       </div>
     </>
@@ -93,8 +91,6 @@ export const ConsultingHouseCardContent = (props) => {
   const [isModal, setModal] = useState(false);
 
   const clickEventHandler = () => {
-    console.log(location);
-
     if (props.clickHandler) {
       props.clickHandler(props.idx);
       return;
@@ -106,8 +102,6 @@ export const ConsultingHouseCardContent = (props) => {
       navigate("/house/detail/대충 번호");
     }
   };
-
-  console.log(props);
 
   return (
     <>
@@ -184,7 +178,14 @@ export const ReservationHouseCardContent = (props) => {
       className={`${classes.reservationItem} `}
     >
       <div className={classes.image}>
-        <img src={sample} alt="선택한 매물 목록" />
+        <img
+          src={
+            props.itemImages?.length !== 0
+              ? props.itemImages[0].imageSrc
+              : sample
+          }
+          alt="선택한 매물 목록"
+        />
       </div>
       <div>
         <h3>
@@ -196,7 +197,7 @@ export const ReservationHouseCardContent = (props) => {
       {/* <button onClick={clickEventHandler}>상세 정보 보기</button> */}
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom itemNo={props.itemNo} />
+          <HouseDetailCom itemNo={props.itemNo} isModal={true} />
         </Modal>
       )}
     </div>
@@ -232,7 +233,7 @@ export const RealtorHousesCardContent = ({
       </div>
       {isModal && (
         <Modal onConfirm={onConfirm}>
-          <HouseDetailCom itemNo={itemNo} />
+          <HouseDetailCom itemNo={itemNo} isModal={true} />
         </Modal>
       )}
     </div>
@@ -254,15 +255,6 @@ export const ContractHouseCardContent = (props) => {
     };
     props.fx2(info);
   };
-
-  const [previewModal, setPreviewModal] = useState(false);
-
-  const previewModalHandler = (e) => {
-    e.preventDefault();
-    setPreviewModal(!previewModal);
-  };
-
-  console.log(forSale.houseImage.length);
 
   const carouselSettings = {
     dots: true,
@@ -332,6 +324,7 @@ export const ContractHouseCardContent = (props) => {
                   <div className={classes.moveDate}>
                     <strong>입주 희망일</strong>
                     <input
+                      type="date"
                       placeholder="2023-01-23"
                       id="userMoveOnDate"
                       name="userMoveOnDate"
@@ -360,5 +353,220 @@ export const ContractHouseCardContent = (props) => {
         </div>
       </form>
     </>
+  );
+};
+
+// 계약 정보 - 일반 회원
+
+export const ContractDetailUserCardContent = (props) => {
+  const forSale = props.ContractInfo;
+
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+    autoplay: false,
+    autoplaySpeed: 0,
+    draggable: false,
+    fade: true,
+    arrows: true,
+    customArrow: true,
+    vertical: false,
+    initialSlide: 0,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+    appendDots: true,
+  };
+
+  return (
+    <form>
+      <div className={classes.contractForSaleContent}>
+        <div className={classes.inner}>
+          <h2>매물 정보</h2>
+          <br />
+          <div className={classes.contractContent}>
+            <div className={classes.leftDesc}>
+              <p>매물번호 {forSale.houseNumber}</p>
+              <h4>{forSale.houseAddress}</h4>
+              <h4>{forSale.houseName}</h4>
+              <p>{forSale.houseArea}</p>
+              <p> {forSale.houseSupplyArea}㎡(전용 면적)</p>
+              <div className={classes.infoBoxList}>
+                <div className={classes.forSale}>
+                  <strong>매물가격</strong>{" "}
+                  <input
+                    type="text"
+                    value={
+                      "월세 " +
+                      forSale.houseDeposit +
+                      "/" +
+                      forSale.houseMonthlyFee
+                    }
+                    readOnly
+                  />
+                </div>
+                <div className={classes.extraFee}>
+                  <strong>추가 비용</strong>{" "}
+                  <input
+                    value={"관리비 " + forSale.houseExtraFee}
+                    readOnly
+                  ></input>
+                </div>
+                <div className={classes.term}>
+                  <strong>계약 기간</strong>
+                  <input value={forSale.houseTermOfContract} readOnly></input>
+                </div>
+                <div className={classes.moveDate}>
+                  <strong>입주 희망일</strong>
+                  <input value={forSale.houseMoveOnDate} readOnly></input>
+                </div>
+              </div>
+            </div>
+            <div className={classes.rightImg}>
+              <div className={classes.imageContent}>
+                <div className={classes.imageBox}>
+                  <div className={classes.mainImage}>
+                    <img src={forSale.houseImage[0]}></img>
+                  </div>
+                  <div className={classes.subImage}>
+                    {forSale.houseImage.slice(1, 3).map((image, idx) => {
+                      return <img src={image} key={idx}></img>;
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </form>
+  );
+};
+
+// 계약 상세 정보(중개사 회원)
+
+export const ContractDetailRealtorCardContent = (props) => {
+  const forSale = props.ContractInfo;
+
+  const formData = useRef();
+
+  const insertInfo = (e) => {
+    e.preventDefault();
+    const info = {
+      deposit: formData.current.deposit.value,
+      rent: formData.current.rent.value,
+      mainteneceFee: formData.current.maintenenceFee.value,
+      termOfContract: formData.current.termOfContract.value,
+      moveOnDate: formData.current.moveOnDate.value,
+    };
+    props.fx2(info);
+  };
+
+  const carouselSettings = {
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+    autoplay: false,
+    autoplaySpeed: 0,
+    draggable: false,
+    fade: true,
+    arrows: true,
+    customArrow: true,
+    vertical: false,
+    initialSlide: 0,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+    appendDots: true,
+  };
+
+  return (
+    <form ref={formData}>
+      <div className={classes.contractForSaleContentRealtor}>
+        <div className={classes.inner}>
+          <h2>매물 정보</h2>
+          <br />
+          <div className={classes.contractContent}>
+            <div className={classes.leftDesc}>
+              <p>매물번호 {forSale.houseNumber}</p>
+              <h4>{forSale.houseAddress}</h4>
+              <h4>{forSale.houseName}</h4>
+              <p>{forSale.houseArea}</p>
+              <p> {forSale.houseSupplyArea}㎡(전용 면적)</p>
+              <div className={classes.infoBoxList}>
+                <div className={classes.forSaleDeposit}>
+                  <strong>보증금</strong>{" "}
+                  <input
+                    defaultValue={forSale.houseDeposit + " (만원)"}
+                    id="deposit"
+                    name="deposit"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+                <div className={classes.forSaleRent}>
+                  <strong>월세</strong>{" "}
+                  <input
+                    defaultValue={forSale.houseMonthlyFee + " (만원)"}
+                    id="rent"
+                    name="rent"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+                <div className={classes.extraFee}>
+                  <strong>관리비</strong>{" "}
+                  <input
+                    defaultValue={forSale.houseExtraFee + " (만원)"}
+                    id="maintenenceFee"
+                    name="maintenenceFee"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+                <div className={classes.term}>
+                  <strong>계약 기간</strong>
+                  <input
+                    defaultValue={forSale.houseTermOfContract + " (개월)"}
+                    id="termOfContract"
+                    name="termOfContract"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+                <div className={classes.moveDate}>
+                  <strong>입주 희망일</strong>
+                  <input
+                    defaultValue={forSale.houseMoveOnDate}
+                    id="moveOnDate"
+                    name="moveOnDate"
+                    onChange={insertInfo}
+                  ></input>
+                </div>
+              </div>
+            </div>
+            <div className={classes.rightImg}>
+              <div className={classes.imageContent}>
+                <div className={classes.imageBox}>
+                  <div className={classes.mainImage}>
+                    <img src={forSale.houseImage[0]}></img>
+                  </div>
+                  <div className={classes.subImage}>
+                    {forSale.houseImage.slice(1, 3).map((image, idx) => {
+                      return <img src={image} key={idx}></img>;
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </form>
   );
 };

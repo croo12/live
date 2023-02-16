@@ -1,8 +1,6 @@
 import classes from "./ReviewCardContent.module.scss";
 
 const ReviewCardContent = (data) => {
-  console.log(data);
-
   return (
     <div className={classes.content}>
       <h3>

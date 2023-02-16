@@ -2,12 +2,27 @@
   box-sizing: border-box;
   height: 100%;
   width: 100%;
-  font-size: 16px;
+
+  &.isModal {
+    font-size: 13px;
+  }
+
+  &.isConsulting {
+    font-size: 12px;
+  }
 
   max-width: 1024px;
 
   @media (max-width: 1024px) {
     font-size: calc(15.6 * 0.1vw);
+
+    &.isModal {
+      font-size: calc(13 * 0.1vw);
+    }
+
+    &.isConsulting {
+      font-size: calc(12 * 0.1vw);
+    }
   }
 
   .imageContent {
@@ -261,6 +276,11 @@
 
       .optionInfo {
         width: 100%;
+
+        &.isConsulting {
+          font-size: 9px;
+        }
+
         h3 {
           font-size: 1.25em;
         }

@@ -87,7 +87,7 @@ const ContractCardContent = (props) => {
               {props.isRealtor ? (
                 <button
                   onClick={() => {
-                    navigate(`/contract/realtor-contract/${props.contractNo}`);
+                    navigate(`/contract/contract-detail/${props.contractNo}`);
                   }}
                 >
                   계약 상세보기
@@ -95,7 +95,7 @@ const ContractCardContent = (props) => {
               ) : (
                 <button
                   onClick={() => {
-                    navigate(`/contract/user-contract/${props.contractNo}`);
+                    navigate(`/contract/contract-detail/${props.contractNo}`);
                   }}
                 >
                   계약 상세보기

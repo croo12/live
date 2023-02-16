@@ -6,12 +6,10 @@
   border-style: solid;
   border-color: #d3d3d3;
 
-  @media (max-width: 1024px) {
-    margin: 0;
-  }
   @media (max-width: 768px) {
     height: 56px;
   }
+
   .headerInner {
     height: 72px;
     margin: 0 10%;
@@ -97,7 +95,7 @@
       }
 
       li {
-        width: 90px;
+        padding: 1.5rem;
 
         :hover {
           color: #42d395;

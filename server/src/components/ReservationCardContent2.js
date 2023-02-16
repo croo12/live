@@ -8,6 +8,7 @@ const ReservationCardContent2 = ({
   consultingdate,
   consultinglocation,
   onDetailReservationHandler,
+  onChangeReservationHandler,
   tabActive,
   userInfo,
   consultingDate,
@@ -21,23 +22,15 @@ const ReservationCardContent2 = ({
   status,
   userNo,
   idx,
+  link,
 }) => {
   const navigation = useNavigate();
   const onDetailHandler = () => {
     navigation(`../user-reservation-detail/${consultingNo}`);
   };
-  const onChangeReservationHandler = async (status, e) => {
-    if(status === 2 && !confirm("예약을 확정하시겠습니까?")) {
-      return;
-    } else if(status === 5 && !confirm("예약을 취소하시겠습니까?")){ 
-      return;
-    }
-    const data = {};
-    data["consultingNo"] = consultingNo;
-    data["status"] = status;
-    const result = await changeReservationStatus(data);
-    alert(result)
-    e.preventDefault();
+
+  const goConsultingPage = () => {
+    navigation(link);
   };
 
   return (
@@ -67,13 +60,10 @@ const ReservationCardContent2 = ({
                 상담 매물
                 <br />
                 <strong>
-                  {
-                    itemCount === 0
-                    ?
-                    representativeItem
-                    : representativeItem+ ' 외 '+ itemCount+'건'
-                  }
-                  </strong>
+                  {itemCount === 0
+                    ? representativeItem
+                    : representativeItem + " 외 " + itemCount + "건"}
+                </strong>
               </p>
             </div>
           </div>
@@ -82,15 +72,29 @@ const ReservationCardContent2 = ({
       <div className={classes.rightContent}>
         {tabActive === 0 && (
           <div>
-          <button className={classes.btn1} onClick={onDetailHandler}>
-            예약 상세보기
-          </button>
-            {
-              status === 1 ? (
-              <button className={classes.btn3} onClick={(e)=>{onChangeReservationHandler(2, e)}}>예약 확정하기</button>
-              ) : ("")
-            }
-            <button className={classes.btn0} onClick={(e)=>{onChangeReservationHandler(5, e)}}>예약 취소하기</button>
+            <button className={classes.btn1} onClick={onDetailHandler}>
+              예약 상세보기
+            </button>
+            {status === 1 ? (
+              <button
+                className={classes.btn3}
+                onClick={(e) => {
+                  onChangeReservationHandler(2, e, consultingNo);
+                }}
+              >
+                예약 확정하기
+              </button>
+            ) : (
+              ""
+            )}
+            <button
+              className={classes.btn0}
+              onClick={(e) => {
+                onChangeReservationHandler(5, e, consultingNo);
+              }}
+            >
+              예약 취소하기
+            </button>
           </div>
         )}
         {tabActive === 1 && (
@@ -98,7 +102,9 @@ const ReservationCardContent2 = ({
             <button className={classes.btn1} onClick={onDetailHandler}>
               예약 상세보기
             </button>
-            <button className={classes.btn2}>상담 바로가기</button>
+            <button onClick={goConsultingPage} className={classes.btn2}>
+              상담 바로가기
+            </button>
           </div>
         )}
         {tabActive === 2 && (

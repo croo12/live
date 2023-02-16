@@ -2,7 +2,7 @@ import classes from "./MyPageRealtorReservationDetail.module.scss";
 
 import ListBox from "../../UI/ListBox";
 import MyReservationSearchBox from "./MyReservationSearchBox";
-import HouseCardContent from "../HouseCardContent";
+import HouseCardContent2 from "../HouseCardContent2";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { getReservationDetail } from "../../apis/reservationApis";
 import axiosInstance from "../../util/axios";
@@ -17,6 +17,7 @@ const MyPageRealtorReservationDetail = () => {
   const navigation = useNavigate();
 
   const searchedListClickHander = (data) => {
+    console.log(data);
     setWantAddList([...wantAddList, data]);
   };
 
@@ -37,13 +38,9 @@ const MyPageRealtorReservationDetail = () => {
     const newArray = [...selectedList, ...wantAddList];
     const itemList = [];
 
-    console.log(newArray);
-
     newArray.forEach((element) => {
       itemList.push(element.itemNo);
     });
-
-    console.log(itemList);
 
     const data = { itemList };
 
@@ -56,12 +53,19 @@ const MyPageRealtorReservationDetail = () => {
   return (
     <>
       <div className={classes.reservationdetailrealtor}>
-        <h2>예약 내역</h2>
         <div className={classes.date}>
+          <h2>예약 내역</h2>
           <p>
             <strong>일시</strong>
             <br />
-            {reservationDetail.consultingDate.substring(0, 10)}
+            {reservationDetail.consultingDate.substring(0, 4) +
+              "년 " +
+              (reservationDetail.consultingDate.substring(5, 6) === "0"
+                ? reservationDetail.consultingDate.substring(6, 7)
+                : reservationDetail.consultingDate.substring(5, 7)) +
+              "월 " +
+              reservationDetail.consultingDate.substring(8, 10) +
+              "일"}
           </p>
         </div>
         <div className={classes.require}>
@@ -69,17 +73,24 @@ const MyPageRealtorReservationDetail = () => {
             <strong>요청사항</strong>
           </p>
           <div className={classes.requestbox}>
-            <p>{reservationDetail.requirement}</p>
+            <pre>{reservationDetail.requirement}</pre>
           </div>
-          <br />
-          <hr />
         </div>
         <div className={classes.forsale}>
-          <h3>상담 매물</h3>
-          <button className={classes.btn1}>매물등록</button>
+          <div className={classes.saleHeader}>
+            <h2>상담 매물</h2>
+            <button
+              className={classes.btn1}
+              onClick={() => {
+                navigation("/house/regist");
+              }}
+            >
+              매물등록
+            </button>
+          </div>
           <div className={classes.selectlocation}>
             <h4>어떤 매물을 원하세요?</h4>
-            <div>
+            <div className={classes.searchBox}>
               <MyReservationSearchBox
                 sidoList={sidoList}
                 searchedListClickHander={searchedListClickHander}
@@ -91,8 +102,12 @@ const MyPageRealtorReservationDetail = () => {
               <p>
                 <strong>현재 요청된 매물</strong>
               </p>
-              <ListBox dataArray={selectedList} direction={false}>
-                <HouseCardContent
+              <ListBox
+                dataArray={selectedList}
+                direction={false}
+                toStart={true}
+              >
+                <HouseCardContent2
                   searchedListClickHandler={removeSelectedItemClickHandler}
                 />
               </ListBox>
@@ -101,16 +116,18 @@ const MyPageRealtorReservationDetail = () => {
               <p>
                 <strong>추가한 매물</strong>
               </p>
-              <ListBox dataArray={wantAddList} direction={false}>
-                <HouseCardContent
+              <ListBox dataArray={wantAddList} direction={false} toStart={true}>
+                <HouseCardContent2
                   searchedListClickHandler={removeItemClickHandler}
                 />
               </ListBox>
             </div>
           </div>
-          <button className={classes.btn2} onClick={adjustConsulting}>
-            적용하기
-          </button>
+          <div className={classes.buttonContainer}>
+            <button className={classes.btn2} onClick={adjustConsulting}>
+              적용하기
+            </button>
+          </div>
         </div>
       </div>
     </>

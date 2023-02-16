@@ -7,7 +7,6 @@ import { TfiWrite } from "react-icons/tfi";
 import classes from "./MyPageUser.module.scss";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { useAuth } from "../common/AuthProtector";
-import { getUserInfo } from "../../apis/MemberService";
 import sample from "../../assets/image/sample.jpg";
 
 const MyPageUser = () => {
@@ -37,8 +36,6 @@ const MyPageUser = () => {
     navigate("/mypage/user/user-reservation");
   };
 
-  console.log(userInfo);
-
   const [num, setNum] = useState(0);
 
   return (
@@ -54,7 +51,7 @@ const MyPageUser = () => {
                 <p>
                   안녕하세요, <strong>{userInfo.name}</strong>님<br />
                   <span>일반 회원</span>
-                  <button onClick={onClickHandler}>개인정보 조회</button>
+                  <button className={classes.goDetail} onClick={onClickHandler}>개인정보 조회</button>
                 </p>
                 <div className={classes.temperature}>온도그래프</div>
                 <progress className={classes.progress} value={userInfo.score} min="0" max="100"></progress>

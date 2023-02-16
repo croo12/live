@@ -28,19 +28,13 @@ export const userLogin = async (data, dispatch) => {
 };
 
 export const userLogout = async (dispatch) => {
-  // const { accessToken, refreshToken } = store.getState().user;
-  // console.log(accessToken, refreshToken);
-
-  // const data = {
-  //   accessToken: accessToken,
-  //   refreshToken: refreshToken,
-  // };
-
   const headers = getAuthHeader();
 
-  await axiosInstance.post("users/logout", undefined, { headers }).then((res) => {
-    dispatch(userAction.logout());
-  });
+  await axiosInstance
+    .post("users/logout", undefined, { headers })
+    .then((res) => {
+      dispatch(userAction.logout());
+    });
 };
 
 //내 정보 줘
@@ -48,33 +42,27 @@ export const getUserInfo = async (accessToken) => {
   let userInfo = null;
 
   const myAccessToken = store.getState().user.accessToken;
-  console.log(myAccessToken);
 
   if (accessToken) {
-    console.log(`매개변수 있음 `, accessToken);
     await axiosInstance
       .get("users", {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: getAuthHeader(),
       })
       .then((res) => {
-        console.log(res);
-        const data = res.data;
-        if (data.state === 200) {
-          userInfo = data.data;
+        if (res.data.state === 200) {
+          userInfo = res.data.data;
           return userInfo;
         }
       });
   } else {
     console.log(`매개변수 accessToken이 없음., ${myAccessToken}`);
     const headers = getAuthHeader();
-    console.log(headers);
 
     await axiosInstance
       .get("users", {
         headers,
       })
       .then((res) => {
-        console.log(res);
         const data = res.data;
 
         if (data.state === 200) {
@@ -110,16 +98,17 @@ export const getRealtorInfo = async (accessToken) => {
   let realtorInfo = null;
 
   const myAccessToken = store.getState().user.accessToken;
-  console.log(myAccessToken);
 
   if (accessToken) {
+    console.log(`매개변수 있음 `, accessToken);
     await axiosInstance
       .get("realtors", {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: getAuthHeader(),
       })
-      .then(({ data }) => {
-        if (data.state === 200) {
-          realtorInfo = data.data;
+      .then((res) => {
+        if (res.data.state === 200) {
+          realtorInfo = res.data.data;
+          return realtorInfo;
         }
       });
   } else {
@@ -130,9 +119,12 @@ export const getRealtorInfo = async (accessToken) => {
       .get("realtors", {
         headers,
       })
-      .then(({ data }) => {
+      .then((res) => {
+        const data = res.data;
+
         if (data.state === 200) {
           realtorInfo = data.data;
+          return realtorInfo;
         }
       });
   }
@@ -179,7 +171,6 @@ export const realtorRank = async (orderBy) => {
   await axiosInstance.get(`realtors/popular?orderBy=${orderBy}`).then(({ data }) => {
     if (data.state === 200) {
       rankInfo = data.data;
-      console.log(rankInfo);
     }
   });
   return rankInfo;

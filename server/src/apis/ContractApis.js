@@ -50,3 +50,28 @@ export const getContractList = async (data) => {
     return response;
   } catch {}
 };
+
+export const getContractInfoByContractNo = async (data) => {
+  const headers = getAuthHeader();
+
+  const getData = async () => {
+    const response = await axiosInstance.get(`/contracts/${data}`, {
+      headers,
+    });
+
+    if (response.data.result === "fail") {
+      throw new Error(404);
+    }
+
+    return response.data;
+  };
+
+  try {
+    const response = await getData();
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

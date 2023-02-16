@@ -2,6 +2,7 @@ import classes from "./RealtorCardContent.module.scss";
 import sample from "../assets/image/sample.jpg";
 import { BsTelephone } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
+import star from "../assets/image/star.png";
 
 const RealtorCardContent = ({ idx, name, total, corp, imageSrc, review, starScore }) => {
   return (
@@ -21,7 +22,7 @@ const RealtorCardContent = ({ idx, name, total, corp, imageSrc, review, starScor
       </div>
       <div className={classes.downCard}>
         <p>
-          ★{starScore} | 보유 매물 {total}개 | 리뷰 {review}건
+        <img alt="★" src={star} className={classes.star}></img>{starScore} | 보유 매물 {total}개 | 리뷰 {review}건
         </p>
       </div>
     </div>
@@ -124,9 +125,7 @@ export const ReservationRealtorCardContent = ({
             <span> {name} </span> 공인중개사
           </p>
         </div>
-        <div className={classes.downCard}>
-          <p>체결 계약 {contactCnt}건 | 경력 10년</p>
-        </div>
+        <div className={classes.downCard}>{/* <p>체결 계약 {contactCnt}건 | 경력 10년</p> */}</div>
       </div>
     </div>
   );

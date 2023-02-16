@@ -3,88 +3,43 @@
   position: relative;
   flex-direction: row;
   justify-content: space-around;
-
-  width: 100%;
-  height: 48vw;
-
-  max-height: 48vw;
-
-  .lists {
-    flex: 3;
-
-    background-color: #022f1c;
-
-    max-width: 480px;
-
-    
-  }
-
-  @media (max-width: 768px) {
-    //모바일 기준
-    flex-direction: column;
-    height: 142vw;
-    max-height: 142vw;
-    
-    
-
-    .lists{
-      position: fixed;
-
-      border-top-right-radius: 4vw;
-      border-top-left-radius: 4vw;
-
-      // top:0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      // background-color: rgba(255, 255, 255, 0.8);
-      z-index: 3;
-
-      width: 100%;
-      height: 10vw;
-      max-width: 100%;
-      
-      color: white;
-      
-      &.isActive {
-        height: 110vw;
-
-        bottom: 0;
-      }
-    }
-  }
+  margin: 0 auto;
+  width: 80%;
+  height: 100%;
+  min-height: 30rem;
 
   .video_box {
-    flex: 7;
+    flex: 3;
     border: 1px solid black;
-
     background-color: black;
+    position: relative;
+    display: flex;
 
     width: 100%;
-
-    // min-height: 100%;
-
-    height: 100%;
+    min-height: 30rem;
     z-index: 2;
 
-    position: relative;
-
     video {
+      flex: 1;
+
       &:first-child {
         width: 100%;
         height: 100%;
         display: block;
 
-        @media(max-width: 768px) {
+        position: absolute;
+        left: 0;
+        top: 0;
+        object-fit: fill;
+
+        @media (max-width: 768px) {
           height: 80%;
         }
-
       }
 
       &:last-child {
         display: none;
       }
-
     }
 
     button {
@@ -92,6 +47,34 @@
       height: 48px;
     }
   }
+  .lists {
+    flex: 2;
+    background-color: #022f1c;
+    max-width: 480px;
+  }
 
-  
+  @media (max-width: 768px) {
+    //모바일 기준
+    flex-direction: column;
+    width: 100%;
+
+    .lists {
+      position: fixed;
+      border-top-right-radius: 4vw;
+      border-top-left-radius: 4vw;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      width: 100%;
+      max-width: 100%;
+      color: white;
+      // transform: translateY(90%);
+
+      &.isActive {
+        overflow-y: auto;
+        transform: translateY(-70%);
+      }
+    }
+  }
 }

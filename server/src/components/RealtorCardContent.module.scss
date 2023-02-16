@@ -3,47 +3,30 @@
   padding: 2em 1.5em 1em 1.5em;
   font-size: 0.8vw;
   text-align: right;
-  color: #FAFAFA;
+  color: #fafafa;
 
   &.isActive0 {
-    background: linear-gradient(
-        115.11deg,
-        rgba(255, 255, 255, 0.5) -3.35%,
-        rgba(255, 255, 255, 0) 107.02%
-      ),
-      #30d08b;
+    background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30d08b;
     box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive1 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #2896e6 -4.52%, #31d5f9 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive2 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #f9b32a -4.52%, #f52ea6 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
   }
 
   &.isActive3 {
-    background: linear-gradient(
-        113.73deg,
-        rgba(255, 255, 255, 0.5) -4.61%,
-        rgba(255, 255, 255, 0) 107.01%
-      ),
+    background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
       linear-gradient(293.17deg, #7e18ff -4.52%, #d885ff 104.14%);
     box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
     border-radius: 8px;
@@ -66,6 +49,7 @@
     .rightDesc {
       flex: 2;
       margin: 6% 0 8% 0;
+
       .realtorName {
         font-size: 1rem;
       }
@@ -74,6 +58,12 @@
 
   .downCard {
     padding: 8% 0;
+    .star {
+      flex: 5;
+      width: 6%;
+      padding: 0;
+      margin-right: 2%;
+    }
   }
 }
 
@@ -83,44 +73,27 @@
     padding: 15px 0;
 
     &.isActive0 {
-      background: linear-gradient(
-          115.11deg,
-          rgba(255, 255, 255, 0.5) -3.35%,
-          rgba(255, 255, 255, 0) 107.02%
-        ),
-        #30d08b;
+      background: linear-gradient(115.11deg, rgba(255, 255, 255, 0.5) -3.35%, rgba(255, 255, 255, 0) 107.02%), #30d08b;
       box-shadow: 2px 5px 16px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive1 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #2896e6 -4.52%, #31d5f9 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive2 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #f9b32a -4.52%, #f52ea6 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
     }
 
     &.isActive3 {
-      background: linear-gradient(
-          113.73deg,
-          rgba(255, 255, 255, 0.5) -4.61%,
-          rgba(255, 255, 255, 0) 107.01%
-        ),
+      background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%),
         linear-gradient(293.17deg, #7e18ff -4.52%, #d885ff 104.14%);
       box-shadow: 2px 5px 16px 1px rgba(0, 0, 0, 0.35);
       border-radius: 8px;
@@ -172,6 +145,7 @@
 
   .rightDesc {
     flex: 4;
+    padding: 2%;
     display: flex;
     margin-top: 3%;
     font-size: 1.1rem;
@@ -179,11 +153,11 @@
     .realtorOfficeInfo {
       flex: 2.5;
 
-      h3 {
-        
-      }
+      h3 {}
 
       .realtorName {
+        padding: 0 0 5% 0;
+
         span {
           font-size: 0.8rem;
           color: rgba(112, 112, 112, 1);
@@ -214,25 +188,80 @@
   }
 }
 
+@media(max-width:768px) {
+  .realtorContractContent {
+    padding: 5% 0;
+    // display: flex;
+    border: 1px solid #42d395;
+    border-radius: 8px;
+
+    .leftImg {
+      display: none;
+    }
+
+    .rightDesc {
+      // flex: 4;
+      padding: 3%;
+      display: flex;
+      margin-top: 3%;
+      font-size: 1.1rem;
+
+      .realtorOfficeInfo {
+        flex: 2.5;
+
+        h3 {}
+
+        .realtorName {
+          padding: 0 0 2% 0;
+
+          span {
+            font-size: 0.8rem;
+            color: rgba(112, 112, 112, 1);
+          }
+        }
+
+        .realtorInfo {
+          padding: 2% 0 0 0;
+          font-size: 0.9rem;
+          color: rgba(112, 112, 112, 1);
+        }
+
+        .realtorAddress {
+          padding: 2% 0 0 0;
+          font-size: 1rem;
+        }
+
+        .realtorPhone {
+          padding: 2% 0 0 0;
+          font-size: 1rem;
+        }
+      }
+
+      .realtorNum {
+        flex: 1;
+        color: #ffcd1d;
+      }
+    }
+  }
+}
+
 //reservation card content
 .realtorReservationCard {
   border: 1px solid rgba(187, 187, 187, 1);
-  border-radius: 12px;
-
-  width: 34vw;
-  height: 14vh;
+  border-radius: 4px;
+  padding: 10px 0;
+  min-height: 100px;
 
   cursor: pointer;
 
   &.isActive {
-    border-width: 2px   ;
+    border-width: 2px;
     border-color: #30d08b;
   }
 
   display: flex;
 
   .leftImg {
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -240,7 +269,7 @@
     width: calc(30%);
     margin-right: (4%);
 
-    > img {
+    >img {
       width: 72px;
       height: 72px;
 
@@ -249,32 +278,32 @@
   }
 
   .rightBox {
-
     flex: auto;
     width: calc(66%);
 
     h4 {
-      > span {
-        color: #ffcd1d;
+      font-size: 0.9em;
+      margin-bottom: 5px;
 
+      >span {
+        color: #ffcd1d;
       }
     }
 
-    .upCard{
-
+    .upCard {
       p {
-        font-size: 1vw;
+        font-size: 14px;
         color: rgba(112, 112, 112, 1);
-        
-        > span {
-          font-size: 1.4vw;
+
+        >span {
+          font-size: 1.2vw;
           font-weight: 700;
 
           color: black;
         }
       }
 
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .downCard {
@@ -284,6 +313,4 @@
       }
     }
   }
-
-
 }

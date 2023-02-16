@@ -1,9 +1,6 @@
 .login {
   width: 100%;
-  height: calc(
-    100vh - 72px - 120px
-  ); // 전체 - 헤더높이 - 푸터높이 ( 스크롤 없애고 딱 맞추기위해 )
-  min-height: 680px;
+  height: 100%;
 
   .section {
     display: flex;
@@ -33,6 +30,11 @@
         text-align: center;
         color: #42d395;
         margin-bottom: 30px;
+
+        @media (max-width: 480px) {
+          font-size: 56px;
+          margin-bottom: 24px;
+        }
       }
 
       .loginBox {
@@ -41,6 +43,7 @@
         border-style: solid;
         border-color: #eaeaea;
         border-radius: 6px;
+        margin-bottom: 80px;
 
         .loginTab {
           input {
@@ -59,11 +62,17 @@
             border: 1px solid #eaeaea;
             border-radius: 6px 6px 0px 0px;
             transition: all 0.3s ease;
-            color: #BBBBBB;
+            color: #bbbbbb;
             cursor: pointer;
 
             :hover {
               opacity: 0.75;
+            }
+
+            @media (max-width: 480px) {
+              height: 40px;
+              line-height: 40px;
+              font-size: 16px;
             }
           }
 

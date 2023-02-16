@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import classes from "./MyPageUserReservation.module.scss";
 import ListBox from "../../UI/ListBox";
 import ReservationCardContent2 from "../ReservationCardContent2";
-import { getReservationList } from "../../apis/reservationApis"
+import {
+  changeReservationStatus,
+  getReservationList,
+} from "../../apis/reservationApis";
 
 const data = ["신청된 상담", "확정된 상담", "종료된 상담"];
 const MyPageUserReservation = () => {
   const [reservationUser, setreservationUser] = useState([]);
   const [tabActive, setTabActive] = useState(0);
 
-  useEffect(()=>{
+  useEffect(() => {
     async function fetchData() {
       const result = await getReservationList(0);
       setreservationUser(result.data);
@@ -17,13 +20,29 @@ const MyPageUserReservation = () => {
     fetchData();
   }, []);
 
-
   const toggleActive = async (e) => {
     let num = Number.parseInt(e.target.value);
     setTabActive(num);
     const result = await getReservationList(num);
     setreservationUser(result.data);
   };
+
+  const onChangeReservationHandler = async (status, e, consultingNo) => {
+    if (status === 2 && !confirm("예약을 확정하시겠습니까?")) {
+      return;
+    } else if (status === 5 && !confirm("예약을 취소하시겠습니까?")) {
+      return;
+    }
+    const data = {};
+    data["consultingNo"] = consultingNo;
+    data["status"] = status;
+    await changeReservationStatus(data);
+    const result = await getReservationList(tabActive);
+    setreservationUser(result.data);
+
+    e.preventDefault();
+  };
+
   return (
     <>
       <div className={classes.consultBox}>
@@ -49,30 +68,40 @@ const MyPageUserReservation = () => {
                   })}
                 </span>
                 <div className={classes.consultingList}>
-                  {tabActive === 0 && (
+                  {/* {tabActive === 0 && (
                     <div>
-                      <p>신청된 상담</p>
                       <ListBox dataArray={reservationUser} direction={false}>
-                        <ReservationCardContent2 tabActive={tabActive} />
+                        <ReservationCardContent2
+                          tabActive={tabActive}
+                          onChangeReservationHandler={
+                            onChangeReservationHandler
+                          }
+                        />
                       </ListBox>
                     </div>
                   )}
                   {tabActive === 1 && (
                     <div>
-                      <p>확정된 상담</p>
                       <ListBox dataArray={reservationUser} direction={false}>
-                        <ReservationCardContent2 tabActive={tabActive} />
+                        <ReservationCardContent2
+                          tabActive={tabActive}
+                          onChangeReservationHandler={
+                            onChangeReservationHandler
+                          }
+                        />
                       </ListBox>
                     </div>
                   )}
-                  {tabActive === 2 && (
-                    <div>
-                      <p>종료된 상담</p>
-                      <ListBox dataArray={reservationUser} direction={false}>
-                        <ReservationCardContent2 tabActive={tabActive} />
-                      </ListBox>
-                    </div>
-                  )}
+                  {tabActive === 2 && ( */}
+                  <div>
+                    <ListBox dataArray={reservationUser} direction={false}>
+                      <ReservationCardContent2
+                        tabActive={tabActive}
+                        onChangeReservationHandler={onChangeReservationHandler}
+                      />
+                    </ListBox>
+                  </div>
+                  {/* )} */}
                 </div>
               </div>
             </div>

@@ -5,12 +5,15 @@ import classes from "./ConsultingMeetPage.module.scss";
 import { STATUS } from "../../pages/ConsultingPage";
 import { BsRecordCircle } from "react-icons/bs";
 import { AiOutlineSound } from "react-icons/ai";
+import { FiMaximize } from "react-icons/fi";
 import { IoExitOutline, IoVolumeMuteOutline } from "react-icons/io5";
 import useWebSocket from "../../util/useWebSocket";
 import useWebRTC from "../../util/useWebRTC";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useRecording from "../../util/useRecording";
 import { usePrompt } from "../../util/usePrompt";
+import Modal from "../../UI/Modal";
+import ReviewForm from "../ReviewForm";
 
 const ConsultingMeetPage = ({
   userInfo,
@@ -28,10 +31,9 @@ const ConsultingMeetPage = ({
 
   //비디오 가운데에 나오는 문구 세팅용
   const [info, setInfo] = useState("준비중...");
-  const params = useParams();
 
   //이름 만들기용
-  const name = useRef(isRealtor ? "중개사" : "고객");
+  const name = useRef(isRealtor ? "realtor" : "user");
 
   //녹화 관리용 [녹화 상태인가? , 녹화시작, 녹화종료]
   const [recording, startRecording, stopRecording] = useRecording({
@@ -40,14 +42,16 @@ const ConsultingMeetPage = ({
     setRecordingFiles,
   });
 
-  // setTimeout(() => register(), 2000);
-  //   firstRegist.current = !firstRegist.current;
-
   const [audio, setAudio] = useState(true);
-  // const [record, setRecord] = useState(false);
+  const [promptBlock, setBlock] = useState(false);
+  const [viewReview, setViewReview] = useState(false);
 
-  const participants = useRef({});
-  const { socket, responseMsg, sendMessage } = useWebSocket();
+  const closeReview = () => {
+    setViewReview(false);
+  };
+
+  const participants = useRef({ user: null, realtor: null });
+  const { socket, responseMsg, sendMessage } = useWebSocket(sessionId);
   const {
     onNewParticipant,
     receiveVideoResponse,
@@ -68,13 +72,6 @@ const ConsultingMeetPage = ({
   });
 
   useEffect(() => {
-    return () => {
-      console.log(`헤헷, 들켰네요....`);
-      leaveRoom();
-    };
-  }, []);
-
-  useEffect(() => {
     switch (status) {
       case STATUS.REALTOR_ENTER:
         setInfo(`준비중...`);
@@ -84,31 +81,34 @@ const ConsultingMeetPage = ({
         //유저에게 알람을 보낸다
 
         //로딩 돌리기?
-        setInfo(`유저의 접속을 기다리고 있습니다...`);
+        setInfo(`유저의 접속을 기다리기`);
 
         //방에 들어아고 내 화면 틀기
+        console.log("중개사 접속 시도...");
+        setBlock(true);
         register();
         break;
 
-      // case REALTOR_STATUS.CONNECTING:
-      //   break;
+      case STATUS.REALTOR_END_CALL:
+        console.log(`연결을 종료하겠다....`);
 
-      // case USER_STATUS.ENTER_SESSION:
-      //   setInfo(`중개사에게 연결 중입니다...`);
-
-      //   break;
-
-      // case USER_STATUS.CONNECTING:
-      //   setInfo(``);
-      //   break;
-
-      // case USER_STATUS.END:
-      //   setInfo(`통화 종료`);
-      //   localVideo.current.pause();
-      //   break;
+        socket.current.send(JSON.stringify({ id: "closeRoom" }));
+        setInfo("상담을 종료합니다...");
+        setTimeout(setInfo(""), 2000);
+        setBlock(false);
+        break;
 
       case STATUS.USER_ENTER:
-        setTimeout(() => register(), 2000);
+        console.log(`유저 등장`);
+
+        setBlock(true);
+        //들어왔져염
+        break;
+
+      case STATUS.CONSULTING_IS_END:
+        //리뷰 ON
+        setBlock(false);
+        setViewReview(true);
         break;
 
       default:
@@ -120,19 +120,26 @@ const ConsultingMeetPage = ({
     setAudio(!audio);
   };
 
+  const params = useParams();
+  const onClose = () => {
+    closeReview();
+    navi("/mypage/user");
+  };
+
   usePrompt({
-    when: localVideo.current?.srcObject,
+    when: promptBlock,
     message: `페이지 이동으로 통화가 종료될 수 있습니다. \n 정말로 나가시겠습니까?`,
   });
 
   useEffect(() => {
-    console.info(`Received message: `, responseMsg);
+    console.log(`Received message: `, responseMsg);
 
     switch (responseMsg.id) {
       //나 연결하면서 원래 있던놈 죄다 연결하기
       case "existingParticipants":
         setInfo(`내 기기 연결 중...`);
         onExistingParticipants(responseMsg);
+        break;
 
       //상대가 왔다.
       case "newParticipantArrived":
@@ -163,6 +170,16 @@ const ConsultingMeetPage = ({
           }
         );
         break;
+
+      case "closeRoom":
+        if (isRealtor) {
+          navi(`/consulting/${sessionId}`);
+        } else {
+          setBlock(false);
+          statusChangeHandler(STATUS.CONSULTING_IS_END);
+        }
+        break;
+
       case undefined:
         console.log(`???`);
         break;
@@ -181,38 +198,60 @@ const ConsultingMeetPage = ({
 
       <div className={classes.controllerBox}>
         <div className={classes.controllerBox_inner}>
-          <div>
-            <Button clickEvent={toggleAudio}>
-              {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
-            </Button>
-          </div>
-          <div className={"recordBtn"}>
-            <Button
-              clickEvent={() => {
-                if (recording) {
-                  console.log("recording stop");
-                  stopRecording();
-                  return;
-                } else {
-                  console.log("recording start");
-                  startRecording();
-                }
-              }}
-            >
-              <BsRecordCircle />
-            </Button>
-          </div>
-          <div>
-            <Button
-              clickEvent={() => {
-                navi("/");
-              }}
-            >
-              <IoExitOutline />
-            </Button>
-          </div>
+          {!isRealtor ? (
+            <>
+              <div>
+                <Button clickEvent={toggleAudio}>
+                  {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
+                </Button>
+              </div>
+              <div className={"recordBtn"}>
+                <Button
+                  clickEvent={() => {
+                    if (recording) {
+                      console.log("recording stop");
+                      stopRecording();
+                      return;
+                    } else {
+                      console.log("recording start");
+                      startRecording();
+                    }
+                  }}
+                >
+                  <BsRecordCircle />
+                </Button>
+              </div>
+              <div>
+                <Button
+                  clickEvent={() => {
+                    navi("/");
+                  }}
+                >
+                  <IoExitOutline />
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* <div>
+                <Button clickEvent={}>
+                  <FiMaximize />
+                </Button>
+              </div> */}
+            </>
+          )}
         </div>
       </div>
+      {viewReview && (
+        <Modal>
+          <ReviewForm
+            realtorNo={params.realtorNo}
+            userNo={params.userNo}
+            consultingNo={params.consultingNo}
+            onClose={onClose}
+          />
+        </Modal>
+      )}
     </>
   );
 };

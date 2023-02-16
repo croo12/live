@@ -120,3 +120,65 @@ const ContractTenantInfo = (props) => {
 };
 
 export default ContractTenantInfo;
+
+export const ContractTenantDetailInfo = (props) => {
+  const UserInfo = {
+    userName: props.userInfoList.name,
+    userPhone: props.userInfoList.phone,
+    userGender: props.userInfoList.gender,
+    userAddress: props.contractInfoList.tenantAddress,
+    userDetailAddress: props.contractInfoList.tenantDetailAddress,
+    userAge: props.contractInfoList.tenantAge,
+  };
+
+  return (
+    <>
+      <form>
+        <div className={classes.tenantInfo}>
+          <div className={classes.inner}>
+            <h2>입주자 정보</h2>
+            <div className={classes.tenantInfoContent}>
+              <br />
+              <div className={classes.infoBoxList}>
+                <div className={classes.contractor}>
+                  <strong>계약자명</strong>{" "}
+                  <input defaultValue={UserInfo.userName} readOnly />
+                </div>
+                <div className={classes.contractorPhone}>
+                  <strong>전화번호</strong>{" "}
+                  <input defaultValue={UserInfo.userPhone} readOnly></input>
+                </div>
+                <div className={classes.contractorGender}>
+                  <strong>성별</strong>{" "}
+                  <input defaultValue={UserInfo.userGender} readOnly />
+                </div>
+                <div className={classes.contractorAddress}>
+                  <strong>실거주주소</strong>{" "}
+                  <div className={classes.searchAddressBox}>
+                    <div className={classes.searchAddress}>
+                      <input
+                        defaultValue={UserInfo.userAddress}
+                        readOnly
+                      ></input>
+                    </div>
+                    <div className={classes.detailAdress}>
+                      <input
+                        defaultValue={UserInfo.userDetailAddress}
+                        readOnly
+                      ></input>
+                    </div>
+                  </div>
+                </div>
+                <div className={classes.contractorAge}>
+                  <strong>나이</strong>{" "}
+                  <input defaultValue={UserInfo.userAge} readOnly></input>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </form>
+    </>
+  );
+};

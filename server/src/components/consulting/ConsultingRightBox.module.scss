@@ -6,23 +6,18 @@
     height: 8vw;
   }
 
-  @media( max-width: 768px) {
+  @media (max-width: 768px) {
     display: block;
   }
 }
 
 .inner_content {
-    overflow-y: hidden;
-    height: 100%;
-    width: 100%;
+  overflow-y: auto;
+  max-height: 33rem;
+  width: 100%;
 
-    padding-top: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+  padding: 0.5rem;
+  padding-bottom: 1rem;
 
-    position: relative;
-
-  &.isActive{
-      overflow-y: auto;
-  }
+  position: relative;
 }

@@ -1,44 +1,55 @@
 import classes from "./AlertPage.module.scss";
-import { DUMMY3 } from "../components/AlarmCardContent";
 import { getAlertList } from "../apis/noticeApis";
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
 const AlertPage = () => {
-  const alertList = useLoaderData();
+  const [notice, setNotice] = useState([]);
   const userInfo = useSelector((state) => state.user.userInfo);
   const navi = useNavigate();
 
-  console.log(userInfo);
+  useEffect(()=>{
+    async function fetchData() {
+      const alertList = await getAlertList();
+      setNotice(alertList);
+    }
+    fetchData();
+  }, []);
+  
 
-  if (!userInfo.auth)
+  if (!userInfo.auth && notice)
     return (
       <>
         <div className={classes.alarm}>
           <div className={classes.alarmContent}>
             <div className={classes.inner}>
+              <br/>
               <h3>알람</h3>
               <div className={classes.alarmTable}>
                 <table>
                   <thead>
                     <tr className={classes.tableHead}>
-                      <td> 작성자</td>
+                      <td> 수신자</td>
                       <td> 날짜 </td>
                       <td> 시간 </td>
                       <td> 알람내용</td>
                     </tr>
                   </thead>
                   <tbody className={classes.tableBody}>
-                    {DUMMY3.map((item, idx) => {
+                    {notice.map((item, idx) => {
                       return (
                         <tr key={idx}>
                           <td>
-                            <img src={item.image} />
-                            <span>{item.writer}</span>
+                            <span>{item.noticeWriter}</span>
                           </td>
-                          <td>{item.date}</td>
-                          <td>{item.time}</td>
-                          <td>{item.content}</td>
+                          <td>{item.noticeDate.substring(0, 4)+"년 "
+                          + item.noticeDate.substring(5, 7)+"월 "
+                          +item.noticeDate.substring(8, 10)+"일"}</td>
+                          <td>{item.noticeDate.substring(11, 13)+"시 "
+                          + item.noticeDate.substring(14, 16)+"분"
+                          }</td>
+                          <td>{item.noticeInfo}</td>
                         </tr>
                       );
                     })}
@@ -50,23 +61,37 @@ const AlertPage = () => {
         </div>
       </>
     );
+    else {
+      return (
+        <>
+          <div className={classes.alarm}>
+            <div className={classes.alarmContent}>
+              <div className={classes.inner}>
+                <br/>
+                <h3>알람</h3>
+                <div className={classes.alarmTable}>
+                  <table>
+                    <thead>
+                      <tr className={classes.tableHead}>
+                        <td> 수신자</td>
+                        <td> 날짜 </td>
+                        <td> 시간 </td>
+                        <td> 알람내용</td>
+                      </tr>
+                    </thead>
+                    <tbody className={classes.tableBody}>
+                    </tbody>
+                  </table>
+                  <h3>
+                    아직 등록된 알람이 없어요.
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      );rn 
+    }
 };
 
 export default AlertPage;
-
-export const alertLoader = async () => {
-  try {
-    const alertList = await getAlertList();
-    console.log(alertList);
-
-    if (alertList.data) {
-      return alertList;
-    } else {
-      console.log("야 나 여기야");
-      return null;
-    }
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};

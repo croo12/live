@@ -1,5 +1,6 @@
 import classes from "./HouseCardContent2.module.scss";
 import { useNavigate } from "react-router-dom";
+import ResponsiveText from "./common/ResponsiveText";
 
 const HouseCardContent2 = ({
   address,
@@ -12,7 +13,7 @@ const HouseCardContent2 = ({
   rent,
   consultingNo,
   exclusivePrivateArea,
-  itemNo
+  itemNo,
 }) => {
   const navigation = useNavigate();
   const onContractHandler = () => {
@@ -23,24 +24,34 @@ const HouseCardContent2 = ({
       <div className={classes.HouseCardContent2}>
         <div className={classes.houseContent}>
           <div className={classes.leftContent}>
-            <img src={imageSrc}></img>
-            <button onClick={onContractHandler}>계약하기</button>
+            <div className={classes.imgContainer}>
+              <img src={imageSrc}></img>
+            </div>
           </div>
           <div className={classes.rightContent}>
-            <p>원룸</p>
-            <p>{buildingName}</p>
-            <h2>월세 {deposit}/{rent}</h2>
+            <h3>
+              월세 {deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              만원/ {rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원
+            </h3>
+            <p className={classes.bName}>{buildingName}</p>
             <p>
-              방 {exclusivePrivateArea}㎡ . 관리비 {
-                maintenanceFee === 0 ? ("없음") : (maintenanceFee)
-              }
-              <br /> {address} 
-              <br /> {addressDetail}
-              <br /> {description}
+              전용{" "}
+              {exclusivePrivateArea
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              ㎡ (
+              {Math.round(exclusivePrivateArea / 3.3)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              평) ㆍ 관리비 {maintenanceFee} 만원
             </p>
+            <p>{address + " " + addressDetail}</p>
           </div>
         </div>
       </div>
+      <button className={classes.consultBtn} onClick={onContractHandler}>
+        계약하기
+      </button>
     </>
   );
 };

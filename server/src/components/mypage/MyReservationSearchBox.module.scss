@@ -23,6 +23,7 @@
       width: calc(33%);
       height: 2.5vw;
     }
+
     // :first-child {
     //   border-top-left-radius: 8px;
     //   border-bottom-left-radius: 8px;
@@ -58,7 +59,7 @@
         padding-inline-start: 2rem;
 
         margin-right: 4px;
-        border-radius: 7px;
+        border-radius: 4px;
         flex: auto;
 
         height: 2.5vw;
@@ -87,14 +88,24 @@
 
       transform: translateY(100%);
 
-      border: 1px solid black;
-      border-radius: 1rem;
-      padding: 1rem;
+      border: 1px solid #bbbbbb;
+      border-radius: 8px;
+      padding: 1em;
 
       background-color: #fafafa;
 
-      ul li {
+      li {
+        width: 100%;
+        min-height: 150px;
+        margin: 8px 0;
+        border: 1px solid #bbbbbb;
+        border-radius: 8px;
         cursor: pointer;
+      }
+
+      li:hover {
+        opacity: 0.9;
+        border: 1px solid #747474;
       }
     }
   }
@@ -102,5 +113,4 @@
 
 .listbox {
   margin: 0, 20px;
-
 }

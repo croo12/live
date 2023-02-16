@@ -1,32 +1,59 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
 import {
   getConsultingDetail,
   registConsultingRoomLink,
 } from "../../apis/consultingApi";
+import { useNavigate } from "react-router-dom";
+import { STATUS } from "../../pages/ConsultingPage";
 import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
 
 const ConsultingRightReservationHouseList = () => {
-  const { clickHandler, detail } = useOutletContext();
+  const { clickHandler, detail, statusChangeHandler } = useOutletContext();
+  const navigation = useNavigate();
 
   const datas = useLoaderData();
   const params = useParams();
-  console.log("안녕 파람", params);
+
+  const userInfo = useSelector((state) => state.user.userInfo);
 
   const dataArray = datas.itemList;
 
   useEffect(() => {
-    const linkUrl = `https://live-live.store/consulting/${params.sessionId}/${params.consultingNo}/${params.realtorNo}/${params.userNo}`;
-    console.log(`링크주소 ${linkUrl}`);
+    if (userInfo.isRealtor) {
+      const linkUrl = `/consulting/${params.sessionId}/${params.consultingNo}/${params.realtorNo}/${params.userNo}`;
+      console.log(`링크주소 ${linkUrl}`);
 
-    registConsultingRoomLink(params.consultingNo, linkUrl);
+      registConsultingRoomLink(params.consultingNo, linkUrl);
+    }
   }, []);
 
   return (
-    <ListBox toStart={true} dataArray={dataArray}>
-      <ConsultingHouseCardContent clickHandler={clickHandler} detail={detail} />
-    </ListBox>
+    <div style={{ maxHeight: "100%", overflow: "scroll" }}>
+      <ListBox toStart={true} dataArray={dataArray}>
+        <ConsultingHouseCardContent
+          clickHandler={clickHandler}
+          detail={detail}
+        />
+      </ListBox>
+      {userInfo.isRealtor && (
+        <button
+          style={{
+            width: "100%",
+            height: "2rem",
+            backgroundColor: "green",
+            borderRadius: "8px",
+          }}
+          onClick={() => {
+            statusChangeHandler(STATUS.REALTOR_END_CALL);
+          }}
+        >
+          상담종료
+        </button>
+      )}
+    </div>
   );
 };
 
