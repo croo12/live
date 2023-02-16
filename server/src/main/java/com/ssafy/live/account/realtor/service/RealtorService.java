@@ -123,7 +123,7 @@ public class RealtorService {
         List<RealtorResponse.FindAllDetail.Reviews> reviews = realtor.getReviews().stream()
             .map(RealtorResponse.FindAllDetail.Reviews::toEntity)
             .collect(Collectors.toList());
-        return response.success(RealtorResponse.FindAllDetail.toEntity(realtor, items, reviews),
+        return response.success(RealtorResponse.FindAllDetail.toResponse(realtor, items, reviews),
             "공인중개사의 정보, 보유 매물 및 리뷰 정보가 조회되었습니다.", HttpStatus.OK);
     }
 
@@ -137,7 +137,7 @@ public class RealtorService {
         if (file != null) {
             s3Service.deleteFile(preImg);
             imgSrc = s3Service.upload(file);
-        } else if(request.getImageSrc() == null){
+        } else if (request.getImageSrc() == null) {
             s3Service.deleteFile(preImg);
         } else {
             imgSrc = request.getImageSrc();
@@ -210,13 +210,11 @@ public class RealtorService {
     }
 
     public ResponseEntity<?> authority() {
-        // SecurityContext에 담겨 있는 authentication userId 정보
         String userId = SecurityUtil.getCurrentUserId();
 
         Realtor realtor = realtorRepository.findByBusinessNumber(userId)
             .orElseThrow(() -> new UsernameNotFoundException("No authentication information."));
 
-        // add ROLE_USER
         realtor.getRoles().add(Authority.REALTOR.name());
         realtorRepository.save(realtor);
 

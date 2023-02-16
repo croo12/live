@@ -66,7 +66,6 @@ public class UserController {
 
     @PostMapping("/passcheck")
     public ResponseEntity<?> temporaryPassword(@RequestBody UserRequest.FindPassword request) {
-        log.info("사용자 임시비밀번호 발급");
         return usersService.temporaryPassword(request);
     }
 

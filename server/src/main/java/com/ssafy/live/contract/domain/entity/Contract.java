@@ -43,7 +43,7 @@ public class Contract extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_no")
     @JsonIgnore
-    private Item item; // 단방향
+    private Item item;
 
     @Column(name = "move_on_date")
     private LocalDate moveOnDate;

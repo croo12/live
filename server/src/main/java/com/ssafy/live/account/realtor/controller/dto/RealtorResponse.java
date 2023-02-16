@@ -189,7 +189,7 @@ public class RealtorResponse {
             }
         }
 
-        public static FindAllDetail toEntity(Realtor realtor, List<Items> itemsList,
+        public static FindAllDetail toResponse(Realtor realtor, List<Items> itemsList,
             List<Reviews> reviewsList) {
             return RealtorResponse.FindAllDetail.builder()
                 .realtorInfo(RealtorInfo.toEntity(realtor))

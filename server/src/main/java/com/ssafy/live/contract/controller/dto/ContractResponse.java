@@ -24,7 +24,7 @@ public class ContractResponse {
         private MemberInfo memberInfo;
         private ItemInfo itemInfo;
 
-        public static ContractList toEntity(Long contractNo, MemberInfo memberInfo,
+        public static ContractList toResponse(Long contractNo, MemberInfo memberInfo,
             ItemInfo itemInfo) {
             return ContractList.builder()
                 .contractNo(contractNo)
@@ -75,7 +75,7 @@ public class ContractResponse {
             private int maintenanceFee;
             private float exclusivePrivateArea;
 
-            public static ItemInfo toEntity(Item item, String imageSrc) {
+            public static ItemInfo toResponse(Item item, String imageSrc) {
                 return ItemInfo.builder()
                     .itemNo(item.getNo())
                     .buildingName(item.getHouse().getBuildingName())

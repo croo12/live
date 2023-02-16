@@ -34,10 +34,7 @@ import com.ssafy.live.notice.domain.entity.Notice;
 import com.ssafy.live.notice.domain.repository.NoticeRepository;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -93,7 +90,7 @@ public class ConsultingService {
             consultingItemRepository.save(consultingItem);
         });
 
-        //smsService.sendSMS(consulting.getNo(), SMSContent.NEW_CONSULTING, consulting.getUsers());
+        smsService.sendSMS(consulting.getNo(), SMSContent.NEW_CONSULTING, consulting.getUsers());
         return response.success("예약이 완료되었습니다.", HttpStatus.OK);
     }
 
@@ -168,7 +165,7 @@ public class ConsultingService {
             .realtor(consulting.getRealtor()).noticeInfo(info).noticeWriter(writer).build();
         noticeRepository.save(notice);
 
-        //smsService.sendSMS(consulting.getNo(), smsContent, consulting.getUsers());
+        smsService.sendSMS(consulting.getNo(), smsContent, consulting.getUsers());
 
         return response.success("예약상태가 변경되었습니다.", HttpStatus.OK);
     }
@@ -190,10 +187,10 @@ public class ConsultingService {
             Item item = consultingItem.getItem();
             House house = consultingItem.getItem().getHouse();
             List<ItemImage> itemImages = itemImageRepository.findByItem(item);
-            items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.toEntity(item, house,
+            items.add(ConsultingResponse.ReservationDetail.MyConsultingItem.toResponse(item, house,
                 itemImages.get(0).getImageSrc()));
         });
-        ConsultingResponse.ReservationDetail detail = ConsultingResponse.ReservationDetail.toEntity(
+        ConsultingResponse.ReservationDetail detail = ConsultingResponse.ReservationDetail.toResponse(
             consultingNo, consulting, items);
         return response.success(detail, "예약 상세 내역을 조회하였습니다.", HttpStatus.OK);
     }
@@ -230,7 +227,7 @@ public class ConsultingService {
         consulting.updateStatus(1);
         consultingRepository.save(consulting);
 
-        //smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers());
+        smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers());
 
         return response.success("상담 매물 수정이 완료되었습니다.", HttpStatus.OK);
     }
@@ -238,18 +235,18 @@ public class ConsultingService {
     public ResponseEntity<?> infoForContact(UserDetails user, Long itemNo) {
         Item item = itemRepository.findById(itemNo)
             .orElseThrow(() -> new BadRequestException(ITEM_NOT_FOUND));
-        ConsultingResponse.ItemForContract.RealtorInfo realtor = ConsultingResponse.ItemForContract.RealtorInfo.toEntity(
+        ConsultingResponse.ItemForContract.RealtorInfo realtor = ConsultingResponse.ItemForContract.RealtorInfo.toResponse(
             item.getRealtor());
-        ConsultingResponse.ItemForContract.UserInfo users = ConsultingResponse.ItemForContract.UserInfo.toEntity(
+        ConsultingResponse.ItemForContract.UserInfo users = ConsultingResponse.ItemForContract.UserInfo.toResponse(
             usersRepository.findById(user.getUsername()).get());
 
         List<ItemImage> itemImages = itemImageRepository.findByItem(item);
         List<String> images = itemImages.stream().map((i) -> i.getImageSrc())
             .collect(Collectors.toList());
 
-        ConsultingResponse.ItemForContract.ItemInfo itemInfo = ConsultingResponse.ItemForContract.ItemInfo.toEntity(
+        ConsultingResponse.ItemForContract.ItemInfo itemInfo = ConsultingResponse.ItemForContract.ItemInfo.toResponse(
             item, images);
-        ConsultingResponse.ItemForContract contractInfo = ConsultingResponse.ItemForContract.toEntity(
+        ConsultingResponse.ItemForContract contractInfo = ConsultingResponse.ItemForContract.toResponse(
             realtor, users, itemInfo);
         return response.success(contractInfo, "계약 할 매물 정보를 조회하였습니다.", HttpStatus.OK);
     }
@@ -262,7 +259,7 @@ public class ConsultingService {
         consultingRepository.save(consulting);
         Notice notice = ConsultingRequest.AddLink.toEntity(consulting, link);
         noticeRepository.save(notice);
-        //smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_START.getMessage()+" "+link.getLink(), consulting.getUsers());
+        smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_START.getMessage()+" "+link.getLink(), consulting.getUsers());
         return response.success("상담링크가 전송되었습니다.", HttpStatus.OK);
     }
 
@@ -278,16 +275,12 @@ public class ConsultingService {
                     int pos = originalFile.lastIndexOf(".");
                     String type = originalFile.substring(pos + 1);
 
-                    //String saveFolder = "C:\\live\\records\\"+consultingNo.toString();        //window
                     String saveFolder = "/live/records/" + consultingNo.toString();
                     String saveFile = UUID.randomUUID() + "." + type;
 
                     File file = new File(saveFolder + "/" + saveFile);
                     file.getParentFile().mkdirs();
                     rec.transferTo(file);
-
-                    log.info(file.getPath());
-
                     Record record = Record.builder()
                         .saveFolder(saveFolder)
                         .saveFile(saveFile)
@@ -353,7 +346,8 @@ public class ConsultingService {
         Realtor realtor = realtorRepository.findByBusinessNumber(user.getUsername())
             .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
 
-        List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusBetweenAndConsultingDateStartigWith(realtor.getNo(),
+        List<Consulting> consultingsList = consultingRepository.findByRealtorNoAndStatusBetweenAndConsultingDateStartigWith(
+            realtor.getNo(),
             CONSULTING_CONFIRMED.getValue(), CONSULTING_PROCESSING.getValue());
         List<ConsultingResponse.TodayConsulting> list = new ArrayList<>();
         consultingsList.stream().forEach(consulting -> {

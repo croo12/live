@@ -121,7 +121,7 @@ public class ConsultingResponse {
             private String imageSrc;
             private float exclusivePrivateArea;
 
-            public static MyConsultingItem toEntity(Item item, House house, String imageSrc) {
+            public static MyConsultingItem toResponse(Item item, House house, String imageSrc) {
                 return ConsultingResponse.ReservationDetail.MyConsultingItem.builder()
                     .itemNo(item.getNo())
                     .deposit(item.getDeposit())
@@ -138,7 +138,7 @@ public class ConsultingResponse {
         }
 
         @Builder
-        public static ReservationDetail toEntity(Long consultingNo, Consulting consulting,
+        public static ReservationDetail toResponse(Long consultingNo, Consulting consulting,
             List<ConsultingResponse.ReservationDetail.MyConsultingItem> items) {
             return ReservationDetail.builder()
                 .status(consulting.getStatus().getValue())
@@ -159,7 +159,7 @@ public class ConsultingResponse {
         private UserInfo userInfo;
         private ItemInfo itemInfo;
 
-        public static ItemForContract toEntity(RealtorInfo realtorInfo, UserInfo userInfo,
+        public static ItemForContract toResponse(RealtorInfo realtorInfo, UserInfo userInfo,
             ItemInfo itemInfo) {
             return ItemForContract.builder()
                 .realtorInfo(realtorInfo)
@@ -179,7 +179,7 @@ public class ConsultingResponse {
             private String businessAddress;
             private String imageSrc;
 
-            public static RealtorInfo toEntity(Realtor realtor) {
+            public static RealtorInfo toResponse(Realtor realtor) {
                 return ConsultingResponse.ItemForContract.RealtorInfo.builder()
                     .realtorNo(realtor.getNo())
                     .corp(realtor.getCorp())
@@ -200,7 +200,7 @@ public class ConsultingResponse {
             private String phone;
             private String gender;
 
-            public static ConsultingResponse.ItemForContract.UserInfo toEntity(Users user) {
+            public static ConsultingResponse.ItemForContract.UserInfo toResponse(Users user) {
                 return ConsultingResponse.ItemForContract.UserInfo.builder()
                     .userNo(user.getNo())
                     .name(user.getName())
@@ -223,7 +223,7 @@ public class ConsultingResponse {
             private float area;
             private List<String> images;
 
-            public static ItemForContract.ItemInfo toEntity(Item item, List<String> images) {
+            public static ItemForContract.ItemInfo toResponse(Item item, List<String> images) {
                 return ItemForContract.ItemInfo.builder()
                     .itemNo(item.getNo())
                     .buildingName(item.getHouse().getBuildingName())
