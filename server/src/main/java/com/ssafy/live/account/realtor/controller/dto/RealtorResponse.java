@@ -176,7 +176,7 @@ public class RealtorResponse {
 
             private Long reviewNo;
             private String reviewInfo;
-            private int ratingScore;
+            private float ratingScore;
             private LocalDateTime createDate;
 
             public static Reviews toEntity(Review review) {
