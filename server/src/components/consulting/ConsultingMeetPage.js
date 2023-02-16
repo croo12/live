@@ -5,6 +5,7 @@ import classes from "./ConsultingMeetPage.module.scss";
 import { STATUS } from "../../pages/ConsultingPage";
 import { BsRecordCircle } from "react-icons/bs";
 import { AiOutlineSound } from "react-icons/ai";
+import { BiPhoneCall } from "react-icons/bi";
 import { FiMaximize } from "react-icons/fi";
 import { IoExitOutline, IoVolumeMuteOutline } from "react-icons/io5";
 import useWebSocket from "../../util/useWebSocket";
@@ -100,10 +101,13 @@ const ConsultingMeetPage = ({
 
       case STATUS.USER_ENTER:
         console.log(`유저 등장`);
-
-        setBlock(true);
         //들어왔져염
         break;
+
+      // case STATUS.USER_WANT_CONNECT:
+      //   setBlock(true);
+      //   register();
+      //   break;
 
       case STATUS.CONSULTING_IS_END:
         //리뷰 ON
@@ -219,6 +223,14 @@ const ConsultingMeetPage = ({
                   }}
                 >
                   <BsRecordCircle />
+                </Button>
+                <Button
+                  clickEvent={() => {
+                    setBlock(true);
+                    register();
+                  }}
+                >
+                  <BiPhoneCall />
                 </Button>
               </div>
               <div>

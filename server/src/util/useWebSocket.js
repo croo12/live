@@ -20,15 +20,15 @@ const useWebSocket = (sessionId) => {
     socket.current.onopen = () => {
       console.log("WebSocket connection established");
 
-      if (!isRealtor) {
-        console.log("유저도 등록시도합니다...", isRealtor);
-        const message = {
-          id: "joinRoom",
-          name: "user",
-          room: sessionId,
-        };
-        socket.current.send(JSON.stringify(message));
-      }
+      // if (!isRealtor) {
+      //   console.log("유저도 등록시도합니다...", isRealtor);
+      //   const message = {
+      //     id: "joinRoom",
+      //     name: "user",
+      //     room: sessionId,
+      //   };
+      //   socket.current.send(JSON.stringify(message));
+      // }
     };
 
     socket.current.onclose = () => {
