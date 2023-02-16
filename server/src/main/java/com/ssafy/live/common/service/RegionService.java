@@ -30,12 +30,10 @@ public class RegionService {
                 break;
         }
 
-        log.debug(regionCode);
-
         List<RegionResponse> regionList = regionRepository.findAllByRegionCodeStartingWithAndRegionCodeEndingWith(
                 regionCode, end)
             .stream()
-            .map(RegionResponse::toDto)
+            .map(RegionResponse::toResponse)
             .collect(Collectors.toList());
 
         return response.success(regionList, "지역 정보가 조회되었습니다.", HttpStatus.OK);

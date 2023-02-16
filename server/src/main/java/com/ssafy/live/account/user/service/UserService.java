@@ -63,16 +63,13 @@ public class UserService {
             UserRequest.SignUp.toEntity(signUp, passwordEncoder.encode(signUp.getPassword()),
                 imgSrc));
 
-        //smsService.sendSMS(signUp.getName()+"님 " + SMSContent.NEW_USER.getMessage(), signUp.getPhone());
+        smsService.sendSMS(signUp.getName()+"님 " + SMSContent.NEW_USER.getMessage(), signUp.getPhone());
         return response.success("회원가입에 성공했습니다.");
     }
 
     public ResponseEntity<?> login(UserRequest.Login login) {
         Users users = usersRepository.findById(login.getId())
             .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
-
-        log.info("로그인 DTO ", login.getPassword());
-        log.info("유저 DTO ", users.getPassword());
         if (!passwordEncoder.matches(login.getPassword(), users.getPassword())) {
             return response.fail("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
@@ -98,7 +95,7 @@ public class UserService {
     public ResponseEntity<?> findUserDetail(UserDetails user) {
         Users users = usersRepository.findById(user.getUsername())
             .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
-        UserResponse.FindDetail detail = UserResponse.FindDetail.toDto(users);
+        UserResponse.FindDetail detail = UserResponse.FindDetail.toResponse(users);
         return response.success(detail, "회원 정보를 조회하였습니다.", HttpStatus.OK);
     }
 
@@ -132,13 +129,12 @@ public class UserService {
             .orElseThrow(() -> new BadRequestException(USER_NOT_FOUND));
         String preImg = users.getImageSrc();
         String imgSrc = null;
-        System.out.println(file+" "+request.getImageSrc());
-        if (file != null) { // 등록할 파일이 있으면
+        if (file != null) {
             s3Service.deleteFile(preImg);
             imgSrc = s3Service.upload(file);
-        } else if(request.getImageSrc() == null){ // 다 삭제
+        } else if (request.getImageSrc() == null) {
             s3Service.deleteFile(preImg);
-        } else { // 그대로
+        } else {
             imgSrc = request.getImageSrc();
         }
         users.updateUser(request, passwordEncoder.encode(request.getPassword()), imgSrc);
@@ -179,7 +175,6 @@ public class UserService {
         Users users = usersRepository.findById(userId)
             .orElseThrow(() -> new UsernameNotFoundException("No authentication information."));
 
-        // add ROLE_USER
         users.getRoles().add(Authority.USER.name());
         usersRepository.save(users);
 

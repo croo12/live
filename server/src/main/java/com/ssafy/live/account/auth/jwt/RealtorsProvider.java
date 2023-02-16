@@ -25,7 +25,7 @@ public class RealtorsProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication)
         throws AuthenticationException {
         String userId = authentication.getName();
-        String userPassword = authentication.getCredentials().toString(); //userPassword
+        String userPassword = authentication.getCredentials().toString();
 
         UserDetails user = realtorDetailService.loadUserByUsername(userId);
 
@@ -53,8 +53,6 @@ public class RealtorsProvider implements AuthenticationProvider {
             Collection<? extends GrantedAuthority> authorities, UserDetails user) {
             super(principal, credentials, user.getAuthorities());
             this.user = user;
-            //principal : userId
-            //credentials : password
         }
 
         @Override

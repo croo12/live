@@ -2,21 +2,14 @@ package com.ssafy.live.consulting.controller;
 
 import com.ssafy.live.account.common.error.ErrorHandler;
 import com.ssafy.live.consulting.controller.dto.ConsultingRequest;
-import com.ssafy.live.consulting.controller.dto.ConsultingRequest.SaveRec;
 import com.ssafy.live.consulting.service.ConsultingService;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRange;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -111,7 +104,8 @@ public class ConsultingController {
     }
 
     @GetMapping(value = "/records/{recordNo}")
-    public ResponseEntity<ResourceRegion> streamRecord(@RequestHeader HttpHeaders headers, @PathVariable Long recordNo) throws IOException {
+    public ResponseEntity<ResourceRegion> streamRecord(@RequestHeader HttpHeaders headers,
+        @PathVariable Long recordNo) throws IOException {
         return consultingService.streamRecord(headers, recordNo);
     }
 }

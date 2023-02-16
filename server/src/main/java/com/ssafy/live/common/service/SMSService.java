@@ -38,14 +38,14 @@ public class SMSService {
 
     private final ConsultingRepository consultingRepository;
 
-    private String hostNameUrl = "https://sens.apigw.ntruss.com";            // 호스트 URL
-    private String requestUrl = "/sms/v2/services/";                        // 요청 URL
+    private String hostNameUrl = "https://sens.apigw.ntruss.com";
+    private String requestUrl = "/sms/v2/services/";
     private String requestUrlType = "/messages";
 
     @Value("${naver.accessKey}")
-    private String accessKey;                        // 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키			// Access Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+    private String accessKey;
     @Value("${naver.secretKey}")
-    private String secretKey;  // 2차 인증을 위해 서비스마다 할당되는 service secret key	// Service Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+    private String secretKey;
     @Value("${naver.serviceId}")
     private String serviceId;
     @Value("${naver.callingNumber}")
@@ -79,13 +79,12 @@ public class SMSService {
         sendSMS(content, users.getPhone());
     }
 
-    //    @Scheduled(cron="0 0 8 * * ?")
     @Transactional
     public void reserveSMSScheduler() {
         LocalDateTime start = LocalDateTime.of(LocalDate.now(),
-            LocalTime.of(0, 0, 0)); //오늘 00:00:00
+            LocalTime.of(0, 0, 0));
         LocalDateTime end = LocalDateTime.of(LocalDate.now(),
-            LocalTime.of(23, 59, 59)); //오늘 23:59:59
+            LocalTime.of(23, 59, 59));
         List<Consulting> consultingList = consultingRepository.findByConsultingDateBetween(start,
             end);
 
@@ -121,15 +120,13 @@ public class SMSService {
 
     private void trySMS(String body) {
 
-        String method = "POST";                                            // 요청 method
+        String method = "POST";
         String timestamp = Long.toString(
-            System.currentTimeMillis());    // current timestamp (epoch)
+            System.currentTimeMillis());
         String smsRequestUrl = requestUrl + serviceId + requestUrlType;
         String apiUrl = hostNameUrl + smsRequestUrl;
 
         try {
-            log.debug(body);
-
             URL url = new URL(apiUrl);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -151,10 +148,9 @@ public class SMSService {
 
             int responseCode = con.getResponseCode();
             BufferedReader br;
-            log.info("responseCode" + " " + responseCode);
-            if (responseCode == 202) { // 정상 호출
+            if (responseCode == 202) {
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else { // 에러 발생
+            } else {
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             }
 
@@ -164,44 +160,35 @@ public class SMSService {
                 response.append(inputLine);
             }
             br.close();
-
-            log.info(response.toString());
-
         } catch (Exception e) {
             log.debug(String.valueOf(e));
         }
     }
 
     private JSONObject makeBodyJson(String content, String phone, String callingNumber) {
-        // JSON 을 활용한 body data 생성
         JSONObject bodyJson = new JSONObject();
         JSONObject toJson = new JSONObject();
         JSONArray toArr = new JSONArray();
 
-        //toJson.put("subject","");							// Optional, messages.subject	개별 메시지 제목, LMS, MMS에서만 사용 가능
-        //toJson.put("content","sms test in spring 111");	// Optional, messages.content	개별 메시지 내용, SMS: 최대 80byte, LMS, MMS: 최대 2000byte
         toJson.put("to",
-            phone);                        // Mandatory(필수), messages.to	수신번호, -를 제외한 숫자만 입력 가능
+            phone);
         toArr.put(toJson);
 
         bodyJson.put("type",
-            "SMS");                            // Madantory, 메시지 Type (SMS | LMS | MMS), (소문자 가능)
-        //bodyJson.put("contentType","");					// Optional, 메시지 내용 Type (AD | COMM) * AD: 광고용, COMM: 일반용 (default: COMM) * 광고용 메시지 발송 시 불법 스팸 방지를 위한 정보통신망법 (제 50조)가 적용됩니다.
-        //bodyJson.put("countryCode","82");					// Optional, 국가 전화번호, (default: 82)
+            "SMS");
         bodyJson.put("from",
-            callingNumber);                    // Mandatory, 발신번호, 사전 등록된 발신번호만 사용 가능
-        //bodyJson.put("subject","");						// Optional, 기본 메시지 제목, LMS, MMS에서만 사용 가능
+            callingNumber);
         bodyJson.put("content",
-            content);                    // Mandatory(필수), 기본 메시지 내용, SMS: 최대 80byte, LMS, MMS: 최대 2000byte
+            content);
         bodyJson.put("messages",
-            toArr);                    // Mandatory(필수), 아래 항목들 참조 (messages.XXX), 최대 1,000개
+            toArr);
         return bodyJson;
     }
 
     private String makeSignature(String url, String timestamp, String method, String accessKey,
         String secretKey) throws NoSuchAlgorithmException, InvalidKeyException {
-        String space = " ";                    // one space
-        String newLine = "\n";                 // new line
+        String space = " ";
+        String newLine = "\n";
 
         String message = method +
             space +

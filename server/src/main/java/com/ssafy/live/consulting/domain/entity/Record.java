@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -35,7 +34,7 @@ public class Record extends BaseEntity {
     @Column(name = "save_file")
     private String saveFile;
 
-    public String getPath(){
-        return saveFolder+"/"+saveFile;
+    public String getPath() {
+        return saveFolder + "/" + saveFile;
     }
 }

@@ -7,12 +7,12 @@ import lombok.Getter;
 @Getter
 public enum ConsultingStatus {
 
-    RESERVERVATION_PROCESSING(0), // 예약 신청 중
-    REALTOR_RESPONSE_COMPLETE(1), // 공인중개사 응답완료
-    CONSULTING_CONFIRMED(2), // 예약 확정
-    CONSULTING_PROCESSING(3), // 상담 진행중
-    CONSULTING_PAST(4), // 과거 예약
-    CONSULTING_CANCLED(5); // 거절, 취소
+    RESERVERVATION_PROCESSING(0),
+    REALTOR_RESPONSE_COMPLETE(1),
+    CONSULTING_CONFIRMED(2),
+    CONSULTING_PROCESSING(3),
+    CONSULTING_PAST(4),
+    CONSULTING_CANCLED(5);
     private final int value;
 
     public static ConsultingStatus[] setStatus(int status) {

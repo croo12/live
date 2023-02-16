@@ -35,7 +35,6 @@ public class RealtorController {
         @Validated @RequestPart(value = "SignUp") RealtorRequest.SignUp signUp, Errors errors,
         @RequestPart(value = "file", required = false) MultipartFile uploadFile)
         throws IOException {
-        // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -45,18 +44,15 @@ public class RealtorController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Validated @RequestBody RealtorRequest.Login login,
         Errors errors) {
-        // validation check
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
-        log.info("공인중개사 로그인");
         return realtorService.login(login);
     }
 
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(@Validated @RequestBody RealtorRequest.Reissue reissue,
         Errors errors) {
-        System.out.println("r " + reissue.getAccessToken());
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(ErrorHandler.refineErrors(errors));
         }
@@ -70,14 +66,12 @@ public class RealtorController {
 
     @DeleteMapping
     public ResponseEntity<?> withdrawl(Authentication authentication) {
-        log.info("회원 탈퇴");
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         return realtorService.withdrawl(principal);
     }
 
     @GetMapping("/authority")
     public ResponseEntity<?> authority() {
-        log.info("ADD ROLE_REALTOR");
         return realtorService.authority();
     }
 
@@ -86,19 +80,16 @@ public class RealtorController {
         @RequestPart(value = "Update") RealtorRequest.Update request,
         @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
-        log.info("공인중개사 정보수정");
         return realtorService.updateRealtor(principal, request, file);
     }
 
     @PostMapping("/passcheck")
     public ResponseEntity<?> temporaryPassword(@RequestBody RealtorRequest.FindPassword request) {
-        log.info("공인중개사 임시비밀번호 발급");
         return realtorService.temporaryPassword(request);
     }
 
     @GetMapping
     public ResponseEntity<?> findRealtorDetail(Authentication authentication) {
-        log.info("공인중개사 정보 상세 조회");
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         return realtorService.findRealtorDetail(principal);
     }
@@ -106,19 +97,16 @@ public class RealtorController {
     @GetMapping("/{realtorNo}/consultings")
     public ResponseEntity<?> findRealtorDetailByRegion(@PathVariable("realtorNo") Long realtorNo,
         @RequestParam("regionCode") String regionCode) {
-        log.info("예약페이지 - 공인중개사 정보 상세 조회");
         return realtorService.findRealtorDetailByRegion(realtorNo, regionCode);
     }
 
     @GetMapping("/region")
     public ResponseEntity<?> findRealtorByRegion(@RequestParam("regionCode") String regionCode) {
-        log.info("특정 지역 공인중개사 목록 조회");
         return realtorService.findDistinctRealtorWithItemsByHouseByRegion(regionCode);
     }
 
     @GetMapping("/popular")
     public ResponseEntity<?> findRealtorList(@RequestParam int orderBy) {
-        log.info("메인페이지 공인중개사 목록 조회");
         return realtorService.findRealtorList(orderBy);
     }
 }

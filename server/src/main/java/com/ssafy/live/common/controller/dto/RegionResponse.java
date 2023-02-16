@@ -15,7 +15,7 @@ public class RegionResponse {
     private String gugunName;
     private String dongName;
 
-    public static RegionResponse toDto(Region region) {
+    public static RegionResponse toResponse(Region region) {
         return RegionResponse.builder()
             .regionCode(region.getRegionCode())
             .sidoName(region.getSidoName())

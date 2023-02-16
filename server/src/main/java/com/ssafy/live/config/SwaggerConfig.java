@@ -14,19 +14,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    //http://localhost:8080/swagger-ui.html
-
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
             .select()
-            //.apis(RequestHandlerSelectors.any()) // 모든 RequestMapping URI 추출
-            //.paths(PathSelectors.ant("/v2/**")) // 경로 패턴 URI만 추출
-            .apis(RequestHandlerSelectors.basePackage("com.ssafy.live")) // 패키지 기준 추출
+            .apis(RequestHandlerSelectors.basePackage("com.ssafy.live"))
             .paths(PathSelectors.any())
             .build()
             .apiInfo(apiInfo())
-            .useDefaultResponseMessages(false); // Response 응답 메시지 디폴트값 적용 X
+            .useDefaultResponseMessages(false);
     }
 
     private ApiInfo apiInfo() {

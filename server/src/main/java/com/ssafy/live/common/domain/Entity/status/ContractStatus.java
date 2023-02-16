@@ -9,10 +9,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ContractStatus {
 
-    CONTRACT_APPROVING(0), // 승인 중
-    CONTRACT_PROCESSING(1), // 계약 진행 중
-    CONTRACT_COMPLETE(2), // 계약 완료
-    CONTRACT_CANCEL(3); // 계약 취소, 거절
+    CONTRACT_APPROVING(0),
+    CONTRACT_PROCESSING(1),
+    CONTRACT_COMPLETE(2),
+    CONTRACT_CANCEL(3);
     private int value;
 
     public static ContractStatus ofValue(int value) {

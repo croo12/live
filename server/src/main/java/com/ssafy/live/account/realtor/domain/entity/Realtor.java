@@ -112,7 +112,7 @@ public class Realtor extends Member implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    } //계정이 사용 가능한지 여부를 리턴한다. (true: 사용 가능)
+    }
 
     public void updateRealtor(Update request, String password, String imgSrc) {
         super.updateInformation(password, request.getPhone(), request.getEmail(), imgSrc);

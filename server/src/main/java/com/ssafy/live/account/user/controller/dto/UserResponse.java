@@ -44,7 +44,7 @@ public class UserResponse {
         private float score;
         private String imageSrc;
 
-        public static UserResponse.FindDetail toDto(Users user) {
+        public static UserResponse.FindDetail toResponse(Users user) {
             return FindDetail.builder()
                 .id(user.getId())
                 .name(user.getName())

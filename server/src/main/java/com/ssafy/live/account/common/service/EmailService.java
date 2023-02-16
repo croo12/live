@@ -28,7 +28,7 @@ public class EmailService {
 
     public void joinEmail(String email, String password, String name) {
         String toMail = email;
-        String title = "[Live] 비밀번호 찾기 메일입니다."; // 이메일 제목
+        String title = "[Live] 비밀번호 찾기 메일입니다.";
 
         Context context = new Context();
         context.setVariable("password", password);

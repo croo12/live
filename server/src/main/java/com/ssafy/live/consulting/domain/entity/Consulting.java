@@ -71,7 +71,7 @@ public class Consulting extends BaseEntity {
     private List<Record> records = new ArrayList<>();
 
     public void updateStatus(int status) {
-        if(status == 1) {
+        if (status == 1) {
             this.status = ConsultingStatus.REALTOR_RESPONSE_COMPLETE;
         } else if (status == 2) {
             this.status = ConsultingStatus.CONSULTING_CONFIRMED;

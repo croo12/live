@@ -57,8 +57,8 @@ public class ContractService {
         Contract contract = ContractRequest.Regist.toEntity(users, realtor, item, regist);
         contractRepository.save(contract);
 
-        //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
-        //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor());
+        smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
+        smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor());
 
         return response.success("계약신청이 완료되었습니다.", HttpStatus.OK);
     }
@@ -67,26 +67,28 @@ public class ContractService {
         ContractStatus contractStatus = ContractStatus.ofValue(status);
         List<ContractResponse.ContractList> list = null;
         if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-            list = contractRepository.findByContractStateAndUsersOrderByCreatedDateDesc(contractStatus,
+            list = contractRepository.findByContractStateAndUsersOrderByCreatedDateDesc(
+                    contractStatus,
                     usersRepository.findById(user.getUsername()).get()).stream()
                 .map((contract) ->
-                    ContractResponse.ContractList.toEntity(
+                    ContractResponse.ContractList.toResponse(
                         contract.getNo(),
                         ContractResponse.ContractList.MemberInfo.toRealtor(contract.getRealtor()),
-                        ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem(),
+                        ContractResponse.ContractList.ItemInfo.toResponse(contract.getItem(),
                             itemImageRepository.findByItem(contract.getItem()).get(0).getImageSrc())
                     )
                 )
                 .collect(Collectors.toList());
         } else if (user.getAuthorities().contains(new SimpleGrantedAuthority("REALTOR"))) {
-            list = contractRepository.findByContractStateAndRealtorOrderByCreatedDateDesc(contractStatus,
+            list = contractRepository.findByContractStateAndRealtorOrderByCreatedDateDesc(
+                    contractStatus,
                     realtorRepository.findByBusinessNumber(user.getUsername()).get()).stream()
                 .map((contract) ->
-                    ContractResponse.ContractList.toEntity(
+                    ContractResponse.ContractList.toResponse(
                         contract.getNo(),
                         ContractResponse.ContractList.MemberInfo.toUser(contract.getUsers(),
                             contract.getTenantAge()),
-                        ContractResponse.ContractList.ItemInfo.toEntity(contract.getItem(),
+                        ContractResponse.ContractList.ItemInfo.toResponse(contract.getItem(),
                             itemImageRepository.findByItem(contract.getItem()).get(0).getImageSrc())
                     )
                 )
@@ -122,7 +124,7 @@ public class ContractService {
         itemRepository.save(item);
         contractRepository.save(contract);
 
-        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
+        smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
         return response.success("계약 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
@@ -132,7 +134,7 @@ public class ContractService {
         contract.changeStatus(status);
         contractRepository.save(contract);
 
-        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
+        smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
 
         return response.success("계약이 상태가 변경되었습니다.", HttpStatus.OK);
     }
