@@ -9,7 +9,7 @@ const ListItem = (props) => {
   return (
     <div className={classes.houseItem}>
       <div className={classes.houseImg}>
-        <img src={house.image} alt={house.address} />
+        <img src={house.imageSrc} alt={house.address} />
       </div>
       <div className={classes.houseInfo}>
         <h3>
