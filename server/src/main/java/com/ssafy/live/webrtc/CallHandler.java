@@ -116,7 +116,7 @@ public class CallHandler extends TextWebSocketHandler {
     private void closeRoom(UserSession user){
         final Room room = roomManager.getRoom(user.getRoomName());
         log.info("close room {}", room.getName());
-        room.close();
+        roomManager.removeRoom(room);
     }
 
     private void selectItem(JsonObject params, UserSession user) {

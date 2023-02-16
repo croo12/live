@@ -158,7 +158,7 @@ public class ContractResponse {
             private String buildingName;
             private int deposit;
             private int rent;
-            private int mainteneceFee;
+            private int maintenanceFee;
             private float exclusivePrivateArea;
             private List<String> images;
 
@@ -169,7 +169,7 @@ public class ContractResponse {
                     .buildingName(item.getHouse().getBuildingName())
                     .deposit(item.getDeposit())
                     .rent(item.getRent())
-                    .mainteneceFee(item.getMaintenanceFee())
+                    .maintenanceFee(item.getMaintenanceFee())
                     .exclusivePrivateArea(item.getHouse().getExclusivePrivateArea())
                     .images(images)
                     .build();
