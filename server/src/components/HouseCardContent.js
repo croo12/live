@@ -7,6 +7,7 @@ import classes from "./HouseCardContent.module.scss";
 import classes2 from "./HouseCardContent2.module.scss";
 import sample from "../assets/image/sample.jpg";
 import ResponsiveText from "./common/ResponsiveText";
+import { useAuth } from "./common/AuthProtector";
 
 const HouseCardContent = ({
   props,
@@ -89,6 +90,7 @@ export const ConsultingHouseCardContent = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isModal, setModal] = useState(false);
+  const { userInfo } = useAuth();
 
   const clickEventHandler = () => {
     if (props.clickHandler) {
@@ -105,7 +107,16 @@ export const ConsultingHouseCardContent = (props) => {
 
   return (
     <>
-      <div className={`${classes.consulting_inner} `}>
+      <div
+        className={`${classes.consulting_inner} ${
+          props.highlightNo === props.idx ? classes.highlight : ""
+        }`}
+        onClick={() => {
+          if (userInfo.isRealtor) {
+            props.setHighlightNo(props.idx);
+          }
+        }}
+      >
         <div className={classes.upperCard}>
           <div className={classes.leftBox}>
             <div>{props.idx + 1}번 매물</div>

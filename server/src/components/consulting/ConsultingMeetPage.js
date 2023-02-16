@@ -24,6 +24,8 @@ const ConsultingMeetPage = ({
   sessionId,
   recordingFiles,
   setRecordingFiles,
+  highlightNo,
+  setHighlightNo,
 }) => {
   const navi = useNavigate();
 
@@ -42,6 +44,8 @@ const ConsultingMeetPage = ({
     recordingFiles,
     setRecordingFiles,
   });
+
+  const isMounted = useRef(true);
 
   const [audio, setAudio] = useState(true);
   const [promptBlock, setBlock] = useState(false);
@@ -131,6 +135,14 @@ const ConsultingMeetPage = ({
     navi("/mypage/user");
   };
 
+  useEffect(() => {
+    if (isMounted.current) {
+      isMounted.current = false;
+    } else {
+      sendMessage({ id: "selectItem", itemNo: highlightNo });
+    }
+  }, [highlightNo]);
+
   usePrompt({
     when: promptBlock,
     message: `페이지 이동으로 통화가 종료될 수 있습니다. \n 정말로 나가시겠습니까?`,
@@ -158,9 +170,10 @@ const ConsultingMeetPage = ({
         setTimeout(() => setInfo(""), 2000);
         break;
 
-      case "selectItem":
+      case "itemSelected":
         //이미지 용
-        if (!isRealtor) {
+        if (!isRealtor && responseMsg.itemNo != highlightNo) {
+          setHighlightNo(responseMsg.itemNo);
         }
         break;
 

@@ -175,6 +175,10 @@
     z-index: 999;
   }
 
+  &.highlight {
+    border: 2px solid #86f656
+  }
+
   .upperCard {
     display: flex;
     flex: 4;
