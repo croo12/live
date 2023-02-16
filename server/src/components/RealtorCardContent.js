@@ -104,17 +104,15 @@ export const RealtorContractCardContent = (props) => {
 export const ReservationRealtorCardContent = ({
   idx,
   realtorNo,
-  imageSrc, //프로필사진
-  corp, //사무소 이름
-  name, //중개사 이름
-  ratingScore, //별점 평균
+  imageSrc,
+  corp,
+  name,
+  ratingScore,
   contactCnt,
   clickEventHandler,
   highlight,
   setHighlight,
 }) => {
-  console.log(idx, realtorNo, imageSrc);
-  console.log(ratingScore);
   return (
     <div
       className={`${classes.realtorReservationCard} ${
@@ -125,11 +123,9 @@ export const ReservationRealtorCardContent = ({
         setHighlight(idx);
       }}
     >
-      {/* <div className={classes.leftBox}> */}
       <div className={classes.leftImg}>
         <img src={imageSrc} alt="realtor-profile" />
       </div>
-      {/* </div> */}
       <div className={classes.rightBox}>
         <div className={classes.upCard}>
           <h4>
@@ -140,9 +136,7 @@ export const ReservationRealtorCardContent = ({
             <span> {name} </span> 공인중개사
           </p>
         </div>
-        <div className={classes.downCard}>
-          {/* <p>체결 계약 {contactCnt}건 | 경력 10년</p> */}
-        </div>
+        <div className={classes.downCard}></div>
       </div>
     </div>
   );

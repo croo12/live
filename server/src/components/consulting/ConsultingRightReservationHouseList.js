@@ -31,7 +31,6 @@ const ConsultingRightReservationHouseList = () => {
   useEffect(() => {
     if (userInfo.isRealtor) {
       const linkUrl = `/consulting/${params.sessionId}/${params.consultingNo}/${params.realtorNo}/${params.userNo}`;
-      console.log(`링크주소 ${linkUrl}`);
 
       registConsultingRoomLink(params.consultingNo, linkUrl);
       changeConsultinRoomNo(params.consultingNo, 3);
@@ -71,8 +70,6 @@ const ConsultingRightReservationHouseList = () => {
 export default ConsultingRightReservationHouseList;
 
 export const consultingDetailLoader = async ({ params }) => {
-  console.log(params);
-
   const response = await getConsultingDetail(params.consultingNo);
   return response.data;
 };

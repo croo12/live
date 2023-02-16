@@ -15,10 +15,7 @@ const reservedItemSlice = createSlice({
         for (let index = 0; index < idx; index++) {
           const element = newArray[index];
 
-          console.log(element.itemNo, el.itemNo);
-
           if (element.itemNo === el.itemNo) {
-            console.log(`똑같네`);
             return false;
           }
         }
@@ -26,7 +23,6 @@ const reservedItemSlice = createSlice({
         return true;
       });
 
-      console.log(filterArray);
       state.selectedItems = filterArray;
     },
     removeItem(state, { payload }) {

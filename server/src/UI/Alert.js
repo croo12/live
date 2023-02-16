@@ -4,13 +4,8 @@ import classes from "./Alert.module.scss";
 import { NavLink } from "react-router-dom";
 
 const CustomAlert = ({ title, content, link, linkName, setter }) => {
-  // const [viewAlert, setAlert] = useState(true);
-
-  console.log(`도전`);
-
   useEffect(() => {
     setTimeout(() => {
-      console.log(setter);
       setter(false);
     }, 5000);
   }, []);

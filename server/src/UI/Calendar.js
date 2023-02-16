@@ -3,10 +3,10 @@ import Button from "./Button";
 import classes from "./Calendar.module.scss";
 
 /**
- * @description 주워온 캘린더를 수정해서 만듦.
+ * @description  캘린더
  *
  * @param { today : Date } new Date() 넣어요
- * @param { mode : boolean } false : 날짜 하나 선택, true : 날짜 여러개 선택 가능 
+ * @param { mode : boolean } false : 날짜 하나 선택, true : 날짜 여러개 선택 가능
  * @returns
  */
 
@@ -121,9 +121,7 @@ const Days = ({ date, startDate, endDate, clickEvent, today }) => {
       {days.map((el, idx) => (
         <Day
           key={idx}
-          clickEvent={
-            el < today ? () => console.log("ㄴㄴ") : (d) => clickEvent(d)
-          }
+          clickEvent={el < today ? () => "" : (d) => clickEvent(d)}
           currentdate={date}
           date={el}
           startDate={startDate}

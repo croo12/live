@@ -15,21 +15,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { userAction } from "../store/user-slice";
 
 const LoginPage = () => {
-  const [loginMode, setLoginMode] = useState("USER"); // 로그인 모드 상태 확인 ( USER , REALTOR )
+  const [loginMode, setLoginMode] = useState("USER");
   const { userInfo, doLogin, doLogout } = useAuth();
   const navigation = useNavigate();
 
   const dispatch = useDispatch();
 
   const loginModeHandler = (event) => {
-    // 로그인 모드 변경 함수
     setLoginMode(event.target.value);
   };
 
   const userLoginHandler = async (userLoginInfo) => {
-    // 일반 회원 로그인 처리
-    // 일반회원 로그인 정보 아이디, 비밀번호 형태로 넘어옵니다.
-
     try {
       const result = await userLogin(userLoginInfo, dispatch);
       if (result.message) {
@@ -38,11 +34,9 @@ const LoginPage = () => {
 
       const { accessToken } = result;
 
-      console.log("유저 로그인 성공");
       dispatch(userAction.setIsRealtor(false));
 
       const userInfo = await getUserInfo(accessToken);
-      console.log(userInfo);
 
       const tmp = {};
       tmp["profile"] = userInfo.imageSrc;
@@ -55,24 +49,18 @@ const LoginPage = () => {
 
       navigation("/");
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
   const realtorLoginHandler = async (realtorLoginInfo) => {
-    // 중개사 회원 로그인 처리
-    // try {
     const tmp = {};
-
-    // console.log(realtorLoginInfo);
 
     const { accessToken } = await realtorLogin(realtorLoginInfo, dispatch);
 
-    console.log("중개사 로그인 성공");
     dispatch(userAction.setIsRealtor(true));
 
     const realtorInfo = await getRealtorInfo(accessToken);
-    console.log(realtorInfo);
 
     tmp["profile"] = realtorInfo.imageSrc;
     tmp["id"] = "중개사는 이런거없음";
@@ -97,7 +85,7 @@ const LoginPage = () => {
                 id="userTab"
                 onChange={loginModeHandler}
                 value="USER"
-                defaultChecked //defaultChecked 말고 그냥 checked 하면 체이닝 어쩌구하면서 에러 폭발함
+                defaultChecked
               />
               <label htmlFor="userTab">일반 회원</label>
               <input

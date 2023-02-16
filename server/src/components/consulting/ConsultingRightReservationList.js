@@ -13,7 +13,6 @@ const ConsultingRightReservationList = () => {
   useEffect(() => {
     async function fetchData() {
       const result = await getTodayReservationList();
-      console.log(result);
       setReservationRealtor(result.data);
     }
     fetchData();

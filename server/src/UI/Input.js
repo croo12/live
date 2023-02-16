@@ -12,7 +12,6 @@ onBlur : 입력에서 떨어졌을 때 발동되는 함수
  */
 
 const Input = (props) => {
-  //강의 베낌
   return (
     <div className={`${classes.inputBox} ${props.isValid ? "none" : ""}`}>
       <input

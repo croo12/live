@@ -109,10 +109,6 @@ export const modifyHouseData = async (data) => {
   }
 };
 
-export const getHouseListByRealtorNo = () => {
-  // items/realtors/
-};
-
 export const getItemListBySearch = async (data) => {
   let response = [];
 
@@ -123,7 +119,6 @@ export const getItemListBySearch = async (data) => {
       headers,
     })
     .then((res) => {
-      console.log(res);
       if (res) {
         response = res.data.data;
       }

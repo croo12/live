@@ -33,13 +33,10 @@ const ConsultingMeetPage = ({
   const localVideo = useRef();
   const remoteVideo = useRef();
 
-  //비디오 가운데에 나오는 문구 세팅용
   const [info, setInfo] = useState("준비중...");
 
-  //이름 만들기용
   const name = useRef(isRealtor ? "realtor" : "user");
 
-  //녹화 관리용 [녹화 상태인가? , 녹화시작, 녹화종료]
   const [recording, startRecording, stopRecording] = useRecording({
     stream: localVideo.current?.srcObject,
     recordingFiles,
@@ -85,13 +82,8 @@ const ConsultingMeetPage = ({
         break;
 
       case STATUS.REALTOR_START_CONSULTING:
-        //유저에게 알람을 보낸다
-
-        //로딩 돌리기?
         setInfo(`유저의 접속을 기다리기`);
 
-        //방에 들어아고 내 화면 틀기
-        console.log("중개사 접속 시도...");
         setBlock(true);
         register();
         break;
@@ -111,7 +103,6 @@ const ConsultingMeetPage = ({
         setViewReview(true);
         break;
       default:
-        console.log("몰루");
     }
   }, [status]);
 
@@ -139,21 +130,16 @@ const ConsultingMeetPage = ({
   });
 
   useEffect(() => {
-    console.log(`Received message: `, responseMsg);
-
     switch (responseMsg.id) {
-      //나 연결하면서 원래 있던놈 죄다 연결하기
       case "existingParticipants":
         setInfo(`내 기기 연결 중...`);
         onExistingParticipants(responseMsg);
         break;
 
-      //상대가 왔다.
       case "newParticipantArrived":
         onNewParticipant(responseMsg);
         break;
 
-      //상대가 나갔다
       case "participantLeft":
         onParticipantLeft(responseMsg);
         setInfo(`상대의 연결이 끊어졌습니다`);
@@ -161,7 +147,6 @@ const ConsultingMeetPage = ({
         break;
 
       case "itemSelected":
-        //이미지 용
         if (!isRealtor && responseMsg.itemNo != highlightNo) {
           setHighlightNo(responseMsg.itemNo);
         }
@@ -194,7 +179,7 @@ const ConsultingMeetPage = ({
         break;
 
       case undefined:
-        console.log(`???`);
+        console.error(undefined);
         break;
       default:
         console.error("Unrecognized message", responseMsg);
@@ -222,11 +207,9 @@ const ConsultingMeetPage = ({
                 <Button
                   clickEvent={() => {
                     if (recording) {
-                      console.log("recording stop");
                       setViewAlert(true);
                       stopRecording();
                     } else {
-                      console.log("recording start");
                       startRecording();
                     }
                   }}

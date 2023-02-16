@@ -3,7 +3,6 @@
   width: 1024px;
   margin: 32px calc((100vw - 1024px) / 2);
 
-  // 드래그 막기
   -ms-user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -445,7 +444,6 @@
           }
 
           input[type="date"]::-webkit-calendar-picker-indicator {
-            // visibility: hidden;
             background: none;
             width: 64px;
             height: 64px;

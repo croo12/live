@@ -15,17 +15,11 @@
       padding: 2em;
 
       div {
-        // .superStar {
-        //   -webkit-text-fill-color: transparent;
-        //   -webkit-background-clip: text;
-        //   background-clip: text;
-        //   color: transparent;
-        // }
         span {
           border: none;
           background: transparent;
           font-size: 3.2em;
-          // 드래그 막기
+
           -ms-user-select: none;
           -moz-user-select: -moz-none;
           -khtml-user-select: none;
