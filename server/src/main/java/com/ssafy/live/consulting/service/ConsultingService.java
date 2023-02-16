@@ -92,7 +92,7 @@ public class ConsultingService {
             consultingItemRepository.save(consultingItem);
         });
 
-        smsService.sendSMS(consulting.getNo(), SMSContent.NEW_CONSULTING, consulting.getUsers());
+        //smsService.sendSMS(consulting.getNo(), SMSContent.NEW_CONSULTING, consulting.getUsers());
         return response.success("예약이 완료되었습니다.", HttpStatus.OK);
     }
 
@@ -167,7 +167,7 @@ public class ConsultingService {
             .realtor(consulting.getRealtor()).noticeInfo(info).noticeWriter(writer).build();
         noticeRepository.save(notice);
 
-        smsService.sendSMS(consulting.getNo(), smsContent, consulting.getUsers());
+        //smsService.sendSMS(consulting.getNo(), smsContent, consulting.getUsers());
 
         return response.success("예약상태가 변경되었습니다.", HttpStatus.OK);
     }
@@ -229,7 +229,7 @@ public class ConsultingService {
         consulting.updateStatus(1);
         consultingRepository.save(consulting);
 
-        smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers());
+        //smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_CHANGE, consulting.getUsers());
 
         return response.success("상담 매물 수정이 완료되었습니다.", HttpStatus.OK);
     }
@@ -260,7 +260,7 @@ public class ConsultingService {
         consultingRepository.save(consulting);
         Notice notice = ConsultingRequest.AddLink.toEntity(consulting, link);
         noticeRepository.save(notice);
-        smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_START.getMessage()+" "+link.getLink(), consulting.getUsers());
+        //smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_START.getMessage()+" "+link.getLink(), consulting.getUsers());
         return response.success("상담링크가 전송되었습니다.", HttpStatus.OK);
     }
 
