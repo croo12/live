@@ -43,7 +43,7 @@ public class ReviewService {
         reviewRepository.save(
             ReviewRequest.Regist.toEntity(realtor, users, consulting, regist.getReviewInfo(),
                 regist.getRatingScore()));
-        Long count = reviewRepository.countBy(realtor);
+        Long count = reviewRepository.countBy(realtor.getNo());
         realtor.updateRatingScore(count, regist.getRatingScore());
         realtorRepository.save(realtor);
         return response.success("리뷰를 등록하였습니다.", HttpStatus.OK);
