@@ -100,12 +100,13 @@ const ConsultingMeetPage = ({
         break;
 
       case STATUS.USER_ENTER:
+        setBlock(true);
         console.log(`유저 등장`);
         //들어왔져염
         break;
 
       // case STATUS.USER_WANT_CONNECT:
-      //   setBlock(true);
+      //
       //   register();
       //   break;
 
@@ -157,12 +158,18 @@ const ConsultingMeetPage = ({
         setTimeout(() => setInfo(""), 2000);
         break;
 
+      case "selectItem":
+        //이미지 용
+        if (!isRealtor) {
+        }
+        break;
+
       case "receiveVideoAnswer":
         console.log("잘되용");
         setInfo(``);
-
         receiveVideoResponse(responseMsg);
         break;
+
       case "iceCandidate":
         participants.current[responseMsg.name].rtcPeer.addIceCandidate(
           responseMsg.candidate,
@@ -224,14 +231,14 @@ const ConsultingMeetPage = ({
                 >
                   <BsRecordCircle />
                 </Button>
-                <Button
+                {/* <Button
                   clickEvent={() => {
                     setBlock(true);
                     register();
                   }}
                 >
                   <BiPhoneCall />
-                </Button>
+                </Button> */}
               </div>
               <div>
                 <Button
