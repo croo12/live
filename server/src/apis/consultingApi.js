@@ -46,3 +46,11 @@ export const registConsultingRoomLink = async (consultingNo, link) => {
       err;
     });
 };
+
+export const changeConsultinRoomNo = (consultingNo, status) => {
+  const headers = getAuthHeader();
+  const data = { consultingNo, status };
+  axiosInstance.patch("consultings", data, {
+    headers,
+  });
+};

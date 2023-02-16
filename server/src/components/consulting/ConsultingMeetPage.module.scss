@@ -71,6 +71,12 @@
           color: red;
         }
       }
+
+      &.recordingActive {
+        svg {
+          color: red;
+        }
+      }
     }
   }
 }
