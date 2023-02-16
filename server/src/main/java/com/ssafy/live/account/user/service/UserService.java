@@ -16,6 +16,7 @@ import com.ssafy.live.account.user.controller.dto.UserResponse;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.account.user.domain.repository.UsersRepository;
 import com.ssafy.live.common.domain.Response;
+import com.ssafy.live.common.domain.SMSContent;
 import com.ssafy.live.common.exception.BadRequestException;
 import com.ssafy.live.common.service.SMSService;
 import java.io.IOException;
@@ -62,7 +63,7 @@ public class UserService {
             UserRequest.SignUp.toEntity(signUp, passwordEncoder.encode(signUp.getPassword()),
                 imgSrc));
 
-        //smsService.sendSMS(signUp.getName()+"님 " + SMSContent.NEW_USER.getMessage(), signUp.getPhone());
+        smsService.sendSMS(signUp.getName()+"님 " + SMSContent.NEW_USER.getMessage(), signUp.getPhone());
         return response.success("회원가입에 성공했습니다.");
     }
 
