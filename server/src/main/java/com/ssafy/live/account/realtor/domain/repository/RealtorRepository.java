@@ -18,31 +18,46 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
 
     Realtor findByEmailAndBusinessNumber(String email, String businessNumber);
 
-    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, " +
-        "r.rating_score as starScore, count(i.realtor_no) as total " +
-        "FROM live.realtor r " +
-        "left join review v on r.realtor_no=v.realtor_no " +
-        "left join item i on i.realtor_no=r.realtor_no " +
-        "group by r.realtor_no " +
-        "order by review desc, starScore desc LIMIT 4", nativeQuery = true)
+    @Query(value = "SELECT  b.name, b.imageSrc, b.corp, a.review, b.starScore, b.total "
+        + "FROM( "
+        + "SELECT r.realtor_no, COUNT(v.review_no) as review "
+        + "FROM realtor r, review v "
+        + "WHERE r.realtor_no = v.realtor_no "
+        + "GROUP BY r.realtor_no ) a "
+        + "RIGHT JOIN( "
+        + "SELECT r.realtor_no,r.name, r.image_src as imageSrc, r.corp,r.rating_score as starScore, count(i.realtor_no) as total "
+        + "FROM realtor r , item i "
+        + "WHERE r.realtor_no = i.realtor_no "
+        + "GROUP BY r.realtor_no ) b "
+        + "ON a.realtor_no = b.realtor_no order by a.review, b.starScore, b.total LIMIT 4", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByReviewsDesc();
 
-    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, " +
-        "r.rating_score as starScore, count(i.realtor_no) as total " +
-        "FROM live.realtor r " +
-        "left join review v on r.realtor_no=v.realtor_no " +
-        "left join item i on i.realtor_no=r.realtor_no " +
-        "group by r.realtor_no " +
-        "order by starScore desc, review desc LIMIT 4", nativeQuery = true)
+    @Query(value = "SELECT  b.name, b.imageSrc, b.corp, a.review, b.starScore, b.total "
+        + "FROM( "
+        + "SELECT r.realtor_no, COUNT(v.review_no) as review "
+        + "FROM realtor r, review v "
+        + "WHERE r.realtor_no = v.realtor_no "
+        + "GROUP BY r.realtor_no ) a "
+        + "RIGHT JOIN( "
+        + "SELECT r.realtor_no,r.name, r.image_src as imageSrc, r.corp,r.rating_score as starScore, count(i.realtor_no) as total "
+        + "FROM realtor r , item i "
+        + "WHERE r.realtor_no = i.realtor_no "
+        + "GROUP BY r.realtor_no ) b "
+        + "ON a.realtor_no = b.realtor_no order by b.starScore, b.total, a.review LIMIT 4", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByStarRatingDesc();
 
-    @Query(value = "SELECT r.name, r.image_src as imageSrc, r.corp, COUNT(v.review_no) as review, " +
-        "r.rating_score as starScore, count(i.realtor_no) as total " +
-        "FROM live.realtor r " +
-        "left join review v on r.realtor_no=v.realtor_no " +
-        "left join item i on i.realtor_no=r.realtor_no " +
-        "group by r.realtor_no " +
-        "order by count(i.realtor_no) desc, starScore desc, review desc LIMIT 4", nativeQuery = true)
+    @Query(value = "SELECT  b.name, b.imageSrc, b.corp, a.review, b.starScore, b.total "
+        + "FROM( "
+        + "SELECT r.realtor_no, COUNT(v.review_no) as review "
+        + "FROM realtor r, review v "
+        + "WHERE r.realtor_no = v.realtor_no "
+        + "GROUP BY r.realtor_no ) a "
+        + "RIGHT JOIN( "
+        + "SELECT r.realtor_no,r.name, r.image_src as imageSrc, r.corp,r.rating_score as starScore, count(i.realtor_no) as total "
+        + "FROM realtor r , item i "
+        + "WHERE r.realtor_no = i.realtor_no "
+        + "GROUP BY r.realtor_no ) b "
+        + "ON a.realtor_no = b.realtor_no order by b.total, a.review, b.starScore LIMIT 4", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByItemDesc();
 
     @Query(value = "SELECT r.* FROM realtor r "
