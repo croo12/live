@@ -29,7 +29,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "FROM realtor r , item i "
         + "WHERE r.realtor_no = i.realtor_no "
         + "GROUP BY r.realtor_no ) b "
-        + "ON a.realtor_no = b.realtor_no order by a.review, b.starScore, b.total LIMIT 4", nativeQuery = true)
+        + "ON a.realtor_no = b.realtor_no order by a.review DESC LIMIT 4", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByReviewsDesc();
 
     @Query(value = "SELECT  b.name, b.imageSrc, b.corp, a.review, b.starScore, b.total "
@@ -43,7 +43,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "FROM realtor r , item i "
         + "WHERE r.realtor_no = i.realtor_no "
         + "GROUP BY r.realtor_no ) b "
-        + "ON a.realtor_no = b.realtor_no order by b.starScore, b.total, a.review LIMIT 4", nativeQuery = true)
+        + "ON a.realtor_no = b.realtor_no order by b.starScore DESC LIMIT 4", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByStarRatingDesc();
 
     @Query(value = "SELECT  b.name, b.imageSrc, b.corp, a.review, b.starScore, b.total "
@@ -57,7 +57,7 @@ public interface RealtorRepository extends JpaRepository<Realtor, Long> {
         + "FROM realtor r , item i "
         + "WHERE r.realtor_no = i.realtor_no "
         + "GROUP BY r.realtor_no ) b "
-        + "ON a.realtor_no = b.realtor_no order by b.total, a.review, b.starScore LIMIT 4", nativeQuery = true)
+        + "ON a.realtor_no = b.realtor_no order by b.total DESC LIMIT 4", nativeQuery = true)
     List<RealtorProjectionInterface> findAllByOrderByCountByItemDesc();
 
     @Query(value = "SELECT r.* FROM realtor r "
