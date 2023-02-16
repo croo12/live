@@ -33,8 +33,6 @@ const ReservationCardContent2 = ({
     navigation(link);
   };
 
-  console.log(status);
-
   return (
     <div className={classes.content}>
       <div className={classes.leftContent}>

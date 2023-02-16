@@ -20,22 +20,8 @@ const ReservationCardContent3 = ({
   status,
 }) => {
   const navigate = useNavigate();
-  // const onChangeReservationHandler = async (status, e) => {
-  //   if (status === 5 && !confirm("예약을 거절하시겠습니까?")) {
-  //     return;
-  //   }
-  //   const data = {};
-  //   data["consultingNo"] = consultingNo;
-  //   data["status"] = status;
-  //   const result = await changeReservationStatus(data);
-  //   alert(result);
-  //   e.preventDefault();
-  // };
   const onDetailHandler = () => {
     navigate(`../realtor-reservation-detail/${consultingNo}`);
-  };
-  const onAddItemsHandler = () => {
-    navigate("/");
   };
 
   return (

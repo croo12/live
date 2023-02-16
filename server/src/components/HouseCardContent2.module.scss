@@ -1,5 +1,9 @@
 .HouseCardContent2 {
   background-color: #fafafa;
+  
+  &.isActive {
+    cursor: pointer;
+  }
 
   .houseContent {
     display: flex;

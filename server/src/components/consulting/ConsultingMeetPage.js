@@ -109,11 +109,6 @@ const ConsultingMeetPage = ({
         //들어왔져염
         break;
 
-      // case STATUS.USER_WANT_CONNECT:
-      //
-      //   register();
-      //   break;
-
       case STATUS.CONSULTING_IS_END:
         //리뷰 ON
         setBlock(false);

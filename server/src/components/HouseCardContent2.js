@@ -29,11 +29,12 @@ const HouseCardContent2 = ({
   return (
     <>
       <div
-        className={classes.HouseCardContent2}
+        className={`${classes.HouseCardContent2} ${
+          haveEvent.current ? classes.isActive : ""
+        }`}
         onClick={() => {
-          searchedListClickHandler(idx);
+          haveEvent && searchedListClickHandler(idx);
         }}
-        style={{ cursor: `${haveEvent.current ? "pointer" : "normal"}` }}
       >
         <div className={classes.houseContent}>
           <div className={classes.leftContent}>

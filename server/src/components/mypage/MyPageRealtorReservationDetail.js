@@ -19,7 +19,20 @@ const MyPageRealtorReservationDetail = (props) => {
   const { userInfo } = useAuth();
 
   const searchedListClickHander = (data) => {
-    console.log(data);
+    // console.log(data);
+
+    for (let i = wantAddList.length - 1; i >= 0; i--) {
+      if (wantAddList[i].itemNo === data.itemNo) {
+        return;
+      }
+    }
+
+    for (let i = selectedList.length - 1; i >= 0; i--) {
+      if( selectedList[i].itemNo === data.itemNo) {
+        return;
+      }
+    }
+
     setWantAddList([...wantAddList, data]);
   };
 
@@ -57,12 +70,12 @@ const MyPageRealtorReservationDetail = (props) => {
 
     if (
       userInfo.isRealtor &&
-      props.status === 0 &&
+      reservationDetail.status === 0 &&
       confirm("정말로 수정하시겠습니까?")
     ) {
       registConsultingItems(consultingNo, data);
       navigation("/mypage/realtor/realtor-reservation");
-    } else if (userInfo.isRealtor && props.status === 0) {
+    } else if (userInfo.isRealtor && reservationDetail.status === 0) {
       return;
     }
 

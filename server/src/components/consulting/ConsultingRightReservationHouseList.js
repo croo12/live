@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { STATUS } from "../../pages/ConsultingPage";
 import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
+import axiosInstance, { getAuthHeader } from "../../util/axios";
 
 const ConsultingRightReservationHouseList = () => {
   const {
@@ -51,10 +52,15 @@ const ConsultingRightReservationHouseList = () => {
           style={{
             width: "100%",
             height: "2rem",
-            backgroundColor: "green",
+            backgroundColor: "#fafafa",
             borderRadius: "8px",
           }}
           onClick={() => {
+            const data = { consultingNo: params.consultingNo, status: 5 };
+
+            axiosInstance.patch("consultings", data, {
+              Headers: getAuthHeader(),
+            });
             statusChangeHandler(STATUS.REALTOR_END_CALL);
           }}
         >

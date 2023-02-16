@@ -150,11 +150,7 @@
       padding: 2% 0;
 
       .requireforsale {
-        
-        &:last-child {
-          width: 50%;
-        }
-
+        width: 50%;
         p {
           strong {
             color: rgba(112, 112, 112, 1);
@@ -163,7 +159,7 @@
       }
 
       .addedforsale {
-        flex: 1;
+        width:50%;
 
         p {
           strong {
