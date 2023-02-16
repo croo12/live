@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/contracts/**").permitAll()
             .antMatchers("/items/**").permitAll()
             .antMatchers("/items").permitAll()
+                .antMatchers("/reviews").permitAll()
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, redisTemplate),
                 UsernamePasswordAuthenticationFilter.class);
