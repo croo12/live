@@ -39,7 +39,7 @@ public class Review extends BaseEntity {
     private String reviewInfo;
 
     @Column(name = "rating_score")
-    private int ratingScore;
+    private float ratingScore;
 
     @Column(name = "iscontract")
     private int isContract;

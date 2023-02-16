@@ -119,10 +119,9 @@ public class Realtor extends Member implements UserDetails {
         this.description = request.getDescription();
     }
 
-    public void updateRatingScore(Long count, int ratingScore) {
+    public void updateRatingScore(Long count, float ratingScore) {
         this.ratingScore = cutDemical(1,
-            ((this.ratingScore * (count - 1)) + (float) ratingScore) / (float) count);
-        System.out.println("result = " + this.ratingScore);
+            ((this.ratingScore * (count - 1)) + ratingScore) / (float) count);
     }
 
     private float cutDemical(int cutSize, float value) {

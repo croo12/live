@@ -20,7 +20,7 @@ public class ReviewResponse {
 
         private String personalInfo;
         private String name;
-        private int ratingScore;
+        private float ratingScore;
         private LocalDateTime time;
         private String reviewInfo;
 

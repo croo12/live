@@ -26,11 +26,11 @@ public class ReviewRequest {
         @NotNull(message = "상담 번호는 필수 입력값입니다.")
         private Long consultingNo;
         private String reviewInfo;
-        private int ratingScore;
+        private float ratingScore;
         private int iscontract;
 
         public static Review toEntity(Realtor realtor, Users users, Consulting consulting,
-            String reviewInfo, int ratingScore) {
+            String reviewInfo, float ratingScore) {
             return Review.builder()
                 .realtor(realtor)
                 .users(users)
