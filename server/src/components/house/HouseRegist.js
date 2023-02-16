@@ -9,9 +9,9 @@ import { findHouseByAddress, registHouseData } from "../../apis/houseApis";
 import { useNavigate } from "react-router-dom";
 
 const HouseRegist = () => {
-  const [SearchAddressModal, setSearchAddressModal] = useState(false); // 주소 검색 모달창 상태 관리용
-  const [PurposeModal, setPurposeModal] = useState(false); // 건축물 용도 모달창 상태
-  const [images, setImages] = useState([]); // 매물 이미지 파일
+  const [SearchAddressModal, setSearchAddressModal] = useState(false);
+  const [PurposeModal, setPurposeModal] = useState(false);
+  const [images, setImages] = useState([]);
   const [findAddress, setFindAddress] = useState(null);
 
   const [direction, setDirection] = useState("");
@@ -20,7 +20,6 @@ const HouseRegist = () => {
 
   const navigate = useNavigate();
 
-  // const realtorNo = useRef();
   const deposit = useRef();
   const rent = useRef();
   const maintenanceFee = useRef();
@@ -161,7 +160,6 @@ const HouseRegist = () => {
       alert("최소 5장 이상의 사진을 등록해야 합니다.");
       return;
     }
-    //--------------------------------------------------------------------------
     const response = await registHouseData({
       jsonData: {
         deposit: deposit.current.value.replaceAll(",", ""),
@@ -248,7 +246,6 @@ const HouseRegist = () => {
     setSearchAddressModal(false);
   };
 
-  // 주소 검색 결과 값 설정
   const setAddressInfoHandler = (addressInfo) => {
     address.current.value = addressInfo.address;
     addressDetail.current.value = addressInfo.addressDetail;
@@ -381,8 +378,6 @@ const HouseRegist = () => {
     const value = event.target.value;
     const maxYear = new Date().getFullYear();
     const minYear = 1940;
-
-    console.log(123);
 
     if (value === "") {
       return;

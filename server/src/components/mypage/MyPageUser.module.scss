@@ -172,6 +172,10 @@
     width: 67.7%;
     margin: auto;
 
+    @media (max-width: 768px) {
+      width: 98%;
+    }
+
     .itemBoxContent {
       padding: 3% 0;
       display: flex;

@@ -19,8 +19,6 @@ const MyPageRealtorReservationDetail = (props) => {
   const { userInfo } = useAuth();
 
   const searchedListClickHander = (data) => {
-    // console.log(data);
-
     for (let i = wantAddList.length - 1; i >= 0; i--) {
       if (wantAddList[i].itemNo === data.itemNo) {
         return;
@@ -28,7 +26,7 @@ const MyPageRealtorReservationDetail = (props) => {
     }
 
     for (let i = selectedList.length - 1; i >= 0; i--) {
-      if( selectedList[i].itemNo === data.itemNo) {
+      if (selectedList[i].itemNo === data.itemNo) {
         return;
       }
     }
@@ -183,8 +181,6 @@ const MyPageRealtorReservationDetail = (props) => {
 export default MyPageRealtorReservationDetail;
 
 export const realtorReservationLoader = async ({ params }) => {
-  console.log(params.consultingNo);
-
   const reservationDetail = await getReservationDetail(params.consultingNo);
   const sidoList = await axiosInstance.get("regions", {
     params: {

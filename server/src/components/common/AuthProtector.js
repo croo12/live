@@ -55,9 +55,6 @@ export const ProtectedRouter = ({ children, condition }) => {
     return <Navigate to="/login" />;
   }
 
-  // true => 중개사만 가능
-  // false => 유저만 가능
-
   if (
     (condition === true && userInfo.isRealtor === false) ||
     (condition === false && userInfo.isRealtor === true)

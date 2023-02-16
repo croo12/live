@@ -9,13 +9,12 @@ const HouseModify = () => {
   const navigate = useNavigate();
   const getLoaderData = useLoaderData().data;
 
-  const [images, setImages] = useState([]); // 매물 이미지 파일
+  const [images, setImages] = useState([]);
   const [loadedImages, setLoadedImages] = useState(getLoaderData.itemImages);
   const [direction, setDirection] = useState(getLoaderData.direction);
   const [entrance, setEntrance] = useState(getLoaderData.entrance);
   const [heating, setHeating] = useState(getLoaderData.heating);
 
-  // const realtorNo = useRef();
   const buildingName = useRef();
   const deposit = useRef();
   const description = useRef();
@@ -113,7 +112,6 @@ const HouseModify = () => {
       alert("최소 5장 이상의 사진을 등록해야 합니다.");
       return;
     }
-    //--------------------------------------------------------------------------
 
     const response = await modifyHouseData({
       jsonData: {
@@ -126,7 +124,6 @@ const HouseModify = () => {
         maintenanceFee: maintenanceFee.current.value.replaceAll(",", ""),
         moveInDate: moveInDate.current.value,
         rent: rent.current.value.replaceAll(",", ""),
-        // 이미 등록되어 있던 사진 중 남은 사진 목록
         itemImages: loadedImages.map((image) => {
           return image.itemImageNo;
         }),
@@ -162,7 +159,7 @@ const HouseModify = () => {
           washingMachine: washingMachine.current.checked,
         },
       },
-      files: [...images], // 새로 추가되는 사진 목록
+      files: [...images],
     });
 
     if (response.result === "fail") {
@@ -252,10 +249,7 @@ const HouseModify = () => {
     event.target.value = result;
   };
 
-  console.log(getLoaderData);
-
   useEffect(() => {
-    // realtorNo.value = getLoaderData.realtorNo;
     buildingName.current.value = getLoaderData.house.buildingName;
     deposit.current.value = getLoaderData.deposit
       .toString()
@@ -299,7 +293,6 @@ const HouseModify = () => {
     houseNo.value = getLoaderData.house.houseNo;
     regionCode.value = getLoaderData.house.regionCode;
     sido.value = getLoaderData.house.sido;
-    // zipcode 우편번호 백에서 안넘어옴
 
     airConditioner.current.checked = getLoaderData.itemOption.airConditioner;
     bathtub.current.checked = getLoaderData.itemOption.bathtub;
@@ -987,8 +980,6 @@ export const loader = async ({ params }) => {
   const itemNo = params.itemNo;
 
   const result = await getHouseByItemNo(itemNo);
-
-  console.log(result);
 
   return result;
 };

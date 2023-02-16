@@ -12,7 +12,7 @@ import FindPassModalOverlay from "./FindPassModalOverlay";
 import classes from "./UserLoginForm.module.scss";
 
 const UserLoginForm = (props) => {
-  const [isFindPassword, setIsFindPassword] = useState(false); // 비밀번호 찾기 state ( True => 모달 활성화)
+  const [isFindPassword, setIsFindPassword] = useState(false);
   const [viewAlert, setViewAlert] = useState(false);
 
   const [loginError, setLoginError] = useState(0);
@@ -21,7 +21,6 @@ const UserLoginForm = (props) => {
   const passwordInputRef = useRef();
 
   const loginHandler = async (event) => {
-    // 일반 회원 로그인 처리
     event.preventDefault();
 
     const id = userIdInputRef.current.value;
@@ -52,28 +51,20 @@ const UserLoginForm = (props) => {
   };
 
   const findPasswordHandler = async (userFindPasswordInfo) => {
-    // 비밀번호 찾기
-
-    // 비밀번호 찾기 email 맞는지 검사 and 전송 하는 과정
-    // console.log("비밀번호 찾기 아직 없음", userFindPasswordInfo);
-
     try {
       const result = await axiosInstance.post(
         "users/passcheck",
         userFindPasswordInfo
       );
-
-      console.log("비밀번호 찾기", result);
     } catch (err) {
       console.error(err);
     }
 
     setViewAlert(true);
-    findPasswordModalHandler(); // 모달창 닫기
+    findPasswordModalHandler();
   };
 
   const findPasswordModalHandler = () => {
-    // 모달 창 상태 값 통해 열고 닫기
     setIsFindPassword(!isFindPassword);
   };
 
@@ -154,7 +145,6 @@ const UserLoginForm = (props) => {
         <CustomAlert
           title={"임시 비밀번호 전송"}
           content={`고객님의 이메일주소로 임시 비밀번호를 전송하였습니다`}
-          // visible={viewAlert}
           setter={setViewAlert}
         />
       )}

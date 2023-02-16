@@ -76,7 +76,7 @@ const ContractExpectedCost = (props) => {
         alert("필수 약관에 모두 동의해주세요!");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -219,8 +219,6 @@ export const ContractExpectedCostDetailUser = (props) => {
     downPayment: props.contractInfoList.downPayment * 10000,
   };
 
-  console.log(expectedCost);
-
   return (
     <>
       <div className={classes.expectedCost}>
@@ -345,13 +343,12 @@ export const ContractExpectedCostDetailRealtor = (props) => {
             },
           }
         );
-        console.log(errorState);
         alert("정보 수정이 완료되었습니다!");
       } else {
         alert("필수 약관에 모두 동의해주세요!");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -373,7 +370,7 @@ export const ContractExpectedCostDetailRealtor = (props) => {
       );
       alert(window.open(url));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -392,7 +389,7 @@ export const ContractExpectedCostDetailRealtor = (props) => {
         );
         alert("계약이 완료되었습니다!");
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
@@ -411,7 +408,7 @@ export const ContractExpectedCostDetailRealtor = (props) => {
           }
         );
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };

@@ -39,9 +39,7 @@ export const registConsultingRoomLink = async (consultingNo, link) => {
   const headers = getAuthHeader();
   axiosInstance
     .post(`/consultings/${consultingNo}`, { link }, { headers })
-    .then((res) => {
-      console.log(`가 임마`, res);
-    })
+    .then()
     .catch((err) => {
       err;
     });

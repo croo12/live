@@ -11,11 +11,11 @@
       .reviewContent {
         margin: 5% 0 7% 0;
 
-        >ul {
+        > ul {
           width: calc(100%);
           flex-wrap: wrap;
 
-          >li:last-child(1) {
+          > li:last-child(1) {
             margin-right: 75%;
           }
         }
@@ -24,11 +24,11 @@
   }
 }
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
   .review {
     .viewReview {
       .inner {
-        width: 80%;
+        width: 100%;
         margin: 0 auto;
 
         h3 {
@@ -38,13 +38,9 @@
         .reviewContent {
           margin: 2%;
 
-          >ul {
-            width: calc(300px);
+          > ul {
             flex-wrap: wrap;
-
-            >li:last-child {
-              margin-right: 75%;
-            }
+            align-items: stretch;
           }
         }
       }

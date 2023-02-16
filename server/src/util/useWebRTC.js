@@ -1,16 +1,11 @@
 import kurentoUtils from "kurento-utils";
 
-//============================================================================
-//==============Participant 객체 생성기========================================
-//============================================================================
 class Participant {
   constructor(name, sendMessage) {
     this.name = name;
 
     this.offerToReceiveVideo = function (error, offerSdp, wp) {
       if (error) return console.error("sdp offer error");
-
-      console.log(`Invoking SDP offer callback function`);
 
       sendMessage({
         id: "receiveVideoFrom",
@@ -20,8 +15,6 @@ class Participant {
     };
 
     this.onIceCandidate = function (candidate, wp) {
-      // console.log("Local candidate" + JSON.stringify(candidate));
-
       sendMessage({
         id: "onIceCandidate",
         candidate: candidate,
@@ -30,7 +23,6 @@ class Participant {
     };
     this.rtcPeer = null;
     this.dispose = function () {
-      console.log("Disposing participant " + this.name);
       this.rtcPeer.dispose();
     };
   }
@@ -43,17 +35,13 @@ const useWebRTC = ({
   localVideo,
   remoteVideo,
   name,
-  audio, //오디오 보낼지말지 정하기
+  audio,
   sessionId,
 }) => {
   const receiveVideo = (sender) => {
-    console.log(`비디오 받았습니다 ${sender}님`);
-
     const participant = new Participant(sender, sendMessage);
     participants.current[sender] = participant;
 
-    //상대가 고객이라면 -> 소리만 받음
-    //상대가 중개사라면 -> 화면과 소리 다 받기
     let constraints;
 
     constraints = {
@@ -75,22 +63,16 @@ const useWebRTC = ({
           return console.error(error);
         }
         this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-        console.log("receiveVideo is Work!!!!!!");
       }
     );
   };
 
   return {
-    //상대가 연결되었습니다
     onNewParticipant(request) {
-      console.log("누가 왔고 무슨 요청인가요 이게", request);
       receiveVideo(request.name);
     },
 
-    //비디오가 온다네
     receiveVideoResponse(result) {
-      console.log("난 뭘까...", result);
-
       participants.current[result.name].rtcPeer.processAnswer(
         result.sdpAnswer,
         function (error) {
@@ -100,8 +82,6 @@ const useWebRTC = ({
     },
 
     onExistingParticipants(msg) {
-      console.log(`onExistingParticipants 작동중...`, isRealtor);
-
       const constraints = {
         audio: true,
         video: true,
@@ -125,14 +105,12 @@ const useWebRTC = ({
             return console.error(error);
           }
           this.generateOffer(participant.offerToReceiveVideo.bind(participant));
-          console.log("야 이것좀 받아봐라");
         }
       );
 
       msg.data.forEach(receiveVideo);
     },
 
-    //상대가 떠남
     onParticipantLeft(request) {
       const participant = participants.current[request.name];
       participant.dispose();
@@ -140,7 +118,6 @@ const useWebRTC = ({
     },
 
     register() {
-      console.log("등록시도합니다...");
       const message = {
         id: "joinRoom",
         name: name,

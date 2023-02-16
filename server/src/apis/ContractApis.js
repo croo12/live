@@ -4,14 +4,10 @@ import { getAuthHeader } from "../util/axios";
 export const getContractInfoByItemNo = async (data) => {
   const headers = getAuthHeader();
 
-  console.log(data, headers);
-
   const getData = async () => {
     const response = await axiosInstance.get(`/consultings/contracts/${data}`, {
       headers,
     });
-
-    console.log(response);
 
     if (response.data.result === "fail") {
       throw new Error(404);
@@ -25,7 +21,7 @@ export const getContractInfoByItemNo = async (data) => {
 
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };
@@ -71,7 +67,7 @@ export const getContractInfoByContractNo = async (data) => {
 
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 };

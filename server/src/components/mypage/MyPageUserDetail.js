@@ -31,12 +31,10 @@ const MyPageUserDetail = () => {
           doLogout();
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
-
-  //const userDetail = useLoaderData();
 
   useEffect(() => {
     async function fetchData() {
@@ -122,7 +120,7 @@ const MyPageUserDetail = () => {
         navigate("/mypage/user");
       }
     } catch (error) {
-      console.error("회원 정보 수정 과정에서 에러가 발생하였습니다.");
+      console.error(error);
     }
   };
 

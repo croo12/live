@@ -27,13 +27,11 @@ const MyReservationSearchBox = (props) => {
 
       setter(e.target.value);
     } else {
-      console.log("뭥미");
     }
   };
 
   useEffect(() => {
     if (props.sidoList) {
-      console.log(`외부에서 들어온 리스트가 있음`);
     } else {
       (async () => {
         try {

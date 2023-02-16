@@ -17,10 +17,7 @@ const useWebSocket = (sessionId) => {
     };
 
     socket.current.onopen = () => {
-      console.log("WebSocket connection established");
-
       if (!isRealtor) {
-        console.log("유저 등록시도...", isRealtor);
         const message = {
           id: "joinRoom",
           name: "user",
@@ -30,9 +27,7 @@ const useWebSocket = (sessionId) => {
       }
     };
 
-    socket.current.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
+    socket.current.onclose = () => {};
 
     return () => {
       socket.current.close();
@@ -41,7 +36,6 @@ const useWebSocket = (sessionId) => {
 
   const sendMessage = useCallback((message) => {
     const data = JSON.stringify(message);
-    console.log("나는 보낸다...", message);
     socket.current.send(data);
   }, []);
 

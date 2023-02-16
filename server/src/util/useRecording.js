@@ -12,7 +12,6 @@ const useRecording = ({ stream, recordingFiles, setRecordingFiles }) => {
   };
 
   useEffect(() => {
-    console.log(`현재 스트림`, stream);
     if (!recording || !stream) return;
 
     const mediaRecorder = new MediaRecorder(stream);
@@ -25,7 +24,6 @@ const useRecording = ({ stream, recordingFiles, setRecordingFiles }) => {
     };
 
     mediaRecorder.onstop = () => {
-      // datas
       const blob = new Blob(chunks, { type: "video/mp4" });
       setRecordingFiles([...recordingFiles, blob]);
     };

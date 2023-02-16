@@ -41,14 +41,10 @@ const ReservationPage = () => {
     setModalActive(!modalActive);
   };
 
-  //예약 목록
   const selectedItems = useSelector((state) => {
     return state.reserve.selectedItems;
   });
 
-  // console.log(selectedItems);
-
-  //중개사 세부 소환
   const clickRealtorEventHandler = (realtorNo) => {
     const params = {};
 
@@ -62,13 +58,11 @@ const ReservationPage = () => {
 
     (async () => {
       const res = await searchReservationRealtorDetail(realtorNo, params);
-      console.log(res);
       const data = res.data;
       setRealtorDetail(data.data);
     })();
   };
 
-  //reserveData 변경
   const clickSearchEventHandler = (sido, gugun, dong, date) => {
     if (!sido) {
       alert(`광역시도는 반드시 입력해야 합니다!`);
@@ -79,7 +73,6 @@ const ReservationPage = () => {
     }
   };
 
-  //중개사 리스트 검색
   useEffect(() => {
     if (!isMount.current) {
       isMount.current = true;
@@ -89,7 +82,6 @@ const ReservationPage = () => {
     const params = {};
 
     if (!reserveData.sido) {
-      console.log(`sido is nothing...`);
       return;
     }
 
@@ -118,11 +110,7 @@ const ReservationPage = () => {
     }
   };
 
-  //예약 ㄱㄱ
   const registReservationHandler = (detail) => {
-    console.log(realtorDetail);
-    console.log(selectedItems);
-
     const data = {};
     data["requirement"] = detail;
     data["status"] = false;

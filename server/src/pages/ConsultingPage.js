@@ -20,7 +20,6 @@ export const STATUS = {
   CONSULTING_IS_END: 999,
 };
 
-//화상통화
 const ConsultingPage = (props) => {
   const { sessionId } = useParams();
 
@@ -36,7 +35,6 @@ const ConsultingPage = (props) => {
   const orderHandler = (status, emit) => {
     switch (status) {
       case STATUS.REALTOR_ENTER:
-        console.log(`중개사 입장`);
         break;
 
       case STATUS.REALTOR_START_CONSULTING:
@@ -78,9 +76,7 @@ const ConsultingPage = (props) => {
 
       axiosInstance
         .post(`consultings/${params.consultingNo}/records`, frm, {})
-        .then((res) =>
-          console.log("Successfully sent recording to server", res)
-        )
+        .then()
         .catch((error) => console.error(error));
     }
   }, [recordingFiles]);

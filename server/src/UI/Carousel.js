@@ -115,9 +115,6 @@ function Carousel() {
   return (
     <div style={{ width: "100%", display: "flex" }}>
       <Slider {...settings} ref={sliderRef}>
-        {/* <Card />
-        <Card /> */}
-
         {items.map((item, idx) => {
           return (
             <div key={item.id}>

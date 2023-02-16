@@ -13,8 +13,6 @@ const ReservationLeftDiv = ({ realtors, clickEventHandler }) => {
     dispatch(reservedItemAction.clearItem());
   }, [highlight]);
 
-  console.log(realtors);
-
   return (
     <div className={classes.leftContainer}>
       <h2>공인 중개사 목록</h2>

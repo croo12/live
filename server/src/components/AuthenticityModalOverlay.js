@@ -11,8 +11,6 @@ const AuthenticityModalOverlay = ({
 
   const onClickHandler = () => {
     const bNo = modalBNInputRef.current.value;
-    // const startDt = modalSDInputRef.current.value;
-    // const pNm = modalRNInputRef.current.value;
     fetch(
       "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=WJW00Su3vUYQxWl%2FCdTWnPqgt4dnBsErjbqIqeo9I7%2BWiVcC4HDx26kL%2BYDc0MRTL%2BjZ6RC1BWUVlf9Z8rWQPg%3D%3D",
       {
@@ -25,13 +23,10 @@ const AuthenticityModalOverlay = ({
     )
       .then((response) => response.json())
       .then((json) => {
-        // const data = json.data[0].valid;
-        // if (data === "02") alert("등록되지 않은 사업자 번호입니다!");
         const data = json.data[0].b_stt_cd;
         if (data === "01") {
           setBusinessNumber(bNo);
           onModalStateChange();
-          // alert("등록된 사업자 번호입니다!");
         } else alert("등록되지 않은 사업자 번호입니다!");
       });
   };
@@ -44,14 +39,6 @@ const AuthenticityModalOverlay = ({
           <label htmlFor="businessnumber">사업자 등록번호(필수) </label>
           <input type="text" id="businessnumber" ref={modalBNInputRef} />
         </div>
-        {/* <div>
-        <label htmlFor="realtorname">대표자 성명(필수) </label>
-        <input type="text" id="realtorname" ref={modalRNInputRef} />
-        </div>
-        <div>
-        <label htmlFor="startdate">개업일자(필수) </label>
-        <input type="text" id="startdate" ref={modalSDInputRef} />
-      </div> */}
         <button onClick={onClickHandler}>진위확인</button>
       </div>
     </>

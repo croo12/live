@@ -31,7 +31,7 @@ const MyPageRealtorDetail = () => {
           doLogout();
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     } else {
       return;
@@ -123,14 +123,12 @@ const MyPageRealtorDetail = () => {
         navigate("/mypage/realtor");
       }
     } catch (error) {
-      console.error("중개사 정보 수정 과정에서 에러가 발생하였습니다.");
-      console.log(error);
+      console.error(error);
     }
   };
 
   return (
     <>
-      {/* <MyPageRealtor /> */}
       <form onSubmit={onChangeUser} ref={formData}>
         <div className={classes.detailUser}>
           <div className={classes.detailFieldSet}>

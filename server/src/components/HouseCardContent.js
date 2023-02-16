@@ -85,7 +85,6 @@ const HouseCardContent = ({
 
 export default HouseCardContent;
 
-//통화 페이지용
 export const ConsultingHouseCardContent = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -151,15 +150,12 @@ export const ConsultingHouseCardContent = (props) => {
   );
 };
 
-//예약 매물 리스트용
 export const ReservationHouseCardContent = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isModal, setModal] = useState(false);
 
   const clickEventHandler = () => {
-    console.log(location);
-
     if (props.clickHandler) {
       props.clickHandler(props.idx);
       return;
@@ -172,7 +168,6 @@ export const ReservationHouseCardContent = (props) => {
     }
   };
 
-  console.log("이 집 정보", props);
   const house = props.house;
 
   return (
@@ -199,7 +194,6 @@ export const ReservationHouseCardContent = (props) => {
         <p>방1 29m. 관리비 {props.maintenanceFee}</p>
         <p>{house.address}</p>
       </div>
-      {/* <button onClick={clickEventHandler}>상세 정보 보기</button> */}
       {isModal && (
         <Modal onConfirm={clickEventHandler}>
           <HouseDetailCom itemNo={props.itemNo} isModal={true} />
@@ -209,7 +203,6 @@ export const ReservationHouseCardContent = (props) => {
   );
 };
 
-//중개사 상세에 나오는 매물카드
 export const RealtorHousesCardContent = ({
   itemNo,
   imageSrc,
@@ -244,8 +237,6 @@ export const RealtorHousesCardContent = ({
     </div>
   );
 };
-
-// 계약 매물 정보
 
 export const ContractHouseCardContent = (props) => {
   const forSale = props.ContractInfo;
@@ -361,8 +352,6 @@ export const ContractHouseCardContent = (props) => {
   );
 };
 
-// 계약 정보 - 일반 회원
-
 export const ContractDetailUserCardContent = (props) => {
   const forSale = props.ContractInfo;
 
@@ -453,14 +442,10 @@ export const ContractDetailUserCardContent = (props) => {
   );
 };
 
-// 계약 상세 정보(중개사 회원)
-
 export const ContractDetailRealtorCardContent = (props) => {
   const forSale = props.ContractInfo;
 
   const formData = useRef();
-
-  console.log(forSale.houseMoveOnDate);
 
   const insertInfo = (e) => {
     e.preventDefault();
@@ -473,7 +458,6 @@ export const ContractDetailRealtorCardContent = (props) => {
       moveOnDate: formData.current.moveOnDate.value,
     };
     props.fx2(info);
-    console.log(info);
   };
 
   const carouselSettings = {

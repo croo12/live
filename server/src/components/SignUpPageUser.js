@@ -13,7 +13,6 @@ const SignUpPageUser = () => {
   const [userPassCheck, setUserPassCheck] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
-  // 에러 메세지
   const [userIdError, setUserIdError] = useState(false);
   const [idDuplicateError, setIdDuplicateError] = useState(0);
   const [userPassError, setUserPassError] = useState(false);
@@ -36,7 +35,6 @@ const SignUpPageUser = () => {
   const checkIdDuplicate = async () => {
     try {
       const result = await axiosInstance.post("users/id", { id: userId });
-      console.log(result);
 
       if (!userId || !result.data.data) {
         setIdDuplicateError(-1);
@@ -96,11 +94,9 @@ const SignUpPageUser = () => {
   }, [profile]);
 
   useEffect(() => {
-    // 화면나올때 스크롤 맨위로 올려주는 용도로 작성
     window.scrollTo(0, 0);
   }, []);
 
-  //회원가입
   const joinUser = async (e) => {
     e.preventDefault();
 
@@ -147,7 +143,7 @@ const SignUpPageUser = () => {
         navigation("/");
       }
     } catch (error) {
-      console.error(`회원가입 과정에서 에러가 발생`, error);
+      console.error(error);
     }
   };
 
@@ -264,7 +260,6 @@ const SignUpPageUser = () => {
             <label htmlFor="userPhone">전화번호 </label>
             <input id="userPhone" name="userPhone" type="text" />
           </div>
-          {/* 회원성별 선택 + 관심지역 선택 */}
           <div className={classes.signUpBtn}>
             <button type="submit">회원가입</button>
           </div>

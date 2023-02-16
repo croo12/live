@@ -7,8 +7,8 @@ const { kakao } = window;
 const Map = (props) => {
   const [width, setWidth] = useState(window.innerWidth);
 
-  const targetAddress = props.address; // 지도에 나타낼 주소
-  const targetHouseName = props.houseName; // 지도에 나타낼 건물명
+  const targetAddress = props.address;
+  const targetHouseName = props.houseName;
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -22,7 +22,7 @@ const Map = (props) => {
 
   useEffect(() => {
     const setMap = setTimeout(() => {
-      const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      const container = document.getElementById("map");
 
       const geocoder = new kakao.maps.services.Geocoder();
 
