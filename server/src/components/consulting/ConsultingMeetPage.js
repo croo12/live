@@ -15,6 +15,7 @@ import useRecording from "../../util/useRecording";
 import { usePrompt } from "../../util/usePrompt";
 import Modal from "../../UI/Modal";
 import ReviewForm from "../ReviewForm";
+import CustomAlert from "../../UI/Alert";
 
 const ConsultingMeetPage = ({
   userInfo,
@@ -50,6 +51,7 @@ const ConsultingMeetPage = ({
   const [audio, setAudio] = useState(true);
   const [promptBlock, setBlock] = useState(false);
   const [viewReview, setViewReview] = useState(false);
+  const [viewAlert, setViewAlert] = useState(false);
 
   const closeReview = () => {
     setViewReview(false);
@@ -57,18 +59,24 @@ const ConsultingMeetPage = ({
 
   const participants = useRef({ user: null, realtor: null });
   const { socket, responseMsg, sendMessage } = useWebSocket(sessionId);
-  const { onNewParticipant, receiveVideoResponse, onExistingParticipants, onParticipantLeft, register, leaveRoom } =
-    useWebRTC({
-      isRealtor,
-      participants,
-      socket,
-      sendMessage,
-      localVideo,
-      remoteVideo,
-      name: name.current,
-      audio,
-      sessionId,
-    });
+  const {
+    onNewParticipant,
+    receiveVideoResponse,
+    onExistingParticipants,
+    onParticipantLeft,
+    register,
+    leaveRoom,
+  } = useWebRTC({
+    isRealtor,
+    participants,
+    socket,
+    sendMessage,
+    localVideo,
+    remoteVideo,
+    name: name.current,
+    audio,
+    sessionId,
+  });
 
   useEffect(() => {
     switch (status) {
@@ -165,12 +173,15 @@ const ConsultingMeetPage = ({
         break;
 
       case "iceCandidate":
-        participants.current[responseMsg.name].rtcPeer.addIceCandidate(responseMsg.candidate, function (error) {
-          if (error) {
-            console.error("Error adding candidate: " + error);
-            return;
+        participants.current[responseMsg.name].rtcPeer.addIceCandidate(
+          responseMsg.candidate,
+          function (error) {
+            if (error) {
+              console.error("Error adding candidate: " + error);
+              return;
+            }
           }
-        });
+        );
         break;
 
       case "closeRoom":
@@ -203,15 +214,17 @@ const ConsultingMeetPage = ({
           {!isRealtor ? (
             <>
               <div>
-                <Button clickEvent={toggleAudio}>{audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}</Button>
+                <Button clickEvent={toggleAudio}>
+                  {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
+                </Button>
               </div>
               <div className={`${recording ? classes.recordingActive : ""}`}>
                 <Button
                   clickEvent={() => {
                     if (recording) {
                       console.log("recording stop");
+                      setViewAlert(true);
                       stopRecording();
-                      return;
                     } else {
                       console.log("recording start");
                       startRecording();
@@ -245,6 +258,13 @@ const ConsultingMeetPage = ({
             onClose={onClose}
           />
         </Modal>
+      )}
+      {viewAlert && (
+        <CustomAlert
+          title={"녹화 완료"}
+          content={"영상이 녹화되었습니다."}
+          setter={setViewAlert}
+        />
       )}
     </>
   );

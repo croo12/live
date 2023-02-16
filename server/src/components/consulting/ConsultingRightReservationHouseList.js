@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { STATUS } from "../../pages/ConsultingPage";
 import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
-import axiosInstance, { getAuthHeader } from "../../util/axios";
 
 const ConsultingRightReservationHouseList = () => {
   const {
@@ -58,7 +57,7 @@ const ConsultingRightReservationHouseList = () => {
             borderRadius: "8px",
           }}
           onClick={() => {
-            changeConsultinRoomNo = (params.consultingNo, 5);
+            changeConsultinRoomNo(params.consultingNo, 5);
             statusChangeHandler(STATUS.REALTOR_END_CALL);
           }}
         >
