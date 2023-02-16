@@ -51,7 +51,9 @@ const MyPageUser = () => {
                 <p>
                   안녕하세요, <strong>{userInfo.name}</strong>님<br />
                   <span>일반 회원</span>
-                  <button className={classes.goDetail} onClick={onClickHandler}>개인정보 조회</button>
+                  <button className={classes.goDetail} onClick={onClickHandler}>
+                    개인정보 조회
+                  </button>
                 </p>
                 <div className={classes.temperature}>온도그래프</div>
                 <progress className={classes.progress} value={userInfo.score} min="0" max="100"></progress>
@@ -63,44 +65,28 @@ const MyPageUser = () => {
       <div className={classes.itemBox}>
         <div className={classes.inner}>
           <div className={classes.itemBoxContent}>
-            <div className={`${classes.privacy} ${btnActive === 1 ? classes.active : ""}`}>
-              <button onClick={recordOnClickHandler} num={num}>
-                <div className={classes.leftLogo}>
-                  <AiOutlineVideoCameraAdd />
-                </div>
-                <div className={classes.rightDesc}>
-                  <strong>녹화</strong>
-                </div>
+            <div className={`${btnActive === 1 ? classes.active : ""}`}>
+              <button className={classes.menuCard} onClick={recordOnClickHandler}>
+                <AiOutlineVideoCameraAdd />
+                <p>녹화</p>
               </button>
             </div>
-            <div className={`${classes.alarm} ${btnActive === 2 ? classes.active : ""}`}>
-              <button onClick={reviewOnClickHadler}>
-                <div className={classes.leftLogo}>
-                  <BsFillBellFill />
-                </div>
-                <div className={classes.rightDesc}>
-                  <strong>리뷰조회</strong>
-                </div>
+            <div className={`${btnActive === 2 ? classes.active : ""}`}>
+              <button className={classes.menuCard} onClick={reviewOnClickHadler}>
+                <BsFillBellFill />
+                <p>리뷰조회</p>
               </button>
             </div>
-            <div className={`${classes.review} ${btnActive === 3 ? classes.active : ""}`}>
-              <button onClick={contractOnClickHandler}>
-                <div className={classes.leftLogo}>
-                  <BsSearch />
-                </div>
-                <div className={classes.rightDesc}>
-                  <strong>계약현황</strong>
-                </div>
+            <div className={`${btnActive === 3 ? classes.active : ""}`}>
+              <button className={classes.menuCard} onClick={contractOnClickHandler}>
+                <BsSearch />
+                <p>계약현황</p>
               </button>
             </div>
-            <div className={`${classes.reservation} ${btnActive === 4 ? classes.active : ""}`}>
-              <button onClick={reservationonClickHandler}>
-                <div className={classes.leftLogo}>
-                  <TfiWrite />
-                </div>
-                <div className={classes.rightDesc}>
-                  <strong>예약현황</strong>
-                </div>
+            <div className={`${btnActive === 4 ? classes.active : ""}`}>
+              <button className={classes.menuCard} onClick={reservationonClickHandler}>
+                <TfiWrite />
+                <p>예약현황</p>
               </button>
             </div>
           </div>

@@ -163,7 +163,6 @@ const MyPageUserDetail = () => {
                       }
                     ></ImageInput>
                   </div>
-                  {/*<!-- <img alt="프로필" src={userDetail.imageSrc !== null ? userDetail.imageSrc : sample}></img> -->*/}
                 </div>
               </div>
               <div className={classes.inputBox}>
