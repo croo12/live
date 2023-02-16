@@ -160,7 +160,6 @@ const ConsultingMeetPage = ({
         break;
 
       case "receiveVideoAnswer":
-        console.log("잘되용");
         setInfo(``);
         receiveVideoResponse(responseMsg);
         break;
@@ -206,7 +205,7 @@ const ConsultingMeetPage = ({
               <div>
                 <Button clickEvent={toggleAudio}>{audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}</Button>
               </div>
-              <div className={"recordBtn"}>
+              <div className={`${recording ? classes.recordingActive : ""}`}>
                 <Button
                   clickEvent={() => {
                     if (recording) {
@@ -221,14 +220,6 @@ const ConsultingMeetPage = ({
                 >
                   <BsRecordCircle />
                 </Button>
-                {/* <Button
-                  clickEvent={() => {
-                    setBlock(true);
-                    register();
-                  }}
-                >
-                  <BiPhoneCall />
-                </Button> */}
               </div>
               <div>
                 <Button
@@ -241,13 +232,7 @@ const ConsultingMeetPage = ({
               </div>
             </>
           ) : (
-            <>
-              {/* <div>
-                <Button clickEvent={}>
-                  <FiMaximize />
-                </Button>
-              </div> */}
-            </>
+            <></>
           )}
         </div>
       </div>

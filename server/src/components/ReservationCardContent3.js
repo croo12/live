@@ -15,26 +15,13 @@ const ReservationCardContent3 = ({
   image,
   name,
   representativeItem,
+  onChangeReservationHandler,
   isRecord,
   status,
 }) => {
   const navigate = useNavigate();
-  const onChangeReservationHandler = async (status, e) => {
-    if (status === 5 && !confirm("예약을 거절하시겠습니까?")) {
-      return;
-    }
-    const data = {};
-    data["consultingNo"] = consultingNo;
-    data["status"] = status;
-    const result = await changeReservationStatus(data);
-    alert(result);
-    e.preventDefault();
-  };
   const onDetailHandler = () => {
     navigate(`../realtor-reservation-detail/${consultingNo}`);
-  };
-  const onAddItemsHandler = () => {
-    navigate("/");
   };
 
   return (
@@ -82,7 +69,7 @@ const ReservationCardContent3 = ({
                 <button
                   className={classes.btn0}
                   onClick={(e) => {
-                    onChangeReservationHandler(5, e);
+                    onChangeReservationHandler(5, e, consultingNo);
                   }}
                 >
                   예약 거절하기
