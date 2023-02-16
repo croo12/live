@@ -65,6 +65,7 @@ const useWebRTC = ({
       remoteVideo: isRealtor ? remoteVideo.current : localVideo.current,
       onicecandidate: participant.onIceCandidate.bind(participant),
       mediaConstraints: constraints,
+      configuration: { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] },
     };
 
     participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
@@ -113,6 +114,9 @@ const useWebRTC = ({
         localVideo: isRealtor ? localVideo.current : remoteVideo.current,
         mediaConstraints: constraints,
         onicecandidate: participant.onIceCandidate.bind(participant),
+        configuration: {
+          iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+        },
       };
       participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
         options,
@@ -130,11 +134,11 @@ const useWebRTC = ({
 
     //상대가 떠남
     onParticipantLeft(request) {
-      console.log(`상대 ${request.name}가 나가버림`);
       const participant = participants.current[request.name];
       participant.dispose();
       delete participants.current[request.name];
     },
+
     register() {
       console.log("등록시도합니다...");
       const message = {
@@ -144,6 +148,7 @@ const useWebRTC = ({
       };
       sendMessage(message);
     },
+
     leaveRoom() {
       sendMessage({
         id: "leaveRoom",
