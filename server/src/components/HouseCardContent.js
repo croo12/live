@@ -136,12 +136,6 @@ export const ConsultingHouseCardContent = (props) => {
           </div>
         )}
       </div>
-
-      {isModal && (
-        <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom houseId={123} />
-        </Modal>
-      )}
     </>
   );
 };
@@ -233,7 +227,7 @@ export const RealtorHousesCardContent = ({
       </div>
       {isModal && (
         <Modal onConfirm={onConfirm}>
-          <HouseDetailCom itemNo={itemNo} isModal={true} />
+          <HouseDetailCom itemNo={itemNo} isModal={true} onClose={onConfirm} />
         </Modal>
       )}
     </div>
