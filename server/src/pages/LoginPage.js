@@ -53,7 +53,7 @@ const LoginPage = () => {
 
       dispatch(userAction.setInfo(tmp));
 
-      navigation("/mypage/user");
+      navigation("/");
     } catch (err) {
       console.log(err);
     }
@@ -81,7 +81,7 @@ const LoginPage = () => {
 
     dispatch(userAction.setInfo(tmp));
 
-    navigation("/mypage/realtor");
+    navigation("/");
   };
 
   return (
