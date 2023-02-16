@@ -63,7 +63,7 @@ public class UserService {
             UserRequest.SignUp.toEntity(signUp, passwordEncoder.encode(signUp.getPassword()),
                 imgSrc));
 
-        smsService.sendSMS(signUp.getName()+"님 " + SMSContent.NEW_USER.getMessage(), signUp.getPhone());
+        //smsService.sendSMS(signUp.getName()+"님 " + SMSContent.NEW_USER.getMessage(), signUp.getPhone());
         return response.success("회원가입에 성공했습니다.");
     }
 

@@ -57,8 +57,8 @@ public class ContractService {
         Contract contract = ContractRequest.Regist.toEntity(users, realtor, item, regist);
         contractRepository.save(contract);
 
-        smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
-        smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor());
+        //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getUsers());
+        //smsService.sendSMS(contract.getNo(), SMSContent.NEW_CONTRACT, contract.getRealtor());
 
         return response.success("계약신청이 완료되었습니다.", HttpStatus.OK);
     }
@@ -122,7 +122,7 @@ public class ContractService {
         itemRepository.save(item);
         contractRepository.save(contract);
 
-        smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
+        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
         return response.success("계약 정보가 수정되었습니다.", HttpStatus.OK);
     }
 
@@ -132,7 +132,7 @@ public class ContractService {
         contract.changeStatus(status);
         contractRepository.save(contract);
 
-        smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
+        //smsService.sendSMS(contract.getNo(), SMSContent.CONTRACT_UPDATE, contract.getUsers());
 
         return response.success("계약이 상태가 변경되었습니다.", HttpStatus.OK);
     }
