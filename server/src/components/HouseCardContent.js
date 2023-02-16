@@ -462,14 +462,22 @@ export const ContractDetailRealtorCardContent = (props) => {
 
   const insertInfo = (e) => {
     e.preventDefault();
+    const depositInput = formData.current.deposit.value;
+    // console.log(formData.current.deposit.value);
+    // if (!formData.current.deposit.value) {
+    //   alert("보증금을 입력하세요!");
+    //   return;
+    // }
+    // console.log(depositInput);
     const info = {
-      deposit: formData.current.deposit.value,
-      rent: formData.current.rent.value,
-      mainteneceFee: formData.current.maintenenceFee.value,
-      termOfContract: formData.current.termOfContract.value,
+      deposit: Number(depositInput),
+      rent: Number(formData.current.rent.value),
+      maintenanceFee: Number(formData.current.maintenanceFee.value),
+      termOfContract: Number(formData.current.termOfContract.value),
       moveOnDate: formData.current.moveOnDate.value,
     };
     props.fx2(info);
+    console.log(info);
   };
 
   const carouselSettings = {
@@ -499,6 +507,8 @@ export const ContractDetailRealtorCardContent = (props) => {
         <div className={classes.inner}>
           <h2>매물 정보</h2>
           <br />
+          <p>*은 필수 입력값입니다!</p>
+          <br />
           <div className={classes.contractContent}>
             <div className={classes.leftDesc}>
               <p>매물번호 {forSale.houseNumber}</p>
@@ -508,45 +518,46 @@ export const ContractDetailRealtorCardContent = (props) => {
               <p> {forSale.houseSupplyArea}㎡(전용 면적)</p>
               <div className={classes.infoBoxList}>
                 <div className={classes.forSaleDeposit}>
-                  <strong>보증금</strong>{" "}
+                  <strong>* 보증금</strong>{" "}
                   <input
-                    defaultValue={forSale.houseDeposit + " (만원)"}
+                    placeholder={forSale.houseDeposit}
                     id="deposit"
                     name="deposit"
                     onChange={insertInfo}
                   ></input>
                 </div>
                 <div className={classes.forSaleRent}>
-                  <strong>월세</strong>{" "}
+                  <strong>* 월세</strong>{" "}
                   <input
-                    defaultValue={forSale.houseMonthlyFee + " (만원)"}
+                    placeholder={forSale.houseMonthlyFee}
                     id="rent"
                     name="rent"
                     onChange={insertInfo}
                   ></input>
                 </div>
                 <div className={classes.extraFee}>
-                  <strong>관리비</strong>{" "}
+                  <strong>* 관리비</strong>{" "}
                   <input
-                    defaultValue={forSale.houseExtraFee + " (만원)"}
-                    id="maintenenceFee"
-                    name="maintenenceFee"
+                    placeholder={forSale.houseExtraFee}
+                    id="maintenanceFee"
+                    name="maintenanceFee"
                     onChange={insertInfo}
                   ></input>
                 </div>
                 <div className={classes.term}>
-                  <strong>계약 기간</strong>
+                  <strong>* 계약 기간</strong>
                   <input
-                    defaultValue={forSale.houseTermOfContract + " (개월)"}
+                    placeholder={forSale.houseTermOfContract}
                     id="termOfContract"
                     name="termOfContract"
                     onChange={insertInfo}
                   ></input>
                 </div>
                 <div className={classes.moveDate}>
-                  <strong>입주 희망일</strong>
+                  <strong>* 입주 희망일</strong>
                   <input
-                    defaultValue={forSale.houseMoveOnDate}
+                    type="date"
+                    placeholder={forSale.houseMoveOnDate}
                     id="moveOnDate"
                     name="moveOnDate"
                     onChange={insertInfo}

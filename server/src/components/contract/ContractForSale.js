@@ -34,11 +34,13 @@ export const ContractForSaleDetailUser = (props) => {
     houseSupplyArea: props.itemInfoList.exclusivePrivateArea,
     houseDeposit: props.itemInfoList.deposit, // 보증금
     houseMonthlyFee: props.itemInfoList.rent, // 월세
-    houseExtraFee: props.itemInfoList.mainteneceFee, // 관리비
+    houseExtraFee: props.itemInfoList.maintenanceFee, // 관리비
     houseTermOfContract: props.contractInfoList.termOfContract, // 계약기간
     houseMoveOnDate: props.contractInfoList.moveOnDate, // 입주 희망일
     houseImage: props.itemInfoList.images, // 매물 이미지
   };
+
+  console.log(ContractInfo);
 
   return (
     <div className={classes.contractForSale}>
@@ -55,7 +57,7 @@ export const ContractForSaleDetailRealtor = (props) => {
     houseSupplyArea: props.itemInfoList.exclusivePrivateArea,
     houseDeposit: props.itemInfoList.deposit, // 보증금
     houseMonthlyFee: props.itemInfoList.rent, // 월세
-    houseExtraFee: props.itemInfoList.mainteneceFee, // 관리비
+    houseExtraFee: props.itemInfoList.maintenanceFee, // 관리비
     houseTermOfContract: props.contractInfoList.termOfContract, // 계약기간
     houseMoveOnDate: props.contractInfoList.moveOnDate, // 입주 희망일
     houseImage: props.itemInfoList.images,

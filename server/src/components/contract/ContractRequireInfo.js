@@ -98,6 +98,8 @@ export const ContractRequireInfoDetailRealtor = (props) => {
         <div className={classes.inner}>
           <div className={classes.requireInfoContent}>
             <h2>요청 정보</h2>
+            <p>*은 필수 입력값입니다!</p>
+            <br />
             <div className={classes.resident}>
               <strong>거주인원</strong>{" "}
               <input
@@ -106,9 +108,9 @@ export const ContractRequireInfoDetailRealtor = (props) => {
               />
             </div>
             <div className={classes.requirement}>
-              <strong>특약 요청사항</strong>{" "}
+              <strong>* 특약 요청사항</strong>{" "}
               <textarea
-                defaultValue={contractInfo.specialContract}
+                placeholder={contractInfo.specialContract}
                 id="userSpecialContract"
                 name="userSpecialContract"
                 onChange={insertRequireInfo}
