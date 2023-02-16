@@ -75,6 +75,10 @@ public class Consulting extends BaseEntity {
             this.status = ConsultingStatus.REALTOR_RESPONSE_COMPLETE;
         } else if (status == 2) {
             this.status = ConsultingStatus.CONSULTING_CONFIRMED;
+        } else if (status == 3) {
+            this.status = ConsultingStatus.CONSULTING_PROCESSING;
+        } else if (status == 4) {
+            this.status = ConsultingStatus.CONSULTING_PAST;
         } else if (status == 5) {
             this.status = ConsultingStatus.CONSULTING_CANCLED;
         }
