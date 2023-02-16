@@ -52,7 +52,7 @@ const RecordedVideo = (props) => {
                 setCurrentVideoNum(videoNum);
               }}
             >
-              {index}번째 영상
+              {index + 1}번째 영상
             </button>
           );
         })}
