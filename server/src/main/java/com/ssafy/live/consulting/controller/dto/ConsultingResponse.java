@@ -83,7 +83,7 @@ public class ConsultingResponse {
             String buildingName, int count) {
             return TodayConsulting.builder()
                 .consultingNo(consulting.getNo())
-                .realtorNo(user.getNo())
+                .realtorNo(consulting.getRealtor().getNo())
                 .userNo(consulting.getUsers().getNo())
                 .userName(user.getName())
                 .userPhone(user.getPhone())
