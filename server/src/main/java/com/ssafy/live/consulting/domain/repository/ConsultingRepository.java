@@ -13,17 +13,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
 
-    @Query(value = "SELECT c from Consulting c " +
+    @Query(value = "SELECT c from consulting c " +
         "WHERE c.realtor = :realtor " +
         "AND (c.status=:status " +
-        "OR c.status=:status1)")
+        "OR c.status=:status1) "
+        + "ORDER BY c.created_date DESC" , nativeQuery = true)
     List<Consulting> findByRealtorAndStatusOrStatusOrderByConsultingDate(Realtor realtor,
         ConsultingStatus status, ConsultingStatus status1);
 
     @Query(value = "SELECT c from Consulting c " +
         "WHERE c.users = :user " +
         "AND (c.status=:status " +
-        "OR c.status=:status1)")
+        "OR c.status=:status1) ORDER BY c.created_date DESC" , nativeQuery = true)
     List<Consulting> findByUsersAndStatusOrStatusOrderByConsultingDate(Users user,
         ConsultingStatus status, ConsultingStatus status1);
 
@@ -33,6 +34,7 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
         + "where realtor_no = :realtorNo "
         + "and status between :status1 and :status2 "
         + "and consulting_date "
-        + "LIKE :date%", nativeQuery = true)
+        + "LIKE :date% "
+        + "ORDER BY c.created_date DESC" , nativeQuery = true)
     List<Consulting> findByRealtorNoAndStatusBetweenAndConsultingDateStartigWith(Long realtorNo, int status1, int status2, String date);
 }
