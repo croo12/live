@@ -7,17 +7,16 @@ export const getReviewList = async () => {
 };
 
 export const registReview = async (data) => {
-  const postData = async () => {
+  const headers = getAuthHeader();
+  const sendRequest = async () => {
     const response = await axiosInstance.post("/reviews", data, {
-      headers: getAuthHeader(),
+      headers,
     });
-
-    console.log(response);
 
     return response;
   };
 
   try {
-    postData();
+    return sendRequest();
   } catch {}
 };

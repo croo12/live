@@ -15,8 +15,6 @@ const ReviewForm = (props) => {
     const clickX = event.clientX - boundingRect.left;
     let score = clickX / starWidth;
 
-    console.log(score);
-
     score = value - 1 + Math.max(Math.min(score, 5), 0);
     setRating(score);
   };
@@ -26,13 +24,11 @@ const ReviewForm = (props) => {
       realtorNo: props.realtorNo,
       userNo: props.userNo,
       consultingNo: props.consultingNo,
-      reviewInfo: reviewInfo,
-      ratingScore: rating,
+      reviewInfo: reviewInfo.current.value,
+      ratingScore: rating.toFixed(1),
     };
 
     const result = await registReview(regist);
-
-    console.log(result);
 
     if (result.data.result === "fail") {
       alert("리뷰 등록에 실패했습니다.");
@@ -58,21 +54,19 @@ const ReviewForm = (props) => {
     }
 
     if (filledWidth > 0) {
+      const gradient = `linear-gradient(90deg, gold ${
+        filledWidth * 100
+      }%, #fff ${filledWidth * 100}%)`;
       const style = {
-        background: `linear-gradient(90deg, gold ${filledWidth * 100}%, #bbb ${
-          filledWidth * 100
-        }%)`,
-        backgroundClip: "text !important",
-        WebkitBackgroundClip: "text",
+        backgroundImage: gradient,
+        backgroundSize: "100% 100%",
         color: "transparent",
+        WebkitTextFillColor: "transparent",
+        WebkitBackgroundClip: "text",
       };
       starElements.push(
-        <span
-          key="partially-filled"
-          className={classes.superStar}
-          style={style}
-        >
-          ☆
+        <span key="partially-filled" style={style}>
+          ★
         </span>
       );
     }
@@ -119,8 +113,18 @@ const ReviewForm = (props) => {
             placeholder="리뷰를 작성해주세요!"
           ></textarea>
         </div>
-        <div className={classes.registBtn}>
-          <button onClick={registHandler}>리뷰 등록</button>
+        <div className={classes.buttonBox}>
+          <button className={classes.registBtn} onClick={registHandler}>
+            리뷰 등록
+          </button>
+          <button
+            className={classes.nopeBtn}
+            onClick={() => {
+              props.onClose();
+            }}
+          >
+            나중에 쓸게요!
+          </button>
         </div>
       </div>
     </div>
