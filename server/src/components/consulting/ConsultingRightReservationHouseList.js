@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
 import {
+  changeConsultinRoomNo,
   getConsultingDetail,
   registConsultingRoomLink,
 } from "../../apis/consultingApi";
@@ -34,6 +35,7 @@ const ConsultingRightReservationHouseList = () => {
       console.log(`링크주소 ${linkUrl}`);
 
       registConsultingRoomLink(params.consultingNo, linkUrl);
+      changeConsultinRoomNo(params.consultingNo, 3);
     }
   }, []);
 
@@ -56,11 +58,7 @@ const ConsultingRightReservationHouseList = () => {
             borderRadius: "8px",
           }}
           onClick={() => {
-            const data = { consultingNo: params.consultingNo, status: 5 };
-
-            axiosInstance.patch("consultings", data, {
-              Headers: getAuthHeader(),
-            });
+            changeConsultinRoomNo = (params.consultingNo, 5);
             statusChangeHandler(STATUS.REALTOR_END_CALL);
           }}
         >
