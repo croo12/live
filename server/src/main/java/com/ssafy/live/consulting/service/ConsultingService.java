@@ -259,7 +259,7 @@ public class ConsultingService {
         consultingRepository.save(consulting);
         Notice notice = ConsultingRequest.AddLink.toEntity(consulting, link);
         noticeRepository.save(notice);
-        smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_START.getMessage()+" "+link.getLink(), consulting.getUsers());
+        smsService.sendSMS(consulting.getNo(), SMSContent.CONSULTING_START.getMessage()+" https://live-live.store"+link.getLink(), consulting.getUsers());
         return response.success("상담링크가 전송되었습니다.", HttpStatus.OK);
     }
 
