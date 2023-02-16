@@ -258,6 +258,7 @@ public class ConsultingService {
         Consulting consulting = consultingRepository.findById(consultingNo)
             .orElseThrow(() -> new BadRequestException(CONSULTING_NOT_FOUND));
         consulting.addLink(link.getLink());
+        consulting.updateStatus(CONSULTING_PROCESSING.getValue());
         consultingRepository.save(consulting);
         Notice notice = ConsultingRequest.AddLink.toEntity(consulting, link);
         noticeRepository.save(notice);
