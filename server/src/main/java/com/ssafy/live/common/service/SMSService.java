@@ -28,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,6 +80,7 @@ public class SMSService {
         sendSMS(content, users.getPhone());
     }
 
+    @Scheduled(cron = "0 30 8 * * ?")
     @Transactional
     public void reserveSMSScheduler() {
         LocalDateTime start = LocalDateTime.of(LocalDate.now(),
