@@ -114,7 +114,7 @@ export const ConsultingHouseCardContent = (props) => {
             <h3>
               <span>월세</span> {props.deposit} / {props.rent}
             </h3>
-            <p> 크기 35 /관리비 {props.maintenanceFee}만 </p>
+            <p> 크기 35 / 관리비 {props.maintenanceFee}만 </p>
             <p> {props.address} </p>
           </div>
           <div className={classes.rightBox}>
