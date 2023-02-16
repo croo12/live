@@ -150,7 +150,10 @@
       padding: 2% 0;
 
       .requireforsale {
-        flex: 1;
+        
+        &:last-child {
+          width: 50%;
+        }
 
         p {
           strong {

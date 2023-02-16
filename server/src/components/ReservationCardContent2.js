@@ -33,6 +33,8 @@ const ReservationCardContent2 = ({
     navigation(link);
   };
 
+  console.log(status);
+
   return (
     <div className={classes.content}>
       <div className={classes.leftContent}>
@@ -75,7 +77,7 @@ const ReservationCardContent2 = ({
             <button className={classes.btn1} onClick={onDetailHandler}>
               예약 상세보기
             </button>
-            {status === 1 ? (
+            {status === 1 && (
               <button
                 className={classes.btn3}
                 onClick={(e) => {
@@ -84,8 +86,6 @@ const ReservationCardContent2 = ({
               >
                 예약 확정하기
               </button>
-            ) : (
-              ""
             )}
             <button
               className={classes.btn0}
@@ -102,9 +102,11 @@ const ReservationCardContent2 = ({
             <button className={classes.btn1} onClick={onDetailHandler}>
               예약 상세보기
             </button>
-            <button onClick={goConsultingPage} className={classes.btn2}>
-              상담 바로가기
-            </button>
+            {link && (
+              <button onClick={goConsultingPage} className={classes.btn2}>
+                상담 바로가기
+              </button>
+            )}
           </div>
         )}
         {tabActive === 2 && (
@@ -120,17 +122,3 @@ const ReservationCardContent2 = ({
 };
 
 export default ReservationCardContent2;
-export const DUMMY5 = [
-  {
-    realtoroffice: "SSAFY 공인중개사 사무소",
-    realtorname: "김희연",
-    consultingdate: "1월 25일 (수)",
-    consultinglocation: "싸피 하우스 외 5건",
-  },
-  {
-    realtoroffice: "SSAFY 공인중개사 사무소",
-    realtorname: "김희연",
-    consultingdate: "1월 25일 (수)",
-    consultinglocation: "싸피 하우스 외 5건",
-  },
-];
