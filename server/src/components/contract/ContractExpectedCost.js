@@ -49,12 +49,12 @@ const ContractExpectedCost = (props) => {
       moveOnDate: props.passInfo.userMoveOnDate,
       tenantAddress: props.passInfo.address,
       tenantDetailAddress: props.passInfo.addressDetail,
-      tenantAge: props.passInfo.age,
-      numberOfResidents: props.passInfo.numberOfResidents,
+      tenantAge: Number(props.passInfo.age),
+      numberOfResidents: Number(props.passInfo.numberOfResidents),
       specialContract: props.passInfo.specialContract,
-      downPayment: downPayment,
-      balance: balance,
-      commission: commission,
+      downPayment: Number(downPayment),
+      balance: Number(balance),
+      commission: Number(commission / 10000),
       realtorNo: props.passInfo.realtorNo,
       userNo: props.passInfo.userNo,
       itemNo: props.passInfo.itemNo,
@@ -215,7 +215,7 @@ export default ContractExpectedCost;
 export const ContractExpectedCostDetailUser = (props) => {
   const expectedCost = {
     balance: props.contractInfoList.balance * 10000,
-    commission: props.contractInfoList.commission,
+    commission: props.contractInfoList.commission * 10000,
     downPayment: props.contractInfoList.downPayment * 10000,
   };
 
@@ -295,7 +295,7 @@ export const ContractExpectedCostDetailRealtor = (props) => {
 
   balance *= 10000;
   downPayment *= 10000;
-  commission;
+  commission *= 10000;
 
   const statusNum = data.data.contractInfo.status;
 
@@ -303,16 +303,34 @@ export const ContractExpectedCostDetailRealtor = (props) => {
   const [nonContactContract, setnonContactContract] = useState(false);
   const [privacy, setPrivacy] = useState(false);
 
-  const onChangeHandler = async () => {
+  const [errorState, seterrorState] = useState(0);
+
+  const onChangeHandler = async (e) => {
+    e.preventDefault();
+
     const totInfoData = {
       contractNo: props.passInfo.itemNo,
       deposit: props.passInfo.deposit,
-      mainteneceFee: props.passInfo.mainteneceFee,
+      rent: props.passInfo.rent,
+      maintenanceFee: props.passInfo.maintenanceFee,
       termOfContract: props.passInfo.termOfContract,
       moveOnDate: props.passInfo.moveOnDate,
       specialContract: props.passInfo.specialContract,
-      commission: commission,
+      commission: Number(value / 10000),
     };
+
+    if (
+      !totInfoData.deposit ||
+      !totInfoData.rent ||
+      !totInfoData.maintenanceFee ||
+      !totInfoData.termOfContract ||
+      !totInfoData.moveOnDate ||
+      !totInfoData.specialContract ||
+      !totInfoData.commission
+    ) {
+      alert("필수 입력값을 모두 입력해주세요!");
+      return;
+    }
 
     try {
       if (
@@ -329,6 +347,8 @@ export const ContractExpectedCostDetailRealtor = (props) => {
             },
           }
         );
+        console.log(errorState);
+        alert("정보 수정이 완료되었습니다!");
       } else {
         alert("필수 약관에 모두 동의해주세요!");
       }
@@ -447,6 +467,8 @@ export const ContractExpectedCostDetailRealtor = (props) => {
         <div className={classes.inner}>
           <div className={classes.expectedCostContent}>
             <h2>예상 비용 안내</h2>
+            <br />
+            <p style={{ textAlign: "left" }}>*은 필수 입력값입니다!</p>
             <div className={classes.costBox}>
               <div className={classes.downPayment}>
                 <p>계약금</p>
@@ -472,9 +494,9 @@ export const ContractExpectedCostDetailRealtor = (props) => {
                 </strong>
               </div>
               <div className={classes.brokerageFee}>
-                <p>중개보수</p>
+                <p>* 중개보수</p>
                 <input
-                  defaultValue={commission + "원"}
+                  placeholder={commission + "원"}
                   id="commission"
                   name="commission"
                   onChange={onCommissionChangeHandler}

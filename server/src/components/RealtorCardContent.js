@@ -22,7 +22,8 @@ const RealtorCardContent = ({ idx, name, total, corp, imageSrc, review, starScor
       </div>
       <div className={classes.downCard}>
         <p>
-        <img alt="★" src={star} className={classes.star}></img>{starScore} | 보유 매물 {total}개 | 리뷰 {review}건
+          <img alt="★" src={star} className={classes.star}></img>
+          {starScore} | 보유 매물 {total}개 | 리뷰 {review === null ? "0" : review}건
         </p>
       </div>
     </div>

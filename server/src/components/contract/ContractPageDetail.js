@@ -16,18 +16,16 @@ const ContractPageDetail = () => {
   const data = useLoaderData();
   console.log(data);
 
-  const price = (10000000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  console.log(price);
-
   const { userInfo } = useAuth();
 
   const [forSaleInfo, setForSaleInfo] = useState({
     deposit: "",
     rent: "",
-    mainteneceFee: "",
+    maintenanceFee: "",
     termOfContract: "",
     moveOnDate: "",
   });
+  console.log(forSaleInfo.maintenanceFee);
 
   const [requireInfo, setRequireInfo] = useState({
     specialContract: "",
@@ -37,21 +35,17 @@ const ContractPageDetail = () => {
     commission: "",
   });
 
-  console.log(data.data);
-
-  // console.log(forSaleInfo);
-  // console.log(requireInfo);
-
   const passInfo = {
     itemNo: data.data.contractInfo.contractNo,
     deposit: forSaleInfo.deposit,
     rent: forSaleInfo.rent,
-    mainteneceFee: forSaleInfo.mainteneceFee,
+    maintenanceFee: forSaleInfo.maintenanceFee,
     termOfContract: forSaleInfo.termOfContract,
     moveOnDate: forSaleInfo.moveOnDate,
     specialContract: requireInfo.specialContract,
     commission: expectedCostInfo.commission,
   };
+  console.log(passInfo);
 
   return (
     <>
