@@ -303,8 +303,6 @@ export const ContractExpectedCostDetailRealtor = (props) => {
   const [nonContactContract, setnonContactContract] = useState(false);
   const [privacy, setPrivacy] = useState(false);
 
-  const [errorState, seterrorState] = useState(0);
-
   const onChangeHandler = async (e) => {
     e.preventDefault();
 
