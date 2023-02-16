@@ -7,7 +7,9 @@ const ReservationRightDiv = ({ realtorDetail }) => {
       <h2>상세정보</h2>
       <div className={classes.rightListContainer}>
         {!realtorDetail?.realtorInfo.name ? (
-          <div className={classes.rightEmptyContainer}>현재 조회된 공인중개사가 없습니다</div>
+          <div className={classes.rightEmptyContainer}>
+            현재 조회된 공인중개사가 없습니다
+          </div>
         ) : (
           <ReservationRealtorInfo realtorDetail={realtorDetail} />
         )}
