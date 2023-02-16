@@ -57,24 +57,18 @@ const ConsultingMeetPage = ({
 
   const participants = useRef({ user: null, realtor: null });
   const { socket, responseMsg, sendMessage } = useWebSocket(sessionId);
-  const {
-    onNewParticipant,
-    receiveVideoResponse,
-    onExistingParticipants,
-    onParticipantLeft,
-    register,
-    leaveRoom,
-  } = useWebRTC({
-    isRealtor,
-    participants,
-    socket,
-    sendMessage,
-    localVideo,
-    remoteVideo,
-    name: name.current,
-    audio,
-    sessionId,
-  });
+  const { onNewParticipant, receiveVideoResponse, onExistingParticipants, onParticipantLeft, register, leaveRoom } =
+    useWebRTC({
+      isRealtor,
+      participants,
+      socket,
+      sendMessage,
+      localVideo,
+      remoteVideo,
+      name: name.current,
+      audio,
+      sessionId,
+    });
 
   useEffect(() => {
     switch (status) {
@@ -95,8 +89,6 @@ const ConsultingMeetPage = ({
         break;
 
       case STATUS.REALTOR_END_CALL:
-        console.log(`연결을 종료하겠다....`);
-
         socket.current.send(JSON.stringify({ id: "closeRoom" }));
         setInfo("상담을 종료합니다...");
         setTimeout(setInfo(""), 2000);
@@ -105,21 +97,11 @@ const ConsultingMeetPage = ({
 
       case STATUS.USER_ENTER:
         setBlock(true);
-        console.log(`유저 등장`);
-        //들어왔져염
         break;
-
-      // case STATUS.USER_WANT_CONNECT:
-      //
-      //   register();
-      //   break;
-
       case STATUS.CONSULTING_IS_END:
-        //리뷰 ON
         setBlock(false);
         setViewReview(true);
         break;
-
       default:
         console.log("몰루");
     }
@@ -184,15 +166,12 @@ const ConsultingMeetPage = ({
         break;
 
       case "iceCandidate":
-        participants.current[responseMsg.name].rtcPeer.addIceCandidate(
-          responseMsg.candidate,
-          function (error) {
-            if (error) {
-              console.error("Error adding candidate: " + error);
-              return;
-            }
+        participants.current[responseMsg.name].rtcPeer.addIceCandidate(responseMsg.candidate, function (error) {
+          if (error) {
+            console.error("Error adding candidate: " + error);
+            return;
           }
-        );
+        });
         break;
 
       case "closeRoom":
@@ -225,9 +204,7 @@ const ConsultingMeetPage = ({
           {!isRealtor ? (
             <>
               <div>
-                <Button clickEvent={toggleAudio}>
-                  {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
-                </Button>
+                <Button clickEvent={toggleAudio}>{audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}</Button>
               </div>
               <div className={"recordBtn"}>
                 <Button

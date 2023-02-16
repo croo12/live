@@ -56,15 +56,11 @@ const HouseCardContent = ({
         </div>
         <div className={classes.rightContent}>
           <h2>
-            월세 {deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-            만원/ {rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원
+            월세 {deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원/{" "}
+            {rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원
           </h2>
           <p>
-            전용{" "}
-            {exclusivePrivateArea
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            ㎡ (
+            전용 {exclusivePrivateArea.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}㎡ (
             {Math.round(exclusivePrivateArea / 3.3)
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -72,10 +68,7 @@ const HouseCardContent = ({
           </p>
           <p>{address + " " + addressDetail}</p>
           <p className={classes.descText}>
-            <ResponsiveText
-              text={description}
-              textLength={[30, 40, 50, 70, 80]}
-            />
+            <ResponsiveText text={description} textLength={[30, 40, 50, 70, 80]} />
           </p>
         </div>
       </div>
@@ -108,9 +101,7 @@ export const ConsultingHouseCardContent = (props) => {
   return (
     <>
       <div
-        className={`${classes.consulting_inner} ${
-          props.highlightNo === props.idx ? classes.highlight : ""
-        }`}
+        className={`${classes.consulting_inner} ${props.highlightNo === props.idx ? classes.highlight : ""}`}
         onClick={() => {
           if (userInfo.isRealtor) {
             props.setHighlightNo(props.idx);
@@ -121,16 +112,13 @@ export const ConsultingHouseCardContent = (props) => {
           <div className={classes.leftBox}>
             <div>{props.idx + 1}번 매물</div>
             <h3>
-              <span>월세</span> {props.rent} / {props.deposit}
+              <span>월세</span> {props.deposit} / {props.rent}
             </h3>
             <p> 크기 35 /관리비 {props.maintenanceFee}만 </p>
             <p> {props.address} </p>
           </div>
           <div className={classes.rightBox}>
-            <img
-              src={props.imageSrc ? props.imageSrc : sample}
-              alt={"토토로"}
-            />
+            <img src={props.imageSrc ? props.imageSrc : sample} alt={"토토로"} />
           </div>
         </div>
         <div className={classes.downCard}>
@@ -183,14 +171,7 @@ export const ReservationHouseCardContent = (props) => {
       className={`${classes.reservationItem} `}
     >
       <div className={classes.image}>
-        <img
-          src={
-            props.itemImages?.length !== 0
-              ? props.itemImages[0].imageSrc
-              : sample
-          }
-          alt="선택한 매물 목록"
-        />
+        <img src={props.itemImages?.length !== 0 ? props.itemImages[0].imageSrc : sample} alt="선택한 매물 목록" />
       </div>
       <div>
         <h3>
@@ -210,13 +191,7 @@ export const ReservationHouseCardContent = (props) => {
 };
 
 //중개사 상세에 나오는 매물카드
-export const RealtorHousesCardContent = ({
-  itemNo,
-  imageSrc,
-  deposit,
-  monthlyRent,
-  address,
-}) => {
+export const RealtorHousesCardContent = ({ itemNo, imageSrc, deposit, monthlyRent, address }) => {
   const [isModal, toggleModal] = useState(false);
 
   const onConfirm = () => {
@@ -301,21 +276,12 @@ export const ContractHouseCardContent = (props) => {
                     <strong>매물가격</strong>{" "}
                     <input
                       type="text"
-                      value={
-                        "월세 " +
-                        forSale.houseDeposit +
-                        "/" +
-                        forSale.houseMonthlyFee
-                      }
+                      value={"월세 " + forSale.houseDeposit + "/" + forSale.houseMonthlyFee}
                       readOnly
                     />
                   </div>
                   <div className={classes.extraFee}>
-                    <strong>추가 비용</strong>{" "}
-                    <input
-                      value={"관리비 " + forSale.houseExtraFee}
-                      readOnly
-                    ></input>
+                    <strong>추가 비용</strong> <input value={"관리비 " + forSale.houseExtraFee} readOnly></input>
                   </div>
                   <div className={classes.term}>
                     <strong>계약 기간</strong>
@@ -403,23 +369,10 @@ export const ContractDetailUserCardContent = (props) => {
               <div className={classes.infoBoxList}>
                 <div className={classes.forSale}>
                   <strong>매물가격</strong>{" "}
-                  <input
-                    type="text"
-                    value={
-                      "월세 " +
-                      forSale.houseDeposit +
-                      "/" +
-                      forSale.houseMonthlyFee
-                    }
-                    readOnly
-                  />
+                  <input type="text" value={"월세 " + forSale.houseDeposit + "/" + forSale.houseMonthlyFee} readOnly />
                 </div>
                 <div className={classes.extraFee}>
-                  <strong>추가 비용</strong>{" "}
-                  <input
-                    value={"관리비 " + forSale.houseExtraFee}
-                    readOnly
-                  ></input>
+                  <strong>추가 비용</strong> <input value={"관리비 " + forSale.houseExtraFee} readOnly></input>
                 </div>
                 <div className={classes.term}>
                   <strong>계약 기간</strong>
@@ -519,21 +472,11 @@ export const ContractDetailRealtorCardContent = (props) => {
               <div className={classes.infoBoxList}>
                 <div className={classes.forSaleDeposit}>
                   <strong>* 보증금</strong>{" "}
-                  <input
-                    placeholder={forSale.houseDeposit}
-                    id="deposit"
-                    name="deposit"
-                    onChange={insertInfo}
-                  ></input>
+                  <input placeholder={forSale.houseDeposit} id="deposit" name="deposit" onChange={insertInfo}></input>
                 </div>
                 <div className={classes.forSaleRent}>
                   <strong>* 월세</strong>{" "}
-                  <input
-                    placeholder={forSale.houseMonthlyFee}
-                    id="rent"
-                    name="rent"
-                    onChange={insertInfo}
-                  ></input>
+                  <input placeholder={forSale.houseMonthlyFee} id="rent" name="rent" onChange={insertInfo}></input>
                 </div>
                 <div className={classes.extraFee}>
                   <strong>* 관리비</strong>{" "}
