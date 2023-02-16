@@ -1,8 +1,10 @@
 import classes from "./HouseCardContent2.module.scss";
 import { useNavigate } from "react-router-dom";
 import ResponsiveText from "./common/ResponsiveText";
+import { useRef } from "react";
 
 const HouseCardContent2 = ({
+  idx,
   address,
   addressDetail,
   buildingName,
@@ -14,14 +16,25 @@ const HouseCardContent2 = ({
   consultingNo,
   exclusivePrivateArea,
   itemNo,
+  isRealtor,
+  searchedListClickHandler,
 }) => {
   const navigation = useNavigate();
   const onContractHandler = () => {
     navigation(`/contract/user-contract/${itemNo}`);
   };
+
+  const haveEvent = useRef(searchedListClickHandler);
+
   return (
     <>
-      <div className={classes.HouseCardContent2}>
+      <div
+        className={classes.HouseCardContent2}
+        onClick={() => {
+          searchedListClickHandler(idx);
+        }}
+        style={{ cursor: `${haveEvent.current ? "pointer" : "normal"}` }}
+      >
         <div className={classes.houseContent}>
           <div className={classes.leftContent}>
             <div className={classes.imgContainer}>
@@ -49,9 +62,11 @@ const HouseCardContent2 = ({
           </div>
         </div>
       </div>
-      <button className={classes.consultBtn} onClick={onContractHandler}>
-        계약하기
-      </button>
+      {!isRealtor && (
+        <button className={classes.consultBtn} onClick={onContractHandler}>
+          계약하기
+        </button>
+      )}
     </>
   );
 };
