@@ -101,6 +101,7 @@ public class ConsultingResponse {
     public static class ReservationDetail {
 
         private Long consultingNo;
+        private int status;
         private LocalDateTime consultingDate;
         private String requirement;
         List<MyConsultingItem> itemList;
@@ -140,6 +141,7 @@ public class ConsultingResponse {
         public static ReservationDetail toEntity(Long consultingNo, Consulting consulting,
             List<ConsultingResponse.ReservationDetail.MyConsultingItem> items) {
             return ReservationDetail.builder()
+                .status(consulting.getStatus().getValue())
                 .consultingNo(consultingNo)
                 .consultingDate(consulting.getConsultingDate())
                 .requirement(consulting.getRequirement())
