@@ -33,6 +33,6 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
     @Query(value = "SELECT * FROM consulting "
         + "where realtor_no = :realtorNo "
         + "and status between :status1 and :status2 "
-        + "and consulting_date = CURDATE()", nativeQuery = true)
+        + "and date_format(consulting_date, \"%Y-%m-%d\") = curdate()", nativeQuery = true)
     List<Consulting> findByRealtorNoAndStatusBetweenAndConsultingDateStartigWith(Long realtorNo, int status1, int status2);
 }
