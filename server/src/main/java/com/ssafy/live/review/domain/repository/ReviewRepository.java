@@ -15,6 +15,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByRealtorOrderByCreatedDateDesc(Realtor realtor);
 
-    @Query(value = "SELECT COUNT(*) FROM Review r WHERE r.realtor=:realtor", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM review r WHERE r.realtor=:realtor", nativeQuery = true)
     Long countBy(Realtor realtor);
 }
