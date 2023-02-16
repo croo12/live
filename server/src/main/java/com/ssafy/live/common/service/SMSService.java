@@ -176,8 +176,14 @@ public class SMSService {
             phone);
         toArr.put(toJson);
 
-        bodyJson.put("type",
-            "SMS");
+        if(content.getBytes().length < 80){
+            bodyJson.put("type",
+                "SMS");
+        }
+        else{
+            bodyJson.put("type",
+                "LMS");
+        }
         bodyJson.put("from",
             callingNumber);
         bodyJson.put("content",
