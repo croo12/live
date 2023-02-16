@@ -15,6 +15,8 @@ export const STATUS = {
 
   USER_ENTER: 200,
 
+  SEND_ITEM_NO: 666,
+
   CONSULTING_IS_END: 999,
 };
 
@@ -29,8 +31,9 @@ const ConsultingPage = (props) => {
   );
   const [viewList, toggleList] = useState(false, true);
   const [recordingFiles, setRecordingFiles] = useState([]);
+  const [highlightNo, setHighlightNo] = useState(0);
 
-  const orderHandler = (status) => {
+  const orderHandler = (status, emit) => {
     switch (status) {
       case STATUS.REALTOR_ENTER:
         console.log(`중개사 입장`);
@@ -79,9 +82,7 @@ const ConsultingPage = (props) => {
       );
 
       axiosInstance
-        .post(`consultings/${params.consultingNo}/records`, frm, {
-          // type
-        })
+        .post(`consultings/${params.consultingNo}/records`, frm, {})
         .then((res) =>
           console.log("Successfully sent recording to server", res)
         )
@@ -101,6 +102,8 @@ const ConsultingPage = (props) => {
             recordingFiles={recordingFiles}
             setRecordingFiles={setRecordingFiles}
             statusChangeHandler={orderHandler}
+            highlightNo={highlightNo}
+            setHighlightNo={setHighlightNo}
           />
         </div>
         <div className={`${classes.lists} ${viewList ? classes.isActive : ""}`}>
@@ -111,6 +114,8 @@ const ConsultingPage = (props) => {
             status={status}
             viewList={viewList}
             sessionId={sessionId}
+            highlightNo={highlightNo}
+            setHighlightNo={setHighlightNo}
           />
         </div>
       </div>

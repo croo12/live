@@ -11,7 +11,13 @@ import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
 
 const ConsultingRightReservationHouseList = () => {
-  const { clickHandler, detail, statusChangeHandler } = useOutletContext();
+  const {
+    clickHandler,
+    detail,
+    statusChangeHandler,
+    highlightNo,
+    setHighlightNo,
+  } = useOutletContext();
   const navigation = useNavigate();
 
   const datas = useLoaderData();
@@ -36,6 +42,8 @@ const ConsultingRightReservationHouseList = () => {
         <ConsultingHouseCardContent
           clickHandler={clickHandler}
           detail={detail}
+          highlightNo={highlightNo}
+          setHighlightNo={setHighlightNo}
         />
       </ListBox>
       {userInfo.isRealtor && (

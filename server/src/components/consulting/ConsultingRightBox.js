@@ -10,6 +10,8 @@ const ConsultingRightBox = ({
   isRealtor,
   toggleListInMobile,
   viewList,
+  highlightNo,
+  setHighlightNo,
 }) => {
   const [detail, setDetail] = useState(-1);
 
@@ -37,6 +39,8 @@ const ConsultingRightBox = ({
             statusChangeHandler,
             clickHandler,
             detail,
+            highlightNo,
+            setHighlightNo,
           }}
         />
       </div>
