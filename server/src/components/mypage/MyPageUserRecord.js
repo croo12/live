@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { getReservationList } from "../../apis/reservationApis";
 import ListBox from "../../UI/ListBox";
 import ReservationCardContent3 from "../ReservationCardContent3";
+import Modal from "../../UI/Modal";
+import RecordedVideo from "../RecordedVideo";
 
 const MyPageUserRecord = (props) => {
   const [recordsList, setRecordsList] = useState([]);
   const [consultNo, setConsultNo] = useState(-1);
   const consultsData = useLoaderData();
+  const [isModal, setIsModal] = useState(false);
 
   useEffect(() => {
     if (consultNo !== -1) {
@@ -18,16 +21,35 @@ const MyPageUserRecord = (props) => {
           `consultings/${consultNo}/records`
         );
 
-        //녹화리스트 저장함
+        if (response.data.data.length === 0) {
+          alert("녹화된 영상이 존재하지 않습니다.");
+          return;
+        }
+
         setRecordsList(response.data.data);
+
+        setIsModal(true);
       })();
     }
   }, [consultNo]);
 
   return (
     <>
-      <div>
-        <h1>녹화페이지 맨</h1>
+      {isModal && (
+        <>
+          <Modal>
+            <RecordedVideo
+              videoList={recordsList}
+              onClose={() => {
+                setIsModal(false);
+                setConsultNo(-1);
+              }}
+            />
+          </Modal>
+        </>
+      )}
+      <div className={classes.recordBox}>
+        <h3>지난 상담 내역</h3>
         <div>
           <ListBox dataArray={consultsData.data}>
             <ReservationCardContent3 tabActive={2} isRecord={setConsultNo} />
