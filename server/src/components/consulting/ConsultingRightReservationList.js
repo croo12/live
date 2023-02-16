@@ -31,7 +31,7 @@ const ConsultingRightReservationList = () => {
             />
           </ListBox>
         ) : (
-          <div style={{ color: "white", textAlign: "center", fontWeight: 700 }}>
+          <div className={classes.nullCardContainer}>
             현재 상담일정이 없습니다
           </div>
         )}
