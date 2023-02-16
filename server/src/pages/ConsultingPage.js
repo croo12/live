@@ -42,16 +42,12 @@ const ConsultingPage = (props) => {
       case STATUS.REALTOR_START_CONSULTING:
         if (confirm("상담을 시작하시겠습니까?")) {
           setStatus(STATUS.REALTOR_START_CONSULTING);
-        } else {
-          console.log(`연결 안함 ㅇㅋ...`);
         }
         break;
 
       case STATUS.REALTOR_END_CALL:
         if (confirm("정말로 종료하시겠습니까? \n상담이 완전히 종료됩니다.")) {
           setStatus(STATUS.REALTOR_END_CALL);
-        } else {
-          console.log("종료안함");
         }
         break;
 
@@ -60,7 +56,6 @@ const ConsultingPage = (props) => {
         break;
 
       case STATUS.CONSULTING_IS_END:
-        console.log("꺼져부렀다");
         setStatus(STATUS.CONSULTING_IS_END);
         break;
     }
