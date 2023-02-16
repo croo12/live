@@ -225,7 +225,7 @@ export const RealtorHousesCardContent = ({
         <h3>
           월세 {deposit}/ {monthlyRent}
         </h3>
-        <p>{`area`}</p>
+        <p> </p>
         <p>{address}</p>
         <button onClick={onConfirm}>매물 상세보기 </button>
       </div>

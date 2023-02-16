@@ -67,7 +67,7 @@
 
     .lists {
       position: absolute;
-      min-height: 600px;
+      min-height: 500px;
       border-top-right-radius: 4vw;
       border-top-left-radius: 4vw;
       top: 1;
@@ -78,7 +78,7 @@
       width: 100%;
       max-width: 100%;
       color: white;
-      transform: translateY(600px);
+      transform: translateY(500px);
 
       &.isActive {
         overflow-y: auto;
