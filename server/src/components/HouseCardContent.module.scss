@@ -314,7 +314,10 @@
 .reservationItem {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+  margin: 0 0 3em 0;
   padding: 15px;
   background: #fafafa;
   border-radius: 4px;
@@ -367,6 +370,22 @@
     color: #707070;
     cursor: pointer;
   }
+  .removeText {
+    display: none;
+    font-size: 1.2em;
+    font-weight: 700;
+    position: absolute;
+  }
+}
+
+.reservationItem:hover {
+  .removeText {
+    display: block;
+  }
+
+  .cardBox {
+    opacity: 0.25;
+  }
 }
 
 .houseItem {
@@ -414,7 +433,7 @@
     }
 
     p {
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 600;
       margin: 1px 0;
       color: #4e4e4e;
