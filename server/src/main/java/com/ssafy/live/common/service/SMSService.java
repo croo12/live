@@ -83,12 +83,8 @@ public class SMSService {
     @Scheduled(cron = "0 40 12 * * ?", zone = "Asia/Seoul")
     @Transactional
     public void reserveSMSScheduler() {
-        LocalDateTime start = LocalDateTime.of(LocalDate.now(),
-            LocalTime.of(0, 0, 0));
-        LocalDateTime end = LocalDateTime.of(LocalDate.now(),
-            LocalTime.of(23, 59, 59));
-        List<Consulting> consultingList = consultingRepository.findByConsultingDateBetween(start,
-            end);
+        List<Consulting> consultingList = consultingRepository.findByStatusBetweenAndConsultingDateStartigWith(
+            CONSULTING_CONFIRMED.getValue(), CONSULTING_PROCESSING.getValue());
 
         if (consultingList != null && !consultingList.isEmpty()) {
             Set<Users> set = new HashSet<>();
