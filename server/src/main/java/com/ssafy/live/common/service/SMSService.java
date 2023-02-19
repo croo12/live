@@ -1,5 +1,8 @@
 package com.ssafy.live.common.service;
 
+import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_CONFIRMED;
+import static com.ssafy.live.common.domain.Entity.status.ConsultingStatus.CONSULTING_PROCESSING;
+
 import com.ssafy.live.account.realtor.domain.entity.Realtor;
 import com.ssafy.live.account.user.domain.entity.Users;
 import com.ssafy.live.common.domain.SMSContent;
