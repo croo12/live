@@ -76,7 +76,7 @@ const HouseRegist = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   const setImageHandler = (data) => {
     setImages(data);
@@ -195,7 +195,6 @@ const HouseRegist = () => {
         },
         itemOption: {
           airConditioner: airConditioner.current.checked,
-          bath: false,
           bathtub: bathtub.current.checked,
           bed: bed.current.checked,
           bidet: bidet.current.checked,
