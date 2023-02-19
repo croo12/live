@@ -56,7 +56,7 @@ const ConsultingRightReservationHouseList = () => {
             borderRadius: "8px",
           }}
           onClick={() => {
-            changeConsultinRoomNo(params.consultingNo, 5);
+            changeConsultinRoomNo(params.consultingNo, 4);
             statusChangeHandler(STATUS.REALTOR_END_CALL);
           }}
         >

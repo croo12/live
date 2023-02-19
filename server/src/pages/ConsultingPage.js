@@ -21,10 +21,8 @@ export const STATUS = {
 };
 
 const ConsultingPage = (props) => {
-  const { sessionId } = useParams();
-
+  const params = useParams();
   const { userInfo } = useAuth();
-
   const [status, setStatus] = useState(
     userInfo.isRealtor ? STATUS.REALTOR_ENTER : STATUS.USER_ENTER
   );
@@ -32,7 +30,7 @@ const ConsultingPage = (props) => {
   const [recordingFiles, setRecordingFiles] = useState([]);
   const [highlightNo, setHighlightNo] = useState(0);
 
-  const orderHandler = (status, emit) => {
+  const orderHandler = (status) => {
     switch (status) {
       case STATUS.REALTOR_ENTER:
         break;
@@ -58,8 +56,6 @@ const ConsultingPage = (props) => {
         break;
     }
   };
-
-  const params = useParams();
 
   const toggleListInMobile = () => {
     toggleList(!viewList);
@@ -89,7 +85,7 @@ const ConsultingPage = (props) => {
             userInfo={userInfo}
             isRealtor={userInfo.isRealtor}
             status={status}
-            sessionId={sessionId}
+            sessionId={params.sessionId}
             recordingFiles={recordingFiles}
             setRecordingFiles={setRecordingFiles}
             statusChangeHandler={orderHandler}
@@ -104,7 +100,7 @@ const ConsultingPage = (props) => {
             toggleListInMobile={toggleListInMobile}
             status={status}
             viewList={viewList}
-            sessionId={sessionId}
+            sessionId={params.sessionId}
             highlightNo={highlightNo}
             setHighlightNo={setHighlightNo}
           />
