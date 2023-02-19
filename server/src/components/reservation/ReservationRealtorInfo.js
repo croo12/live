@@ -34,27 +34,31 @@ const ReservationRealtorInfo = ({ realtorDetail, addItemHandler }) => {
             </p>
           </div>
         </div>
-        <div className={classes.realtorItems}>
+        <div className={classes.realtorItemBox}>
           <h3>매물 목록</h3>
-          {realtorDetail.itemsList?.length ? (
-            <ListBox dataArray={realtorDetail.itemsList}>
-              <RealtorHousesCardContent addItemHandler={addItemHandler} />
-            </ListBox>
-          ) : (
-            <p>현재 거래 가능한 매물이 없습니다!</p>
-          )}
-        </div>
-        <div className={classes.reviewLists}>
-          <h3>리뷰 수 {reviewsList.length}건</h3>
-          {reviewsList?.length ? (
-            <>
-              <ListBox dataArray={reviewsList}>
-                <ReviewCardContent />
+          <div className={classes.realtorItems}>
+            {realtorDetail.itemsList?.length ? (
+              <ListBox dataArray={realtorDetail.itemsList}>
+                <RealtorHousesCardContent addItemHandler={addItemHandler} />
               </ListBox>
-            </>
-          ) : (
-            <p>현재 조회 가능한 리뷰가 없습니다!</p>
-          )}
+            ) : (
+              <p>현재 거래 가능한 매물이 없습니다!</p>
+            )}
+          </div>
+        </div>
+        <div className={classes.reviewListBox}>
+          <h3>리뷰 수 {reviewsList.length}건</h3>
+          <div className={classes.reviewLists}>
+            {reviewsList?.length ? (
+              <>
+                <ListBox dataArray={reviewsList}>
+                  <ReviewCardContent />
+                </ListBox>
+              </>
+            ) : (
+              <p>현재 조회 가능한 리뷰가 없습니다!</p>
+            )}
+          </div>
         </div>
       </div>
     </>

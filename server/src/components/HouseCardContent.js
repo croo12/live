@@ -177,28 +177,46 @@ export const ReservationHouseCardContent = (props) => {
       }}
       className={`${classes.reservationItem} `}
     >
-      <div className={classes.image}>
-        <img
-          src={
-            props.itemImages?.length !== 0
-              ? props.itemImages[0].imageSrc
-              : sample
-          }
-          alt="선택한 매물 목록"
-        />
+      <div className={classes.removeText}>클릭 시 목록에서 삭제됩니다.</div>
+      <div className={classes.cardBox}>
+        <div className={classes.image}>
+          <img
+            src={
+              props.itemImages?.length !== 0
+                ? props.itemImages[0].imageSrc
+                : sample
+            }
+            alt="선택한 매물 목록"
+          />
+        </div>
+        <div>
+          <h3>
+            월세{" "}
+            {props.deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} /{" "}
+            {props.rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </h3>
+          <p>
+            {props.house.room === 1
+              ? "원룸 "
+              : props.house.room === 2
+              ? "투룸 "
+              : "방 " + props.house.room + "개 "}
+            {props.house.exclusivePrivateArea
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            m² 관리비{" "}
+            {props.maintenanceFee
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </p>
+          <p>{house.address}</p>
+        </div>
+        {isModal && (
+          <Modal onConfirm={clickEventHandler}>
+            <HouseDetailCom itemNo={props.itemNo} isModal={true} />
+          </Modal>
+        )}
       </div>
-      <div>
-        <h3>
-          월세 {props.rent} / {props.deposit}
-        </h3>
-        <p>방1 29m. 관리비 {props.maintenanceFee}</p>
-        <p>{house.address}</p>
-      </div>
-      {isModal && (
-        <Modal onConfirm={clickEventHandler}>
-          <HouseDetailCom itemNo={props.itemNo} isModal={true} />
-        </Modal>
-      )}
     </div>
   );
 };
@@ -223,10 +241,10 @@ export const RealtorHousesCardContent = ({
       </div>
       <div className={classes.houseInfo}>
         <h3>
-          월세 {deposit}/ {monthlyRent}
+          월세 {deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} /{" "}
+          {monthlyRent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </h3>
-        <p> </p>
-        <p>{address}</p>
+        <p className={classes.address}>{address}</p>
         <button onClick={onConfirm}>매물 상세보기 </button>
       </div>
       {isModal && (
