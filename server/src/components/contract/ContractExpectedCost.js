@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import axiosInstance, { getAuthHeader } from "../../util/axios";
 import classes from "./ContractExpectedCost.module.scss";
+import Modal from "../../UI/Modal";
+import ContractModalOverlay from "./ContractModalOverlay";
 
 const ContractExpectedCost = (props) => {
   const deposit = props.passInfo.deposit;
@@ -286,6 +288,7 @@ export const ContractExpectedCostDetailUser = (props) => {
 export const ContractExpectedCostDetailRealtor = (props) => {
   const formData = useRef();
   const data = useLoaderData();
+  const navigate = useNavigate();
 
   let downPayment = props.contractInfoList.downPayment;
   let balance = props.contractInfoList.balance;
@@ -369,13 +372,14 @@ export const ContractExpectedCostDetailRealtor = (props) => {
         "계약이 승인되었습니다. 부동산 거래 전자 계약 시스템으로 이동합니다!"
       );
       alert(window.open(url));
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
 
-  const onConfirmHandler = async (e) => {
-    e.preventDefault();
+  const [contractState, setContractState] = useState(false);
+  const onConfirmHandler = async () => {
     if (window.confirm("정말로 계약을 진행하시겠습니까?")) {
       try {
         const result = await axiosInstance.patch(
@@ -388,10 +392,15 @@ export const ContractExpectedCostDetailRealtor = (props) => {
           }
         );
         alert("계약이 완료되었습니다!");
+        findContractModalHandler();
       } catch (error) {
         console.error(error);
       }
     }
+  };
+
+  const findContractModalHandler = () => {
+    setContractState(true);
   };
 
   const onQuitHandler = async (e) => {
@@ -407,6 +416,7 @@ export const ContractExpectedCostDetailRealtor = (props) => {
             },
           }
         );
+        navigate("/mypage/realtor/realtor-contract");
       } catch (error) {
         console.error(error);
       }
@@ -457,122 +467,105 @@ export const ContractExpectedCostDetailRealtor = (props) => {
   }, [nonContactContract, privacy]);
 
   return (
-    <form ref={formData}>
-      <div className={classes.expectedCostRealtor}>
-        <div className={classes.inner}>
-          <div className={classes.expectedCostContent}>
-            <h2>예상 비용 안내</h2>
-            <br />
-            <p style={{ textAlign: "left" }}>*은 필수 입력값입니다!</p>
-            <div className={classes.costBox}>
-              <div className={classes.downPayment}>
-                <p>계약금</p>
-                <strong>
-                  {!props.passInfo.deposit
-                    ? downPayment
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"
-                    : (parseInt(props.passInfo.deposit * 0.1) * 10000)
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
-                </strong>
-              </div>
-              <div className={classes.balance}>
-                <p>잔금</p>
-                <strong>
-                  {!props.passInfo.deposit
-                    ? balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-                      "원"
-                    : (parseInt(props.passInfo.deposit * 0.9) * 10000)
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
-                </strong>
-              </div>
-              <div className={classes.brokerageFee}>
-                <p>* 중개보수</p>
-                <input
-                  placeholder={commission + "원"}
-                  id="commission"
-                  name="commission"
-                  onChange={onCommissionChangeHandler}
-                  ref={formData}
-                />
-              </div>
-            </div>
-            <hr className={classes.costLine} />
-            <div className={classes.cost}>
-              <div className={classes.totalEstimatedCost}>
-                <h5>총 예상 비용</h5>
-                <strong>
-                  {!props.passInfo.deposit
-                    ? (
-                        downPayment +
-                        balance +
-                        (!value ? commission : Number(value))
-                      )
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"
-                    : (
-                        parseInt(props.passInfo.deposit * 0.1) * 10000 +
-                        parseInt(props.passInfo.deposit * 0.9) * 10000 +
-                        (!value ? commission : Number(value))
-                      )
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
-                </strong>
-              </div>
-            </div>
-            <br />
-            <div className={classes.agreeCondition}>
-              <div className={classes.checkBox}>
-                <input
-                  type="checkbox"
-                  checked={allCheck}
-                  onChange={allBtnCheck}
-                />{" "}
-                <strong>약관에 모두 동의합니다.</strong>
-                <hr />
-                <div className={classes.agreeCheck}>
-                  <div className={classes.serviceAgree}>
-                    <input
-                      type="checkbox"
-                      checked={nonContactContract}
-                      onChange={nonContactCheck}
-                    />{" "}
-                    <p> [필수] 비대면 계약 서비스 이용 약관 동의</p>
-                  </div>
-                  <div className={classes.personalInfoAgree}>
-                    <input
-                      type="checkbox"
-                      checked={privacy}
-                      onChange={privacyCheck}
-                    />{" "}
-                    <p> [필수] 개인정보 수집 및 이용동의 </p>
-                  </div>
+    <>
+      {contractState && (
+        <Modal onConfirm={findContractModalHandler}>
+          <ContractModalOverlay onModalStateChange={findContractModalHandler} />
+        </Modal>
+      )}
+      <form ref={formData}>
+        <div className={classes.expectedCostRealtor}>
+          <div className={classes.inner}>
+            <div className={classes.expectedCostContent}>
+              <h2>예상 비용 안내</h2>
+              <br />
+              <p style={{ textAlign: "left" }}>*은 필수 입력값입니다!</p>
+              <div className={classes.costBox}>
+                <div className={classes.downPayment}>
+                  <p>계약금</p>
+                  <strong>
+                    {!props.passInfo.deposit
+                      ? downPayment
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"
+                      : (parseInt(props.passInfo.deposit * 0.1) * 10000)
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
+                  </strong>
+                </div>
+                <div className={classes.balance}>
+                  <p>잔금</p>
+                  <strong>
+                    {!props.passInfo.deposit
+                      ? balance
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+                      : (parseInt(props.passInfo.deposit * 0.9) * 10000)
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
+                  </strong>
+                </div>
+                <div className={classes.brokerageFee}>
+                  <p>* 중개보수</p>
+                  <input
+                    placeholder={commission + "원"}
+                    id="commission"
+                    name="commission"
+                    onChange={onCommissionChangeHandler}
+                    ref={formData}
+                  />
                 </div>
               </div>
-            </div>
-            <div className={classes.buttonList}>
-              <button onClick={onChangeHandler} className={classes.btn1}>
-                정보 수정
-              </button>
-              {statusNum === 0 && (
-                <button onClick={onApproveHandler} className={classes.btn2}>
-                  승인
-                </button>
-              )}
-              {statusNum === 1 && (
-                <button onClick={onConfirmHandler} className={classes.btn3}>
-                  계약 완료
-                </button>
-              )}
-              <button onClick={onQuitHandler} className={classes.btn4}>
-                계약 취소
-              </button>
+              <hr className={classes.costLine} />
+              <div className={classes.cost}>
+                <div className={classes.totalEstimatedCost}>
+                  <h5>총 예상 비용</h5>
+                  <strong>
+                    {!props.passInfo.deposit
+                      ? (
+                          downPayment +
+                          balance +
+                          (!value ? commission : Number(value))
+                        )
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"
+                      : (
+                          parseInt(props.passInfo.deposit * 0.1) * 10000 +
+                          parseInt(props.passInfo.deposit * 0.9) * 10000 +
+                          (!value ? commission : Number(value))
+                        )
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"}
+                  </strong>
+                </div>
+              </div>
+              <br />
+              <div className={classes.buttonList}>
+                {statusNum !== 2 && (
+                  <button onClick={onChangeHandler} className={classes.btn1}>
+                    정보 수정
+                  </button>
+                )}
+                {statusNum === 0 && (
+                  <button onClick={onApproveHandler} className={classes.btn2}>
+                    승인
+                  </button>
+                )}
+                {statusNum === 1 && (
+                  <button onClick={onConfirmHandler} className={classes.btn3}>
+                    계약 완료
+                  </button>
+                )}
+                {statusNum !== 2 && (
+                  <button onClick={onQuitHandler} className={classes.btn4}>
+                    계약 취소
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 };
