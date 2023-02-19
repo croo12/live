@@ -66,6 +66,7 @@ const LoginPage = () => {
     tmp["id"] = "중개사는 이런거없음";
     tmp["isRealtor"] = true;
     tmp["name"] = realtorInfo.name;
+    tmp["score"] = realtorInfo.ratingScore;
 
     dispatch(userAction.setInfo(tmp));
 
