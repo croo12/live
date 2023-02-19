@@ -1,45 +1,52 @@
 import kurentoUtils from "kurento-utils";
 
-class Participant {
-  constructor(name, sendMessage) {
-    this.name = name;
 
-    this.offerToReceiveVideo = function (error, offerSdp, wp) {
-      if (error) return console.error("sdp offer error");
-
-      sendMessage({
-        id: "receiveVideoFrom",
-        sender: name,
-        sdpOffer: offerSdp,
-      });
-    };
-
-    this.onIceCandidate = function (candidate, wp) {
-      sendMessage({
-        id: "onIceCandidate",
-        candidate: candidate,
-        name,
-      });
-    };
-    this.rtcPeer = null;
-    this.dispose = function () {
-      this.rtcPeer.dispose();
-    };
-  }
-}
 
 const useWebRTC = ({
+  socket,
   isRealtor,
   participants,
   sendMessage,
   localVideo,
   remoteVideo,
-  name,
+  myName,
   audio,
   sessionId,
 }) => {
+  class Participant {
+    constructor(name) {
+      this.name = name;
+      this.sendMessage = sendMessage;
+
+      var rtcPeer;
+
+      this.offerToReceiveVideo = (error, offerSdp, wp) => {
+        if (error) return console.error("sdp offer error");
+
+        this.sendMessage({
+          id: "receiveVideoFrom",
+          sender: this.name,
+          sdpOffer: offerSdp,
+        });
+      };
+
+      this.onIceCandidate = (candidate, wp) => {
+        this.sendMessage({
+          id: "onIceCandidate",
+          candidate: candidate,
+          name: this.name,
+        });
+      };
+      Object.defineProperty(this, "rtcPeer", { writable: true });
+      this.dispose = function () {
+        this.rtcPeer.dispose();
+      };
+    }
+  }
+
   const receiveVideo = (sender) => {
-    const participant = new Participant(sender, sendMessage);
+    const participant = new Participant(sender);
+    console.log(participant);
     participants.current[sender] = participant;
 
     let constraints;
@@ -77,6 +84,7 @@ const useWebRTC = ({
         result.sdpAnswer,
         function (error) {
           if (error) return console.error(error);
+          console.log("잘댐");
         }
       );
     },
@@ -87,8 +95,9 @@ const useWebRTC = ({
         video: true,
       };
 
-      const participant = new Participant(name, sendMessage);
-      participants.current[name] = participant;
+      const participant = new Participant(myName);
+      console.log(participant);
+      participants.current[myName] = participant;
 
       var options = {
         localVideo: isRealtor ? localVideo.current : remoteVideo.current,
@@ -108,6 +117,8 @@ const useWebRTC = ({
         }
       );
 
+      console.log("이거 보냄", participant.rtcPeer);
+
       msg.data.forEach(receiveVideo);
     },
 
@@ -120,7 +131,7 @@ const useWebRTC = ({
     register() {
       const message = {
         id: "joinRoom",
-        name: name,
+        name: myName,
         room: sessionId,
       };
       sendMessage(message);
