@@ -83,7 +83,7 @@ public class SMSService {
         sendSMS(content, users.getPhone());
     }
 
-    @Scheduled(cron = "0 46 0 * * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 47 0 * * ?", zone = "Asia/Seoul")
     @Transactional
     public void reserveSMSScheduler() {
         List<Consulting> consultingList = consultingRepository.findByStatusBetweenAndConsultingDateStartigWith(
