@@ -80,7 +80,7 @@ public class SMSService {
         sendSMS(content, users.getPhone());
     }
 
-    @Scheduled(cron = "0 30 8 * * ?")
+    @Scheduled(cron = "0 40 12 * * ?", zone = "Asia/Seoul")
     @Transactional
     public void reserveSMSScheduler() {
         LocalDateTime start = LocalDateTime.of(LocalDate.now(),
