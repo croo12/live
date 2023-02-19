@@ -306,7 +306,6 @@ export const ContractExpectedCostDetailRealtor = (props) => {
 
   const onChangeHandler = async (e) => {
     e.preventDefault();
-
     const totInfoData = {
       contractNo: props.passInfo.itemNo,
       deposit: props.passInfo.deposit,
@@ -332,24 +331,18 @@ export const ContractExpectedCostDetailRealtor = (props) => {
     }
 
     try {
-      if (
-        allCheck === true ||
-        (nonContactContract === true && privacy === true)
-      ) {
-        const result = await axiosInstance.patch(
-          `contracts/${totInfoData.contractNo}`,
-          totInfoData,
-          {
-            headers: {
-              Authorization: getAuthHeader().Authorization,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        alert("정보 수정이 완료되었습니다!");
-      } else {
-        alert("필수 약관에 모두 동의해주세요!");
-      }
+      const result = await axiosInstance.patch(
+        `contracts/${totInfoData.contractNo}`,
+        totInfoData,
+        {
+          headers: {
+            Authorization: getAuthHeader().Authorization,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      alert("정보 수정이 완료되었습니다!");
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -429,42 +422,6 @@ export const ContractExpectedCostDetailRealtor = (props) => {
     e.preventDefault();
     setValue(formData.current.commission.value);
   };
-
-  const allBtnCheck = () => {
-    if (allCheck === false) {
-      setAllCheck(true);
-      setnonContactContract(true);
-      setPrivacy(true);
-    } else {
-      setAllCheck(false);
-      setnonContactContract(false);
-      setPrivacy(false);
-    }
-  };
-
-  const nonContactCheck = () => {
-    if (nonContactContract === false) {
-      setnonContactContract(true);
-    } else {
-      setnonContactContract(false);
-    }
-  };
-
-  const privacyCheck = () => {
-    if (privacy === false) {
-      setPrivacy(true);
-    } else {
-      setPrivacy(false);
-    }
-  };
-
-  useEffect(() => {
-    if (nonContactContract === true && privacy === true) {
-      setAllCheck(true);
-    } else {
-      setAllCheck(false);
-    }
-  }, [nonContactContract, privacy]);
 
   return (
     <>
