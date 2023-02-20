@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BsFillBellFill, BsSearch } from "react-icons/bs";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { TfiWrite } from "react-icons/tfi";
+import MyPageScore from "./MyPageScore";
 
 import classes from "./MyPageUser.module.scss";
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
@@ -58,6 +59,10 @@ const MyPageUser = () => {
                 <div className={classes.temperature}>온도그래프</div>
                 <progress className={classes.progress} value={userInfo.score} min="0" max="100"></progress>
               </div>
+            </div>
+            <div className={classes.myScoreContainer}>
+              <p>"지금까지 0가구의 쉼터를 찾아주셨어요."</p>
+              <MyPageScore score={userInfo.score}></MyPageScore>
             </div>
           </div>
         </div>
