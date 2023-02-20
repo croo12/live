@@ -19,7 +19,6 @@ const MyPageUser = () => {
 
   const [btnActive, setBtnActive] = useState(0);
   const { userInfo } = useAuth();
-  console.log(userInfo);
 
   const recordOnClickHandler = () => {
     setBtnActive(1);
@@ -62,7 +61,9 @@ const MyPageUser = () => {
               </div>
             </div>
             <div className={classes.myScoreContainer}>
-              <p>"지금까지 0가구의 쉼터를 찾아주셨어요."</p>
+              <p>
+                "지금까지 <strong>{userInfo.count}가구</strong>의 쉼터를 찾아주셨어요."
+              </p>
               <MyPageScore score={userInfo.score}></MyPageScore>
             </div>
           </div>
