@@ -14,7 +14,6 @@
       text-align: left;
       line-height: 1.5rem;
 
-
       .infoBoxList {
         .contractor {
           display: flex;
@@ -81,7 +80,6 @@
           }
         }
 
-
         .contractorAddress {
           display: flex;
 
@@ -103,7 +101,7 @@
                 background: #fafafa;
                 border: 1px solid #bbbbbb;
                 border-radius: 4px;
-                padding: 1.7% 4% 1.7% 4%;
+                padding: 2% 3% 2% 3%;
                 flex: 1;
               }
 
@@ -122,7 +120,7 @@
                 background: #fafafa;
                 border: 1px solid #bbbbbb;
                 border-radius: 4px;
-                padding: 2% 4% 2% 4%;
+                padding: 2%;
                 width: 100%;
               }
             }
@@ -153,8 +151,7 @@
   }
 }
 
-@media(max-width:768px) {
-
+@media (max-width: 768px) {
   .tenantInfo {
     margin: 3%;
     font-size: 1.05rem;
@@ -230,8 +227,6 @@
             }
           }
 
-
-
           .contractorAddress {
             display: flex;
 
@@ -253,7 +248,7 @@
                   background: #fafafa;
                   border: 1px solid #bbbbbb;
                   border-radius: 4px;
-                  padding: 1.7% 4% 1.7% 4%;
+                  padding: 2% 3% 2% 3%;
                   flex: 1;
                 }
 
@@ -272,7 +267,7 @@
                   background: #fafafa;
                   border: 1px solid #bbbbbb;
                   border-radius: 4px;
-                  padding: 2% 4% 2% 4%;
+                  padding: 2%;
                   width: 100%;
                   margin-bottom: 2%;
                 }
