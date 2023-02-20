@@ -38,4 +38,6 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Long> {
         + "and date_format(consulting_date, \"%Y-%m-%d\") = curdate()", nativeQuery = true)
     List<Consulting> findByRealtorNoAndStatusBetweenAndConsultingDateStartigWith(Long realtorNo,
         int status1, int status2);
+
+    Long countByUsersAndStatus(Users users, ConsultingStatus consultingPast);
 }
