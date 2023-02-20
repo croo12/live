@@ -30,7 +30,7 @@ const MyPageScore = ({ score }) => {
     case score < 90.0:
       return <img src={require("../../assets/score/score_9.png")}></img>;
       break;
-    case score >= 100.0:
+    case score >= 90.0:
       return <img src={require("../../assets/score/score_10.png")}></img>;
       break;
   }

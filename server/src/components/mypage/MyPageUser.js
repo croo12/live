@@ -19,6 +19,7 @@ const MyPageUser = () => {
 
   const [btnActive, setBtnActive] = useState(0);
   const { userInfo } = useAuth();
+  console.log(userInfo);
 
   const recordOnClickHandler = () => {
     setBtnActive(1);

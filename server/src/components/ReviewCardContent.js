@@ -5,8 +5,7 @@ const ReviewCardContent = (data) => {
   return (
     <div className={classes.content}>
       <div className={classes.headerContentContainer}>
-        <h3>{data.userName}</h3>
-        <h3>{data.name}</h3>
+        <h3>{data.userName !== undefined ? data.userName : data.name}</h3>
         <div className={classes.starScoreContainer}>
           <div>★</div>
           <div>{data.ratingScore}</div>
