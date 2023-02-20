@@ -98,7 +98,7 @@ export const ContractRequireInfoDetailRealtor = (props) => {
         <div className={classes.inner}>
           <div className={classes.requireInfoContent}>
             <h2>요청 정보</h2>
-            <p>*은 필수 입력값입니다!</p>
+            <p>* 은 필수 입력값입니다!</p>
             <br />
             <div className={classes.resident}>
               <strong>거주인원</strong>{" "}
