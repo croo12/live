@@ -26,8 +26,8 @@ const MyPageUserContract = () => {
     response();
   }, [currentTab]);
 
-  const tabChangeHandler = (e) => {
-    setCurrentTab(Number.parseInt(e.target.value));
+  const tabChangeHandler = (idx) => {
+    setCurrentTab(idx);
   };
 
   return (
@@ -45,8 +45,12 @@ const MyPageUserContract = () => {
                       <div
                         key={index}
                         value={index}
-                        className={`${classes.btn} ${index === currentTab ? classes.active : ""}`}
-                        onClick={tabChangeHandler}
+                        className={`${classes.btn} ${
+                          index === currentTab ? classes.active : ""
+                        }`}
+                        onClick={() => {
+                          tabChangeHandler(index);
+                        }}
                       >
                         {title}
                       </div>
