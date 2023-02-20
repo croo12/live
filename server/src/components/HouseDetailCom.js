@@ -17,7 +17,7 @@ const HouseDetailCom = (props) => {
   const [isInfoMore, setIsInfoMore] = useState(false);
   const [isOptionMore, setIsOptionMore] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
-  const [errMessage, setErrMessage] = useState("Loading...");
+  const [errMessage, setErrMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -83,18 +83,14 @@ const HouseDetailCom = (props) => {
     <>
       {previewModal && (
         <Modal onConfirm={previewModalHandler} className={classes.previewModal}>
-          <PreviewCarousel
-            settings={carouselSettings}
-            items={houseInfo.itemImages}
-            onClose={previewModalHandler}
-          />
+          <PreviewCarousel settings={carouselSettings} items={houseInfo.itemImages} onClose={previewModalHandler} />
         </Modal>
       )}
       {houseInfo ? (
         <div
-          className={`${classes.houseDetailCom} ${
-            props.isModal && classes.isModal
-          } ${props.isConsulting && classes.isConsulting}`}
+          className={`${classes.houseDetailCom} ${props.isModal && classes.isModal} ${
+            props.isConsulting && classes.isConsulting
+          }`}
         >
           {houseInfo && (
             <>
@@ -105,9 +101,7 @@ const HouseDetailCom = (props) => {
                   </div>
                   <div className={classes.subImage}>
                     {houseInfo.itemImages.slice(1, 5).map((image) => {
-                      return (
-                        <img src={image.imageSrc} key={image.itemImageNo}></img>
-                      );
+                      return <img src={image.imageSrc} key={image.itemImageNo}></img>;
                     })}
                   </div>
                 </div>
@@ -142,30 +136,18 @@ const HouseDetailCom = (props) => {
               <div className={classes.innerHeader}>
                 <div className={classes.itemDesc}>
                   <p>
-                    {houseInfo.house.sido} {houseInfo.house.gugun}{" "}
-                    {houseInfo.house.dong}
+                    {houseInfo.house.sido} {houseInfo.house.gugun} {houseInfo.house.dong}
                   </p>
                   <div>
                     <span>보증금/월세</span>
                     <p>
-                      {houseInfo.deposit
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                      만원 /{" "}
-                      {houseInfo.rent
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                      만원
+                      {houseInfo.deposit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원 /{" "}
+                      {houseInfo.rent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원
                     </p>
                   </div>
                   <div>
                     <span>관리비</span>
-                    <p>
-                      {houseInfo.maintenanceFee
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                      만원
-                    </p>
+                    <p>{houseInfo.maintenanceFee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 만원</p>
                   </div>
                 </div>
                 {!props.isConsulting && (
@@ -195,9 +177,7 @@ const HouseDetailCom = (props) => {
                         <button
                           className={classes.contractButton}
                           onClick={() => {
-                            navigate(
-                              `/contract/user-contract/${houseInfo.itemNo}`
-                            );
+                            navigate(`/contract/user-contract/${houseInfo.itemNo}`);
                           }}
                         >
                           계 약
@@ -214,18 +194,12 @@ const HouseDetailCom = (props) => {
                 <h3>매물 정보</h3>
                 <div>
                   <div className={classes.Area}>
-                    {Icons.area}{" "}
-                    {houseInfo.house.exclusivePrivateArea
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {Icons.area} {houseInfo.house.exclusivePrivateArea.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     m² (전용{" "}
                     {Math.round(houseInfo.house.exclusivePrivateArea / 3.3)
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                    평) /{" "}
-                    {houseInfo.house.supplyArea
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    평) / {houseInfo.house.supplyArea.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     m² (공급{" "}
                     {Math.round(houseInfo.house.supplyArea / 3.3)
                       .toString()
@@ -244,27 +218,19 @@ const HouseDetailCom = (props) => {
                     (욕실 {houseInfo.house.bathroom}개)
                   </div>
                   <div>
-                    {Icons.parking}{" "}
-                    {houseInfo.itemOption.parkingLot
-                      ? "주차 가능"
-                      : "주차 불가능"}
+                    {Icons.parking} {houseInfo.itemOption.parkingLot ? "주차 가능" : "주차 불가능"}
                   </div>
                   <div>
-                    {Icons.buildingFloor} {houseInfo.house.floor}층 /{" "}
-                    {houseInfo.house.totalFloor}층
+                    {Icons.buildingFloor} {houseInfo.house.floor}층 / {houseInfo.house.totalFloor}층
                   </div>
                 </div>
                 <div>
                   <div>
                     {Icons.calendar}{" "}
                     {houseInfo.moveInDate.replaceAll("-", "") <
-                    new Date()
-                      .toISOString()
-                      .substring(0, 10)
-                      .replaceAll("-", "")
+                    new Date().toISOString().substring(0, 10).replaceAll("-", "")
                       ? "즉시 입주 가능"
-                      : houseInfo.moveInDate.replaceAll("-", ".") +
-                        " 이후 입주 가능"}
+                      : houseInfo.moveInDate.replaceAll("-", ".") + " 이후 입주 가능"}
                   </div>
                   <div>
                     {Icons.compass}{" "}
@@ -286,10 +252,7 @@ const HouseDetailCom = (props) => {
                     (주실 기준)
                   </div>
                   <div>
-                    {Icons.elevator}{" "}
-                    {houseInfo.itemOption.elevator
-                      ? "엘리베이터 있음"
-                      : "엘리베이터 없음"}
+                    {Icons.elevator} {houseInfo.itemOption.elevator ? "엘리베이터 있음" : "엘리베이터 없음"}
                   </div>
                 </div>
                 {!isInfoMore ? (
@@ -325,14 +288,11 @@ const HouseDetailCom = (props) => {
                     </div>
                     <div>
                       <div>
-                        {Icons.completionYear} {houseInfo.house.completionYear}
-                        년 준공
+                        {Icons.completionYear} {houseInfo.house.completionYear}년 준공
                       </div>
                       <div className={classes.addressInfo}>
                         {Icons.marker} {houseInfo.house.address}
-                        {houseInfo.house.buildingName
-                          ? " (" + houseInfo.house.buildingName + ")"
-                          : ""}
+                        {houseInfo.house.buildingName ? " (" + houseInfo.house.buildingName + ")" : ""}
                       </div>
                     </div>
                     <button
@@ -348,11 +308,7 @@ const HouseDetailCom = (props) => {
 
               <hr />
 
-              <div
-                className={`${classes.optionInfo} ${
-                  props.isConsulting && classes.isConsulting
-                }`}
-              >
+              <div className={`${classes.optionInfo} ${props.isConsulting && classes.isConsulting}`}>
                 <h3>옵션 정보</h3>
                 <div>
                   {options.slice(0, 6).map((option) => {
@@ -734,9 +690,7 @@ const HouseDetailCom = (props) => {
                     <Map
                       address={houseInfo.house.address}
                       houseName={
-                        houseInfo.house.buildingName
-                          ? houseInfo.house.buildingName
-                          : houseInfo.house.addressDetail
+                        houseInfo.house.buildingName ? houseInfo.house.buildingName : houseInfo.house.addressDetail
                       }
                     />
                   </div>

@@ -1,11 +1,16 @@
 import classes from "./ReviewCardContent.module.scss";
 
 const ReviewCardContent = (data) => {
+  console.log(data);
   return (
     <div className={classes.content}>
       <div className={classes.headerContentContainer}>
+        <h3>{data.userName}</h3>
         <h3>{data.name}</h3>
-        <div>★ {data.ratingScore}</div>
+        <div className={classes.starScoreContainer}>
+          <div>★</div>
+          <div>{data.ratingScore}</div>
+        </div>
       </div>
       <p>{data.personalInfo}</p>
       <br />

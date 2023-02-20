@@ -79,24 +79,28 @@
       max-height: 256px;
     }
   }
+  .reviewListBoxContainer {
+    width: 100%;
+    .reviewListBox {
+      padding: 1rem;
+      > h3 {
+        text-align: left;
+        margin-bottom: 0.7rem;
+      }
+      p {
+        color: #000000;
+        font-weight: 400;
+        line-height: 18px;
+        font-size: 0.9rem;
+      }
 
-  .reviewListBox {
-    width: 80%;
-    padding: 1rem;
-    > h3 {
-      text-align: left;
-      margin-bottom: 0.7rem;
-    }
-    p {
-      color: #000000;
-      font-weight: 400;
-      line-height: 18px;
-      font-size: 0.9rem;
-    }
-
-    .reviewLists {
-      overflow-y: auto;
-      max-height: 256px;
+      .reviewLists {
+        overflow-y: auto;
+        max-height: 256px;
+        ul {
+          width: 80%;
+        }
+      }
     }
   }
 }

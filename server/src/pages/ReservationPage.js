@@ -8,11 +8,7 @@ import classes from "./ReservationPage.module.scss";
 import { FiAlertCircle } from "react-icons/fi";
 import { useLoaderData } from "react-router-dom";
 import axiosInstance from "../util/axios";
-import {
-  registResevation,
-  searchRealtorList,
-  searchReservationRealtorDetail,
-} from "../apis/reservationApis";
+import { registResevation, searchRealtorList, searchReservationRealtorDetail } from "../apis/reservationApis";
 import Modal from "../UI/Modal";
 import { reservedItemAction } from "../store/reserved-item-slice";
 import CustomAlert from "../UI/Alert";
@@ -59,6 +55,7 @@ const ReservationPage = () => {
     (async () => {
       const res = await searchReservationRealtorDetail(realtorNo, params);
       const data = res.data;
+      console.log(data);
       setRealtorDetail(data.data);
     })();
   };
@@ -136,28 +133,19 @@ const ReservationPage = () => {
 
           <div className={classes.reservationSearchBoxContainer}>
             <h3>어느 지역을 원하세요?</h3>
-            <ReservationSearchBox
-              clickSearchEventHandler={clickSearchEventHandler}
-              sidos={sidos}
-            />
+            <ReservationSearchBox clickSearchEventHandler={clickSearchEventHandler} sidos={sidos} />
           </div>
         </div>
       </div>
       <div className={classes.contentContainer}>
-        <ReservationLeftDiv
-          realtors={realtorList}
-          clickEventHandler={clickRealtorEventHandler}
-        />
+        <ReservationLeftDiv realtors={realtorList} clickEventHandler={clickRealtorEventHandler} />
         <ReservationRightDiv realtorDetail={realtorDetail} />
       </div>
       <div className={classes.listBoxContainer}>
         <div className={classes.listItemContainer}>
           <h2>내가 선택한 매물</h2>
           <div className={classes.list}>
-            <ReservationNullCard
-              selectedItems={selectedItems}
-              removeItemHandler={removeItemHandler}
-            />
+            <ReservationNullCard selectedItems={selectedItems} removeItemHandler={removeItemHandler} />
           </div>
         </div>
       </div>
@@ -169,12 +157,11 @@ const ReservationPage = () => {
           <div className={classes.ulContainer}>
             <ul>
               <li>
-                선택 하신 매물은 계정 정보(가입된 아이디, 이름, 연락처 등)와
-                함께 해당 공인중개사에게 노출 됩니다.
+                선택 하신 매물은 계정 정보(가입된 아이디, 이름, 연락처 등)와 함께 해당 공인중개사에게 노출 됩니다.
               </li>
               <li>
-                신청하신 예약은 해당 공인중개사가 확인(상담 매물 수정 등) 후
-                고객님의 예약 확정을 통해 상담이 이루어집니다.
+                신청하신 예약은 해당 공인중개사가 확인(상담 매물 수정 등) 후 고객님의 예약 확정을 통해 상담이
+                이루어집니다.
               </li>
             </ul>
           </div>
@@ -192,13 +179,7 @@ const ReservationPage = () => {
           ></DoReserve>
         </Modal>
       )}
-      {viewAlert && (
-        <CustomAlert
-          title={"알림"}
-          content={"예약이 완료되었습니다"}
-          setter={setViewAlert}
-        />
-      )}
+      {viewAlert && <CustomAlert title={"알림"} content={"예약이 완료되었습니다"} setter={setViewAlert} />}
     </>
   );
 };
@@ -211,10 +192,7 @@ const DoReserve = (props) => {
   return (
     <div className={classes.doReserve}>
       <label>요청사항</label>
-      <textarea
-        ref={detail}
-        placeholder={`세부적인 요청사항이 있다면 입력해주세요.`}
-      ></textarea>
+      <textarea ref={detail} placeholder={`세부적인 요청사항이 있다면 입력해주세요.`}></textarea>
       <div className={classes.reserveBtnContainer}>
         <button
           onClick={() => {

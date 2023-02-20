@@ -46,18 +46,20 @@ const ReservationRealtorInfo = ({ realtorDetail, addItemHandler }) => {
             )}
           </div>
         </div>
-        <div className={classes.reviewListBox}>
-          <h3>리뷰 수 {reviewsList.length}건</h3>
-          <div className={classes.reviewLists}>
-            {reviewsList?.length ? (
-              <>
-                <ListBox dataArray={reviewsList}>
-                  <ReviewCardContent />
-                </ListBox>
-              </>
-            ) : (
-              <p>현재 조회 가능한 리뷰가 없습니다!</p>
-            )}
+        <div className={classes.reviewListBoxContainer}>
+          <div className={classes.reviewListBox}>
+            <h3>리뷰 수 {reviewsList.length}건</h3>
+            <div className={classes.reviewLists}>
+              {reviewsList?.length ? (
+                <>
+                  <ListBox dataArray={reviewsList}>
+                    <ReviewCardContent />
+                  </ListBox>
+                </>
+              ) : (
+                <p>현재 조회 가능한 리뷰가 없습니다!</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
