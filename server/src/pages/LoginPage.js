@@ -2,13 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RealtorLoginForm from "../components/login/RealtorLoginForm";
 import UserLoginForm from "../components/login/UserLoginForm";
-import {
-  userLogin,
-  logout,
-  realtorLogin,
-  getUserInfo,
-  getRealtorInfo,
-} from "../apis/MemberService";
+import { userLogin, logout, realtorLogin, getUserInfo, getRealtorInfo } from "../apis/MemberService";
 import classes from "./LoginPage.module.scss";
 import { useAuth } from "../components/common/AuthProtector";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,6 +38,7 @@ const LoginPage = () => {
       tmp["isRealtor"] = false;
       tmp["name"] = userInfo.name;
       tmp["score"] = userInfo.score;
+      tmp["count"] = userInfo.count;
 
       dispatch(userAction.setInfo(tmp));
 
@@ -89,21 +84,11 @@ const LoginPage = () => {
                 defaultChecked
               />
               <label htmlFor="userTab">일반 회원</label>
-              <input
-                type="radio"
-                name="loginTab"
-                id="realtorTab"
-                onChange={loginModeHandler}
-                value="REALTOR"
-              />
+              <input type="radio" name="loginTab" id="realtorTab" onChange={loginModeHandler} value="REALTOR" />
               <label htmlFor="realtorTab">공인중개사</label>
             </div>
-            {loginMode === "USER" && (
-              <UserLoginForm onUserLogin={userLoginHandler} />
-            )}
-            {loginMode === "REALTOR" && (
-              <RealtorLoginForm onRealtorLogin={realtorLoginHandler} />
-            )}
+            {loginMode === "USER" && <UserLoginForm onUserLogin={userLoginHandler} />}
+            {loginMode === "REALTOR" && <RealtorLoginForm onRealtorLogin={realtorLoginHandler} />}
           </div>
         </div>
       </div>
