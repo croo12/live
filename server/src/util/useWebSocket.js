@@ -16,15 +16,12 @@ const useWebSocket = (sessionId, myName) => {
     };
 
     socket.current.onopen = () => {
-      console.log(myName, sessionId);
-
       const message = {
         id: "joinRoom",
         name: myName,
         room: sessionId,
       };
       socket.current.send(JSON.stringify(message));
-      console.log("socket is open!");
     };
 
     socket.current.onclose = () => {
@@ -32,7 +29,6 @@ const useWebSocket = (sessionId, myName) => {
         id: "leaveRoom",
       };
       socket.current.send(JSON.stringify(message));
-      console.log("socket is close...");
     };
 
     return () => {

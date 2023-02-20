@@ -19,10 +19,7 @@ const RealtorLoginForm = (props) => {
     // 중개사 회원 로그인 처리
     event.preventDefault();
 
-    if (
-      !businessNumberInputRef.current.value ||
-      !passwordInputRef.current.value
-    ) {
+    if (!businessNumberInputRef.current.value || !passwordInputRef.current.value) {
       alert("값없음");
       return;
     }
@@ -37,8 +34,6 @@ const RealtorLoginForm = (props) => {
 
   const findPasswordHandler = (realtorFindPasswordInfo) => {
     // 비밀번호 찾기
-
-    console.log(realtorFindPasswordInfo); //모달에서 받은 사업자 번호,email 정보
 
     // 입력 값 존재하는 지 검사
 
@@ -98,12 +93,7 @@ const RealtorLoginForm = (props) => {
             </div>
             <div className={classes.inputBox}>
               <label htmlFor="password">비밀번호</label>
-              <input
-                id="password"
-                type="password"
-                placeholder="비밀번호 입력"
-                ref={passwordInputRef}
-              ></input>
+              <input id="password" type="password" placeholder="비밀번호 입력" ref={passwordInputRef}></input>
             </div>
           </div>
           <div className={classes.formUtil}>
@@ -112,8 +102,7 @@ const RealtorLoginForm = (props) => {
               <label>로그인 상태 유지</label>
             </div>
             <div className={classes.connList}>
-              <Link to="/signup/realtor">회원가입</Link> |{" "}
-              <Link onClick={findPasswordModalHandler}>비밀번호 찾기</Link>
+              <Link to="/signup/realtor">회원가입</Link> | <Link onClick={findPasswordModalHandler}>비밀번호 찾기</Link>
             </div>
           </div>
           <div className={classes.formBtn}>

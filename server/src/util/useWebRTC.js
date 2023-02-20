@@ -1,7 +1,5 @@
 import kurentoUtils from "kurento-utils";
 
-
-
 const useWebRTC = ({
   socket,
   isRealtor,
@@ -46,7 +44,6 @@ const useWebRTC = ({
 
   const receiveVideo = (sender) => {
     const participant = new Participant(sender);
-    console.log(participant);
     participants.current[sender] = participant;
 
     let constraints;
@@ -63,15 +60,12 @@ const useWebRTC = ({
       configuration: { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] },
     };
 
-    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
-      options,
-      function (error) {
-        if (error) {
-          return console.error(error);
-        }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {
+      if (error) {
+        return console.error(error);
       }
-    );
+      this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+    });
   };
 
   return {
@@ -80,13 +74,9 @@ const useWebRTC = ({
     },
 
     receiveVideoResponse(result) {
-      participants.current[result.name].rtcPeer.processAnswer(
-        result.sdpAnswer,
-        function (error) {
-          if (error) return console.error(error);
-          console.log("잘댐");
-        }
-      );
+      participants.current[result.name].rtcPeer.processAnswer(result.sdpAnswer, function (error) {
+        if (error) return console.error(error);
+      });
     },
 
     onExistingParticipants(msg) {
@@ -96,7 +86,6 @@ const useWebRTC = ({
       };
 
       const participant = new Participant(myName);
-      console.log(participant);
       participants.current[myName] = participant;
 
       var options = {
@@ -107,17 +96,12 @@ const useWebRTC = ({
           iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
         },
       };
-      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
-        options,
-        function (error) {
-          if (error) {
-            return console.error(error);
-          }
-          this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function (error) {
+        if (error) {
+          return console.error(error);
         }
-      );
-
-      console.log("이거 보냄", participant.rtcPeer);
+        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      });
 
       msg.data.forEach(receiveVideo);
     },

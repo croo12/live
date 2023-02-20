@@ -100,7 +100,6 @@ const ConsultingMeetPage = ({
         break;
 
       default:
-        console.log("어떻게 이런일이...");
     }
   }, [status]);
 
@@ -152,15 +151,12 @@ const ConsultingMeetPage = ({
           break;
 
         case "iceCandidate":
-          participants.current[responseMsg.name].rtcPeer.addIceCandidate(
-            responseMsg.candidate,
-            function (error) {
-              if (error) {
-                console.error("Error adding candidate: " + error);
-                return;
-              }
+          participants.current[responseMsg.name].rtcPeer.addIceCandidate(responseMsg.candidate, function (error) {
+            if (error) {
+              console.error("Error adding candidate: " + error);
+              return;
             }
-          );
+          });
           break;
 
         case "closeRoom":
@@ -171,13 +167,7 @@ const ConsultingMeetPage = ({
             statusChangeHandler(STATUS.CONSULTING_IS_END);
           }
           break;
-
-        case undefined:
-          console.log("입장");
-          break;
-
         default:
-          console.error("Unrecognized message", responseMsg);
       }
     };
 
@@ -188,12 +178,9 @@ const ConsultingMeetPage = ({
         room: sessionId,
       };
       socket.current.send(JSON.stringify(message));
-      console.log("socket is open!");
     };
 
-    socket.current.onclose = () => {
-      console.log("socket is close...");
-    };
+    socket.current.onclose = () => {};
 
     return () => {
       const message = {
@@ -257,15 +244,12 @@ const ConsultingMeetPage = ({
       mediaConstraints: constraints,
     };
 
-    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
-      options,
-      function (error) {
-        if (error) {
-          return console.error(error);
-        }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {
+      if (error) {
+        return console.error(error);
       }
-    );
+      this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+    });
   };
 
   const onNewParticipant = (request) => {
@@ -273,12 +257,9 @@ const ConsultingMeetPage = ({
   };
 
   const receiveVideoResponse = (result) => {
-    participants.current[result.name].rtcPeer.processAnswer(
-      result.sdpAnswer,
-      function (error) {
-        if (error) return console.error(error);
-      }
-    );
+    participants.current[result.name].rtcPeer.processAnswer(result.sdpAnswer, function (error) {
+      if (error) return console.error(error);
+    });
   };
 
   const onExistingParticipants = (msg) => {
@@ -298,15 +279,12 @@ const ConsultingMeetPage = ({
         iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
       },
     };
-    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
-      options,
-      function (error) {
-        if (error) {
-          return console.error(error);
-        }
-        this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function (error) {
+      if (error) {
+        return console.error(error);
       }
-    );
+      this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+    });
 
     msg.data.forEach(receiveVideo);
   };
@@ -316,88 +294,6 @@ const ConsultingMeetPage = ({
     participant.dispose();
     delete participants.current[request.name];
   };
-
-  //=================================================
-
-  // const { socket, responseMsg, sendMessage } = useWebSocket(sessionId, myName);
-  // const {
-  //   onNewParticipant,
-  //   receiveVideoResponse,
-  //   onExistingParticipants,
-  //   onParticipantLeft,
-  //   register,
-  //   leaveRoom,
-  // } = useWebRTC({
-  //   socket,
-  //   isRealtor,
-  //   participants,
-  //   socket,
-  //   sendMessage,
-  //   localVideo,
-  //   remoteVideo,
-  //   myName,
-  //   audio,
-  //   sessionId,
-  // });
-
-  // //responseMsg에 따른 변화
-  // useEffect(() => {
-  //   switch (responseMsg.id) {
-  //     case "existingParticipants":
-  //       setInfo(`내 기기 연결 중...`);
-  //       onExistingParticipants(responseMsg);
-  //       break;
-
-  //     case "newParticipantArrived":
-  //       onNewParticipant(responseMsg);
-  //       break;
-
-  //     case "participantLeft":
-  //       onParticipantLeft(responseMsg);
-  //       setInfo(`상대의 연결이 끊어졌습니다`);
-  //       setTimeout(() => setInfo(""), 2000);
-  //       break;
-
-  //     case "itemSelected":
-  //       if (!isRealtor && responseMsg.itemNo != highlightNo) {
-  //         setHighlightNo(responseMsg.itemNo);
-  //       }
-  //       break;
-
-  //     case "receiveVideoAnswer":
-  //       setInfo(``);
-  //       receiveVideoResponse(responseMsg);
-  //       break;
-
-  //     case "iceCandidate":
-  //       participants.current[responseMsg.name].rtcPeer.addIceCandidate(
-  //         responseMsg.candidate,
-  //         function (error) {
-  //           if (error) {
-  //             console.error("Error adding candidate: " + error);
-  //             return;
-  //           }
-  //         }
-  //       );
-  //       break;
-
-  //     case "closeRoom":
-  //       if (isRealtor) {
-  //         navi(`/consulting/${sessionId}`);
-  //       } else {
-  //         setBlock(false);
-  //         statusChangeHandler(STATUS.CONSULTING_IS_END);
-  //       }
-  //       break;
-
-  //     case undefined:
-  //       console.log("입장");
-  //       break;
-
-  //     default:
-  //       console.error("Unrecognized message", responseMsg);
-  //   }
-  // }, [responseMsg]);
 
   return (
     <>
@@ -412,9 +308,7 @@ const ConsultingMeetPage = ({
           {!isRealtor ? (
             <>
               <div>
-                <Button clickEvent={toggleAudio}>
-                  {audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}
-                </Button>
+                <Button clickEvent={toggleAudio}>{audio ? <AiOutlineSound /> : <IoVolumeMuteOutline />}</Button>
               </div>
               <div className={`${recording ? classes.recordingActive : ""}`}>
                 <Button
@@ -455,13 +349,7 @@ const ConsultingMeetPage = ({
           />
         </Modal>
       )}
-      {viewAlert && (
-        <CustomAlert
-          title={"녹화 완료"}
-          content={"영상이 녹화되었습니다."}
-          setter={setViewAlert}
-        />
-      )}
+      {viewAlert && <CustomAlert title={"녹화 완료"} content={"영상이 녹화되었습니다."} setter={setViewAlert} />}
     </>
   );
 };
