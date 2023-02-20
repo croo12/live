@@ -28,14 +28,14 @@ const ConsultingRightReservationHouseList = () => {
 
   const dataArray = datas.itemList;
 
-  useEffect(() => {
-    if (userInfo.isRealtor) {
-      const linkUrl = `/consulting/${params.sessionId}/${params.consultingNo}/${params.realtorNo}/${params.userNo}`;
+  // useEffect(() => {
+  //   if (userInfo.isRealtor) {
+  //     const linkUrl = `/consulting/${params.sessionId}/${params.consultingNo}/${params.realtorNo}/${params.userNo}`;
 
-      registConsultingRoomLink(params.consultingNo, linkUrl);
-      changeConsultinRoomNo(params.consultingNo, 3);
-    }
-  }, []);
+  //     registConsultingRoomLink(params.consultingNo, linkUrl);
+  //     changeConsultinRoomNo(params.consultingNo, 3);
+  //   }
+  // }, []);
 
   return (
     <div style={{ maxHeight: "100%", overflow: "scroll" }}>

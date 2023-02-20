@@ -8,6 +8,10 @@ import { STATUS } from "../pages/ConsultingPage";
 import { BsCalendar2WeekFill, BsFillPhoneFill } from "react-icons/bs";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import Modal from "../UI/Modal";
+import {
+  changeConsultinRoomNo,
+  registConsultingRoomLink,
+} from "../apis/consultingApi";
 
 const ReservationCardContent = (props) => {
   const [isConsulting, setConsulting] = useState(props.isConsulting);
@@ -53,9 +57,13 @@ export const ConsultingReservationCardContent = (props) => {
     if (props.statusChangeHandler) {
       props.statusChangeHandler(STATUS.REALTOR_START_CONSULTING);
     }
-    navigation(
-      `/consulting/${props.sessionId}/${props.consultingNo}/${props.realtorNo}/${props.userNo}`
-    );
+
+    const linkUrl = `/consulting/${props.sessionId}/${props.consultingNo}/${props.realtorNo}/${props.userNo}`;
+
+    registConsultingRoomLink(props.consultingNo, linkUrl);
+    changeConsultinRoomNo(props.consultingNo, 3);
+
+    navigation(linkUrl);
   };
 
   return (
