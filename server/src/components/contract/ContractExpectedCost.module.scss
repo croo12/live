@@ -109,18 +109,17 @@
 
         .totalEstimatedCost {
           display: flex;
+          justify-content: space-between;
           padding: 0 10%;
           font-size: 1.3rem;
           margin-top: 1.7%;
 
           h5 {
-            flex: 1;
-            margin-left: 10%;
+            margin-left: 17%;
           }
 
           strong {
-            flex: 0.8;
-            margin-left: 50%;
+            margin-right: 2.5%;
             color: rgba(66, 211, 149, 1);
           }
         }
@@ -139,7 +138,7 @@
 
         .checkBox {
           margin: 2% 0;
-          accent-color: #42D395;
+          accent-color: #42d395;
           border-radius: 4px;
 
           input {
@@ -185,7 +184,7 @@
 
       button {
         margin-left: 11.5%;
-        background: #42D395;
+        background: #42d395;
         border-radius: 4px;
         border-radius: 4px;
         border: none;
@@ -304,18 +303,17 @@
 
           .totalEstimatedCost {
             display: flex;
+            justify-content: space-between;
             padding: 0;
             font-size: 1.4rem;
             margin-top: 3%;
 
             h5 {
-              flex: 0.9;
-              margin-left: 0%;
+              margin-left: 17%;
             }
 
             strong {
-              flex: 1;
-              margin-left: 30%;
+              margin-right: 2.5%;
               color: rgba(66, 211, 149, 1);
             }
           }
@@ -503,18 +501,17 @@
 
         .totalEstimatedCost {
           display: flex;
+          justify-content: space-between;
           padding: 0 20%;
           font-size: 1.3rem;
           margin-top: 1.7%;
 
           h5 {
-            flex: 1;
-            margin-left: 10%;
+            margin-left: 17%;
           }
 
           strong {
-            flex: 0.8;
-            margin-left: 50%;
+            margin-right: 2.5%;
             color: rgba(66, 211, 149, 1);
           }
         }
@@ -533,7 +530,7 @@
 
         .checkBox {
           margin: 2% 0;
-          accent-color: #42D395;
+          accent-color: #42d395;
           border-radius: 4px;
 
           input {
@@ -581,55 +578,54 @@
         display: flex;
         margin: 0 5%;
 
-
         .btn1 {
           flex: 1;
           margin: 3%;
-          background: #42D395;
+          background: #42d395;
           border-radius: 4px;
           border: none;
           color: white;
-          padding: 1% 10%;
+          padding: 1%;
           font-size: 1rem;
         }
 
         .btn2 {
           flex: 1;
           margin: 3%;
-          background: #BBBBBB;
+          background: #bbbbbb;
           border-radius: 4px;
           border: none;
           color: white;
-          padding: 1% 10%;
+          padding: 1%;
           font-size: 1rem;
-          background: #42D395;
+          background: #42d395;
           border-radius: 4px;
-          color: white
+          color: white;
         }
 
         .btn3 {
           flex: 1;
           margin: 3%;
-          background: #BBBBBB;
+          background: #bbbbbb;
           border-radius: 4px;
           border: none;
           color: white;
-          padding: 1% 10%;
+          padding: 1%;
           font-size: 1rem;
-          background: #42D395;
+          background: #42d395;
           border-radius: 4px;
         }
 
         .btn4 {
           flex: 1;
           margin: 3%;
-          background: #BBBBBB;
+          background: #bbbbbb;
           border-radius: 4px;
           border: none;
           color: white;
-          padding: 1% 10%;
+          padding: 1%;
           font-size: 1rem;
-          background: #FF5959;
+          background: #ff5959;
           border-radius: 4px;
         }
       }
@@ -744,18 +740,17 @@
 
           .totalEstimatedCost {
             display: flex;
+            justify-content: space-between;
             padding: 0;
             font-size: 1.4rem;
             margin-top: 3%;
 
             h5 {
-              flex: 0.9;
-              margin-left: 0%;
+              margin-left: 17%;
             }
 
             strong {
-              flex: 1;
-              margin-left: 30%;
+              margin-right: 2.5%;
               color: rgba(66, 211, 149, 1);
             }
           }
@@ -824,7 +819,7 @@
           border-radius: 4px;
           border: none;
           color: white;
-          padding: 1% 10%;
+          padding: 1%;
           font-size: 1rem;
         }
       }
