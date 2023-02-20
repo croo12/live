@@ -50,6 +50,7 @@
 
     .buttonBox {
       margin: 2em;
+
       .registBtn {
         margin: 0 0.75em;
         width: 10em;
@@ -61,6 +62,7 @@
         border-radius: 6px;
         border: none;
         transition: all 0.2s ease;
+        cursor: pointer;
       }
 
       .registBtn:hover {
@@ -78,6 +80,7 @@
         border-radius: 6px;
         border: none;
         transition: all 0.2s ease;
+        cursor: pointer;
       }
 
       .nopeBtn:hover {
