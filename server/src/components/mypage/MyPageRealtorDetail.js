@@ -247,7 +247,7 @@ const MyPageRealtorDetail = () => {
 };
 
 export const realtorDetailInfoLoader = async () => {
-  const response = await getRealtorInfo();
+  const response = await getRealtorInfo(getAuthHeader());
   return response;
 };
 

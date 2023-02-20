@@ -16,7 +16,6 @@ const UserLoginForm = (props) => {
   const [viewAlert, setViewAlert] = useState(false);
 
   const [loginError, setLoginError] = useState(0);
-
   const userIdInputRef = useRef();
   const passwordInputRef = useRef();
 
