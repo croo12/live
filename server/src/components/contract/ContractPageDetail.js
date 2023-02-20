@@ -44,6 +44,10 @@ const ContractPageDetail = () => {
     commission: expectedCostInfo.commission,
   };
 
+  const contractInfo = {
+    itemNo: data.data.contractInfo.contractNo,
+  };
+
   return (
     <>
       <section>
@@ -85,6 +89,7 @@ const ContractPageDetail = () => {
         {userInfo.isRealtor === false ? (
           <ContractExpectedCostDetailUser
             contractInfoList={data.data.contractInfo}
+            contractInfo={contractInfo}
           />
         ) : (
           <ContractExpectedCostDetailRealtor

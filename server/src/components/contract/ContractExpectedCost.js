@@ -221,6 +221,29 @@ export const ContractExpectedCostDetailUser = (props) => {
     downPayment: props.contractInfoList.downPayment * 10000,
   };
 
+  const navigate = useNavigate();
+
+  const onQuitHandler = async (e) => {
+    e.preventDefault();
+    console.log(props.contractInfo);
+    if (window.confirm("정말로 계약을 취소하시겠습니까?")) {
+      try {
+        const result = await axiosInstance.patch(
+          `contracts/${props.contractInfo.itemNo}/${3}`,
+          {
+            headers: {
+              Authorization: getAuthHeader().Authorization,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        navigate("/mypage/user/user-contract");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <>
       <div className={classes.expectedCost}>
@@ -277,6 +300,15 @@ export const ContractExpectedCostDetailUser = (props) => {
                   원
                 </strong>
               </div>
+            </div>
+            <div className={classes.buttonList}>
+              <button
+                onClick={onQuitHandler}
+                className={classes.btn4}
+                style={{ margin: "7% 0 5% 8.5%" }}
+              >
+                계약 취소
+              </button>
             </div>
           </div>
         </div>
