@@ -49,14 +49,19 @@ const LoginPage = () => {
   };
 
   const realtorLoginHandler = async (realtorLoginInfo) => {
-    const tmp = {};
 
-    const { accessToken } = await realtorLogin(realtorLoginInfo, dispatch);
+    const result = await realtorLogin(realtorLoginInfo, dispatch);
+    if (result.message) {
+      return result.message;
+    }
+
+    const { accessToken } = result;
 
     dispatch(userAction.setIsRealtor(true));
 
     const realtorInfo = await getRealtorInfo(accessToken);
 
+    const tmp = {};
     tmp["profile"] = realtorInfo.imageSrc;
     tmp["id"] = "중개사는 이런거없음";
     tmp["isRealtor"] = true;

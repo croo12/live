@@ -76,15 +76,21 @@ export const realtorLogin = async (data, dispatch) => {
   let result = {
     accessToken: null,
     refreshToken: null,
+    message: null,
   };
-
-  await axiosInstance.post(`realtors/login`, data).then((res) => {
-    const data = res.data;
-    if (data.state === 200) {
-      result = { ...result, ...data.data };
-      dispatch(userAction.login(result));
-    }
-  });
+  await axiosInstance
+    .post(`realtors/login`, data, {})
+    .then(({ data }) => {
+      if (data.state === 200) {
+        result = data.data;
+        dispatch(userAction.login(result));
+      } else {
+        result["message"] = data.message;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   return result;
 };
@@ -100,6 +106,7 @@ export const getRealtorInfo = async (accessToken) => {
         headers: getAuthHeader(),
       })
       .then((res) => {
+        alert(res.data+"!!!")
         if (res.data.state === 200) {
           realtorInfo = res.data.data;
           return realtorInfo;
@@ -114,6 +121,7 @@ export const getRealtorInfo = async (accessToken) => {
       })
       .then((res) => {
         const data = res.data;
+        alert("공인중개사 "+data);
 
         if (data.state === 200) {
           realtorInfo = data.data;

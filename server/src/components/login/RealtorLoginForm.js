@@ -12,38 +12,64 @@ import classes from "./RealtorLoginForm.module.scss";
 const RealtorLoginForm = (props) => {
   const [isFindPassword, setIsFindPassword] = useState(false); // 비밀번호 찾기 state ( True => 모달 활성화)
 
+  const [viewAlert, setViewAlert] = useState(false);
+  const [loginError, setLoginError] = useState(0);
+
   const businessNumberInputRef = useRef(); // 사업자등록번호 Ref
   const passwordInputRef = useRef(); // 비밀번호 Ref
 
-  const loginHandler = (event) => {
+  const loginHandler = async (event) => {
     // 중개사 회원 로그인 처리
     event.preventDefault();
 
-    if (!businessNumberInputRef.current.value || !passwordInputRef.current.value) {
-      alert("값없음");
+    // if (!businessNumberInputRef.current.value || !passwordInputRef.current.value) {
+    //   alert("값없음");
+    //   return;
+    // }
+
+    const businessNumber = businessNumberInputRef.current.value;
+    const password = passwordInputRef.current.value;
+
+    if (!businessNumber) {
+      setLoginError(3);
+      return;
+    }
+
+    if (!password) {
+      setLoginError(4);
       return;
     }
 
     const realtorLoginInfo = {
-      businessNumber: businessNumberInputRef.current.value,
-      password: passwordInputRef.current.value,
+      businessNumber,
+      password,
     };
 
-    props.onRealtorLogin(realtorLoginInfo);
+    const result = await props.onRealtorLogin(realtorLoginInfo);
+    
+    if (result === "공인중개사 정보를 찾을 수 없습니다.") {
+      setLoginError(1);
+    } else {
+      setLoginError(2);
+    }
   };
 
-  const findPasswordHandler = (realtorFindPasswordInfo) => {
-    // 비밀번호 찾기
+  const findPasswordHandler = async (realtorFindPasswordInfo) => {
+    try {
+      const result = await axiosInstance.post(
+        "realtors/passcheck",
+        realtorFindPasswordInfo
+      );
+    } catch (err) {
+      console.error(err);
+    }
 
-    // 입력 값 존재하는 지 검사
+    setViewAlert(true);
+    findPasswordModalHandler();
+  };
 
-    // 사업자 등록 번호 유효성 검사
-
-    // 이메일 유효섣 검사
-
-    // 비밀번호 찾기 email 맞는지 검사 and 전송 하는 과정
-
-    findPasswordModalHandler(); // 모달창 닫기
+  const findPasswordModalHandler = () => {
+    setIsFindPassword(!isFindPassword);
   };
 
   const onChangeBusinessNumber = (e) => {
@@ -61,9 +87,21 @@ const RealtorLoginForm = (props) => {
     // }
   };
 
-  const findPasswordModalHandler = () => {
-    // 모달 창 상태 값 통해 열고 닫기
-    setIsFindPassword(!isFindPassword);
+  const showErrorMessage = (loginError) => {
+    switch (loginError) {
+      case 0:
+        return ``;
+      case 1:
+        return `존재하지 않는 사업자등록번호입니다.`;
+      case 2:
+        return `비밀번호가 틀렸습니다.`;
+      case 3:
+        return `사업자등록번호가 입력되지 않았습니다`;
+      case 4:
+        return `비밀번호가 입력되지 않았습니다`;
+      default:
+        return ``;
+    }
   };
 
   return (
@@ -96,6 +134,12 @@ const RealtorLoginForm = (props) => {
               <input id="password" type="password" placeholder="비밀번호 입력" ref={passwordInputRef}></input>
             </div>
           </div>
+          {loginError !== 0 && (
+            <div style={{ color: "red", padding: "0.6rem" }}>
+              {" "}
+              {showErrorMessage(loginError)}{" "}
+            </div>
+          )}
           <div className={classes.formUtil}>
             <div className={classes.keepLogin}>
               <input type="checkbox" id="keepLogin" />
@@ -110,6 +154,13 @@ const RealtorLoginForm = (props) => {
           </div>
         </div>
       </form>
+      {viewAlert && (
+        <CustomAlert
+          title={"임시 비밀번호 전송"}
+          content={`고객님의 이메일주소로 임시 비밀번호를 전송하였습니다`}
+          setter={setViewAlert}
+        />
+      )}
     </>
   );
 };
