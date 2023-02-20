@@ -42,16 +42,14 @@ const MyPageUserContract = () => {
                 <span>
                   {data.map((title, index) => {
                     return (
-                      <button
+                      <div
                         key={index}
                         value={index}
-                        className={`${classes.btn} ${
-                          index === currentTab ? classes.active : ""
-                        }`}
+                        className={`${classes.btn} ${index === currentTab ? classes.active : ""}`}
                         onClick={tabChangeHandler}
                       >
                         {title}
-                      </button>
+                      </div>
                     );
                   })}
                 </span>
