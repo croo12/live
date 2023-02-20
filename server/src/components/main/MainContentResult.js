@@ -9,7 +9,7 @@ import ListBox from "../../UI/ListBox";
 import classes from "./MainContentResult.module.scss";
 import MainContentResultIconBox from "./MainContentResultIconBox";
 
-const dummy = [
+const settingData = [
   {
     icon: <BiCoffeeTogo />,
     name: "카  페",
@@ -43,7 +43,7 @@ const dummy = [
 ];
 
 const MainContentResultBox = () => {
-  const [data, setData] = useState(dummy);
+  const [data, setData] = useState(settingData);
 
   return (
     <div style={{ textAlign: "left" }}>
