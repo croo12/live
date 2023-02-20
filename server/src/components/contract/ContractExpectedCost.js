@@ -468,7 +468,9 @@ export const ContractExpectedCostDetailRealtor = (props) => {
             <div className={classes.expectedCostContent}>
               <h2>예상 비용 안내</h2>
               <br />
-              <p style={{ textAlign: "left" }}>*은 필수 입력값입니다!</p>
+              <p style={{ textAlign: "left", fontSize: "14px" }}>
+                * 은 필수 입력값입니다!
+              </p>
               <div className={classes.costBox}>
                 <div className={classes.downPayment}>
                   <p>계약금</p>

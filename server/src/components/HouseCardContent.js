@@ -505,7 +505,7 @@ export const ContractDetailRealtorCardContent = (props) => {
         <div className={classes.inner}>
           <h2>매물 정보</h2>
           <br />
-          <p>*은 필수 입력값입니다!</p>
+          <p>* 은 필수 입력값입니다!</p>
           <br />
           <div className={classes.contractContent}>
             <div className={classes.leftDesc}>
