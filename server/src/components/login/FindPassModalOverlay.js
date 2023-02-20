@@ -9,14 +9,12 @@ const FindPassModalOverlay = (props) => {
   const modalFindPassHandler = () => {
     const emailVaild = /^[A-Za-z0-9.\-_]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,6}$/;
 
-    // 회원 ID 유효성 검사
     if (modalIdInputRef.current.value.trim().length === 0) {
       alert("회원 아이디 제대로 입력한거 맞니?");
       modalIdInputRef.current.focus();
       return;
     }
 
-    // 이메일 유효섣 검사
     if (
       (modalEmailInputRef.current.value.trim().length === 0) |
       !emailVaild.test(modalEmailInputRef.current.value)

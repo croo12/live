@@ -126,7 +126,6 @@
   }
 }
 .consulting_inner {
-  // position: relative;
   width: 100%;
   padding: 20px;
   display: flex;
@@ -136,12 +135,13 @@
   color: #eaeaea;
 
   background: linear-gradient(
-    45.74deg, 
-  rgba(232, 232, 232, 0.15) -0.5%, 
-  rgba(246, 246, 246, 0.00445545) 33.81%, 
-  rgba(246, 246, 246, 0) 70.76%, 
-  rgba(250, 250, 250, 0.15) 100.85%), 
-  rgba(250, 250, 250, 0.3);
+      45.74deg,
+      rgba(232, 232, 232, 0.15) -0.5%,
+      rgba(246, 246, 246, 0.00445545) 33.81%,
+      rgba(246, 246, 246, 0) 70.76%,
+      rgba(250, 250, 250, 0.15) 100.85%
+    ),
+    rgba(250, 250, 250, 0.3);
   border-radius: 12px;
 
   max-width: 440px;
@@ -162,7 +162,7 @@
   }
 
   &.highlight {
-    border: 2px solid #86f656
+    border: 2px solid #86f656;
   }
 
   .upperCard {
@@ -202,7 +202,6 @@
       width: 160px;
       height: 160px;
       flex: 1;
-      // border-radius: 1rem;
 
       img {
         width: 100%;
@@ -246,7 +245,7 @@
       border: 0;
 
       &:hover {
-        color: #FAFAFA;
+        color: #fafafa;
         font-size: 14px;
         cursor: pointer;
       }
@@ -312,12 +311,13 @@
   }
 }
 
-///예약 - 매물 카드 컨텐트
-
 .reservationItem {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+  margin: 0 0 3em 0;
   padding: 15px;
   background: #fafafa;
   border-radius: 4px;
@@ -370,9 +370,23 @@
     color: #707070;
     cursor: pointer;
   }
+  .removeText {
+    display: none;
+    font-size: 1.2em;
+    font-weight: 700;
+    position: absolute;
+  }
 }
 
-///예약 - 중개사의 매물목록
+.reservationItem:hover {
+  .removeText {
+    display: block;
+  }
+
+  .cardBox {
+    opacity: 0.25;
+  }
+}
 
 .houseItem {
   display: flex;
@@ -419,7 +433,7 @@
     }
 
     p {
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 600;
       margin: 1px 0;
       color: #4e4e4e;
@@ -601,7 +615,6 @@
             width: 100%;
             display: flex;
             box-sizing: border-box;
-            // border: 1px solid rgb(218, 218, 218);
             border-radius: 6px;
 
             .mainImage {
@@ -610,9 +623,6 @@
 
               img {
                 box-sizing: border-box;
-                // 1400 기준
-                // width: 43.25em;
-                // height: 31.5em;
                 width: 24em;
                 height: 23em;
                 margin: 0.25em;
@@ -628,9 +638,6 @@
 
               img {
                 box-sizing: border-box;
-                // 1400 기준
-                // width: 21.375em;
-                // height: 15.5em;
                 width: 15.45em;
                 height: 11.25em;
                 margin: 0.25em;
@@ -890,7 +897,6 @@
             width: 100%;
             display: flex;
             box-sizing: border-box;
-            // border: 1px solid rgb(218, 218, 218);
             border-radius: 6px;
 
             .mainImage {
@@ -899,9 +905,6 @@
 
               img {
                 box-sizing: border-box;
-                // 1400 기준
-                // width: 43.25em;
-                // height: 31.5em;
                 width: 24em;
                 height: 23em;
                 margin: 0.25em;
@@ -917,9 +920,6 @@
 
               img {
                 box-sizing: border-box;
-                // 1400 기준
-                // width: 21.375em;
-                // height: 15.5em;
                 width: 15.45em;
                 height: 11.25em;
                 margin: 0.25em;
@@ -1199,7 +1199,6 @@
             width: 100%;
             display: flex;
             box-sizing: border-box;
-            // border: 1px solid rgb(218, 218, 218);
             border-radius: 6px;
 
             .mainImage {
@@ -1208,9 +1207,6 @@
 
               img {
                 box-sizing: border-box;
-                // 1400 기준
-                // width: 43.25em;
-                // height: 31.5em;
                 width: 24em;
                 height: 23em;
                 margin: 0.25em;
@@ -1226,9 +1222,6 @@
 
               img {
                 box-sizing: border-box;
-                // 1400 기준
-                // width: 21.375em;
-                // height: 15.5em;
                 width: 15.45em;
                 height: 11.25em;
                 margin: 0.25em;

@@ -3,15 +3,11 @@
   border-radius: 12px;
   overflow: none;
 
-  //   position: relative;
-
   .selectBox {
     display: flex;
 
     margin: 0 auto;
     margin-right: auto;
-
-    // position: absolute;
 
     width: 80%;
 
@@ -23,18 +19,6 @@
       width: calc(33%);
       height: 2.5vw;
     }
-
-    // :first-child {
-    //   border-top-left-radius: 8px;
-    //   border-bottom-left-radius: 8px;
-
-    //   // border: ;
-    // }
-
-    // :last-child {
-    //   border-top-right-radius: 8px;
-    //   border-bottom-right-radius: 8px;
-    // }
   }
 
   .searchInput {

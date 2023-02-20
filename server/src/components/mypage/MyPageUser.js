@@ -46,18 +46,26 @@ const MyPageUser = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-                <img alt="프로필" src={userInfo.profile !== null ? userInfo.profile : sample}></img>
+                <img
+                  alt="프로필"
+                  src={userInfo.profile !== null ? userInfo.profile : sample}
+                ></img>
               </div>
               <div className={classes.rightDesc}>
                 <p>
                   안녕하세요, <strong>{userInfo.name}</strong>님<br />
-                  <span>일반 회원</span>
-                  <button className={classes.goDetail} onClick={onClickHandler}>
-                    개인정보 조회
-                  </button>
                 </p>
-                <div className={classes.temperature}>온도그래프</div>
-                <progress className={classes.progress} value={userInfo.score} min="0" max="100"></progress>
+                <div className={classes.infoState}>
+                  <span>일반 회원</span>
+                  <button onClick={onClickHandler}>개인정보 조회</button>
+                </div>
+                <div className={classes.temperatureInfo}>
+                  <div className={classes.temperature}>온도그래프</div>
+                  <div className={classes.realTemperature}>
+                    {userInfo.score + "℃ "}
+                  </div>
+                </div>
+                <progress value={userInfo.score} min="0" max="100"></progress>
               </div>
             </div>
             <div className={classes.myScoreContainer}>
@@ -71,25 +79,37 @@ const MyPageUser = () => {
         <div className={classes.inner}>
           <div className={classes.itemBoxContent}>
             <div className={`${btnActive === 1 ? classes.active : ""}`}>
-              <button className={classes.menuCard} onClick={recordOnClickHandler}>
+              <button
+                className={classes.menuCard}
+                onClick={recordOnClickHandler}
+              >
                 <AiOutlineVideoCameraAdd />
                 <p>녹화</p>
               </button>
             </div>
             <div className={`${btnActive === 2 ? classes.active : ""}`}>
-              <button className={classes.menuCard} onClick={reviewOnClickHadler}>
+              <button
+                className={classes.menuCard}
+                onClick={reviewOnClickHadler}
+              >
                 <BsFillBellFill />
                 <p>리뷰조회</p>
               </button>
             </div>
             <div className={`${btnActive === 3 ? classes.active : ""}`}>
-              <button className={classes.menuCard} onClick={contractOnClickHandler}>
+              <button
+                className={classes.menuCard}
+                onClick={contractOnClickHandler}
+              >
                 <BsSearch />
                 <p>계약현황</p>
               </button>
             </div>
             <div className={`${btnActive === 4 ? classes.active : ""}`}>
-              <button className={classes.menuCard} onClick={reservationonClickHandler}>
+              <button
+                className={classes.menuCard}
+                onClick={reservationonClickHandler}
+              >
                 <TfiWrite />
                 <p>예약현황</p>
               </button>

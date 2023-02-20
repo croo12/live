@@ -4,12 +4,6 @@ const ErrorCommonPage = ({ navigate, errorMsg }) => {
   const error = useRouteError();
   const navigation = useNavigate();
 
-  // if (navigate) {
-  //   navigation(navigate);
-  // }
-
-  // console.log(error);
-
   return (
     <>
       <h1> Error Page ! </h1>

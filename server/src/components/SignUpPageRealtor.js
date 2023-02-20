@@ -34,8 +34,6 @@ const SignUpPageRealtor = () => {
   const realtorForm = useRef();
 
   const addRealtorInformationHandler = (data) => {
-    console.log(data);
-
     const { bsnmCmpnm, brkrNm, jurirno, ldCodeNm, registDe } = data;
 
     bsnmCmpnmRef.current.value = bsnmCmpnm;
@@ -43,12 +41,6 @@ const SignUpPageRealtor = () => {
     jurirnoRef.current.value = jurirno;
     ldCodeNmRef.current.value = ldCodeNm;
     registDeRef.current.value = registDe;
-  };
-
-  const onChangeHanldler = (e) => {
-    e.preventDefault();
-
-    console.log(e.target.phone.value);
   };
 
   const onChangeRealtorEmail = (e) => {
@@ -118,7 +110,6 @@ const SignUpPageRealtor = () => {
   };
 
   useEffect(() => {
-    // 화면나올때 스크롤 맨위로 올려주는 용도로 작성
     window.scrollTo(0, 0);
   }, []);
 
@@ -169,13 +160,15 @@ const SignUpPageRealtor = () => {
     }
 
     tmp["description"] = form.realtorDescription.value;
-    console.log(tmp);
 
     const frm = new FormData();
     frm.append("file", profile);
-    frm.append("SignUp", new Blob([JSON.stringify(tmp)], {
-      type: `application/json`,
-    }), );
+    frm.append(
+      "SignUp",
+      new Blob([JSON.stringify(tmp)], {
+        type: `application/json`,
+      })
+    );
 
     try {
       const response = await axiosInstance.post("realtors", frm, {
@@ -183,7 +176,6 @@ const SignUpPageRealtor = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response);
     } catch (err) {
       console.error(err);
     }

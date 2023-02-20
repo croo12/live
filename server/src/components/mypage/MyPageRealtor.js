@@ -37,17 +37,25 @@ const MyPageRealtor = () => {
           <div className={classes.introContent}>
             <div className={classes.info}>
               <div className={classes.leftImg}>
-              <img alt="프로필" src={userInfo.profile !== null ? userInfo.profile : sample}></img>
+                <img
+                  alt="프로필"
+                  src={userInfo.profile !== null ? userInfo.profile : sample}
+                ></img>
               </div>
               <div className={classes.rightDesc}>
                 <p>
                   안녕하세요, <strong>{userInfo.name}</strong>님<br />
-                  <span>중개사 회원</span>
-                  <button className={classes.goDetail} onClick={onClickHandler}>개인정보 조회</button>
                 </p>
-                <div className={classes.temperature}> 
-                <img alt="★" src={star} className={classes.star}></img> 
-                {userInfo.score}</div>
+                <div className={classes.infoState}>
+                  <span>중개사 회원</span>
+                  <button onClick={onClickHandler}>개인정보 조회</button>
+                </div>
+                <div className={classes.temperatureInfo}>
+                  <div className={classes.temperature}>
+                    <img alt="★" src={star} className={classes.star}></img>
+                    <div className={classes.starNum}>{userInfo.score}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

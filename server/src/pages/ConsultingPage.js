@@ -20,12 +20,9 @@ export const STATUS = {
   CONSULTING_IS_END: 999,
 };
 
-//화상통화
 const ConsultingPage = (props) => {
-  const { sessionId } = useParams();
-
+  const params = useParams();
   const { userInfo } = useAuth();
-
   const [status, setStatus] = useState(
     userInfo.isRealtor ? STATUS.REALTOR_ENTER : STATUS.USER_ENTER
   );
@@ -33,10 +30,9 @@ const ConsultingPage = (props) => {
   const [recordingFiles, setRecordingFiles] = useState([]);
   const [highlightNo, setHighlightNo] = useState(0);
 
-  const orderHandler = (status, emit) => {
+  const orderHandler = (status) => {
     switch (status) {
       case STATUS.REALTOR_ENTER:
-        console.log(`중개사 입장`);
         break;
 
       case STATUS.REALTOR_START_CONSULTING:
@@ -61,8 +57,6 @@ const ConsultingPage = (props) => {
     }
   };
 
-  const params = useParams();
-
   const toggleListInMobile = () => {
     toggleList(!viewList);
   };
@@ -78,9 +72,7 @@ const ConsultingPage = (props) => {
 
       axiosInstance
         .post(`consultings/${params.consultingNo}/records`, frm, {})
-        .then((res) =>
-          console.log("Successfully sent recording to server", res)
-        )
+        .then()
         .catch((error) => console.error(error));
     }
   }, [recordingFiles]);
@@ -93,7 +85,7 @@ const ConsultingPage = (props) => {
             userInfo={userInfo}
             isRealtor={userInfo.isRealtor}
             status={status}
-            sessionId={sessionId}
+            sessionId={params.sessionId}
             recordingFiles={recordingFiles}
             setRecordingFiles={setRecordingFiles}
             statusChangeHandler={orderHandler}
@@ -108,7 +100,7 @@ const ConsultingPage = (props) => {
             toggleListInMobile={toggleListInMobile}
             status={status}
             viewList={viewList}
-            sessionId={sessionId}
+            sessionId={params.sessionId}
             highlightNo={highlightNo}
             setHighlightNo={setHighlightNo}
           />

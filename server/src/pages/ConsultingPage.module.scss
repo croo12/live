@@ -62,14 +62,15 @@
   }
 
   @media (max-width: 768px) {
-    //모바일 기준
     flex-direction: column;
     width: 100%;
 
     .lists {
-      position: fixed;
+      position: absolute;
+      min-height: 500px;
       border-top-right-radius: 4vw;
       border-top-left-radius: 4vw;
+      top: 1;
       bottom: 0;
       left: 0;
       right: 0;
@@ -77,11 +78,11 @@
       width: 100%;
       max-width: 100%;
       color: white;
-      // transform: translateY(90%);
+      transform: translateY(500px);
 
       &.isActive {
         overflow-y: auto;
-        transform: translateY(-70%);
+        transform: translateY(0px);
       }
     }
   }

@@ -59,10 +59,15 @@ const ContractCardContent = (props) => {
                 <p>({props.itemInfo.buildingName})</p>
               </strong>
               <p>
-                방 {props.itemInfo.room}/ {props.itemInfo.exclusivePrivateArea}
+                방 {props.itemInfo.room}/{" "}
+                {props.itemInfo.exclusivePrivateArea
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 ㎡{" "}
                 {"(전용" +
-                  Math.round(props.itemInfo.exclusivePrivateArea / 3.3) +
+                  Math.round(props.itemInfo.exclusivePrivateArea / 3.3)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
                   "평)"}
               </p>
             </div>
@@ -71,15 +76,27 @@ const ContractCardContent = (props) => {
                 <p>
                   매물 가격
                   <strong>
-                    &nbsp;월세 {props.itemInfo.deposit} 만원/
-                    {props.itemInfo.rent} 만원
+                    &nbsp;월세{" "}
+                    {props.itemInfo.deposit
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                    만원/
+                    {props.itemInfo.rent
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                    만원
                   </strong>
                 </p>
               </div>
               <div className={classes.maintenanceFee}>
                 <p>
                   관리비&nbsp;
-                  <strong>{props.itemInfo.maintenanceFee} 만원</strong>
+                  <strong>
+                    {props.itemInfo.maintenanceFee
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                    만원
+                  </strong>
                 </p>
               </div>
             </div>

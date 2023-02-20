@@ -10,8 +10,9 @@ import HouseRegist from "../components/house/HouseRegist";
 import HouseList from "../components/house/HouseList";
 import HouseModify from "../components/house/HouseModify";
 import MyPageUser from "../components/mypage/MyPageUser";
-//import { myReservationLoader } from "../components/mypage/MyReservation";
-import MyPageUserDetail, { userDetailInfoLoader } from "../components/mypage/MyPageUserDetail";
+import MyPageUserDetail, {
+  userDetailInfoLoader,
+} from "../components/mypage/MyPageUserDetail";
 import MyPageUserReservation from "../components/mypage/MyPageUserReservation";
 import MyPageUserReservationDetail from "../components/mypage/MyPageUserReservationDetail";
 import { loader as consultingUserLoader } from "../components/mypage/MyPageUserReservationDetail";
@@ -61,7 +62,6 @@ const router = createBrowserRouter(
       <Route index element={<MainPage />}></Route>
       <Route path="login" element={<LoginPage />}></Route>
       <Route path="signup" element={<SignUpPage />}>
-        {/* for Redirect */}
         <Route path="" element={<Navigate replace to="user" />} />
         <Route path="user" element={<SignUpPageUser />}></Route>
         <Route path="realtor" element={<SignUpPageRealtor />}></Route>

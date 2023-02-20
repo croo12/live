@@ -1,11 +1,11 @@
 .realtorInfoContainer {
   border: 2px solid rgba(66, 211, 149, 1);
   border-radius: 4px;
-  padding: 24px;
+  padding: 12px 24px;
   margin-top: 15px;
 
   overflow: scroll;
-  max-height: 700px;
+  height: 90%;
 
   .realtorUpper {
     display: flex;
@@ -68,21 +68,19 @@
     margin-bottom: 24px;
   }
 
-  .realtorItems {
-    max-height: 300px;
-    overflow-y: auto;
+  .realtorItemBox {
     padding: 1rem;
     > h3 {
       text-align: left;
       margin-bottom: 0.7rem;
     }
-
-
+    .realtorItems {
+      overflow-y: auto;
+      max-height: 256px;
+    }
   }
 
-  .reviewLists {
-    max-height: 300px;
-    overflow-y: auto;
+  .reviewListBox {
     padding: 1rem;
     > h3 {
       text-align: left;
@@ -90,6 +88,11 @@
     }
     p {
       color: rgb(187, 187, 187);
+    }
+
+    .reviewLists {
+      overflow-y: auto;
+      max-height: 256px;
     }
   }
 }

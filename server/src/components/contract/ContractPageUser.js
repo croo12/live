@@ -15,8 +15,6 @@ const ContractPageUser = () => {
     userMoveOnDate: "",
   });
 
-  console.log(forSaleInfo);
-
   const [tenantInfo, setTeanatInfo] = useState({
     address: "",
     addressDetail: "",

@@ -23,12 +23,10 @@ const HouseDetailCom = (props) => {
 
   const { userInfo } = useAuth();
 
-  //예약 아이템 추가하기
   const dispatch = useDispatch();
 
   const params = useParams();
 
-  // 캐러셀 설정 값
   const carouselSettings = {
     dots: true,
     infinite: true,

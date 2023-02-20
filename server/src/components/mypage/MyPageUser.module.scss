@@ -34,32 +34,75 @@
           text-align: left;
           padding-top: 12%;
 
-          strong {
-            font-size: large;
+          p {
+            margin-bottom: 0.7%;
+
+            strong {
+              font-size: large;
+            }
           }
 
-          span {
-            background-color: #42d395;
-            color: white;
-            border-radius: 3%;
-            padding: 0.3%;
-            font-size: 1.3vh;
+          .infoState {
+            display: flex;
+            width: 17%;
+
+            span {
+              flex: 1;
+              margin-right: 5%;
+              padding: 1%;
+              text-align: center;
+              background-color: #47d48e;
+              color: white;
+              font-size: 1.3vh;
+
+            }
+
+            button {
+              flex: 1;
+              border: none;
+              background-color: rgb(143, 236, 166);
+              color: white;
+              padding: 1.45%;
+              font-size: 1.3vh;
+            }
           }
 
-          .goDetail {
-            background-color: #42d395;
-            color: white;
-            padding: 0.3%;
-            margin-left: 3%;
-            font-size: 1.3vh;
-            border: none;
+
+          .infoButton {
+            margin-top: 1%;
+
           }
 
-          .temperature {
-            padding: 1% 0;
+          .temperatureInfo {
+            display: flex;
+            margin-top: 1.5%;
 
-            .progress {}
+            .temperature {
+              flex: 0.14;
+              margin-top: 1%;
+            }
 
+            .realTemperature {
+              flex: 1;
+              color: purple;
+              font-size: 1.1rem;
+              margin-top: 0.875%;
+            }
+          }
+
+          progress {
+            width: 17%;
+            -webkit-appearance: none;
+          }
+
+          ::-webkit-progress-bar {
+            background-color: rgb(224, 235, 224);
+            border-radius: 9px;
+          }
+
+          ::-webkit-progress-value {
+            background: linear-gradient(113.73deg, rgba(255, 255, 255, 0.5) -4.61%, rgba(255, 255, 255, 0) 107.01%), linear-gradient(293.17deg, #7E18FF -4.52%, #D885FF 104.14%);
+            border-radius: 8px;
           }
         }
       }
@@ -84,6 +127,7 @@
     }
   }
 }
+
 
 @media (max-width: 768px) {
   .intro {
@@ -134,8 +178,7 @@
             .temperature {
               padding: 1% 0;
 
-              .progress {
-              }
+              .progress {}
             }
           }
         }
@@ -158,6 +201,10 @@
     width: 67.7%;
     margin: auto;
 
+    @media (max-width: 768px) {
+      width: 98%;
+    }
+
     .itemBoxContent {
       padding: 3% 0;
       display: flex;
@@ -165,7 +212,7 @@
       div {
         flex: 1;
         padding-right: 2%;
-        
+
         .menuCard {
           display: flex;
           justify-content: center;
@@ -181,21 +228,24 @@
           svg {
             flex: 1;
             color: #42d395;
-          } 
+          }
+
           p {
             flex: 2;
             font-size: 1.1rem;
             font-weight: 700;
             color: rgba(85, 85, 85, 1);
           }
-          
+
         }
+
         &:last-child {
           padding: 0;
         }
 
         &.active {
-          .menuCard {          display: flex;
+          .menuCard {
+            display: flex;
             justify-content: center;
             align-items: center;
             border: 0.3px solid #fafafa;
@@ -205,21 +255,21 @@
             padding: 6.5% 5%;
             border-radius: 4px;
             font-size: 1.9rem;
+
             svg {
               flex: 1;
               color: #fafafa;
             }
-  
+
             p {
               flex: 2;
               font-size: 1.1rem;
               font-weight: 700;
               color: #fafafa;
             }
-          }  
+          }
         }
       }
     }
   }
 }
- 

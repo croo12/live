@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { STATUS } from "../../pages/ConsultingPage";
 import ListBox from "../../UI/ListBox";
 import { ConsultingHouseCardContent } from "../HouseCardContent";
-import axiosInstance, { getAuthHeader } from "../../util/axios";
 
 const ConsultingRightReservationHouseList = () => {
   const {
@@ -32,7 +31,6 @@ const ConsultingRightReservationHouseList = () => {
   useEffect(() => {
     if (userInfo.isRealtor) {
       const linkUrl = `/consulting/${params.sessionId}/${params.consultingNo}/${params.realtorNo}/${params.userNo}`;
-      console.log(`링크주소 ${linkUrl}`);
 
       registConsultingRoomLink(params.consultingNo, linkUrl);
       changeConsultinRoomNo(params.consultingNo, 3);
@@ -58,7 +56,7 @@ const ConsultingRightReservationHouseList = () => {
             borderRadius: "8px",
           }}
           onClick={() => {
-            changeConsultinRoomNo = (params.consultingNo, 5);
+            changeConsultinRoomNo(params.consultingNo, 4);
             statusChangeHandler(STATUS.REALTOR_END_CALL);
           }}
         >
@@ -72,8 +70,6 @@ const ConsultingRightReservationHouseList = () => {
 export default ConsultingRightReservationHouseList;
 
 export const consultingDetailLoader = async ({ params }) => {
-  console.log(params);
-
   const response = await getConsultingDetail(params.consultingNo);
   return response.data;
 };

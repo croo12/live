@@ -53,8 +53,6 @@ const HouseListContent = (props) => {
   const houses = props.houses;
   const navigate = useNavigate();
 
-  console.log(houses);
-
   const navigateDetailHandler = (itemNo) => {
     navigate(`/house/detail/${itemNo}`);
   };

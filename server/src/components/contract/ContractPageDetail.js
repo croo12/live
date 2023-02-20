@@ -14,7 +14,6 @@ import { useAuth } from "../common/AuthProtector";
 
 const ContractPageDetail = () => {
   const data = useLoaderData();
-  console.log(data);
 
   const { userInfo } = useAuth();
 
@@ -25,7 +24,6 @@ const ContractPageDetail = () => {
     termOfContract: "",
     moveOnDate: "",
   });
-  console.log(forSaleInfo.maintenanceFee);
 
   const [requireInfo, setRequireInfo] = useState({
     specialContract: "",
@@ -45,7 +43,6 @@ const ContractPageDetail = () => {
     specialContract: requireInfo.specialContract,
     commission: expectedCostInfo.commission,
   };
-  console.log(passInfo);
 
   return (
     <>

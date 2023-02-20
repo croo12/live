@@ -29,7 +29,6 @@ const ReservationSearchBox = (props) => {
 
       setter(e.target.value);
     } else {
-      console.log("뭥미");
     }
   };
 
@@ -41,7 +40,6 @@ const ReservationSearchBox = (props) => {
     }
   };
 
-  //시도에 맞는 구군리스트 얻기
   useEffect(() => {
     (async () => {
       if (!sido) {

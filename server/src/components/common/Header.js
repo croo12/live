@@ -22,7 +22,6 @@ const Header = () => {
 
   const logoutEventHandler = (e) => {
     e.preventDefault();
-    console.log("ㄱㄱ");
 
     if (isToggled) isToggledHandler();
 
@@ -54,7 +53,7 @@ const Header = () => {
               </NavLink>
             </li>
           ) : (
-              ""
+            ""
           )}
           {userInfo.isRealtor ? (
             <li>
@@ -67,14 +66,20 @@ const Header = () => {
           )}
           {userInfo.isRealtor === false && (
             <li>
-              <NavLink to={"/reservation"} onClick={isToggled && isToggledHandler}>
+              <NavLink
+                to={"/reservation"}
+                onClick={isToggled && isToggledHandler}
+              >
                 예약
               </NavLink>
             </li>
           )}
           {userInfo.isRealtor && (
             <li>
-              <NavLink to={`/consulting/${makeUUID()}`} onClick={isToggled && isToggledHandler}>
+              <NavLink
+                to={`/consulting/${makeUUID()}`}
+                onClick={isToggled && isToggledHandler}
+              >
                 상담
               </NavLink>
             </li>

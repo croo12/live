@@ -8,10 +8,7 @@ const MainContentLeftBox = () => {
   const [dong] = useState("덕명동");
   const [data] = useState([]);
 
-  const calc = useEffect(() => {
-    //평균가 계산
-    //편의시설 수 계산
-  }, [dong]);
+  const calc = useEffect(() => {}, [dong]);
 
   return (
     <div className={classes.questionBox}>
@@ -20,7 +17,9 @@ const MainContentLeftBox = () => {
       </p>
       <br />
       <div className={classes.searchBox}>
-        <strong style={{ textAlign: "left", fontSize: "1.1rem" }}>매물 평균가</strong>
+        <strong style={{ textAlign: "left", fontSize: "1.1rem" }}>
+          매물 평균가
+        </strong>
         <MainContentInputBox />
         <MainContentResult />
       </div>

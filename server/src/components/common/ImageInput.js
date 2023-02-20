@@ -16,16 +16,14 @@ import { useEffect, useState } from "react";
 import classes from "./ImageInput.module.scss";
 
 const ImageInput = (props) => {
-  const [imagePreviewState, setImagePreviewState] = useState([]); // 매물 이미지 미리보기
-  const [imageState, setImageState] = useState([]); // 매물 이미지 파일
-  const [loadedImages, setLoadedImages] = useState(props.loadedImages); // 이미지 배열[{itemImageNo,imageSrc},{...}]
+  const [imagePreviewState, setImagePreviewState] = useState([]);
+  const [imageState, setImageState] = useState([]);
+  const [loadedImages, setLoadedImages] = useState(props.loadedImages);
 
-  // 매물 이미지 변경 이벤트 함수
   const ImageChangeEventHandler = async (data) => {
-    const images = [...data.target.files]; // 입력받은 이미지 파일
-    data.target.value = ""; // 다음 이미지 선택을 고려해 input 값 초기화
+    const images = [...data.target.files];
+    data.target.value = "";
 
-    // 등록 가능 최대 파일 수가 1일 경우
     if (props.maxFileNum === 1 || !props.maxFileNum) {
       if (!images[0].type.includes("image")) {
         alert(
@@ -51,25 +49,20 @@ const ImageInput = (props) => {
       return;
     }
 
-    const removeDupl = [...imageState, ...images]; // 이미지 파일 중복 제거용 배열
+    const removeDupl = [...imageState, ...images];
 
-    // 이미지 파일 정보는 객체 배열이므로 -> 파일 이름 속성으로 객체 중복 제거
     const nonDuplImages = removeDupl.filter((item) => {
-      let idx; // 중복되는 객체의 인덱스 정보를 담을 변수
+      let idx;
 
       for (let i = 0; i < removeDupl.length; i++) {
-        // 반복문을 통해 중복 객체의 인덱스 정보를 찾음
         if (item.name === removeDupl[i].name) {
           idx = i;
-          // break; <-- 동일 이름이면 늦게 등록한 이미지가 반환되도록 break 주석
         }
       }
 
-      // 찾은 인덱스(idx)와 일치하는 이미지 객체들을 필터함수로 배열 형태로 반환
       return idx === removeDupl.indexOf(item);
     });
 
-    // 이미지 파일 개수 유효성 검사 ( 기존 등록된 이미지 수도 고려하여 중복제거 후 검사 )
     if (
       nonDuplImages.length + (!loadedImages ? 0 : loadedImages.length) >
       props.maxFileNum
@@ -81,7 +74,6 @@ const ImageInput = (props) => {
     let imageTypeValid = false;
     let imageSizeValid = false;
 
-    // 유효성 검사 ( 파일 형식, 최대 파일 크기)
     nonDuplImages.forEach((image) => {
       if (!image.type.includes("image")) {
         imageTypeValid = true;
@@ -111,11 +103,9 @@ const ImageInput = (props) => {
       return;
     }
 
-    // 유효성 검사를 통과 시 imageState에 중복제거된 배열 복사
     setImageData([...nonDuplImages]);
   };
 
-  // 이미지 제거용 함수
   const imageRemoveEventHandler = (event) => {
     const targetName = event.target.value;
 
@@ -126,12 +116,10 @@ const ImageInput = (props) => {
     setImageData([...resultSet]);
   };
 
-  // 로드된 이미지 제거용 함수
   const loadedImageRemoveHandler = (event) => {
     const targetNo = event.target.value;
 
     const resultSet = loadedImages.filter((image) => {
-      console.log(targetNo, image.itemImageNo);
       return image.itemImageNo !== +targetNo;
     });
 
@@ -148,28 +136,25 @@ const ImageInput = (props) => {
     props.setLoadedImages(data);
   };
 
-  // 매물 이미지 미리보기 처리 ( imageState 변경 시 실행 )
   useEffect(() => {
     if (!props.isPreview) {
       return;
     }
-    let imagePreview = []; // 미리보기 데이터 담을 임시 변수
+    let imagePreview = [];
 
     if (imageState.length === 0) {
-      // imageState 길이가 0 이면 previewState를 빈 배열로하고 리턴(삭제 시 마지막 남는 값 제거용)
       setImagePreviewState([]);
       return;
     }
 
     imageState.forEach((image) => {
-      const reader = new FileReader(); // 이미지 파일 읽어줄 친구
-      reader.readAsDataURL(image); // 이미지 URL 변환
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
 
-      // onload : 읽기 성공 시, onloadend : 읽기 성공 실패 여부 상관 없음
       reader.onload = () => {
-        imagePreview = [...imagePreview, { image, url: reader.result }]; // 데이터 담아줌
+        imagePreview = [...imagePreview, { image, url: reader.result }];
 
-        setImagePreviewState([...imagePreview]); // previewImageState에 넣어줌
+        setImagePreviewState([...imagePreview]);
       };
     });
   }, [imageState, props.isPreview]);

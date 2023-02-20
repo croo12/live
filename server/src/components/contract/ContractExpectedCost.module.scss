@@ -109,7 +109,7 @@
 
         .totalEstimatedCost {
           display: flex;
-          padding: 0 20%;
+          padding: 0 10%;
           font-size: 1.3rem;
           margin-top: 1.7%;
 
@@ -579,11 +579,11 @@
 
       .buttonList {
         display: flex;
-        justify-content: space-between;
-        margin: 0 15%;
+        margin: 0 5%;
 
 
         .btn1 {
+          flex: 1;
           margin: 3%;
           background: #42D395;
           border-radius: 4px;
@@ -594,6 +594,7 @@
         }
 
         .btn2 {
+          flex: 1;
           margin: 3%;
           background: #BBBBBB;
           border-radius: 4px;
@@ -607,6 +608,7 @@
         }
 
         .btn3 {
+          flex: 1;
           margin: 3%;
           background: #BBBBBB;
           border-radius: 4px;
@@ -619,6 +621,7 @@
         }
 
         .btn4 {
+          flex: 1;
           margin: 3%;
           background: #BBBBBB;
           border-radius: 4px;
