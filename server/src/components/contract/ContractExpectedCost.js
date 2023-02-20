@@ -11,6 +11,8 @@ const ContractExpectedCost = (props) => {
   const deposit = props.passInfo.deposit;
   const rent = props.passInfo.rent;
 
+  const navigation = useNavigate();
+
   let balance = deposit * 0.9;
   let downPayment = deposit * 0.1;
 
@@ -80,6 +82,8 @@ const ContractExpectedCost = (props) => {
     } catch (error) {
       console.error(error);
     }
+
+    navigation("/mypage/user/user-contract");
   };
 
   const allBtnCheck = () => {
