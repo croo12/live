@@ -35,21 +35,24 @@
 
       .consultingInfo {
         display: flex;
+        justify-content: space-between;
+        text-align: left;
         padding: 5% 0 0 0;
 
         .consultingDate {
           flex: 1;
-
           p {
-            text-align: left;
+            div {
+              margin-top: 8px;
+            }
           }
         }
 
         .consultingLocation {
           flex: 1;
-
-          p {
-            text-align: left;
+          text-align: left;
+          div {
+            color: #bbbbbb;
           }
         }
       }

@@ -41,29 +41,28 @@ const ReservationCardContent2 = ({
         </div>
         <div className={classes.rightDesc}>
           <div className={classes.personalInfo}>
-            <p>
+            <p style={{ color: "#707070" }}>
               {personalInfo}
               <br />
-              <strong>{name}</strong>
+              <strong style={{ color: "#000000" }}>{name}</strong>
             </p>
           </div>
           <div className={classes.consultingInfo}>
             <div className={classes.consultingdate}>
-              <p>
+              <p style={{ color: "#707070" }}>
                 상담 일시
-                <br />
-                <strong>{consultingDate.substring(0, 10)}</strong>
+                <div style={{ color: "#000000" }}>
+                  {consultingDate.substring(0, 4)}년 {consultingDate.substring(5, 7)}월{" "}
+                  {consultingDate.substring(8, 10)}일
+                </div>
               </p>
             </div>
             <div className={classes.consultinglocation}>
-              <p>
+              <p style={{ color: "#707070" }}>
                 상담 매물
-                <br />
-                <strong>
-                  {itemCount === 0
-                    ? representativeItem
-                    : representativeItem + " 외 " + itemCount + "건"}
-                </strong>
+                <div style={{ color: "#000000" }}>
+                  {itemCount === 0 ? representativeItem : representativeItem + " 외 " + itemCount + "건"}
+                </div>
               </p>
             </div>
           </div>
