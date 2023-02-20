@@ -1,7 +1,7 @@
 import classes from "./MainRanking.module.scss";
 import ListBox from "../../UI/ListBox";
 
-import RealtorCardContent, { DUMMY } from "../RealtorCardContent";
+import RealtorCardContent from "../RealtorCardContent";
 import { useEffect, useState } from "react";
 import { realtorRank } from "../../apis/MemberService";
 

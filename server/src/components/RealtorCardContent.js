@@ -1,5 +1,4 @@
 import classes from "./RealtorCardContent.module.scss";
-import sample from "../assets/image/sample.jpg";
 import { BsTelephone } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
 import star from "../assets/image/star.png";
@@ -42,37 +41,6 @@ const RealtorCardContent = ({
 };
 
 export default RealtorCardContent;
-
-export const DUMMY = [
-  {
-    idx: 0,
-    image: sample,
-    name: "김희연",
-    starNum: 4.8,
-    contactCnt: 105,
-  },
-  {
-    idx: 1,
-    image: sample,
-    name: "김희연",
-    starNum: 4.8,
-    contactCnt: 105,
-  },
-  {
-    idx: 2,
-    image: sample,
-    name: "김희연",
-    starNum: 4.8,
-    contactCnt: 105,
-  },
-  {
-    idx: 3,
-    image: sample,
-    name: "김희연",
-    starNum: 4.8,
-    contactCnt: 105,
-  },
-];
 
 export const RealtorContractCardContent = (props) => {
   const data = props.data;
