@@ -29,11 +29,9 @@ export const userLogin = async (data, dispatch) => {
 export const userLogout = async (dispatch) => {
   const headers = getAuthHeader();
 
-  await axiosInstance
-    .post("users/logout", undefined, { headers })
-    .then((res) => {
-      dispatch(userAction.logout());
-    });
+  await axiosInstance.post("users/logout", undefined, { headers }).then((res) => {
+    dispatch(userAction.logout());
+  });
 };
 
 export const getUserInfo = async (accessToken) => {
@@ -106,7 +104,6 @@ export const getRealtorInfo = async (accessToken) => {
         headers: getAuthHeader(),
       })
       .then((res) => {
-        alert(res.data+"!!!")
         if (res.data.state === 200) {
           realtorInfo = res.data.data;
           return realtorInfo;
@@ -121,7 +118,6 @@ export const getRealtorInfo = async (accessToken) => {
       })
       .then((res) => {
         const data = res.data;
-        alert("공인중개사 "+data);
 
         if (data.state === 200) {
           realtorInfo = data.data;
@@ -136,21 +132,17 @@ export const getRealtorInfo = async (accessToken) => {
 export const realtorLogout = async (dispatch) => {
   const headers = getAuthHeader();
 
-  await axiosInstance
-    .post("realtors/logout", undefined, { headers })
-    .then((res) => {
-      dispatch(userAction.logout());
-    });
+  await axiosInstance.post("realtors/logout", undefined, { headers }).then((res) => {
+    dispatch(userAction.logout());
+  });
 };
 
 export const realtorRank = async (orderBy) => {
   let rankInfo = {};
-  await axiosInstance
-    .get(`realtors/popular?orderBy=${orderBy}`)
-    .then(({ data }) => {
-      if (data.state === 200) {
-        rankInfo = data.data;
-      }
-    });
+  await axiosInstance.get(`realtors/popular?orderBy=${orderBy}`).then(({ data }) => {
+    if (data.state === 200) {
+      rankInfo = data.data;
+    }
+  });
   return rankInfo;
 };
