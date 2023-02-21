@@ -32,12 +32,12 @@
         .rightDesc {
           flex: 2;
           text-align: left;
-          padding-top: 12%;
+          padding-top: 15%;
           
           .mainProfileContainer {
             display: flex;
             flex-direction: row;
-            margin-bottom: 1.5%;
+            margin-bottom: 5%;
 
             .mainProfileContent {
               font-weight: 400;
@@ -50,11 +50,11 @@
               margin-left: 2%;
               padding: 2% 2%;
               border: none;
-              background-color: #47d48e;
+              background: #dddddd;
               border-radius: 4px;
               font-size: 12px;
               font-weight: 400;
-              color: #fafafa;
+              color: #000000;
             }
           }
 
@@ -70,11 +70,15 @@
             
             button {
               padding: 3%;
-              font-size: 16px;
+              font-size: 14px;
               border-radius: 4px;
               border: none;
               background-color: rgb(143, 236, 166);
               color: #fafafa;
+              cursor: pointer;
+              &:hover {
+                font-size: 16px;
+              }
             }
           }
         }
