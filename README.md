@@ -88,7 +88,7 @@ WebSocket, Session으로 Signaling Server를 구축하고 Kurento Media Server�
 
 ### 3-2. 서비스 아키텍처
 
-![010](https://github.com/croo12/ssafy1/blob/main/Live(%EB%88%84%EA%B5%AC%EB%82%98%20%EC%89%BD%EA%B2%8C%20%EC%A7%91%EC%9D%84%20%EA%B5%AC%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20One-Stop%20%20c41fb7d729d84fbfa0a8c65e5b4e0f0e/010.png?raw=true)
+![010](https://github.com/croo12/ssafy1/blob/main/Live/010.png?raw=true)
 
 
 ## 4. 설계 문서
@@ -97,12 +97,12 @@ WebSocket, Session으로 Signaling Server를 구축하고 Kurento Media Server�
 
 ### 4-1. ERD
 
-![Untitled](https://github.com/croo12/ssafy1/blob/main/Live(%EB%88%84%EA%B5%AC%EB%82%98%20%EC%89%BD%EA%B2%8C%20%EC%A7%91%EC%9D%84%20%EA%B5%AC%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20One-Stop%20%20c41fb7d729d84fbfa0a8c65e5b4e0f0e/Untitled.png?raw=true)
+![Untitled](https://github.com/croo12/ssafy1/blob/main/Live/Untitled.png?raw=true)
 
 
 ### 4-2. 화면 설계서
 
-![_ED_99_94_EB_A9_B4__EC_84_A4_EA_B3_84_EC_84_9C](/uploads/e5387e076af85891b0116703f2255183/_ED_99_94_EB_A9_B4__EC_84_A4_EA_B3_84_EC_84_9C.png)
+![머징](https://github.com/croo12/ssafy1/blob/main/Live/_ED_99_94_EB_A9_B4__EC_84_A4_EA_B3_84_EC_84_9C.png?row=true)
 
 
 ### 4-3. 요구사항 명세서
@@ -112,7 +112,7 @@ WebSocket, Session으로 Signaling Server를 구축하고 Kurento Media Server�
 
 ### 4-4. API 명세서
 
-![API_명세서](/uploads/b7bac6b6df9fe90669788402ada98899/API_명세서.gif)
+![API_명세서](https://github.com/croo12/ssafy1/blob/main/Live/API_명세서.gif?raw=true)
 
 
 ## 5. 협업 툴 및 코드 컨벤션
