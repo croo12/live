@@ -11,7 +11,7 @@
 
 ## 2. 주요 기능
 
-![화면_녹화_전체](https://github.com/croo12/ssafy1/blob/main/Live/CON_1.png?raw=true)
+![화면_녹화_전체](https://github.com/croo12/ssafy1/blob/main/Live/entire.gif?raw=true)
 
 ---
 
@@ -102,12 +102,12 @@ WebSocket, Session으로 Signaling Server를 구축하고 Kurento Media Server�
 
 ### 4-2. 화면 설계서
 
-![머징](https://github.com/croo12/ssafy1/blob/main/Live/figman_man.png?row=true)
+![머징](https://github.com/croo12/ssafy1/blob/main/Live/figma_man.png?row=true)
 
 
 ### 4-3. 요구사항 명세서
 
-![요구사항_명세서](/uploads/1dad104a101bd9319ae8fe962ad2279e/require_man.gif?raw=true)
+![요구사항_명세서](https://github.com/croo12/ssafy1/blob/main/Live/require_man.gif?raw=true)
 
 
 ### 4-4. API 명세서
