@@ -1,6 +1,6 @@
 # Live(누구나 쉽게 집을 구할 수 있는 One-Stop 완전 비대면 부동산 서비스)
 
-![CON_1](https://github.com/croo12/ssafy1/blob/main/Live(%EB%88%84%EA%B5%AC%EB%82%98%20%EC%89%BD%EA%B2%8C%20%EC%A7%91%EC%9D%84%20%EA%B5%AC%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20One-Stop%20%20c41fb7d729d84fbfa0a8c65e5b4e0f0e/CON_1.png?raw=true)
+![CON_1](https://github.com/croo12/ssafy1/blob/main/Live/CON_1.png?raw=true)
 
 
 ## 1. Live 소개
