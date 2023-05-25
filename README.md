@@ -1,6 +1,6 @@
 # Live(누구나 쉽게 집을 구할 수 있는 One-Stop 완전 비대면 부동산 서비스)
 
-![CON_1](/Live(누구나 쉽게 집을 구할 수 있는 One-Stop c41fb7d729d84fbfa0a8c65e5b4e0f0e/CON_1.png)
+![CON_1](./Live(누구나 쉽게 집을 구할 수 있는 One-Stop c41fb7d729d84fbfa0a8c65e5b4e0f0e/CON_1.png)
 
 
 ## 1. Live 소개
