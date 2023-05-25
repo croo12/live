@@ -88,7 +88,7 @@ WebSocket, Session으로 Signaling Server를 구축하고 Kurento Media Server�
 
 ### 3-2. 서비스 아키텍처
 
-![010](/uploads/d25989c92da14299eaddc1b02737ea73/010.png)
+![010](https://github.com/croo12/ssafy1/blob/main/Live(%EB%88%84%EA%B5%AC%EB%82%98%20%EC%89%BD%EA%B2%8C%20%EC%A7%91%EC%9D%84%20%EA%B5%AC%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20One-Stop%20%20c41fb7d729d84fbfa0a8c65e5b4e0f0e/010.png?raw=true)
 
 
 ## 4. 설계 문서
@@ -97,7 +97,7 @@ WebSocket, Session으로 Signaling Server를 구축하고 Kurento Media Server�
 
 ### 4-1. ERD
 
-![Untitled](/uploads/b1ee4c4745cc52ee2158758278fec8b6/Untitled.png)
+![Untitled](https://github.com/croo12/ssafy1/blob/main/Live(%EB%88%84%EA%B5%AC%EB%82%98%20%EC%89%BD%EA%B2%8C%20%EC%A7%91%EC%9D%84%20%EA%B5%AC%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20One-Stop%20%20c41fb7d729d84fbfa0a8c65e5b4e0f0e/Untitled.png?raw=true)
 
 
 ### 4-2. 화면 설계서
