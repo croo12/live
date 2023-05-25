@@ -102,17 +102,17 @@ WebSocket, Session으로 Signaling Server를 구축하고 Kurento Media Server�
 
 ### 4-2. 화면 설계서
 
-![머징](https://github.com/croo12/ssafy1/blob/main/Live/_ED_99_94_EB_A9_B4__EC_84_A4_EA_B3_84_EC_84_9C.png?row=true)
+![머징](https://github.com/croo12/ssafy1/blob/main/Live/figman_man.png?row=true)
 
 
 ### 4-3. 요구사항 명세서
 
-![요구사항_명세서](/uploads/1dad104a101bd9319ae8fe962ad2279e/요구사항_명세서.gif)
+![요구사항_명세서](/uploads/1dad104a101bd9319ae8fe962ad2279e/require_man.gif?raw=true)
 
 
 ### 4-4. API 명세서
 
-![API_명세서](https://github.com/croo12/ssafy1/blob/main/Live/API_명세서.gif?raw=true)
+![API_명세서](https://github.com/croo12/ssafy1/blob/main/Live/API_man.gif?raw=true)
 
 
 ## 5. 협업 툴 및 코드 컨벤션
@@ -166,4 +166,4 @@ ex) **feature/live-func**
 
 ---
 
-![020](/uploads/bb106efaa6d9726104af4a479534e0ab/020.png)
+![020](https://github.com/croo12/ssafy1/blob/main/Live/020.png?raw=true)
